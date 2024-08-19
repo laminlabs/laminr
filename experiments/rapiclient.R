@@ -13,21 +13,21 @@ instance_id <- "399387d4-feec-45b5-995d-5b5750f5542c"
 schema_id <- "a122335a-0d85-cf36-291d-9e98a6dd1417"
 
 # get schema
-schema <- operations$get_schema_instances__instance_id__schema__get(instance_id = instance_id) |>
+schemas <- operations$get_schema_instances__instance_id__schema__get(instance_id = instance_id) |>
   content()
 
-schema$core$artifact$class_name # "Artifact"
+schemas$core$artifact$class_name # "Artifact"
 
-artifact_fields <- schema$core$artifact$fields_metadata %>%
+artifact_fields <- schemas$core$artifact$fields_metadata %>%
   unname() %>%
   dynutils::list_as_tibble() %>%
   filter(model_name == "artifact")
 
 module_name <- "core"; model_name <- "artifact"
 generate_r6 <- function(module_name, model_name) {
-  class_name <- schema[[module_name]][[model_name]]$class_name
+  class_name <- schemas[[module_name]][[model_name]]$class_name
 
-  fields <- schema[[module_name]][[model_name]]$fields_metadata %>%
+  fields <- schemas[[module_name]][[model_name]]$fields_metadata %>%
     unname() %>%
     dynutils::list_as_tibble() %>%
     filter(model_name == !!model_name) %>%
@@ -82,10 +82,10 @@ generate_r6 <- function(module_name, model_name) {
 }
 
 r6_classes <- lapply(
-  names(schema),
+  names(schemas),
   function(module_name) {
     out <- lapply(
-      names(schema[[module_name]]),
+      names(schemas[[module_name]]),
       function(model_name) {
         tryCatch({
           generate_r6(module_name = module_name, model_name = model_name)
@@ -95,10 +95,10 @@ r6_classes <- lapply(
         })
       }
     )
-    setNames(out, names(schema[[module_name]]))
+    setNames(out, names(schemas[[module_name]]))
   }
 )
-names(r6_classes) <- names(schema)
+names(r6_classes) <- names(schemas)
 Artifact <- generate_r6("core", "artifact")
 
 obj_fields <- artifact_fields %>%

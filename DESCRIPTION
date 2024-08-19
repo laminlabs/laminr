@@ -17,3 +17,10 @@ URL: https://github.com/laminlabs/laminr
 BugReports: https://github.com/laminlabs/laminr/issues
 Depends:
     R (>= 4.0.0)
+Imports:
+    httr,
+    purrr,
+    dplyr,
+    dynutils,
+    R6,
+    rapiclient
