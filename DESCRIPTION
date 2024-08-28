@@ -18,9 +18,7 @@ BugReports: https://github.com/laminlabs/laminr/issues
 Depends:
     R (>= 4.0.0)
 Imports:
+    cli,
     httr,
     purrr,
-    dplyr,
-    dynutils,
-    R6,
-    rapiclient
+    R6

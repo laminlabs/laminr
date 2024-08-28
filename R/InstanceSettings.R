@@ -1,3 +1,6 @@
+# TODO: align with Python's InstanceSettings
+# https://github.com/laminlabs/lamindb-setup/blob/main/lamindb_setup/core/_settings_instance.py#L42
+
 #' InstanceSettings class
 #'
 #' The InstanceSettings class is used to store the settings of a LaminDB instance.
@@ -31,3 +34,4 @@ InstanceSettings <- R6::R6Class(
     }
   )
 )
+

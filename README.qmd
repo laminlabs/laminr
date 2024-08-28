@@ -14,7 +14,9 @@ You can install the development version from GitHub with:
 remotes::install_github("laminlabs/laminr")
 ```
 
+<!--
 ## Set up environment
+
 
 For this package to work, we first need to run the following commands in the terminal:
 
@@ -33,79 +35,73 @@ This should create an `.env` file at `~/.lamin/instance--laminlabs--cellxgene.en
     schema_id = "0123456789abcdefghijklmnopqrstuv"
     api_url = "https://us-west-2.api.lamin.ai"
 
+:::{.callout-note}
+laminr doesn't detect the `.env` yet, so you need to provide the `instance_id`, `schema_id` and `api_url` manually.
+:::
+
+-->
+
 ## Example
 
 This is a basic example which shows you how to solve a common problem:
 
-```{r}
+```{r setup}
 library(laminr)
-
-ln <- LaminDB$new(
-  url = "https://us-west-2.api.lamin.ai",
-  instance_id = "399387d4-feec-45b5-995d-5b5750f5542c",
-  schema_id = "a122335a-0d85-cf36-291d-9e98a6dd1417"
-)
 ```
 
-Fetch artifact:
-```{r}
-artifact <- ln$types$core$artifact$get_record(
-  id_or_uid = "KBW89Mf7IGcekja2hADu"
+### Connect to a LaminDB instance
+
+```{r connect, eval=FALSE}
+options(
+  lamindb_current_instance = list(
+    url = "https://us-west-2.api.lamin.ai",
+    instance_id = "0123456789abcdefghijklmnopqrstuv",
+    schema_id = "0123456789abcdefghijklmnopqrstuv"
+  )
 )
+
+db <- laminr::connect()
 ```
 
-:::{.callout-note}
-The data returned by the API contains a field `is_latest`. Since it is not present in the schema, it is current ignored by the package.
-:::
+```{r connect2, echo=FALSE}
+db <- laminr::connect()
+```
 
+### Print a LaminDB instance
 
-```{r}
+```{r print_instance}
+db
+```
+
+### Get artifact
+
+```{r get_artifact}
+# Planned:
+# artifact <- db$artifact$get("KBW89Mf7IGcekja2hADu")
+
+artifact <- db$.__enclos_env__$private$classes$core$artifact$get("KBW89Mf7IGcekja2hADu")
+```
+
+### Print artifact
+
+```{r print_artifact}
 artifact
+```
 
+### Print simple fields
+
+```{r print_simple_fields}
 artifact$id
 
-artifact$storage_id
+artifact$uid
 
-artifact$visibility
+artifact$key
 ```
 
-## Issue: Can't fetch records with id, only with uid
+### Print related fields
 
-Unfortunately, the following code does not work:
+```{r print_related_fields}
+artifact$storage
 
-```{r eval=FALSE}
-artifact$storage()
+artifact$created_by
 ```
-
-This is because calling `storage()` actually calls `get_record` with the `artifact$storage_id` as argument:
-
-```{r eval=FALSE}
-ln$types$core$storage$get_record(
-  id_or_uid = artifact$storage_id
-)
-```
-
-However, it seems `get_record` only works with `uid` and not with `id`. 
-
-
-<!--
-### `fields_metadata` contains entries for other models
-
-...
-
-### `fields_metadata` contains duplicate entries
-
-core.run contains duplicate field 'id'
-
-```r
-fields <- 
-  ln$.__enclos_env__$private$schemas[["core"]][["run"]] %>%
-  .$fields_metadata %>%
-  unname() %>%
-  dynutils::list_as_tibble() %>%
-  filter(model_name == "run") %>%
-  filter(!is.na(column))
-
-fields %>% filter(column == "id")
-```
--->
