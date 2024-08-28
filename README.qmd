@@ -75,6 +75,12 @@ db <- laminr::connect()
 db
 ```
 
+### Print the Artifact class
+
+```{r print_class}
+db$Artifact
+```
+
 ### Get artifact
 
 ```{r get_artifact}

@@ -46,6 +46,8 @@ library(laminr)
 ``` r
 options(
   lamindb_current_instance = list(
+    owner = "lamin",
+    name = "example",
     url = "https://us-west-2.api.lamin.ai",
     instance_id = "0123456789abcdefghijklmnopqrstuv",
     schema_id = "0123456789abcdefghijklmnopqrstuv"
@@ -61,25 +63,66 @@ db <- laminr::connect()
 db
 ```
 
-    <Instance>
-      Public:
-        initialize: function (instance_settings) 
-      Private:
-        cast_data_to_class: function (module_name, model_name, data) 
-        classes: list
-        create_classes: function () 
-        generate_class: function (module_name, model_name) 
-        get_record: function (module_name, model_name, id_or_uid, field_name = NULL) 
-        instance_settings: InstanceSettings, R6
-        schema: list
+    Instance 'lamin/cellxgene'
+      core classes:
+        Run
+        User
+        Param
+        ULabel
+        Feature
+        Storage
+        Artifact
+        Transform
+        Collection
+        FeatureSet
+        ParamValue
+        FeatureValue
+        RunParamValue
+        ArtifactULabel
+        CollectionULabel
+        FeatureSetFeature
+        ArtifactFeatureSet
+        ArtifactParamValue
+        CollectionArtifact
+        ArtifactFeatureValue
+        CollectionFeatureSet
+      bionty classes:
+        Gene
+        Source
+        Tissue
+        Disease
+        Pathway
+        Protein
+        CellLine
+        CellType
+        Organism
+        Ethnicity
+        Phenotype
+        CellMarker
+        ArtifactGene
+        ArtifactTissue
+        FeatureSetGene
+        ArtifactDisease
+        ArtifactPathway
+        ArtifactProtein
+        ArtifactCellLine
+        ArtifactCellType
+        ArtifactOrganism
+        ArtifactEthnicity
+        ArtifactPhenotype
+        FeatureSetPathway
+        FeatureSetProtein
+        ArtifactCellMarker
+        DevelopmentalStage
+        ExperimentalFactor
+        FeatureSetCellMarker
+        ArtifactDevelopmentalStage
+        ArtifactExperimentalFactor
 
 ### Get artifact
 
 ``` r
-# Planned:
-# artifact <- db$artifact$get("KBW89Mf7IGcekja2hADu")
-
-artifact <- db$.__enclos_env__$private$classes$core$artifact$get("KBW89Mf7IGcekja2hADu")
+artifact <- db$Artifact$get("KBW89Mf7IGcekja2hADu")
 ```
 
     Warning: Data is missing expected fields: run_id, storage_id, transform_id, created_by_id

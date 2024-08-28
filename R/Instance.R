@@ -45,6 +45,9 @@ create_instance_class <- function(instance_settings) {
     public = list(
       initialize = function(instance_settings, schema) {
         super$initialize(instance_settings, schema)
+      },
+      print = function(...) {
+        super$print(...)
       }
     )
   )
@@ -85,6 +88,18 @@ Instance <- R6::R6Class(
         }
       ) |>
         set_names(module_names)
+    },
+    #' Print the Instance class
+    print = function(...) {
+      cat("Instance '", private$instance_settings$owner, "/", private$instance_settings$name, "'\n", sep = "")
+      for (module_name in names(private$classes)) {
+        cat("  ", module_name, " classes:\n", sep = "")
+        for (model_name in names(private$classes[[module_name]])) {
+          model <- private$schema[[module_name]][[model_name]]
+          class_name <- model$class_name
+          cat("    ", class_name, "\n", sep = "")
+        }
+      }
     }
   ),
   private = list(
