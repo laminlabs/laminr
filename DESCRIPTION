@@ -20,5 +20,6 @@ Depends:
 Imports:
     cli,
     httr,
+    jsonlite,
     purrr,
     R6

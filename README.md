@@ -65,12 +65,11 @@ db
       Public:
         initialize: function (instance_settings) 
       Private:
-        api_get_record: function (module_name, model_name, id_or_uid, field_name = NULL) 
-        api_get_schema: function () 
         cast_data_to_class: function (module_name, model_name, data) 
         classes: list
         create_classes: function () 
         generate_class: function (module_name, model_name) 
+        get_record: function (module_name, model_name, id_or_uid, field_name = NULL) 
         instance_settings: InstanceSettings, R6
         schema: list
 
@@ -82,8 +81,6 @@ db
 
 artifact <- db$.__enclos_env__$private$classes$core$artifact$get("KBW89Mf7IGcekja2hADu")
 ```
-
-    Getting record from module 'core',model 'artifact',id_or_uid 'KBW89Mf7IGcekja2hADu',
 
     Warning: Data is missing expected fields: run_id, storage_id, transform_id, created_by_id
 
@@ -121,8 +118,6 @@ artifact$key
 artifact$storage
 ```
 
-    Getting record from module 'core',model 'artifact',id_or_uid 'KBW89Mf7IGcekja2hADu',, field_name 'storage'
-
     Warning: Data is missing expected fields: run_id, created_by_id
 
     Storage(id = '2', uid = 'oIYGbD74', root = 's3://cellxgene-data-public', type = 's3', region = 'us-west-2', created_at = '2023-09-19T13:17:56.273068+00:00', updated_at = '2023-10-16T15:04:08.998203+00:00', description = '2', instance_uid = 'oIYGbD74')
@@ -130,7 +125,5 @@ artifact$storage
 ``` r
 artifact$created_by
 ```
-
-    Getting record from module 'core',model 'artifact',id_or_uid 'KBW89Mf7IGcekja2hADu',, field_name 'created_by'
 
     User(id = '1', uid = 'kmvZDIX9', name = 'Sunny Sun', handle = 'sunnyosun', created_at = '2023-09-19T12:02:50.76501+00:00', updated_at = '2023-12-13T16:23:44.195541+00:00')
