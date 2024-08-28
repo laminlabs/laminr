@@ -117,14 +117,11 @@ artifact$created_by
 ### Load artifact
 
 :::{.callout-note}
-This function will be moved to the `Artifact` class in the near future.
+Only S3 and AnnData artifacts are supported at the moment.
 :::
 
 ```{r load_artifact}
-adata <- laminr:::artifact_load(artifact)
-
-# Planned usage:
-# adata <- artifact$load()
+adata <- artifact$load()
 
 adata
 ```

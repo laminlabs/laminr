@@ -6,41 +6,52 @@ create_record_class <- function(
 ) {
   field_names <- map_chr(module$fields_metadata, "field_name")
 
+  active <- map(
+    field_names,
+    function(field_name) {
+      fun <- NULL
+      fun_src <- paste0(
+        "fun <- function(value) {\n",
+        "  if (missing(value)) {\n",
+        "    private$get_value('", field_name, "')\n",
+        "  } else {\n",
+        "    private$set_value('", field_name, "', value)\n",
+        "  }\n",
+        "}\n"
+      )
+      eval(parse(text = fun_src))
+      fun
+    }
+  ) |>
+    set_names(field_names)
+
+  public <- list(
+    initialize = function(data) {
+      super$initialize(
+        data = data,
+        get_record = get_record,
+        class_name = module$class_name,
+        fields_metadata = module$fields_metadata
+      )
+    },
+    print = function(...) {
+      super$print(...)
+    }
+  )
+
+  # NOTE: special case for core.artifact
+  if (module_name == "core" && model_name == "artifact") {
+    public$load <- function() {
+      artifact_load(self)
+    }
+  }
+
   record_class <- R6::R6Class(
     module$class_name,
     cloneable = FALSE,
     inherit = Record,
-    active = map(
-      field_names,
-      function(field_name) {
-        fun <- NULL
-        fun_src <- paste0(
-          "fun <- function(value) {\n",
-          "  if (missing(value)) {\n",
-          "    private$get_value('", field_name, "')\n",
-          "  } else {\n",
-          "    private$set_value('", field_name, "', value)\n",
-          "  }\n",
-          "}\n"
-        )
-        eval(parse(text = fun_src))
-        fun
-      }
-    ) |>
-      set_names(field_names),
-    public = list(
-      initialize = function(data) {
-        super$initialize(
-          data = data,
-          get_record = get_record,
-          class_name = module$class_name,
-          fields_metadata = module$fields_metadata
-        )
-      },
-      print = function(...) {
-        super$print(...)
-      }
-    )
+    active = active,
+    public = public
   )
 
   record_class$get <- function(id_or_uid) {

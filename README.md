@@ -133,6 +133,7 @@ db$Artifact
   Public:
     initialize: function (data) 
     print: function (...) 
+    load: function () 
   Active bindings:
     id: function (value) 
     key: function (value) 
@@ -200,7 +201,7 @@ db$Artifact
     experimental_factors: function (value) 
     links_developmental_stage: function (value) 
     links_experimental_factor: function (value) 
-  Parent env: <environment: 0x55692dfe5c90>
+  Parent env: <environment: 0x55fc1429f710>
   Locked objects: TRUE
   Locked class: FALSE
   Portable: TRUE
@@ -267,19 +268,15 @@ artifact$created_by
 
 > [!NOTE]
 >
-> This function will be moved to the `Artifact` class in the near
-> future.
+> Only S3 and AnnData artifacts are supported at the moment.
 
 ``` r
-adata <- laminr:::artifact_load(artifact)
+adata <- artifact$load()
 ```
 
     Warning: Data is missing expected fields: run_id, created_by_id
 
 ``` r
-# Planned usage:
-# adata <- artifact$load()
-
 adata
 ```
 
