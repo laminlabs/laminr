@@ -14,6 +14,25 @@ You can install the development version from GitHub with:
 remotes::install_github("laminlabs/laminr")
 ```
 
+## Set up environment
+
+For this package to work, we first need to run the following commands in the terminal:
+
+```python
+pip install lamindb
+```
+
+```bash
+lamin load laminlabs/cellxgene
+```
+
+This should create an `.env` file at `~/.lamin/instance--laminlabs--cellxgene.env` and `~/.lamin/current_instance.env` containing an `instance_id`, `schema_id` and `api_url`, e.g.:
+
+    # instance--laminlabs--cellxgene.env
+    instance_id = "0123456789abcdefghijklmnopqrstuv"
+    schema_id = "0123456789abcdefghijklmnopqrstuv"
+    api_url = "https://us-west-2.api.lamin.ai"
+
 ## Example
 
 This is a basic example which shows you how to solve a common problem:
