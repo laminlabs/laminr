@@ -54,6 +54,8 @@ library(laminr)
 ```{r connect, eval=FALSE}
 options(
   lamindb_current_instance = list(
+    owner = "lamin",
+    name = "example",
     url = "https://us-west-2.api.lamin.ai",
     instance_id = "0123456789abcdefghijklmnopqrstuv",
     schema_id = "0123456789abcdefghijklmnopqrstuv"
@@ -76,10 +78,7 @@ db
 ### Get artifact
 
 ```{r get_artifact}
-# Planned:
-# artifact <- db$artifact$get("KBW89Mf7IGcekja2hADu")
-
-artifact <- db$.__enclos_env__$private$classes$core$artifact$get("KBW89Mf7IGcekja2hADu")
+artifact <- db$Artifact$get("KBW89Mf7IGcekja2hADu")
 ```
 
 ### Print artifact

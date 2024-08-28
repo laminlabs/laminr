@@ -1,3 +1,56 @@
+create_instance_class <- function(instance_settings) {
+  name <- paste0(instance_settings$owner, "/", instance_settings$name)
+  schema <- api_get_schema(instance_settings)
+
+  # use lapply instead of map to retain names
+  classes <- map(
+    names(schema),
+    function(module_name) {
+      model_names <- names(schema[[module_name]])
+      map(
+        model_names,
+        function(model_name) {
+          list(
+            module_name = module_name,
+            model_name = model_name,
+            class_name = schema[[module_name]][[model_name]]$class_name
+          )
+        }
+      )
+    }
+  ) |>
+    list_flatten() |>
+    transpose()
+
+  active <- pmap(
+    classes,
+    function(module_name, model_name, class_name) {
+      fun <- NULL
+      fun_src <- paste0(
+        "fun <- function() {\n",
+        "  private$classes[['", module_name, "']][['", model_name, "']]\n",
+        "}\n"
+      )
+      eval(parse(text = fun_src))
+      fun
+    }
+  ) |>
+    set_names(classes$class_name)
+
+  instance_class <- R6::R6Class(
+    name,
+    cloneable = FALSE,
+    inherit = Instance,
+    active = active,
+    public = list(
+      initialize = function(instance_settings, schema) {
+        super$initialize(instance_settings, schema)
+      }
+    )
+  )
+
+  instance_class$new(instance_settings, schema)
+}
 
 Instance <- R6::R6Class(
   "Instance",
@@ -8,16 +61,30 @@ Instance <- R6::R6Class(
     #' @param instance_settings The settings of the LaminDB instance.
     #'
     #' @noRd
-    #'
-    #' @importFrom R6 R6Class
-    #' @importFrom httr GET POST content add_headers
-    #' @importFrom purrr map map_chr map2 set_names
-    initialize = function(instance_settings) {
+    initialize = function(instance_settings, schema) {
       private$instance_settings <- instance_settings
+      private$schema <- schema
 
-      private$schema <- api_get_schema(private$instance_settings)
-
-      private$classes <- private$create_classes()
+      module_names <- names(schema)
+      private$classes <- map(
+        module_names,
+        function(module_name) {
+          model_names <- names(schema[[module_name]])
+          map(
+            model_names,
+            function(model_name) {
+              create_record_class(
+                module_name = module_name,
+                model_name = model_name,
+                module = private$schema[[module_name]][[model_name]],
+                get_record = private$get_record
+              )
+            }
+          ) |>
+            set_names(model_names)
+        }
+      ) |>
+        set_names(module_names)
     }
   ),
   private = list(
@@ -25,7 +92,7 @@ Instance <- R6::R6Class(
     schema = NULL,
     classes = NULL,
 
-    ## API FUNCTIONS
+    ## HELPER FUNCTIONS
     get_record = function(module_name, model_name, id_or_uid, field_name = NULL) {
       data <- api_get_record(
         instance_settings = private$instance_settings,
@@ -52,28 +119,6 @@ Instance <- R6::R6Class(
       }
     },
 
-    ## HELPER FUNCTIONS
-    create_classes = function() {
-      # use lapply instead of map to retain names
-      module_names <- names(private$schema)
-      private$classes <- map(
-        module_names,
-        function(module_name) {
-          model_names <- names(private$schema[[module_name]])
-          map(
-            model_names,
-            function(model_name) {
-              private$generate_class(
-                module_name = module_name,
-                model_name = model_name
-              )
-            }
-          ) |>
-            set_names(model_names)
-        }
-      ) |>
-        set_names(module_names)
-    },
     cast_data_to_class = function(module_name, model_name, data) {
       if (is.null(private$schema[[module_name]])) {
         cli::cli_abort(paste0("Module '", module_name, "' not found"))
@@ -98,64 +143,8 @@ Instance <- R6::R6Class(
           paste(setdiff(column_names, names(data)), collapse = ", ")
         ))
       }
-      
+
       private$classes[[module_name]][[model_name]]$new(data)
-    },
-    
-    generate_class = function(
-      module_name,
-      model_name
-    ) {
-      module <- private$schema[[module_name]][[model_name]]
-      field_names <- map_chr(module$fields_metadata, "field_name")
-      get_record <- private$get_record
-
-      record_class <- R6::R6Class(
-        module$class_name,
-        cloneable = FALSE,
-        inherit = Record,
-        active = map(
-          field_names,
-          function(field_name) {
-            fun <- NULL
-            fun_src <- paste0(
-              "fun <- function(value) {",
-              "  if (missing(value)) {",
-              "    private$get_value('", field_name, "')",
-              "  } else {",
-              "    private$set_value('", field_name, "', value)",
-              "  }",
-              "}"
-            )
-            eval(parse(text = fun_src))
-            fun
-          }
-        ) |>
-          set_names(field_names),
-        public = list(
-          initialize = function(data) {
-            super$initialize(
-              data = data,
-              get_record = get_record,
-              class_name = module$class_name,
-              fields_metadata = module$fields_metadata
-            )
-          }
-        )
-      )
-
-      record_class$get <- function(id_or_uid) {
-        private$get_record(
-          module_name = module_name,
-          model_name = model_name,
-          id_or_uid = id_or_uid
-        )
-      }
-
-      record_class
     }
   )
 )
-
-
-

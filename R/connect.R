@@ -12,6 +12,8 @@
 #' \dontrun{
 #' options(
 #'   lamindb_current_instance = list(
+#'     owner = "lamin",
+#'     name = "example",
 #'     url = "https://us-west-2.api.lamin.ai",
 #'     instance_id = "0123456789abcdefghijklmnopqrstuv",
 #'     schema_id = "0123456789abcdefghijklmnopqrstuv"
@@ -45,7 +47,7 @@ connect <- function(slug = NULL) {
       expected_format_str
     ))
   }
-  for (key in c("url", "instance_id", "schema_id")) {
+  for (key in c("owner", "name", "url", "instance_id", "schema_id")) {
     if (!key %in% names(current_instance)) {
       cli::cli_abort(paste0(
         "Expected option 'lamindb_current_instance' to have a '",
@@ -55,12 +57,5 @@ connect <- function(slug = NULL) {
   }
 
   # TODO: replace with 'setup_instance_from_store'
-  instance_settings <- InstanceSettings$new(
-    url = current_instance$url,
-    instance_id = current_instance$instance_id,
-    schema_id = current_instance$schema_id
-  )
-
-  # TODO: fail gracefully if the instance is not reachable
-  Instance$new(instance_settings)
+  create_instance_class(current_instance)
 }
