@@ -8,7 +8,7 @@
 #' @importFrom R6 R6Class
 #'
 #' @noRd
-InstanceSettings <- R6::R6Class(
+InstanceSettings <- R6::R6Class( # nolint object_name_linter
   "InstanceSettings",
   cloneable = FALSE,
   public = list(
@@ -44,4 +44,3 @@ InstanceSettings <- R6::R6Class(
     }
   )
 )
-

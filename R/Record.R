@@ -54,7 +54,7 @@ create_record_class <- function(
   record_class
 }
 
-Record <- R6::R6Class(
+Record <- R6::R6Class( # nolint object_name_linter
   "Record",
   cloneable = FALSE,
   public = list(

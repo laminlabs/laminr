@@ -75,11 +75,14 @@ db <- laminr::connect()
 db
 ```
 
+<!--
 ### Print the Artifact class
 
 ```{r print_class}
 db$Artifact
 ```
+
+-->
 
 ### Get artifact
 
@@ -109,4 +112,19 @@ artifact$key
 artifact$storage
 
 artifact$created_by
+```
+
+### Load artifact
+
+:::{.callout-note}
+This function will be moved to the `Artifact` class in the near future.
+:::
+
+```{r load_artifact}
+adata <- laminr:::artifact_load(artifact)
+
+# Planned usage:
+# adata <- artifact$load()
+
+adata
 ```

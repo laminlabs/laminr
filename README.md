@@ -119,6 +119,98 @@ db
         ArtifactDevelopmentalStage
         ArtifactExperimentalFactor
 
+<!--
+### Print the Artifact class
+&#10;
+&#10;::: {.cell}
+&#10;```{.r .cell-code}
+db$Artifact
+```
+&#10;::: {.cell-output .cell-output-stdout}
+&#10;```
+<Artifact> object generator
+  Inherits from: <Record>
+  Public:
+    initialize: function (data) 
+    print: function (...) 
+  Active bindings:
+    id: function (value) 
+    key: function (value) 
+    run: function (value) 
+    uid: function (value) 
+    hash: function (value) 
+    size: function (value) 
+    type: function (value) 
+    genes: function (value) 
+    suffix: function (value) 
+    storage: function (value) 
+    tissues: function (value) 
+    ulabels: function (value) 
+    version: function (value) 
+    _actions: function (value) 
+    diseases: function (value) 
+    pathways: function (value) 
+    proteins: function (value) 
+    _accessor: function (value) 
+    is_latest: function (value) 
+    n_objects: function (value) 
+    organisms: function (value) 
+    transform: function (value) 
+    _hash_type: function (value) 
+    _report_of: function (value) 
+    cell_lines: function (value) 
+    cell_types: function (value) 
+    created_at: function (value) 
+    created_by: function (value) 
+    links_gene: function (value) 
+    phenotypes: function (value) 
+    updated_at: function (value) 
+    visibility: function (value) 
+    collections: function (value) 
+    description: function (value) 
+    ethnicities: function (value) 
+    cell_markers: function (value) 
+    feature_sets: function (value) 
+    links_tissue: function (value) 
+    links_ulabel: function (value) 
+    _param_values: function (value) 
+    input_of_runs: function (value) 
+    links_disease: function (value) 
+    links_pathway: function (value) 
+    links_protein: function (value) 
+    _previous_runs: function (value) 
+    links_organism: function (value) 
+    n_observations: function (value) 
+    _action_targets: function (value) 
+    _environment_of: function (value) 
+    _feature_values: function (value) 
+    _key_is_virtual: function (value) 
+    _source_code_of: function (value) 
+    links_cell_line: function (value) 
+    links_cell_type: function (value) 
+    links_ethnicity: function (value) 
+    links_phenotype: function (value) 
+    links_collection: function (value) 
+    links_cell_marker: function (value) 
+    links_feature_set: function (value) 
+    _meta_of_collection: function (value) 
+    _source_artifact_of: function (value) 
+    _source_dataframe_of: function (value) 
+    developmental_stages: function (value) 
+    experimental_factors: function (value) 
+    links_developmental_stage: function (value) 
+    links_experimental_factor: function (value) 
+  Parent env: <environment: 0x55692dfe5c90>
+  Locked objects: TRUE
+  Locked class: FALSE
+  Portable: TRUE
+```
+&#10;
+:::
+:::
+&#10;
+&#10;-->
+
 ### Get artifact
 
 ``` r
@@ -170,3 +262,29 @@ artifact$created_by
 ```
 
     User(id = '1', uid = 'kmvZDIX9', name = 'Sunny Sun', handle = 'sunnyosun', created_at = '2023-09-19T12:02:50.76501+00:00', updated_at = '2023-12-13T16:23:44.195541+00:00')
+
+### Load artifact
+
+> [!NOTE]
+>
+> This function will be moved to the `Artifact` class in the near
+> future.
+
+``` r
+adata <- laminr:::artifact_load(artifact)
+```
+
+    Warning: Data is missing expected fields: run_id, created_by_id
+
+``` r
+# Planned usage:
+# adata <- artifact$load()
+
+adata
+```
+
+    AnnData object with n_obs × n_vars = 51552 × 36398
+        obs: 'donor_id', 'Predicted_labels_CellTypist', 'Majority_voting_CellTypist', 'Manually_curated_celltype', 'assay_ontology_term_id', 'cell_type_ontology_term_id', 'development_stage_ontology_term_id', 'disease_ontology_term_id', 'self_reported_ethnicity_ontology_term_id', 'is_primary_data', 'organism_ontology_term_id', 'sex_ontology_term_id', 'tissue_ontology_term_id', 'suspension_type', 'tissue_type', 'cell_type', 'assay', 'disease', 'organism', 'sex', 'tissue', 'self_reported_ethnicity', 'development_stage', 'observation_joinid'
+        var: 'gene_symbols', 'feature_is_filtered', 'feature_name', 'feature_reference', 'feature_biotype', 'feature_length'
+        uns: 'cell_type_ontology_term_id_colors', 'citation', 'default_embedding', 'schema_reference', 'schema_version', 'sex_ontology_term_id_colors', 'title'
+        obsm: 'X_umap'

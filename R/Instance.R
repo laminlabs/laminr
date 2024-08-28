@@ -55,15 +55,10 @@ create_instance_class <- function(instance_settings) {
   instance_class$new(instance_settings, schema)
 }
 
-Instance <- R6::R6Class(
+Instance <- R6::R6Class( # nolint object_name_linter
   "Instance",
   cloneable = FALSE,
   public = list(
-    #' Initialize the Instance class
-    #'
-    #' @param instance_settings The settings of the LaminDB instance.
-    #'
-    #' @noRd
     initialize = function(instance_settings, schema) {
       private$instance_settings <- instance_settings
       private$schema <- schema
@@ -89,7 +84,6 @@ Instance <- R6::R6Class(
       ) |>
         set_names(module_names)
     },
-    #' Print the Instance class
     print = function(...) {
       cat("Instance '", private$instance_settings$owner, "/", private$instance_settings$name, "'\n", sep = "")
       for (module_name in names(private$classes)) {
