@@ -13,25 +13,34 @@ You can install the development version from GitHub with:
 remotes::install_github("laminlabs/laminr")
 ```
 
-<!--
 ## Set up environment
-&#10;
-For this package to work, we first need to run the following commands in the terminal:
-&#10;```python
+
+For this package to work, we first need to run the following commands in
+the terminal:
+
+``` python
 pip install lamindb
 ```
-&#10;```bash
+
+``` bash
 lamin load laminlabs/cellxgene
 ```
-&#10;This should create an `.env` file at `~/.lamin/instance--laminlabs--cellxgene.env` and `~/.lamin/current_instance.env` containing an `instance_id`, `schema_id` and `api_url`, e.g.:
-&#10;    # instance--laminlabs--cellxgene.env
-    instance_id = "0123456789abcdefghijklmnopqrstuv"
-    schema_id = "0123456789abcdefghijklmnopqrstuv"
-    api_url = "https://us-west-2.api.lamin.ai"
-&#10;:::{.callout-note}
-laminr doesn't detect the `.env` yet, so you need to provide the `instance_id`, `schema_id` and `api_url` manually.
-:::
-&#10;-->
+
+This should create an `.env` file at `~/.lamin/current_instance.env` and
+`~/.lamin/instance--laminlabs--cellxgene.env` containing (amongst
+others) the following data:
+
+    lamindb_instance_id=0123456789abcdefghijklmnopqrstuv
+    lamindb_instance_owner=laminlabs
+    lamindb_instance_name=cellxgene
+    lamindb_instance_schema_id=0123456789abcdefghijklmnopqrstuv
+    lamindb_instance_api_url=https://us-west-2.api.lamin.ai
+
+> [!NOTE]
+>
+> The `.env` files don’t store the `schema_id` and `api_url` yet, so
+> instead we pass these settings via
+> `options(lamindb_current_instance = ...)` (see below).
 
 ## Example
 
@@ -48,8 +57,8 @@ options(
   lamindb_current_instance = list(
     owner = "lamin",
     name = "example",
-    url = "https://us-west-2.api.lamin.ai",
-    instance_id = "0123456789abcdefghijklmnopqrstuv",
+    id = "0123456789abcdefghijklmnopqrstuv",
+    api_url = "https://us-west-2.api.lamin.ai",
     schema_id = "0123456789abcdefghijklmnopqrstuv"
   )
 )
@@ -201,7 +210,7 @@ db$Artifact
     experimental_factors: function (value) 
     links_developmental_stage: function (value) 
     links_experimental_factor: function (value) 
-  Parent env: <environment: 0x55fc1429f710>
+  Parent env: <environment: 0x5603b2dd9b28>
   Locked objects: TRUE
   Locked class: FALSE
   Portable: TRUE

@@ -18,8 +18,8 @@ options(
   lamindb_current_instance = list(
     owner = "lamin",
     name = "example",
-    url = "https://us-west-2.api.lamin.ai",
-    instance_id = "0123456789abcdefghijklmnopqrstuv",
+    api_url = "https://us-west-2.api.lamin.ai",
+    id = "0123456789abcdefghijklmnopqrstuv",
     schema_id = "0123456789abcdefghijklmnopqrstuv"
   )
 )

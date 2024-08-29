@@ -38,9 +38,9 @@ api_get_record <- function(
   data <-
     httr::POST(
       paste0(
-        instance_settings$url,
+        instance_settings$api_url,
         "/instances/",
-        instance_settings$instance_id,
+        instance_settings$id,
         "/modules/",
         module_name,
         "/",

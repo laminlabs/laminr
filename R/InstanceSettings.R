@@ -17,29 +17,29 @@ InstanceSettings <- R6::R6Class( # nolint object_name_linter
     #' @field name The name of the LaminDB instance.
     name = NULL,
     #' @field url The base URL of the LaminDB API.
-    url = NULL,
-    #' @field instance_id The instance ID of the LaminDB instance.
-    instance_id = NULL,
+    api_url = NULL,
+    #' @field id The instance ID of the LaminDB instance.
+    id = NULL,
     #' @field schema_id The schema ID of the LaminDB schema.
     schema_id = NULL,
     #' Initialize the InstanceSettings class
     #'
+    #' @param id The instance ID of the LaminDB instance.
     #' @param owner The owner of the LaminDB instance.
     #' @param name The name of the LaminDB instance.
-    #' @param url The base URL of the LaminDB API.
-    #' @param instance_id The instance ID of the LaminDB instance.
+    #' @param api_url The base URL of the LaminDB API.
     #' @param schema_id The schema ID of the LaminDB schema.
     initialize = function(
+      id,
       owner,
       name,
       url,
-      instance_id,
       schema_id
     ) {
+      self$id <- id
       self$owner <- owner
       self$name <- name
-      self$url <- url
-      self$instance_id <- instance_id
+      self$api_url <- api_url
       self$schema_id <- schema_id
     }
   )

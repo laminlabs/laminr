@@ -14,8 +14,8 @@
 #'   lamindb_current_instance = list(
 #'     owner = "lamin",
 #'     name = "example",
-#'     url = "https://us-west-2.api.lamin.ai",
-#'     instance_id = "0123456789abcdefghijklmnopqrstuv",
+#'     api_url = "https://us-west-2.api.lamin.ai",
+#'     id = "0123456789abcdefghijklmnopqrstuv",
 #'     schema_id = "0123456789abcdefghijklmnopqrstuv"
 #'   )
 #' )
@@ -47,7 +47,7 @@ connect <- function(slug = NULL) {
       expected_format_str
     ))
   }
-  for (key in c("owner", "name", "url", "instance_id", "schema_id")) {
+  for (key in c("owner", "name", "api_url", "id", "schema_id")) {
     if (!key %in% names(current_instance)) {
       cli::cli_abort(paste0(
         "Expected option 'lamindb_current_instance' to have a '",
