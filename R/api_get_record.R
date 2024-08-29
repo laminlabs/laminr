@@ -1,12 +1,11 @@
 #' @importFrom jsonlite toJSON
 api_get_record <- function(
-  instance_settings,
-  module_name,
-  model_name,
-  id_or_uid,
-  select = NULL,
-  verbose = FALSE
-) {
+    instance_settings,
+    module_name,
+    model_name,
+    id_or_uid,
+    select = NULL,
+    verbose = FALSE) {
   if (verbose) {
     field_name_str <-
       if (!is.null(select)) {

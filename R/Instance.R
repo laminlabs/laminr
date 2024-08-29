@@ -1,4 +1,6 @@
 create_instance_class <- function(instance_settings) {
+  super <- NULL # satisfy R CMD check and lintr
+
   name <- paste0(instance_settings$owner, "/", instance_settings$name)
   schema <- api_get_schema(instance_settings)
 
@@ -25,7 +27,7 @@ create_instance_class <- function(instance_settings) {
   active <- pmap(
     classes,
     function(module_name, model_name, class_name) {
-      fun <- NULL
+      fun <- NULL # satisfy R CMD check and lintr
       fun_src <- paste0(
         "fun <- function() {\n",
         "  private$classes[['", module_name, "']][['", model_name, "']]\n",
@@ -127,7 +129,6 @@ Instance <- R6::R6Class( # nolint object_name_linter
         private$cast_data_to_class(module_name, model_name, data)
       }
     },
-
     cast_data_to_class = function(module_name, model_name, data) {
       if (is.null(private$schema[[module_name]])) {
         cli::cli_abort(paste0("Module '", module_name, "' not found"))

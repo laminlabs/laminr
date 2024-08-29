@@ -1,9 +1,9 @@
 create_record_class <- function(
-  module_name,
-  model_name,
-  module,
-  get_record
-) {
+    module_name,
+    model_name,
+    module,
+    get_record) {
+  self <- super <- NULL # satisfy R CMD check and lintr
   field_names <- map_chr(module$fields_metadata, "field_name")
 
   active <- map(

@@ -29,13 +29,11 @@ InstanceSettings <- R6::R6Class( # nolint object_name_linter
     #' @param name The name of the LaminDB instance.
     #' @param api_url The base URL of the LaminDB API.
     #' @param schema_id The schema ID of the LaminDB schema.
-    initialize = function(
-      id,
-      owner,
-      name,
-      url,
-      schema_id
-    ) {
+    initialize = function(id,
+                          owner,
+                          name,
+                          url,
+                          schema_id) {
       self$id <- id
       self$owner <- owner
       self$name <- name
