@@ -18,11 +18,8 @@ remotes::install_github("laminlabs/laminr")
 For this package to work, we first need to run the following commands in
 the terminal:
 
-``` python
-pip install lamindb
-```
-
 ``` bash
+pip install lamindb
 lamin load laminlabs/cellxgene
 ```
 
@@ -210,7 +207,7 @@ db$Artifact
     experimental_factors: function (value) 
     links_developmental_stage: function (value) 
     links_experimental_factor: function (value) 
-  Parent env: <environment: 0x5603b2dd9b28>
+  Parent env: <environment: 0x55f320e9a670>
   Locked objects: TRUE
   Locked class: FALSE
   Portable: TRUE

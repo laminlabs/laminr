@@ -19,11 +19,8 @@ remotes::install_github("laminlabs/laminr")
 
 For this package to work, we first need to run the following commands in the terminal:
 
-```python
-pip install lamindb
-```
-
 ```bash
+pip install lamindb
 lamin load laminlabs/cellxgene
 ```
 
@@ -40,9 +37,7 @@ The `.env` files don't store the `schema_id` and `api_url` yet, so instead we pa
 :::
 
 
-## Example
-
-This is a basic example which shows you how to solve a common problem:
+## Usage
 
 ```{r setup}
 library(laminr)
