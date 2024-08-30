@@ -3,9 +3,10 @@ create_record_class <- function(
     model_name,
     module,
     get_record) {
-  self <- super <- NULL # satisfy R CMD check and lintr
+  super <- NULL # satisfy R CMD check and lintr
   field_names <- map_chr(module$fields_metadata, "field_name")
 
+  # create fields for this class
   active <- map(
     field_names,
     function(field_name) {
@@ -25,33 +26,34 @@ create_record_class <- function(
   ) |>
     set_names(field_names)
 
-  public <- list(
-    initialize = function(data) {
-      super$initialize(
-        data = data,
-        get_record = get_record,
-        class_name = module$class_name,
-        fields_metadata = module$fields_metadata
-      )
-    },
-    print = function(...) {
-      super$print(...)
+  # determine the base class
+  # (core.artifact gets additional methods)
+  RecordClass <- # nolint object_name_linter
+    if (module_name == "core" && model_name == "artifact") {
+      CoreArtifact
+    } else {
+      Record
     }
-  )
 
-  # NOTE: special case for core.artifact
-  if (module_name == "core" && model_name == "artifact") {
-    public$load <- function() {
-      artifact_load(self)
-    }
-  }
-
+  # create the instanciated class
   record_class <- R6::R6Class(
     module$class_name,
     cloneable = FALSE,
-    inherit = Record,
+    inherit = RecordClass,
     active = active,
-    public = public
+    public = list(
+      initialize = function(data) {
+        super$initialize(
+          data = data,
+          get_record = get_record,
+          class_name = module$class_name,
+          fields_metadata = module$fields_metadata
+        )
+      },
+      print = function(...) {
+        super$print(...)
+      }
+    )
   )
 
   record_class$get <- function(id_or_uid) {

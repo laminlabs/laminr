@@ -108,14 +108,22 @@ artifact$storage
 artifact$created_by
 ```
 
+### Cache artifact
+
+:::{.callout-note}
+Only S3 storage is supported at the moment.
+:::
+
+```{r cache_artifact}
+artifact$cache()
+```
+
 ### Load artifact
 
 :::{.callout-note}
-Only S3 and AnnData artifacts are supported at the moment.
+Only S3 storage and AnnData accessors are supported at the moment.
 :::
 
 ```{r load_artifact}
-adata <- artifact$load()
-
-adata
+artifact$load()
 ```

@@ -1,0 +1,47 @@
+CoreArtifact <- R6::R6Class(
+  "CoreArtifact",
+  inherit = Record,
+  public = list(
+    load = function() {
+      artifact_accessor <- private$get_value("_accessor")
+
+      file_path <- self$cache()
+
+      if (artifact_accessor == "AnnData") {
+        requireNamespace("anndata", quietly = TRUE)
+        anndata::read_h5ad(file_path)
+      } else {
+        stop("Unsupported accessor: ", artifact_accessor)
+      }
+    },
+    cache = function() {
+      # assume that an artifact will have a storage field,
+      # and that the storage field will have a type field
+      artifact_storage <- private$get_value("storage")
+      artifact_key <- private$get_value("key")
+
+      if (artifact_storage$type == "s3") {
+        requireNamespace("s3", quietly = TRUE)
+        local_path <- file.path(
+          Sys.getenv("HOME"),
+          ".cache",
+          "lamindb",
+          gsub("^s3://", "", artifact_storage$root),
+          artifact_key
+        )
+        if (!file.exists(local_path)) {
+          workaround <- s3::s3_get(
+            paste0(artifact_storage$root, "/", artifact_key),
+            local_path,
+            region = artifact_storage$region
+          )
+          file.rename(workaround, local_path)
+        }
+
+        local_path
+      } else {
+        stop("Unsupported storage type: ", artifact_storage$type)
+      }
+    }
+  )
+)
