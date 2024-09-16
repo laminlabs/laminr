@@ -77,7 +77,7 @@ Instance <- R6::R6Class( # nolint object_name_linter
                 module_name = module_name,
                 model_name = model_name,
                 module = private$schema[[module_name]][[model_name]],
-                get_record = private$get_record
+                instance = self
               )
             }
           ) |>

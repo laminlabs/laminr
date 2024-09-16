@@ -2,7 +2,7 @@ create_record_class <- function(
     module_name,
     model_name,
     module,
-    get_record) {
+    instance) {
   super <- NULL # satisfy R CMD check and lintr
   field_names <- map_chr(module$fields_metadata, "field_name")
 
@@ -45,7 +45,7 @@ create_record_class <- function(
       initialize = function(data) {
         super$initialize(
           data = data,
-          get_record = get_record,
+          instance = instance,
           class_name = module$class_name,
           fields_metadata = module$fields_metadata
         )
@@ -57,7 +57,7 @@ create_record_class <- function(
   )
 
   record_class$get <- function(id_or_uid) {
-    get_record(
+    instance$`.__enclos_env__`$private$get_record(
       module_name = module_name,
       model_name = model_name,
       id_or_uid = id_or_uid
@@ -71,10 +71,10 @@ Record <- R6::R6Class( # nolint object_name_linter
   "Record",
   cloneable = FALSE,
   public = list(
-    initialize = function(data, get_record, class_name, fields_metadata) {
+    initialize = function(data, instance, class_name, fields_metadata) {
       private$class_name <- class_name
       private$data <- data
-      private$get_record <- get_record
+      private$instance <- instance
       private$fields_metadata <- fields_metadata
     },
     print = function(...) {
@@ -102,7 +102,7 @@ Record <- R6::R6Class( # nolint object_name_linter
   ),
   private = list(
     data = NULL,
-    get_record = NULL,
+    instance = NULL,
     class_name = NULL,
     fields_metadata = NULL,
     get_value = function(field_name) {
@@ -112,7 +112,7 @@ Record <- R6::R6Class( # nolint object_name_linter
       if (is.null(relation_type)) {
         private$data[[column_name]]
       } else {
-        private$get_record(
+        private$instance$`.__enclos_env__`$private$get_record(
           module_name = field_metadata$schema_name,
           model_name = field_metadata$model_name,
           id_or_uid = private$data$uid,
