@@ -81,15 +81,6 @@ db
         FeatureSet
         ParamValue
         FeatureValue
-        RunParamValue
-        ArtifactULabel
-        CollectionULabel
-        FeatureSetFeature
-        ArtifactFeatureSet
-        ArtifactParamValue
-        CollectionArtifact
-        ArtifactFeatureValue
-        CollectionFeatureSet
       bionty classes:
         Gene
         Source
@@ -103,25 +94,8 @@ db
         Ethnicity
         Phenotype
         CellMarker
-        ArtifactGene
-        ArtifactTissue
-        FeatureSetGene
-        ArtifactDisease
-        ArtifactPathway
-        ArtifactProtein
-        ArtifactCellLine
-        ArtifactCellType
-        ArtifactOrganism
-        ArtifactEthnicity
-        ArtifactPhenotype
-        FeatureSetPathway
-        FeatureSetProtein
-        ArtifactCellMarker
         DevelopmentalStage
         ExperimentalFactor
-        FeatureSetCellMarker
-        ArtifactDevelopmentalStage
-        ArtifactExperimentalFactor
 
 <!--
 ### Print the Artifact class
@@ -204,7 +178,7 @@ db$Artifact
     experimental_factors: function (value) 
     links_developmental_stage: function (value) 
     links_experimental_factor: function (value) 
-  Parent env: <environment: 0x555bd12cd3d8>
+  Parent env: <environment: 0x562d17289b80>
   Locked objects: TRUE
   Locked class: FALSE
   Portable: TRUE
@@ -221,15 +195,13 @@ db$Artifact
 artifact <- db$Artifact$get("KBW89Mf7IGcekja2hADu")
 ```
 
-    Warning: Data is missing expected fields: run_id, storage_id, transform_id, created_by_id
-
 ### Print artifact
 
 ``` r
 artifact
 ```
 
-    Artifact(uid = 'KBW89Mf7IGcekja2hADu', key = 'cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad', description = 'Myeloid compartment', n_observations = '51552', hash = 'SZ5tB0T4YKfiUuUkAL09ZA', size = '691757462', is_latest = 'TRUE', _hash_type = 'md5-n', type = 'dataset', created_at = '2024-07-12T12:34:10.345829+00:00', updated_at = '2024-07-12T12:40:48.837026+00:00', _key_is_virtual = 'FALSE', visibility = '1', suffix = '.h5ad', version = '2024-07-01', _accessor = 'AnnData', id = '3659', n_objects = 'KBW89Mf7IGcekja2hADu')
+    Artifact(updated_at = '2024-07-12T12:40:48.837026+00:00', run_id = '27', suffix = '.h5ad', visibility = '1', _key_is_virtual = 'FALSE', n_objects = 'KBW89Mf7IGcekja2hADu', uid = 'SZ5tB0T4YKfiUuUkAL09ZA', hash = 'Myeloid compartment', description = '2', storage_id = '2024-07-01', version = 'AnnData', _accessor = '3659', id = 'cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad', key = 'dataset', type = '22', transform_id = '691757462', size = 'TRUE', is_latest = '51552', n_observations = '1', created_by_id = 'md5-n', _hash_type = '2024-07-12T12:34:10.345829+00:00', created_at = '2024-07-12T12:40:48.837026+00:00')
 
 ### Print simple fields
 
@@ -279,7 +251,7 @@ artifact$cache()
 
     Warning: Data is missing expected fields: run_id, created_by_id
 
-    [1] "/home/rcannood/.cache/lamindb/cellxgene-data-public/cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad"
+    ℹ 's3://cellxgene-data-public/cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad' already exists at '/home/rcannood/.cache/lamindb/cellxgene-data-public/cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad'
 
 ### Load artifact
 
@@ -292,6 +264,8 @@ artifact$load()
 ```
 
     Warning: Data is missing expected fields: run_id, created_by_id
+
+    ℹ 's3://cellxgene-data-public/cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad' already exists at '/home/rcannood/.cache/lamindb/cellxgene-data-public/cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad'
 
     AnnData object with n_obs × n_vars = 51552 × 36398
         obs: 'donor_id', 'Predicted_labels_CellTypist', 'Majority_voting_CellTypist', 'Manually_curated_celltype', 'assay_ontology_term_id', 'cell_type_ontology_term_id', 'development_stage_ontology_term_id', 'disease_ontology_term_id', 'self_reported_ethnicity_ontology_term_id', 'is_primary_data', 'organism_ontology_term_id', 'sex_ontology_term_id', 'tissue_ontology_term_id', 'suspension_type', 'tissue_type', 'cell_type', 'assay', 'disease', 'organism', 'sex', 'tissue', 'self_reported_ethnicity', 'development_stage', 'observation_joinid'

@@ -92,8 +92,10 @@ Instance <- R6::R6Class( # nolint object_name_linter
         cat("  ", module_name, " classes:\n", sep = "")
         for (model_name in names(private$classes[[module_name]])) {
           model <- private$schema[[module_name]][[model_name]]
-          class_name <- model$class_name
-          cat("    ", class_name, "\n", sep = "")
+          if (!model$is_link_table) {
+            class_name <- model$class_name
+            cat("    ", class_name, "\n", sep = "")
+          }
         }
       }
     }
