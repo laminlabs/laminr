@@ -4,6 +4,7 @@ api_get_record <- function(
     module_name,
     model_name,
     id_or_uid,
+    include_foreign_keys = FALSE,
     select = NULL,
     verbose = FALSE) {
   if (verbose) {
@@ -47,7 +48,9 @@ api_get_record <- function(
         "/",
         id_or_uid,
         "?schema_id=",
-        instance_settings$schema_id
+        instance_settings$schema_id,
+        "&include_foreign_keys=",
+        tolower(include_foreign_keys)
       ),
       httr::add_headers(
         accept = "application/json",

@@ -116,7 +116,7 @@ Record <- R6::R6Class( # nolint object_name_linter
           module_name = field_metadata$schema_name,
           model_name = field_metadata$model_name,
           id_or_uid = private$data$uid,
-          field_name = field_name
+          select = field_name
         )
       }
     },

@@ -104,17 +104,21 @@ Instance <- R6::R6Class( # nolint object_name_linter
     classes = NULL,
 
     ## HELPER FUNCTIONS
-    get_record = function(module_name, model_name, id_or_uid, field_name = NULL) {
+    # get_record fetches a record from the lamindb API
+    # and casts the data to the appropriate class
+    get_record = function(module_name, model_name, id_or_uid, select = NULL) {
       data <- api_get_record(
         instance_settings = private$instance_settings,
         module_name = module_name,
         model_name = model_name,
         id_or_uid = id_or_uid,
-        select = field_name
+        select = select,
+        include_foreign_keys = TRUE
       )
-      if (!is.null(field_name)) {
-        related_data <- data[[field_name]]
-        schema_info <- private$schema[[module_name]][[model_name]]$fields_metadata[[field_name]]
+      # use 'select' to select a related field instead of the main data itself
+      if (!is.null(select)) {
+        related_data <- data[[select]]
+        schema_info <- private$schema[[module_name]][[model_name]]$fields_metadata[[select]]
         related_module_name <- schema_info$related_schema_name
         related_model_name <- schema_info$related_model_name
         relation_type <- schema_info$relation_type
