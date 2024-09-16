@@ -24,4 +24,4 @@ Imports:
     jsonlite,
     purrr,
     R6,
-    s3
+    s3 (>= 1.1.0)

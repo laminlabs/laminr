@@ -22,23 +22,12 @@ CoreArtifact <- R6::R6Class(
 
       if (artifact_storage$type == "s3") {
         requireNamespace("s3", quietly = TRUE)
-        local_path <- file.path(
-          Sys.getenv("HOME"),
-          ".cache",
-          "lamindb",
-          gsub("^s3://", "", artifact_storage$root),
-          artifact_key
+        root_dir <- file.path(Sys.getenv("HOME"), ".cache", "lamindb")
+        s3::s3_get(
+          paste0(artifact_storage$root, "/", artifact_key),
+          region = artifact_storage$region,
+          data_dir = root_dir
         )
-        if (!file.exists(local_path)) {
-          workaround <- s3::s3_get(
-            paste0(artifact_storage$root, "/", artifact_key),
-            local_path,
-            region = artifact_storage$region
-          )
-          file.rename(workaround, local_path)
-        }
-
-        local_path
       } else {
         stop("Unsupported storage type: ", artifact_storage$type)
       }
