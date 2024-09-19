@@ -1,8 +1,8 @@
-create_instance_class <- function(instance_settings) {
+create_instance_class <- function(instance_settings, api) {
   super <- NULL # satisfy R CMD check and lintr
 
   name <- paste0(instance_settings$owner, "/", instance_settings$name)
-  schema <- api_get_schema(instance_settings)
+  schema <- api_get_schema(api, instance_settings)
 
   # use lapply instead of map to retain names
   classes <- map(
@@ -45,8 +45,8 @@ create_instance_class <- function(instance_settings) {
     inherit = Instance,
     active = active,
     public = list(
-      initialize = function(instance_settings, schema) {
-        super$initialize(instance_settings, schema)
+      initialize = function(instance_settings, schema, api) {
+        super$initialize(instance_settings, schema, api)
       },
       print = function(...) {
         super$print(...)
@@ -54,16 +54,17 @@ create_instance_class <- function(instance_settings) {
     )
   )
 
-  instance_class$new(instance_settings, schema)
+  instance_class$new(instance_settings, schema, api)
 }
 
 Instance <- R6::R6Class( # nolint object_name_linter
   "Instance",
   cloneable = FALSE,
   public = list(
-    initialize = function(instance_settings, schema) {
+    initialize = function(instance_settings, schema, api) {
       private$instance_settings <- instance_settings
       private$schema <- schema
+      private$api <- api
 
       module_names <- names(schema)
       private$classes <- map(
@@ -103,6 +104,7 @@ Instance <- R6::R6Class( # nolint object_name_linter
   private = list(
     instance_settings = NULL,
     schema = NULL,
+    api = NULL,
     classes = NULL,
 
     ## HELPER FUNCTIONS
@@ -110,6 +112,7 @@ Instance <- R6::R6Class( # nolint object_name_linter
     # and casts the data to the appropriate class
     get_record = function(module_name, model_name, id_or_uid, select = NULL) {
       data <- api_get_record(
+        api = private$api,
         instance_settings = private$instance_settings,
         module_name = module_name,
         model_name = model_name,

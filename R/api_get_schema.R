@@ -1,11 +1,6 @@
-api_get_schema <- function(instance_settings) {
-  httr::GET(
-    paste0(
-      instance_settings$api_url,
-      "/instances/",
-      instance_settings$id,
-      "/schema"
-    )
-  ) |>
+api_get_schema <- function(api, instance_settings) {
+  operations <- rapiclient::get_operations(api)
+
+  operations$get_schema_instances__instance_id__schema_get(instance_id) |>
     httr::content()
 }

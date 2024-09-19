@@ -56,6 +56,9 @@ connect <- function(slug = NULL) {
     }
   }
 
+  # TODO: This should probably be wrapped in another function that fails nicely etc.
+  api <- rapiclient::get_api(paste0(current_instance$api_url, "/openapi.json"))
+
   # TODO: replace with 'setup_instance_from_store'
-  create_instance_class(current_instance)
+  create_instance_class(current_instance, api)
 }
