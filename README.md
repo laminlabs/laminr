@@ -178,7 +178,7 @@ db$Artifact
     experimental_factors: function (value) 
     links_developmental_stage: function (value) 
     links_experimental_factor: function (value) 
-  Parent env: <environment: 0x562d17289b80>
+  Parent env: <environment: 0x55d07977b588>
   Locked objects: TRUE
   Locked class: FALSE
   Portable: TRUE
@@ -201,7 +201,7 @@ artifact <- db$Artifact$get("KBW89Mf7IGcekja2hADu")
 artifact
 ```
 
-    Artifact(updated_at = '2024-07-12T12:40:48.837026+00:00', run_id = '27', suffix = '.h5ad', visibility = '1', _key_is_virtual = 'FALSE', n_objects = 'KBW89Mf7IGcekja2hADu', uid = 'SZ5tB0T4YKfiUuUkAL09ZA', hash = 'Myeloid compartment', description = '2', storage_id = '2024-07-01', version = 'AnnData', _accessor = '3659', id = 'cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad', key = 'dataset', type = '22', transform_id = '691757462', size = 'TRUE', is_latest = '51552', n_observations = '1', created_by_id = 'md5-n', _hash_type = '2024-07-12T12:34:10.345829+00:00', created_at = '2024-07-12T12:40:48.837026+00:00')
+    Artifact(description = 'Myeloid compartment', storage_id = '2', version = '2024-07-01', _accessor = 'AnnData', id = '3659', key = 'cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad', transform_id = '22', size = '691757462', is_latest = 'TRUE', created_by_id = '1', type = 'dataset', _hash_type = 'md5-n', n_observations = '51552', created_at = '2024-07-12T12:34:10.345829+00:00', updated_at = '2024-07-12T12:40:48.837026+00:00', run_id = '27', suffix = '.h5ad', visibility = '1', _key_is_virtual = 'FALSE', n_objects = 'KBW89Mf7IGcekja2hADu', uid = 'SZ5tB0T4YKfiUuUkAL09ZA', hash = 'Myeloid compartment')
 
 ### Print simple fields
 
@@ -250,8 +250,6 @@ artifact$cache()
 ```
 
     Warning: Data is missing expected fields: run_id, created_by_id
-
-    ℹ 's3://cellxgene-data-public/cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad' already exists at '/home/rcannood/.cache/lamindb/cellxgene-data-public/cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad'
 
 ### Load artifact
 

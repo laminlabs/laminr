@@ -45,7 +45,7 @@ library(laminr)
 
 ### Connect to a LaminDB instance
 
-```{r connect, eval=FALSE}
+``` r
 options(
   lamindb_current_instance = list(
     owner = "lamin",
