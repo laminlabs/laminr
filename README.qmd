@@ -60,7 +60,11 @@ db <- laminr::connect()
 ```
 
 ```{r connect2, echo=FALSE}
+devtools::load_all()
+
 db <- laminr::connect()
+
+db
 ```
 
 ### Print a LaminDB instance

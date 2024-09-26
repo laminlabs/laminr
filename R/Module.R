@@ -1,41 +1,26 @@
-create_instance_class <- function(instance_settings) {
+create_module_class <- function(instance, module_name, module_schema) {
   private <- super <- NULL # satisfy R CMD check and lintr
-
-  # fetch the schema from the API
-  name <- paste0(instance_settings$owner, "/", instance_settings$name)
-  schema <- api_get_schema(instance_settings)
 
   # create helper functions for each record in the schema
   active <- list()
-  for (module_name in names(schema)) {
-    cat("Adding module ", module_name, " to active\n", sep = "")
-    active[[module_name]] <- function() {
-      private$module_classes[[module_name]]
-    }
-  }
 
-  # TODO: re-enable
-  # # copy core directly into active
-  # for (model_name in names(active$core)) {
-  #   cat("Adding model core.", model_name, " to active\n", sep = "")
-  #   active[[model_name]] <- function() {
-  #     private$module_classes[["core"]][[model_name]]
-  #   }
-  # }
-  # active$core <- NULL
-  active$modules <- function() {
-    private$module_classes
+  for (model_name in names(module_schema)) {
+    class_name <- module_schema[[model_name]]$class_name
+
+    active[[class_name]] <- function() {
+      private$record_classes[[model_name]]
+    }
   }
 
   # create the instance class
   instance_class <- R6::R6Class(
-    name,
+    module_name,
     cloneable = FALSE,
-    inherit = Instance,
+    inherit = Module,
     active = active,
     public = list(
-      initialize = function(instance_settings, schema) {
-        super$initialize(instance_settings, schema)
+      initialize = function(instance, module_name, module_schema) {
+        super$initialize(instance, module_name, module_schema)
       },
       print = function(...) {
         super$print(...)
@@ -46,47 +31,60 @@ create_instance_class <- function(instance_settings) {
     )
   )
 
-  instance_class$new(instance_settings, schema)
+  active$records <- function() {
+    private$record_classes
+  }
+
+  instance_class$new(instance, module_name, module_schema)
 }
 
-Instance <- R6::R6Class( # nolint object_name_linter
-  "Instance",
+Module <- R6::R6Class( # nolint object_name_linter
+  "Module",
   cloneable = FALSE,
   public = list(
-    initialize = function(instance_settings, schema) {
-      private$instance_settings <- instance_settings
-      private$schema <- schema
+    initialize = function(instance, module_name, module_schema) {
+      private$instance <- instance
+      private$module_name <- module_name
+      private$module_schema <- module_schema
 
-      module_names <- names(schema)
-      private$module_classes <- map(
-        module_names,
-        function(module_name) {
-          create_module_class(
-            instance = self,
+      model_names <- names(module_schema)
+
+      private$record_classes <- map(
+        model_names,
+        function(model_name) {
+          create_record_class(
             module_name = module_name,
-            module_schema = schema[[module_name]]
+            model_name = model_name,
+            model_schema = module_schema[[model_name]],
+            instance = instance
           )
         }
       ) |>
-        set_names(module_names)
+        set_names(model_names)
     },
     print = function(...) {
       cat(paste(self$to_string(...), "\n", sep = "", collapse = "\n"))
     },
-    to_string = function(...) {
+    to_string = function(show_link_tables = FALSE) {
       out <- c(
-        paste0("Instance '", private$instance_settings$owner, "/", private$instance_settings$name, "'\n")
+        paste0("Module ", private$module_name, " classes:")
       )
-      for (module_class in private$module_classes) {
-        out <- c(out, paste0("  ", module_class$to_string(...)))
+      for (record_class in private$record_classes) {
+        if (show_link_tables || !record_class$is_link_table) {
+          out <- c(
+            out,
+            paste0("  ", record_class$name)
+          )
+        }
       }
       out
     }
   ),
   private = list(
-    instance_settings = NULL,
-    schema = NULL,
-    module_classes = NULL,
+    instance = NULL,
+    module_name = NULL,
+    module_schema = NULL,
+    record_classes = NULL,
 
     ## HELPER FUNCTIONS
     # get_record fetches a record from the lamindb API
@@ -143,7 +141,7 @@ Instance <- R6::R6Class( # nolint object_name_linter
         ))
       }
 
-      private$module_classes[[module_name]][[model_name]]$new(data)
+      private$classes[[module_name]][[model_name]]$new(data)
     }
   )
 )

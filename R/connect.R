@@ -34,21 +34,23 @@ connect <- function(slug = NULL) {
     "  options(lamindb_current_instance = list(url = ..., instance_id = ..., schema_id = ...))"
   )
 
-  current_instance <- getOption("lamindb_current_instance")
-  if (is.null(current_instance)) {
+  instance_settings <- getOption("lamindb_current_instance")
+
+  if (is.null(instance_settings)) {
     cli::cli_abort(paste0(
       "Parsing ~/.lamin/*.env files is currently not implemented. ",
       expected_format_str
     ))
   }
-  if (!is.list(current_instance)) {
+  if (!is.list(instance_settings)) {
     cli::cli_abort(paste0(
       "Expected option 'lamindb_current_instance' to be a list. ",
       expected_format_str
     ))
   }
+  
   for (key in c("owner", "name", "api_url", "id", "schema_id")) {
-    if (!key %in% names(current_instance)) {
+    if (!key %in% names(instance_settings)) {
       cli::cli_abort(paste0(
         "Expected option 'lamindb_current_instance' to have a '",
         key, "' key. ", expected_format_str
@@ -57,5 +59,5 @@ connect <- function(slug = NULL) {
   }
 
   # TODO: replace with 'setup_instance_from_store'
-  create_instance_class(current_instance)
+  create_instance_class(instance_settings)
 }

@@ -1,0 +1,54 @@
+```{mermaid}
+classDiagram
+    Instance --> InstanceSettings
+    Instance --> InstanceAPI
+    InstanceAPI --> InstanceSettings
+    Instance --> Module
+    Module --> Model
+    Model --> Field
+    Field --> Record
+    
+
+
+    class InstanceSettings{
+        +initialize(String url)
+    }
+    class InstanceAPI{
+        +initialize(InstanceSettings instance_settings)
+    }
+    class Instance{
+        -API api
+        -Dict schema
+        +Module[] module
+        +initialize(InstanceSettings instance_settings)
+    }
+    class Module{
+        +String name
+        +Model[] models
+        +initialize(Dict module_schema)
+    }
+    class Model{
+        +String name
+        +Bool is_link_table
+        +Field[] fields
+        +initialize(Module module, Dict model_schema)
+    }
+    class Field{
+        +Model model
+        +String type
+        +String field_name
+        +String model_name
+        +...
+        +initialize(Model model, Dict field_schema)
+    }
+    class Record{
+        -Field field
+        -Dict data
+        +initialize(Field field, Dict data)
+        +to_string()
+        +print()
+        +get_value(String field_name)
+        +set_value(String field_name, Any value)
+        +...fields...
+    }
+```

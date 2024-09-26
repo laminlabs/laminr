@@ -1,10 +1,11 @@
+# todo: change arguments into 'module_class'
 create_record_class <- function(
     module_name,
     model_name,
-    module,
+    model_schema,
     instance) {
   super <- NULL # satisfy R CMD check and lintr
-  field_names <- map_chr(module$fields_metadata, "field_name")
+  field_names <- map_chr(model_schema$fields_metadata, "field_name")
 
   # create fields for this class
   active <- map(
@@ -25,6 +26,10 @@ create_record_class <- function(
     }
   ) |>
     set_names(field_names)
+  
+  active$is_link_table <- function() {
+    private$is_link_table
+  }
 
   # determine the base class
   # (core.artifact gets additional methods)
@@ -37,7 +42,7 @@ create_record_class <- function(
 
   # create the instanciated class
   record_class <- R6::R6Class(
-    module$class_name,
+    model_schema$class_name,
     cloneable = FALSE,
     inherit = RecordClass,
     active = active,
@@ -46,12 +51,16 @@ create_record_class <- function(
         super$initialize(
           data = data,
           instance = instance,
-          class_name = module$class_name,
-          fields_metadata = module$fields_metadata
+          class_name = model_schema$class_name,
+          fields_metadata = model_schema$fields_metadata,
+          is_link_table = model_schema$is_link_table
         )
       },
       print = function(...) {
         super$print(...)
+      },
+      to_string = function(...) {
+        super$to_string(...)
       }
     )
   )
@@ -71,13 +80,17 @@ Record <- R6::R6Class( # nolint object_name_linter
   "Record",
   cloneable = FALSE,
   public = list(
-    initialize = function(data, instance, class_name, fields_metadata) {
-      private$class_name <- class_name
+    initialize = function(data, instance, class_name, fields_metadata, is_link_table) {
       private$data <- data
       private$instance <- instance
+      private$class_name <- class_name
       private$fields_metadata <- fields_metadata
+      private$is_link_table <- is_link_table
     },
     print = function(...) {
+      cat(paste(self$to_string(...), "\n", sep = "", collapse = "\n"))
+    },
+    to_string = function(...) {
       # NOTE: could use private$fields instead of names(private$data)
       data_names <- names(private$data)
       data_values <- sapply(
@@ -92,12 +105,11 @@ Record <- R6::R6Class( # nolint object_name_linter
           }
         }
       )
-      data_str <- paste0(
+      paste0(
         private$class_name, "(",
         paste(data_names, "=", data_values, collapse = ", "),
         ")"
       )
-      cat(data_str, "\n", sep = "")
     }
   ),
   private = list(
