@@ -78,26 +78,59 @@ Record <- R6::R6Class( # nolint object_name_linter
       private$fields_metadata <- fields_metadata
     },
     print = function(...) {
+
+      common_fields <- c("uid", "hash", "created_at", "updated_at")
+
+      id_string <- ""
+      if (!is.null(private$data$uid)) {
+        id_string <- paste0(id_string, "UID:", private$data$uid)
+      }
+      if (!is.null(private$data$uid) && !is.null(private$data$hash)) {
+        id_string <- paste0(id_string, " - ")
+      }
+      if (!is.null(private$data$hash)) {
+        id_string <- paste0(id_string, "Hash:", private$data$hash)
+      }
+
+      cli::cat_rule(
+        left = cli::style_inverse(private$class_name),
+        right = id_string
+      )
       # NOTE: could use private$fields instead of names(private$data)
-      data_names <- names(private$data)
-      data_values <- sapply(
-        unlist(private$data),
-        function(x) {
-          if (is.null(x)) {
-            "NULL"
-          } else if (is.character(x)) {
-            paste0("'", x, "'")
-          } else {
-            x
-          }
+      purrr::walk(names(private$data), function(.name) {
+        if (.name %in% common_fields) {
+          return()
         }
+
+        value <- private$data[[.name]]
+        if (is.character(value)) {
+          value <- paste0("'", value, "'")
+        }
+        if (is.null(value)) {
+          value <- "NULL"
+        }
+        cli::cat_line(cli::col_yellow(.name, ": "), cli::col_cyan(value))
+      })
+
+      date_string <- ""
+      if (!is.null(private$data$created_at)) {
+        id_string <- paste0(id_string, "Created:", private$data$created_at)
+      }
+      if (!is.null(private$data$created_at) &&
+          !is.null(private$data$updated_at)) {
+        id_string <- paste0(id_string, " - ")
+      }
+      if (!is.null(private$data$hash)) {
+        id_string <- paste0(id_string, "Updated:", private$data$updated_at)
+      }
+
+      cli::cat_rule(
+        right = paste0(
+          "Created: ", private$data$created_at,
+          " - ",
+          "Updated: ", private$data$updated_at
+        )
       )
-      data_str <- paste0(
-        private$class_name, "(",
-        paste(data_names, "=", data_values, collapse = ", "),
-        ")"
-      )
-      cat(data_str, "\n", sep = "")
     }
   ),
   private = list(
