@@ -14,7 +14,6 @@ Module <- R6::R6Class( # nolint object_name_linter
             instance = instance,
             module = self,
             api = api,
-            module_name = module_name,
             model_name = model_name,
             model_schema = module_schema[[model_name]]
           )
