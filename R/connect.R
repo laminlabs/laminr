@@ -3,9 +3,9 @@ connect <- function(owner, name, access_token = NULL) {
     access_token <- .connect_get_access_token()
   }
 
-  instance_settings <- .connect_get_instance_settings(owner, name, access_token)
+  settings <- .connect_get_instance_settings(owner, name, access_token)
 
-  Instance$new(instance_settings = instance_settings)
+  create_instance(settings = settings)
 }
 
 .connect_get_access_token <- function() {
