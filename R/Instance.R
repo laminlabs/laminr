@@ -2,11 +2,11 @@ Instance <- R6::R6Class( # nolint object_name_linter
   "Instance",
   cloneable = FALSE,
   public = list(
-    initialize = function(api_url, instance_id, schema_id) {
+    initialize = function(instance_settings) {
       private$.api <- API$new(
-        api_url = api_url,
-        instance_id = instance_id,
-        schema_id = schema_id
+        api_url = instance_settings$api_url,
+        instance_id = instance_settings$id,
+        schema_id = instance_settings$schema_id
       )
 
       # fetch schema from the API

@@ -18,11 +18,12 @@ API <- R6::R6Class( # nolint object_name_linter
         )
       )
 
+      content <- httr::content(request)
       if (httr::http_error(request)) {
-        cli::cli_abort(httr::content(request)$detail)
+        cli::cli_abort(content$detail)
       }
 
-      httr::content(request)
+      content
     },
     #' @importFrom jsonlite toJSON
     get_record = function(
@@ -86,11 +87,12 @@ API <- R6::R6Class( # nolint object_name_linter
         body = body
       )
 
+      content <- httr::content(request)
       if (httr::http_error(request)) {
-        cli::cli_abort(httr::content(request)$detail)
+        cli::cli_abort(content$detail)
       }
 
-      httr::content(request)
+      content
     }
 
   ),
