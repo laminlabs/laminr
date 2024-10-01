@@ -18,6 +18,7 @@ Instance <- R6::R6Class( # nolint object_name_linter
         function(module_name) {
           Module$new(
             instance = self,
+            api = private$.api,
             module_name = module_name,
             module_schema = schema[[module_name]]
           )

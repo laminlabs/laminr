@@ -9,18 +9,23 @@ API <- R6::R6Class( # nolint object_name_linter
     },
     get_schema = function() {
       # TODO: replace with laminr.api get_schema call
-      httr::GET(
+      request <- httr::GET(
         paste0(
           private$api_url,
           "/instances/",
           private$instance_id,
           "/schema"
         )
-      ) |>
-        httr::content()
+      )
+
+      if (httr::http_error(request)) {
+        cli::cli_abort(httr::content(request)$detail)
+      }
+
+      httr::content(request)
     },
     #' @importFrom jsonlite toJSON
-    api_get_record = function(
+    get_record = function(
       module_name,
       model_name,
       id_or_uid,
@@ -56,32 +61,36 @@ API <- R6::R6Class( # nolint object_name_linter
           "{}"
         }
 
-      data <-
-        httr::POST(
-          paste0(
-            private$api_url,
-            "/instances/",
-            private$id,
-            "/modules/",
-            module_name,
-            "/",
-            model_name,
-            "/",
-            id_or_uid,
-            "?schema_id=",
-            private$schema_id,
-            "&include_foreign_keys=",
-            tolower(include_foreign_keys)
-          ),
-          httr::add_headers(
-            accept = "application/json",
-            `Content-Type` = "application/json"
-          ),
-          body = body
-        ) |>
-        httr::content()
+      url <- paste0(
+        private$api_url,
+        "/instances/",
+        private$instance_id,
+        "/modules/",
+        module_name,
+        "/",
+        model_name,
+        "/",
+        id_or_uid,
+        "?schema_id=",
+        private$schema_id,
+        "&include_foreign_keys=",
+        tolower(include_foreign_keys)
+      )
 
-      data
+      request <- httr::POST(
+        url,
+        httr::add_headers(
+          accept = "application/json",
+          `Content-Type` = "application/json"
+        ),
+        body = body
+      )
+
+      if (httr::http_error(request)) {
+        cli::cli_abort(httr::content(request)$detail)
+      }
+
+      httr::content(request)
     }
 
   ),

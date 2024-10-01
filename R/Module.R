@@ -2,8 +2,9 @@ Module <- R6::R6Class( # nolint object_name_linter
   "Module",
   cloneable = FALSE,
   public = list(
-    initialize = function(instance, module_name, module_schema) {
+    initialize = function(instance, api, module_name, module_schema) {
       private$.instance <- instance
+      private$.api <- api
       private$.module_name <- module_name
 
       private$.model_classes <- map(
@@ -11,6 +12,8 @@ Module <- R6::R6Class( # nolint object_name_linter
         function(model_name) {
           Model$new(
             instance = instance,
+            module = self,
+            api = api,
             module_name = module_name,
             model_name = model_name,
             model_schema = module_schema[[model_name]]
@@ -22,6 +25,7 @@ Module <- R6::R6Class( # nolint object_name_linter
   ),
   private = list(
     .instance = NULL,
+    .api = NULL,
     .module_name = NULL,
     .model_classes = NULL
   ),
