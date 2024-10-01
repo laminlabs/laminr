@@ -1,149 +1,38 @@
-create_instance_class <- function(instance_settings) {
-  private <- super <- NULL # satisfy R CMD check and lintr
-
-  # fetch the schema from the API
-  name <- paste0(instance_settings$owner, "/", instance_settings$name)
-  schema <- api_get_schema(instance_settings)
-
-  # create helper functions for each record in the schema
-  active <- list()
-  for (module_name in names(schema)) {
-    cat("Adding module ", module_name, " to active\n", sep = "")
-    active[[module_name]] <- function() {
-      private$module_classes[[module_name]]
-    }
-  }
-
-  # TODO: re-enable
-  # # copy core directly into active
-  # for (model_name in names(active$core)) {
-  #   cat("Adding model core.", model_name, " to active\n", sep = "")
-  #   active[[model_name]] <- function() {
-  #     private$module_classes[["core"]][[model_name]]
-  #   }
-  # }
-  # active$core <- NULL
-  active$modules <- function() {
-    private$module_classes
-  }
-
-  # create the instance class
-  instance_class <- R6::R6Class(
-    name,
-    cloneable = FALSE,
-    inherit = Instance,
-    active = active,
-    public = list(
-      initialize = function(instance_settings, schema) {
-        super$initialize(instance_settings, schema)
-      },
-      print = function(...) {
-        super$print(...)
-      },
-      to_string = function(...) {
-        super$to_string(...)
-      }
-    )
-  )
-
-  instance_class$new(instance_settings, schema)
-}
-
 Instance <- R6::R6Class( # nolint object_name_linter
   "Instance",
   cloneable = FALSE,
   public = list(
-    initialize = function(instance_settings, schema) {
-      private$instance_settings <- instance_settings
-      private$schema <- schema
+    initialize = function(api_url, instance_id, schema_id) {
+      private$.api <- API$new(
+        api_url = api_url,
+        instance_id = instance_id,
+        schema_id = schema_id
+      )
 
-      module_names <- names(schema)
-      private$module_classes <- map(
-        module_names,
+      # fetch schema from the API
+      schema <- private$.api$get_schema()
+
+      # create module classes from the schema
+      private$.module_classes <- map(
+        names(schema),
         function(module_name) {
-          create_module_class(
+          Module$new(
             instance = self,
             module_name = module_name,
             module_schema = schema[[module_name]]
           )
         }
       ) |>
-        set_names(module_names)
-    },
-    print = function(...) {
-      cat(paste(self$to_string(...), "\n", sep = "", collapse = "\n"))
-    },
-    to_string = function(...) {
-      out <- c(
-        paste0("Instance '", private$instance_settings$owner, "/", private$instance_settings$name, "'\n")
-      )
-      for (module_class in private$module_classes) {
-        out <- c(out, paste0("  ", module_class$to_string(...)))
-      }
-      out
+        set_names(names(schema))
     }
   ),
   private = list(
-    instance_settings = NULL,
-    schema = NULL,
-    module_classes = NULL,
-
-    ## HELPER FUNCTIONS
-    # get_record fetches a record from the lamindb API
-    # and casts the data to the appropriate class
-    get_record = function(module_name, model_name, id_or_uid, select = NULL) {
-      data <- api_get_record(
-        instance_settings = private$instance_settings,
-        module_name = module_name,
-        model_name = model_name,
-        id_or_uid = id_or_uid,
-        select = select,
-        include_foreign_keys = TRUE
-      )
-      # use 'select' to select a related field instead of the main data itself
-      if (!is.null(select)) {
-        related_data <- data[[select]]
-        schema_info <- private$schema[[module_name]][[model_name]]$fields_metadata[[select]]
-        related_module_name <- schema_info$related_schema_name
-        related_model_name <- schema_info$related_model_name
-        relation_type <- schema_info$relation_type
-        if (relation_type == "one-to-one" || relation_type == "many-to-one") {
-          private$cast_data_to_class(related_module_name, related_model_name, related_data)
-        } else {
-          map(related_data, function(item) {
-            private$cast_data_to_class(related_module_name, related_model_name, item)
-          })
-        }
-      } else {
-        private$cast_data_to_class(module_name, model_name, data)
-      }
-    },
-    cast_data_to_class = function(module_name, model_name, data) {
-      if (is.null(private$schema[[module_name]])) {
-        cli::cli_abort(paste0("Module '", module_name, "' not found"))
-      }
-      module <- private$schema[[module_name]][[model_name]]
-      if (is.null(module)) {
-        cli::cli_abort(paste0("Model '", module_name, ".", model_name, "' not found"))
-      }
-      fields_metadata <- module$fields_metadata
-      column_names <- map(fields_metadata, "column_name") |>
-        unlist() |>
-        unname()
-      if (!all(names(data) %in% column_names)) {
-        cli::cli_warn(paste0(
-          "Data contains unexpected fields: ",
-          paste(setdiff(names(data), column_names), collapse = ", ")
-        ))
-      }
-      if (!all(column_names %in% names(data))) {
-        cli::cli_warn(paste0(
-          "Data is missing expected fields: ",
-          paste(setdiff(column_names, names(data)), collapse = ", ")
-        ))
-      }
-
-      private$module_classes[[module_name]][[model_name]]$new(data)
+    .api = NULL,
+    .module_classes = NULL
+  ),
+  active = list(
+    modules = function() {
+      private$.module_classes
     }
   )
 )
