@@ -47,7 +47,7 @@ create_instance <- function(instance_settings) {
   }
 
   # create the instance class
-  CurrentInstance <- R6::R6Class( # nolint object_name_linter
+  RichInstance <- R6::R6Class( # nolint object_name_linter
     instance_settings$name,
     cloneable = FALSE,
     inherit = Instance,
@@ -64,7 +64,7 @@ create_instance <- function(instance_settings) {
   )
 
   # create the instance
-  CurrentInstance$new(settings = instance_settings, api = api, schema = schema)
+  RichInstance$new(settings = instance_settings, api = api, schema = schema)
 }
 
 Instance <- R6::R6Class( # nolint object_name_linter

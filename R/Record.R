@@ -5,11 +5,11 @@ create_record <- function(instance, model, api, data) {
   active <- list()
 
   # add fields to active
-  for (field_name in names(model$fields)) {
+  for (field_name in model$get_field_names()) {
     fun <- NULL
     fun_src <- paste0(
       "fun <- function() {",
-      "  private$.get_value('", field_name, "')",
+      "  private$get_value('", field_name, "')",
       "}"
     )
     eval(parse(text = fun_src))
@@ -27,8 +27,8 @@ create_record <- function(instance, model, api, data) {
     }
 
   # create the record class
-  CurrentRecord <- R6::R6Class( # nolint object_name_linter
-    "CurrentRecord",
+  RichRecord <- R6::R6Class( # nolint object_name_linter
+    "RichRecord",
     cloneable = FALSE,
     inherit = RecordClass,
     public = list(
@@ -40,11 +40,12 @@ create_record <- function(instance, model, api, data) {
           data = data
         )
       }
-    )
+    ),
+    active = active
   )
 
   # create the record
-  CurrentRecord$new(instance, model, api, data)
+  RichRecord$new(instance, model, api, data)
 }
 
 Record <- R6::R6Class( # nolint object_name_linter
@@ -66,8 +67,8 @@ Record <- R6::R6Class( # nolint object_name_linter
     get_value = function(key) {
       if (key %in% names(private$.data)) {
         private$.data[[key]]
-      } else if (key %in% names(private$.model$fields)) {
-        field <- private$.model$fields[[key]]
+      } else if (key %in% private$.model$get_field_names()) {
+        field <- private$.model$get_field(key)
 
         ## TODO: use related_model_class$get_records instead
         related_data <- private$.api$get_record(
@@ -77,8 +78,8 @@ Record <- R6::R6Class( # nolint object_name_linter
           select = key
         )[[key]]
 
-        related_module_class <- instance$modules[[field$related_schema_name]]
-        related_model_class <- related_module_class$get_models()[[field$related_model_name]]
+        related_module_class <- private$.instance$get_module(field$related_schema_name)
+        related_model_class <- related_module_class$get_model(field$related_model_name)
 
         if (field$relation_type %in% c("one-to-one", "many-to-one")) {
           related_model_class$cast_data_to_class(related_data)
@@ -87,10 +88,10 @@ Record <- R6::R6Class( # nolint object_name_linter
         }
       } else {
         cli::cli_abort(
-          "Field not found: ",
-          key,
-          " in model ",
-          private$.model$name
+          paste0(
+            "Field '", key, "' not found in model '",
+            private$.model$name, "'"
+          )
         )
       }
     }

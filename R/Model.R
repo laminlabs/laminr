@@ -32,7 +32,13 @@ Model <- R6::R6Class( # nolint object_name_linter
     get_fields = function() {
       private$.fields
     },
-    get_record = function(id_or_uid, include_foreign_keys = TRUE, verbose = FALSE) {
+    get_field = function(field_name) {
+      private$.fields[[field_name]]
+    },
+    get_field_names = function() {
+      names(private$.fields)
+    },
+    get = function(id_or_uid, include_foreign_keys = TRUE, verbose = FALSE) {
       data <- private$.api$get_record(
         module_name = private$.module$name,
         model_name = private$.model_name,

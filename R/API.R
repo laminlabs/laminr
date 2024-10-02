@@ -92,6 +92,6 @@ API <- R6::R6Class( # nolint object_name_linter
     }
   ),
   private = list(
-    instance_settings = NULL
+    .instance_settings = NULL
   )
 )
