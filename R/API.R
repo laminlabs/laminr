@@ -2,18 +2,16 @@ API <- R6::R6Class( # nolint object_name_linter
   "API",
   cloneable = FALSE,
   public = list(
-    initialize = function(api_url, instance_id, schema_id) {
-      private$api_url <- api_url
-      private$instance_id <- instance_id
-      private$schema_id <- schema_id
+    initialize = function(instance_settings) {
+      private$.instance_settings <- instance_settings
     },
     get_schema = function() {
       # TODO: replace with laminr.api get_schema call
       request <- httr::GET(
         paste0(
-          private$api_url,
+          private$.instance_settings$api_url,
           "/instances/",
-          private$instance_id,
+          private$.instance_settings$id,
           "/schema"
         )
       )
@@ -61,9 +59,9 @@ API <- R6::R6Class( # nolint object_name_linter
         }
 
       url <- paste0(
-        private$api_url,
+        private$.instance_settings$api_url,
         "/instances/",
-        private$instance_id,
+        private$.instance_settings$id,
         "/modules/",
         module_name,
         "/",
@@ -71,7 +69,7 @@ API <- R6::R6Class( # nolint object_name_linter
         "/",
         id_or_uid,
         "?schema_id=",
-        private$schema_id,
+        private$.instance_settings$schema_id,
         "&include_foreign_keys=",
         tolower(include_foreign_keys)
       )
@@ -94,8 +92,6 @@ API <- R6::R6Class( # nolint object_name_linter
     }
   ),
   private = list(
-    api_url = NULL,
-    instance_id = NULL,
-    schema_id = NULL
+    instance_settings = NULL
   )
 )

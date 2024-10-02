@@ -9,7 +9,7 @@ create_record <- function(instance, model, api, data) {
     fun <- NULL
     fun_src <- paste0(
       "fun <- function() {",
-      "  private$.get_field('", field_name, "')",
+      "  private$.get_value('", field_name, "')",
       "}"
     )
     eval(parse(text = fun_src))
@@ -17,11 +17,20 @@ create_record <- function(instance, model, api, data) {
     active[[field_name]] <- fun
   }
 
+  # determine the base class
+  # (core.artifact gets additional methods)
+  RecordClass <- # nolint object_name_linter
+    if (model$module$name == "core" && model$name == "artifact") {
+      Artifact
+    } else {
+      Record
+    }
+
   # create the record class
   CurrentRecord <- R6::R6Class( # nolint object_name_linter
     "CurrentRecord",
     cloneable = FALSE,
-    inherit = Record,
+    inherit = RecordClass,
     public = list(
       initialize = function(instance, model, api, data) {
         super$initialize(
@@ -54,7 +63,7 @@ Record <- R6::R6Class( # nolint object_name_linter
     .model = NULL,
     .api = NULL,
     .data = NULL,
-    get_field = function(key) {
+    get_value = function(key) {
       if (key %in% names(private$.data)) {
         private$.data[[key]]
       } else if (key %in% names(private$.model$fields)) {

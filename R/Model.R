@@ -29,12 +29,15 @@ Model <- R6::R6Class( # nolint object_name_linter
       ) |>
         set_names(names(model_schema$fields_metadata))
     },
-    get_record = function(id_or_uid, verbose = FALSE) {
+    get_fields = function() {
+      private$.fields
+    },
+    get_record = function(id_or_uid, include_foreign_keys = TRUE, verbose = FALSE) {
       data <- private$.api$get_record(
         module_name = private$.module$name,
         model_name = private$.model_name,
         id_or_uid = id_or_uid,
-        include_foreign_keys = TRUE,
+        include_foreign_keys = include_foreign_keys,
         verbose = verbose
       )
 
@@ -77,6 +80,9 @@ Model <- R6::R6Class( # nolint object_name_linter
     .fields = NULL
   ),
   active = list(
+    module = function() {
+      private$.module
+    },
     name = function() {
       private$.model_name
     },
@@ -85,9 +91,6 @@ Model <- R6::R6Class( # nolint object_name_linter
     },
     is_link_table = function() {
       private$.is_link_table
-    },
-    fields = function() {
-      private$.fields
     }
   )
 )
