@@ -30,6 +30,8 @@ lamin load laminlabs/cellxgene
 library(laminr)
 ```
 
+## Instance
+
 ### Connect to a LaminDB instance
 
 ``` r
@@ -67,7 +69,71 @@ db
         .module_classes: list
         .settings: InstanceSettings, R6
 
-### Print the Artifact class
+### Get module
+
+``` r
+db$get_module("core")
+```
+
+    <core>
+      Inherits from: <Module>
+      Public:
+        Artifact: active binding
+        Collection: active binding
+        Feature: active binding
+        FeatureSet: active binding
+        FeatureValue: active binding
+        get_model: function (model_name) 
+        get_model_names: function () 
+        get_models: function () 
+        initialize: function (instance, api, module_name, module_schema) 
+        name: active binding
+        Param: active binding
+        ParamValue: active binding
+        Run: active binding
+        Storage: active binding
+        Transform: active binding
+        ULabel: active binding
+        User: active binding
+      Private:
+        .api: API, R6
+        .instance: cellxgene, Instance, R6
+        .model_classes: list
+        .module_name: core
+
+``` r
+db$bionty
+```
+
+    <bionty>
+      Inherits from: <Module>
+      Public:
+        CellLine: active binding
+        CellMarker: active binding
+        CellType: active binding
+        DevelopmentalStage: active binding
+        Disease: active binding
+        Ethnicity: active binding
+        ExperimentalFactor: active binding
+        Gene: active binding
+        get_model: function (model_name) 
+        get_model_names: function () 
+        get_models: function () 
+        initialize: function (instance, api, module_name, module_schema) 
+        name: active binding
+        Organism: active binding
+        Pathway: active binding
+        Phenotype: active binding
+        Protein: active binding
+        Source: active binding
+        Tissue: active binding
+      Private:
+        .api: API, R6
+        .instance: cellxgene, Instance, R6
+        .model_classes: list
+        .module_name: bionty
+
+## Model
 
 ``` r
 db$Artifact
@@ -93,6 +159,33 @@ db$Artifact
         .is_link_table: FALSE
         .model_name: artifact
         .module: core, Module, R6
+
+``` r
+db$bionty$CellLine
+```
+
+    <Model>
+      Public:
+        cast_data_to_class: function (data) 
+        class_name: active binding
+        get: function (id_or_uid, include_foreign_keys = TRUE, verbose = FALSE) 
+        get_field: function (field_name) 
+        get_field_names: function () 
+        get_fields: function () 
+        initialize: function (instance, module, api, model_name, model_schema) 
+        is_link_table: active binding
+        module: active binding
+        name: active binding
+      Private:
+        .api: API, R6
+        .class_name: CellLine
+        .fields: list
+        .instance: cellxgene, Instance, R6
+        .is_link_table: FALSE
+        .model_name: cellline
+        .module: bionty, Module, R6
+
+## Record
 
 ### Get artifact
 

@@ -31,6 +31,8 @@ lamin load laminlabs/cellxgene
 library(laminr)
 ```
 
+## Instance
+
 ### Connect to a LaminDB instance
 
 ```{r connect}
@@ -44,12 +46,25 @@ db <- connect("laminlabs/cellxgene")
 db
 ```
 
-### Print the Artifact class
+### Get module
 
-```{r print_class}
+```{r get_module}
+db$get_module("core")
+
+db$bionty
+```
+
+## Model
+
+```{r get_artifact_model}
 db$Artifact
 ```
 
+```{r get_bionty_celline}
+db$bionty$CellLine
+```
+
+## Record
 
 ### Get artifact
 
