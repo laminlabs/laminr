@@ -59,7 +59,7 @@ Model <- R6::R6Class( # nolint object_name_linter
         ))
       }
 
-      Record$new(
+      create_record(
         instance = private$.instance,
         model = self,
         api = private$.api,

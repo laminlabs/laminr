@@ -16,12 +16,20 @@ create_instance <- function(settings) {
   # add core models to active fields
   for (model_name in names(schema$core)) {
     model <- schema$core[[model_name]]
+
     if (model$is_link_table) {
       next
     }
-    active[[model_name]] <- function() {
-      private$.module_classes$core$models[[model_name]]
-    }
+
+    fun <- NULL
+    fun_src <- paste0(
+      "fun <- function() {",
+      "  private$.module_classes$core$get_model('", model_name, "')",
+      "}"
+    )
+    eval(parse(text = fun_src))
+
+    active[[model$class_name]] <- fun
   }
 
   # add non-core modules to active fields
@@ -30,9 +38,16 @@ create_instance <- function(settings) {
       next
     }
 
-    active[[module_name]] <- function() {
-      private$.module_classes[[module_name]]
-    }
+    fun <- NULL
+    fun_src <- paste0(
+      "fun <- function() {",
+      "  self$get_module('", module_name, "')",
+      "}"
+    )
+
+    eval(parse(text = fun_src))
+
+    active[[module_name]] <- fun
   }
 
   # create the instance class
@@ -68,7 +83,7 @@ Instance <- R6::R6Class( # nolint object_name_linter
       private$.module_classes <- map(
         names(schema),
         function(module_name) {
-          Module$new(
+          create_module(
             instance = self,
             api = private$.api,
             module_name = module_name,
@@ -80,6 +95,13 @@ Instance <- R6::R6Class( # nolint object_name_linter
     },
     get_modules = function() {
       private$.module_classes
+    },
+    get_module = function(module_name) {
+      # todo: assert module exists
+      private$.module_classes[[module_name]]
+    },
+    get_module_names = function() {
+      names(private$.module_classes)
     }
   ),
   private = list(
