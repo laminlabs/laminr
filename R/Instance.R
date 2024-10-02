@@ -1,10 +1,10 @@
-create_instance <- function(settings) {
-  private <- super <- NULL # satisfy linter
+create_instance <- function(instance_settings) {
+  super <- NULL # satisfy linter
 
   api <- API$new(
-    api_url = settings$api_url,
-    instance_id = settings$id,
-    schema_id = settings$schema_id
+    api_url = instance_settings$api_url,
+    instance_id = instance_settings$id,
+    schema_id = instance_settings$schema_id
   )
 
   # fetch schema from the API
@@ -52,7 +52,7 @@ create_instance <- function(settings) {
 
   # create the instance class
   CurrentInstance <- R6::R6Class( # nolint object_name_linter
-    settings$name,
+    instance_settings$name,
     cloneable = FALSE,
     inherit = Instance,
     public = list(
@@ -68,7 +68,7 @@ create_instance <- function(settings) {
   )
 
   # create the instance
-  CurrentInstance$new(settings = settings, api = api, schema = schema)
+  CurrentInstance$new(settings = instance_settings, api = api, schema = schema)
 }
 
 Instance <- R6::R6Class( # nolint object_name_linter

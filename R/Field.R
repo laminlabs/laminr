@@ -2,19 +2,17 @@ Field <- R6::R6Class( # nolint object_name_linter
   "Field",
   cloneable = FALSE,
   public = list(
-    initialize = function(
-      type,
-      through,
-      field_name,
-      model_name,
-      column_name,
-      schema_name,
-      is_link_table,
-      relation_type,
-      related_field_name,
-      related_model_name,
-      related_schema_name
-    ) {
+    initialize = function(type,
+                          through,
+                          field_name,
+                          model_name,
+                          column_name,
+                          schema_name,
+                          is_link_table,
+                          relation_type,
+                          related_field_name,
+                          related_model_name,
+                          related_schema_name) {
       private$.type <- type
       private$.through <- through
       private$.field_name <- field_name

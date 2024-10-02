@@ -76,7 +76,6 @@ Record <- R6::R6Class( # nolint object_name_linter
         } else {
           map(related_data, related_model_class$cast_data_to_class)
         }
-
       } else {
         cli::cli_abort(
           "Field not found: ",

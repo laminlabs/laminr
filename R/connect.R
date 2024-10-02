@@ -7,24 +7,31 @@
 #'   If the instance is owned by you, it suffices to pass the instance name.
 #'
 #' @export
+#'
+#' @examples
+#' \dontrun{
+#'   # first run 'lamin login' to authenticate
+#'   instance <- connect("laminlabs/cellxgene")
+#'   instance
+#' }
 connect <- function(slug) {
   user_settings <- .settings_load__load_or_create_user_settings()
 
   owner_name <- .connect_get_owner_name_from_identifier(slug)
 
-  settings <- .connect_get_instance_settings(
+  instance_settings <- .connect_get_instance_settings(
     owner = owner_name$owner,
     name = owner_name$name,
     access_token = user_settings$access_token
   )
 
-  create_instance(settings = settings)
+  create_instance(instance_settings = instance_settings)
 }
 
-
-.connect_get_owner_name_from_identifier <- function( # nolint object_length_linter
-  identifier
-) {
+# nolint start: object_length_linter
+.connect_get_owner_name_from_identifier <- function(
+    # nolint end: object_length_linter
+    identifier) {
   if (grepl("/", identifier)) {
     if (grepl("https://lamin.ai/", identifier)) {
       identifier <- gsub("https://lamin.ai/", "", identifier)

@@ -1,40 +1,24 @@
-#' InstanceSettings class
-#'
-#' The InstanceSettings class is used to store the settings of a LaminDB instance.
-#'
-#' @importFrom R6 R6Class
-#'
-#' @noRd
 InstanceSettings <- R6::R6Class( # nolint object_name_linter
   "InstanceSettings",
   cloneable = FALSE,
   public = list(
-    #' Initialize the InstanceSettings class
-    #'
-    #' @param id The instance ID of the LaminDB instance.
-    #' @param owner The owner of the LaminDB instance.
-    #' @param name The name of the LaminDB instance.
-    #' @param api_url The base URL of the LaminDB API.
-    #' @param schema_id The schema ID of the LaminDB schema.
-    initialize = function(
-      owner,
-      name,
-      id,
-      schema_str,
-      schema_id,
-      git_repo,
-      keep_artifacts_local,
-      api_url,
-      lamindb_version,
-      storage,
-      db_scheme,
-      db_host,
-      db_port,
-      db_database,
-      db_permissions,
-      db_user_name,
-      db_user_password
-    ) {
+    initialize = function(owner,
+                          name,
+                          id,
+                          schema_str,
+                          schema_id,
+                          git_repo,
+                          keep_artifacts_local,
+                          api_url,
+                          lamindb_version,
+                          storage,
+                          db_scheme,
+                          db_host,
+                          db_port,
+                          db_database,
+                          db_permissions,
+                          db_user_name,
+                          db_user_password) {
       private$.owner <- owner
       private$.name <- name
       private$.id <- id

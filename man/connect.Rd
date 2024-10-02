@@ -2,27 +2,21 @@
 % Please edit documentation in R/connect.R
 \name{connect}
 \alias{connect}
-\title{Connect to a Lamin instance}
+\title{Connect to instance}
 \usage{
-connect(slug = NULL)
+connect(slug)
 }
 \arguments{
-\item{slug}{The slug of the instance to connect to. If not provided, the current instance is used.}
+\item{slug}{The instance slug \code{account_handle/instance_name} or URL.
+If the instance is owned by you, it suffices to pass the instance name.}
 }
 \description{
-Connect to a Lamin instance using the current instance settings.
+Connect to instance
 }
 \examples{
 \dontrun{
-options(
-  lamindb_current_instance = list(
-    owner = "lamin",
-    name = "example",
-    api_url = "https://us-west-2.api.lamin.ai",
-    id = "0123456789abcdefghijklmnopqrstuv",
-    schema_id = "0123456789abcdefghijklmnopqrstuv"
-  )
-)
-db <- connect()
+  # first run 'lamin login' to authenticate
+  instance <- connect("laminlabs/cellxgene")
+  instance
 }
 }

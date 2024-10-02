@@ -55,11 +55,12 @@
   file.path(settings_dir, "storage.env")
 }
 
+# nolint start: object_length_linter
 .settings_store__read_typed_env <- function(
-  env_file,
-  env_prefix,
-  field_types
-) {
+    # nolint end: object_length_linter
+    env_file,
+    env_prefix,
+    field_types) {
   env <- readLines(env_file)
 
   # remove comments

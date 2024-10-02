@@ -26,14 +26,12 @@ API <- R6::R6Class( # nolint object_name_linter
       content
     },
     #' @importFrom jsonlite toJSON
-    get_record = function(
-      module_name,
-      model_name,
-      id_or_uid,
-      include_foreign_keys = FALSE,
-      select = NULL,
-      verbose = FALSE
-    ) {
+    get_record = function(module_name,
+                          model_name,
+                          id_or_uid,
+                          include_foreign_keys = FALSE,
+                          select = NULL,
+                          verbose = FALSE) {
       if (verbose) {
         field_name_str <-
           if (!is.null(select)) {
@@ -94,7 +92,6 @@ API <- R6::R6Class( # nolint object_name_linter
 
       content
     }
-
   ),
   private = list(
     api_url = NULL,
