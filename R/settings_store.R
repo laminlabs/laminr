@@ -1,6 +1,7 @@
 # based on: https://github.com/laminlabs/lamindb-setup/blob/main/lamindb_setup/core/_settings_store.py
+# NOTE: These functions could be moved to a separate lamindb.setup package
 
-get_settings_dir <- function() {
+.settings_store__get_settings_dir <- function() { # nolint object_length_linter
   settings_dir <- Sys.getenv("LAMIN_SETTINGS_DIR")
 
   if (settings_dir != "") {
@@ -10,7 +11,7 @@ get_settings_dir <- function() {
   }
 }
 
-get_settings_file_name_prefix <- function() {
+.settings_store__get_settings_file_name_prefix <- function() { # nolint object_length_linter
   lamin_env <- Sys.getenv("LAMIN_ENV")
   if (lamin_env != "" && lamin_env != "prod") {
     paste0(lamin_env, "--")
@@ -19,42 +20,42 @@ get_settings_file_name_prefix <- function() {
   }
 }
 
-current_instance_settings_file <- function() {
-  settings_dir <- get_settings_dir()
-  settings_file_name_prefix <- get_settings_file_name_prefix()
+.settings_store__current_instance_settings_file <- function() { # nolint object_length_linter
+  settings_dir <- .settings_store__get_settings_dir()
+  settings_file_name_prefix <- .settings_store__get_settings_file_name_prefix()
   file.path(settings_dir, paste0(settings_file_name_prefix, "current_instance.env"))
 }
 
-current_user_settings_file <- function() {
-  settings_dir <- get_settings_dir()
-  settings_file_name_prefix <- get_settings_file_name_prefix()
+.settings_store__current_user_settings_file <- function() { # nolint object_length_linter
+  settings_dir <- .settings_store__get_settings_dir()
+  settings_file_name_prefix <- .settings_store__get_settings_file_name_prefix()
   file.path(settings_dir, paste0(settings_file_name_prefix, "current_user.env"))
 }
 
-instance_settings_file <- function(name, owner) {
-  settings_dir <- get_settings_dir()
-  settings_file_name_prefix <- get_settings_file_name_prefix()
+.settings_store__instance_settings_file <- function(name, owner) { # nolint object_length_linter
+  settings_dir <- .settings_store__get_settings_dir()
+  settings_file_name_prefix <- .settings_store__get_settings_file_name_prefix()
   file.path(settings_dir, paste0(settings_file_name_prefix, "instance--", owner, "--", name, ".env"))
 }
 
-user_settings_file_email <- function(email) {
-  settings_dir <- get_settings_dir()
-  settings_file_name_prefix <- get_settings_file_name_prefix()
+.settings_store__user_settings_file_email <- function(email) { # nolint object_length_linter
+  settings_dir <- .settings_store__get_settings_dir()
+  settings_file_name_prefix <- .settings_store__get_settings_file_name_prefix()
   file.path(settings_dir, paste0(settings_file_name_prefix, "user--", email, ".env"))
 }
 
-user_settings_file_handle <- function(handle) {
-  settings_dir <- get_settings_dir()
-  settings_file_name_prefix <- get_settings_file_name_prefix()
+.settings_store__user_settings_file_handle <- function(handle) { # nolint object_length_linter
+  settings_dir <- .settings_store__get_settings_dir()
+  settings_file_name_prefix <- .settings_store__get_settings_file_name_prefix()
   file.path(settings_dir, paste0(settings_file_name_prefix, "user--", handle, ".env"))
 }
 
-system_storage_settings_file <- function() {
-  settings_dir <- get_settings_dir()
+.settings_store__system_storage_settings_file <- function() { # nolint object_length_linter
+  settings_dir <- .settings_store__get_settings_dir()
   file.path(settings_dir, "storage.env")
 }
 
-settings_store__read_typed_env <- function(
+.settings_store__read_typed_env <- function(
   env_file,
   env_prefix,
   field_types
@@ -67,7 +68,7 @@ settings_store__read_typed_env <- function(
   # remove empty lines
   env3 <- env2[env2 != ""]
 
-  parsed <- lapply(env3, function(x) {
+  parsed <- map(env3, function(x) {
     x_split <- strsplit(x, "=")[[1]]
 
     if (length(x_split) != 2) {
@@ -104,21 +105,17 @@ settings_store__read_typed_env <- function(
       } else {
         stop("Unknown type: ", type)
       }
-    
+
     list(name = name, value = value)
   })
 
-  values <- sapply(parsed, function(x) {
-    x$value
-  })
-  names <- sapply(parsed, function(x) {
-    x$name
-  })
+  values <- map(parsed, "value")
+  names <- map_chr(parsed, "name")
 
   setNames(values, names)
 }
 
-parse_instance_settings <- function(env_file) {
+.settings_store__parse_instance_settings <- function(env_file) { # nolint object_length_linter
   env_prefix <- "lamindb_instance_"
 
   field_types <- list(
@@ -133,10 +130,10 @@ parse_instance_settings <- function(env_file) {
     keep_artifacts_local = "Optional[bool]"
   )
 
-  settings_store__read_typed_env(env_file, env_prefix, field_types)
+  .settings_store__read_typed_env(env_file, env_prefix, field_types)
 }
 
-parse_user_settings <- function(env_file) {
+.settings_store__parse_user_settings <- function(env_file) { # nolint object_length_linter
   env_prefix <- "lamin_user_"
 
   field_types <- list(
@@ -149,5 +146,5 @@ parse_user_settings <- function(env_file) {
     name = "str"
   )
 
-  settings_store__read_typed_env(env_file, env_prefix, field_types)
+  .settings_store__read_typed_env(env_file, env_prefix, field_types)
 }

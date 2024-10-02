@@ -1,23 +1,54 @@
-connect <- function(owner, name, access_token = NULL) {
-  if (is.null(access_token)) {
-    access_token <- .connect_get_access_token()
-  }
+# https://github.com/laminlabs/lamindb-setup/blob/main/lamindb_setup/_connect_instance.py
+# NOTE: These functions could be moved to a separate lamindb.setup package
 
-  settings <- .connect_get_instance_settings(owner, name, access_token)
+#' Connect to instance
+#'
+#' @param slug The instance slug `account_handle/instance_name` or URL.
+#'   If the instance is owned by you, it suffices to pass the instance name.
+#'
+#' @export
+connect <- function(slug) {
+  user_settings <- .settings_load__load_or_create_user_settings()
+
+  owner_name <- .connect_get_owner_name_from_identifier(slug)
+
+  settings <- .connect_get_instance_settings(
+    owner = owner_name$owner,
+    name = owner_name$name,
+    access_token = user_settings$access_token
+  )
 
   create_instance(settings = settings)
 }
 
-.connect_get_access_token <- function() {
-  requireNamespace("reticulate", quietly = TRUE)
-  if (!reticulate::py_module_available("lamindb_setup")) {
-    cli::cli_abort("Python module 'lamindb_setup' is required to get the access token")
+
+.connect_get_owner_name_from_identifier <- function( # nolint object_length_linter
+  identifier
+) {
+  if (grepl("/", identifier)) {
+    if (grepl("https://lamin.ai/", identifier)) {
+      identifier <- gsub("https://lamin.ai/", "", identifier)
+    }
+    split <- strsplit(identifier, "/")[[1]]
+    if (length(split) > 2) {
+      stop(
+        "The instance identifier needs to be 'owner/name', the instance name",
+        " (owner is current user) or the URL: https://lamin.ai/owner/name."
+      )
+    }
+    owner <- split[[1]]
+    name <- split[[2]]
+  } else {
+    user_settings <- .settings_load__load_or_create_user_settings()
+
+    owner <- user_settings$handle
+    name <- identifier
   }
-  ln_setup <- reticulate::import("lamindb_setup")
-  ln_setup$settings$user$access_token
+  return(list(owner = owner, name = name))
 }
 
-.connect_get_instance_settings <- function(owner, name, access_token) {
+
+.connect_get_instance_settings <- function(owner, name, access_token) { # nolint object_length_linter
   supabase_url <- "https://hub.lamin.ai"
   function_name <- "get-instance-settings-v1"
 
