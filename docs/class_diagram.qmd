@@ -54,7 +54,7 @@ classDiagram
     class API{
         +initialize(InstanceSettings Instance_settings)
         +get_schema(): Map~String, Any~
-        +get_record(...): RichRecord
+        +get_record(...): Map~String, Any~
     }
     class RichInstance{
         +initialize(InstanceSettings Instance_settings, API api, Map<String, any> schema): RichInstance
@@ -88,9 +88,11 @@ classDiagram
         +name: String
         +class_name: String
         +is_link_table: Bool
-        +get_values(): Field[]
-        +get_record(String id_or_uid, Bool include_foreign_keys, List~String~ select, Bool verbose): RichRecord
-        +cast_data_to_class(Map<String, Any> data): Record
+        +get_fields(): Field[]
+        +get_field(String field_name): Field
+        +get_field_names(): String[]
+        +get(String id_or_uid, Bool include_foreign_keys, List~String~ select, Bool verbose): RichRecord
+        +cast_data_to_class(Map<String, Any> data): RichRecord
     }
     class Artifact{
         +initialize(...): Artifact
