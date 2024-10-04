@@ -21,21 +21,9 @@ For this package to work, we first need to run the following commands in the ter
 
 ```bash
 pip install lamindb
+lamin login
 lamin load laminlabs/cellxgene
 ```
-
-This should create an `.env` file at `~/.lamin/current_instance.env` and `~/.lamin/instance--laminlabs--cellxgene.env` containing (amongst others) the following data:
-
-    lamindb_instance_id=0123456789abcdefghijklmnopqrstuv
-    lamindb_instance_owner=laminlabs
-    lamindb_instance_name=cellxgene
-    lamindb_instance_schema_id=0123456789abcdefghijklmnopqrstuv
-    lamindb_instance_api_url=https://us-west-2.api.lamin.ai
-
-:::{.callout-note}
-The `.env` files don't store the `schema_id` and `api_url` yet, so instead we pass these settings via `options(lamindb_current_instance = ...)` (see below).
-:::
-
 
 ## Usage
 
@@ -43,25 +31,14 @@ The `.env` files don't store the `schema_id` and `api_url` yet, so instead we pa
 library(laminr)
 ```
 
+## Instance
+
 ### Connect to a LaminDB instance
 
-``` r
-options(
-  lamindb_current_instance = list(
-    owner = "lamin",
-    name = "example",
-    id = "0123456789abcdefghijklmnopqrstuv",
-    api_url = "https://us-west-2.api.lamin.ai",
-    schema_id = "0123456789abcdefghijklmnopqrstuv"
-  )
-)
-
-db <- laminr::connect()
+```{r connect}
+db <- connect("laminlabs/cellxgene")
 ```
 
-```{r connect2, echo=FALSE}
-db <- laminr::connect()
-```
 
 ### Print a LaminDB instance
 
@@ -69,14 +46,25 @@ db <- laminr::connect()
 db
 ```
 
-<!--
-### Print the Artifact class
+### Get module
 
-```{r print_class}
+```{r get_module}
+db$get_module("core")
+
+db$bionty
+```
+
+## Registry
+
+```{r get_artifact_registry}
 db$Artifact
 ```
 
--->
+```{r get_bionty_celline}
+db$bionty$CellLine
+```
+
+## Record
 
 ### Get artifact
 
@@ -106,6 +94,8 @@ artifact$key
 artifact$storage
 
 artifact$created_by
+
+artifact$experimental_factors
 ```
 
 ### Cache artifact

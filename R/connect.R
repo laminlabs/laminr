@@ -1,61 +1,94 @@
 # https://github.com/laminlabs/lamindb-setup/blob/main/lamindb_setup/_connect_instance.py
+# NOTE: These functions could be moved to a separate lamindb.setup package
 
-#' Connect to a Lamin instance
+#' Connect to instance
 #'
-#' Connect to a Lamin instance using the current instance settings.
-#'
-#' @param slug The slug of the instance to connect to. If not provided, the current instance is used.
+#' @param slug The instance slug `account_handle/instance_name` or URL.
+#'   If the instance is owned by you, it suffices to pass the instance name.
 #'
 #' @export
 #'
 #' @examples
 #' \dontrun{
-#' options(
-#'   lamindb_current_instance = list(
-#'     owner = "lamin",
-#'     name = "example",
-#'     api_url = "https://us-west-2.api.lamin.ai",
-#'     id = "0123456789abcdefghijklmnopqrstuv",
-#'     schema_id = "0123456789abcdefghijklmnopqrstuv"
-#'   )
-#' )
-#' db <- connect()
+#' # first run 'lamin login' to authenticate
+#' instance <- connect("laminlabs/cellxgene")
+#' instance
 #' }
-connect <- function(slug = NULL) {
-  if (!is.null(slug)) {
-    cli::cli_warn(paste0(
-      "Connecting to a specific instance by slug is not yet implemented, ",
-      "connecting to the current instance instead"
-    ))
-  }
+connect <- function(slug) {
+  user_settings <- .settings_load__load_or_create_user_settings()
 
-  expected_format_str <- paste0(
-    "Please set the current instance manually using:\n",
-    "  options(lamindb_current_instance = list(url = ..., instance_id = ..., schema_id = ...))"
+  owner_name <- .connect_get_owner_name_from_identifier(slug)
+
+  instance_settings <- .connect_get_instance_settings(
+    owner = owner_name$owner,
+    name = owner_name$name,
+    access_token = user_settings$access_token
   )
 
-  current_instance <- getOption("lamindb_current_instance")
-  if (is.null(current_instance)) {
-    cli::cli_abort(paste0(
-      "Parsing ~/.lamin/*.env files is currently not implemented. ",
-      expected_format_str
-    ))
-  }
-  if (!is.list(current_instance)) {
-    cli::cli_abort(paste0(
-      "Expected option 'lamindb_current_instance' to be a list. ",
-      expected_format_str
-    ))
-  }
-  for (key in c("owner", "name", "api_url", "id", "schema_id")) {
-    if (!key %in% names(current_instance)) {
-      cli::cli_abort(paste0(
-        "Expected option 'lamindb_current_instance' to have a '",
-        key, "' key. ", expected_format_str
+  create_instance(instance_settings = instance_settings)
+}
+
+# nolint start: object_length_linter
+.connect_get_owner_name_from_identifier <- function(
+    # nolint end: object_length_linter
+    identifier) {
+  if (grepl("/", identifier)) {
+    if (grepl("https://lamin.ai/", identifier)) {
+      identifier <- gsub("https://lamin.ai/", "", identifier)
+    }
+    split <- strsplit(identifier, "/")[[1]]
+    if (length(split) > 2) {
+      cli_abort(paste0(
+        "The instance identifier needs to be 'owner/name', the instance name",
+        " (owner is current user) or the URL: https://lamin.ai/owner/name."
       ))
     }
+    owner <- split[[1]]
+    name <- split[[2]]
+  } else {
+    user_settings <- .settings_load__load_or_create_user_settings()
+
+    owner <- user_settings$handle
+    name <- identifier
+  }
+  return(list(owner = owner, name = name))
+}
+
+
+.connect_get_instance_settings <- function(owner, name, access_token) { # nolint object_length_linter
+  supabase_url <- "https://hub.lamin.ai"
+  function_name <- "get-instance-settings-v1"
+
+  body_data <- list(owner = owner, name = name)
+  body <-
+    if (length(body_data) > 0) {
+      jsonlite::toJSON(body_data)
+    } else {
+      "{}"
+    }
+
+  url <- paste0(
+    supabase_url,
+    "/functions/v1/",
+    function_name
+  )
+
+  request <- httr::POST(
+    url,
+    httr::add_headers(
+      Authorization = paste0("Bearer ", access_token),
+      `Content-Type` = "application/json"
+    ),
+    body = body
+  )
+  content <- httr::content(request)
+
+  if (httr::http_error(request)) {
+    cli_abort(content)
+  }
+  if (length(content) == 0) {
+    cli_abort(paste0("Instance '", owner, "/", name, "' not found"))
   }
 
-  # TODO: replace with 'setup_instance_from_store'
-  create_instance_class(current_instance)
+  InstanceSettings$new(content)
 }

@@ -1,127 +1,131 @@
-create_record_class <- function(
-    module_name,
-    model_name,
-    module,
-    instance) {
-  super <- NULL # satisfy R CMD check and lintr
-  field_names <- map_chr(module$fields_metadata, "field_name")
+create_record_class <- function(instance, registry, api) {
+  super <- NULL # satisfy linter
 
-  # create fields for this class
-  active <- map(
-    field_names,
-    function(field_name) {
-      fun <- NULL
-      fun_src <- paste0(
-        "fun <- function(value) {\n",
-        "  if (missing(value)) {\n",
-        "    private$get_value('", field_name, "')\n",
-        "  } else {\n",
-        "    private$set_value('", field_name, "', value)\n",
-        "  }\n",
-        "}\n"
-      )
-      eval(parse(text = fun_src))
-      fun
-    }
-  ) |>
-    set_names(field_names)
+  # create active fields for the exposed instance
+  active <- list()
+
+  # add fields to active
+  for (field_name in registry$get_field_names()) {
+    fun_src <- paste0(
+      "function() {",
+      "  private$get_value('", field_name, "')",
+      "}"
+    )
+    active[[field_name]] <- eval(parse(text = fun_src))
+  }
 
   # determine the base class
   # (core.artifact gets additional methods)
-  RecordClass <- # nolint object_name_linter
-    if (module_name == "core" && model_name == "artifact") {
-      CoreArtifact
+  base_class <-
+    if (registry$module$name == "core" && registry$name == "artifact") {
+      ArtifactRecord
     } else {
       Record
     }
 
-  # create the instanciated class
-  record_class <- R6::R6Class(
-    module$class_name,
+  # create the record class
+  RichRecordClass <- R6::R6Class( # nolint object_name_linter
+    registry$class_name,
     cloneable = FALSE,
-    inherit = RecordClass,
-    active = active,
+    inherit = base_class,
     public = list(
       initialize = function(data) {
         super$initialize(
-          data = data,
           instance = instance,
-          class_name = module$class_name,
-          fields_metadata = module$fields_metadata
+          registry = registry,
+          api = api,
+          data = data
         )
-      },
-      print = function(...) {
-        super$print(...)
       }
-    )
+    ),
+    active = active
   )
 
-  record_class$get <- function(id_or_uid) {
-    instance$`.__enclos_env__`$private$get_record(
-      module_name = module_name,
-      model_name = model_name,
-      id_or_uid = id_or_uid
-    )
-  }
-
-  record_class
+  # create the record
+  RichRecordClass
 }
 
+#' @title Record
+#'
+#' @noRd
+#'
+#' @description
+#' A record from a registry.
 Record <- R6::R6Class( # nolint object_name_linter
   "Record",
   cloneable = FALSE,
   public = list(
-    initialize = function(data, instance, class_name, fields_metadata) {
-      private$class_name <- class_name
-      private$data <- data
-      private$instance <- instance
-      private$fields_metadata <- fields_metadata
-    },
-    print = function(...) {
-      # NOTE: could use private$fields instead of names(private$data)
-      data_names <- names(private$data)
-      data_values <- sapply(
-        unlist(private$data),
-        function(x) {
-          if (is.null(x)) {
-            "NULL"
-          } else if (is.character(x)) {
-            paste0("'", x, "'")
-          } else {
-            x
-          }
-        }
-      )
-      data_str <- paste0(
-        private$class_name, "(",
-        paste(data_names, "=", data_values, collapse = ", "),
-        ")"
-      )
-      cat(data_str, "\n", sep = "")
+    #' @param instance The instance the record belongs to.
+    #' @param registry The registry the record belongs to.
+    #' @param api The API for the instance.
+    #' @param data The data for the record.
+    initialize = function(instance, registry, api, data) {
+      private$.instance <- instance
+      private$.registry <- registry
+      private$.api <- api
+      private$.data <- data
+
+      column_names <- map(registry$get_fields(), "column_name") |>
+        unlist() |>
+        unname()
+
+      unexpected_fields <- setdiff(names(data), column_names)
+      if (length(unexpected_fields) > 0) {
+        cli_warn(
+          paste0(
+            "Data contains unexpected fields: ",
+            paste(unexpected_fields, collapse = ", ")
+          )
+        )
+      }
+
+      missing_fields <- setdiff(column_names, names(data))
+      if (length(missing_fields) > 0) {
+        cli_warn(
+          paste0(
+            "Data is missing expected fields: ",
+            paste(missing_fields, collapse = ", ")
+          )
+        )
+      }
     }
   ),
   private = list(
-    data = NULL,
-    instance = NULL,
-    class_name = NULL,
-    fields_metadata = NULL,
-    get_value = function(field_name) {
-      field_metadata <- private$fields_metadata[[field_name]]
-      column_name <- field_metadata$column_name
-      relation_type <- field_metadata$relation_type
-      if (is.null(relation_type)) {
-        private$data[[column_name]]
+    .instance = NULL,
+    .registry = NULL,
+    .api = NULL,
+    .data = NULL,
+    get_value = function(key) {
+      if (key %in% names(private$.data)) {
+        private$.data[[key]]
+      } else if (key %in% private$.registry$get_field_names()) {
+        field <- private$.registry$get_field(key)
+
+        ## TODO: use related_registry_class$get_records instead
+        related_data <- private$.api$get_record(
+          module_name = field$module_name,
+          registry_name = field$registry_name,
+          id_or_uid = private$.data[["uid"]],
+          select = key
+        )[[key]]
+
+        related_module <- private$.instance$get_module(field$related_module_name)
+        related_registry <- related_module$get_registry(field$related_registry_name)
+        related_registry_class <- related_registry$get_record_class()
+
+        if (field$relation_type %in% c("one-to-one", "many-to-one")) {
+          related_registry_class$new(related_data)
+        } else {
+          map(related_data, ~ related_registry_class$new(.x))
+        }
       } else {
-        private$instance$`.__enclos_env__`$private$get_record(
-          module_name = field_metadata$schema_name,
-          model_name = field_metadata$model_name,
-          id_or_uid = private$data$uid,
-          select = field_name
+        cli_abort(
+          paste0(
+            "Field '", key, "' not found in registry '",
+            private$.registry$name, "'"
+          )
         )
       }
-    },
-    set_value = function(field_name) {
-      cli::cli_abort("Setting values is not supported yet")
     }
   )
 )
