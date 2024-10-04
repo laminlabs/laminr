@@ -49,7 +49,7 @@ Registry <- R6::R6Class( # nolint object_name_linter
       )
     },
     #' Get a record by ID or UID.
-    get = function(id_or_uid, include_foreign_keys = TRUE, verbose = FALSE) {
+    get = function(id_or_uid, include_foreign_keys = FALSE, verbose = FALSE) {
       data <- private$.api$get_record(
         module_name = private$.module$name,
         registry_name = private$.registry_name,

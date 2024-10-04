@@ -15,6 +15,10 @@
   - Linting action.
   - Commands for roxygenizing (`/document`) and restyling the source code (`/style`).
 
+## MINOR CHANGES
+
+* Do not complain when foreign keys are not found in a record, but also do not complain when they are (PR #13).
+
 ## BUG FIXES
 
 * Fixed the parsing of the env files in `~/.lamin` due to changes in the lamindb-setup Python package (PR #12).
