@@ -1,10 +1,22 @@
+#' @title InstanceAPI
+#'
+#' @noRd
+#'
+#' @description
+#' A wrapper around the LaminDB API for an instance.
 InstanceAPI <- R6::R6Class( # nolint object_name_linter
   "API",
   cloneable = FALSE,
   public = list(
+    #' @param instance_settings The settings for the instance
+    #' Should have the following fields:
+    #'  - id: The ID of the instance
+    #'  - api_url: The URL of the API
+    #'  - schema_id: The ID of the schema
     initialize = function(instance_settings) {
       private$.instance_settings <- instance_settings
     },
+    #' Get the schema for the instance.
     get_schema = function() {
       # TODO: replace with laminr.api get_schema call
       request <- httr::GET(
@@ -23,6 +35,7 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
 
       content
     },
+    #' Get a record from the instance.
     #' @importFrom jsonlite toJSON
     get_record = function(module_name,
                           registry_name,

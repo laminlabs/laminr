@@ -1,7 +1,18 @@
+#' @title Registry
+#'
+#' @noRd
+#'
+#' @description
+#' A registry in a module.
 Registry <- R6::R6Class( # nolint object_name_linter
   "Registry",
   cloneable = FALSE,
   public = list(
+    #' @param instance The instance the registry belongs to.
+    #' @param module The module the registry belongs to.
+    #' @param api The API for the instance.
+    #' @param registry_name The name of the registry.
+    #' @param registry_schema The schema for the registry.
     initialize = function(instance, module, api, registry_name, registry_schema) {
       private$.instance <- instance
       private$.module <- module
@@ -37,18 +48,7 @@ Registry <- R6::R6Class( # nolint object_name_linter
         api = api
       )
     },
-    get_fields = function() {
-      private$.fields
-    },
-    get_field = function(field_name) {
-      private$.fields[[field_name]]
-    },
-    get_field_names = function() {
-      names(private$.fields)
-    },
-    get_record_class = function() {
-      private$.record_class
-    },
+    #' Get a record by ID or UID.
     get = function(id_or_uid, include_foreign_keys = TRUE, verbose = FALSE) {
       data <- private$.api$get_record(
         module_name = private$.module$name,
@@ -59,6 +59,22 @@ Registry <- R6::R6Class( # nolint object_name_linter
       )
 
       private$.record_class$new(data = data)
+    },
+    #' Get the fields in the registry.
+    get_fields = function() {
+      private$.fields
+    },
+    #' Get a field by name.
+    get_field = function(field_name) {
+      private$.fields[[field_name]]
+    },
+    #' Get the field names in the registry.
+    get_field_names = function() {
+      names(private$.fields)
+    },
+    #' Get the record class for the registry.
+    get_record_class = function() {
+      private$.record_class
     }
   ),
   private = list(
@@ -72,15 +88,19 @@ Registry <- R6::R6Class( # nolint object_name_linter
     .record_class = NULL
   ),
   active = list(
+    #' @return The instance the registry belongs to.
     module = function() {
       private$.module
     },
+    #' @return The API for the instance.
     name = function() {
       private$.registry_name
     },
+    #' @return The class name for the registry.
     class_name = function() {
       private$.class_name
     },
+    #' @return Whether the registry is a link table.
     is_link_table = function() {
       private$.is_link_table
     }

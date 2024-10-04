@@ -113,7 +113,7 @@
   values <- map(parsed, "value")
   names <- map_chr(parsed, "name")
 
-  setNames(values, names)
+  set_names(values, names)
 }
 
 .settings_store__parse_instance_settings <- function(env_file) { # nolint object_length_linter

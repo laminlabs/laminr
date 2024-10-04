@@ -15,8 +15,8 @@ Connect to instance
 }
 \examples{
 \dontrun{
-  # first run 'lamin login' to authenticate
-  instance <- connect("laminlabs/cellxgene")
-  instance
+# first run 'lamin login' to authenticate
+instance <- connect("laminlabs/cellxgene")
+instance
 }
 }

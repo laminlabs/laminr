@@ -45,10 +45,20 @@ create_record_class <- function(instance, registry, api) {
   RichRecordClass
 }
 
+#' @title Record
+#'
+#' @noRd
+#'
+#' @description
+#' A record from a registry.
 Record <- R6::R6Class( # nolint object_name_linter
   "Record",
   cloneable = FALSE,
   public = list(
+    #' @param instance The instance the record belongs to.
+    #' @param registry The registry the record belongs to.
+    #' @param api The API for the instance.
+    #' @param data The data for the record.
     initialize = function(instance, registry, api, data) {
       private$.instance <- instance
       private$.registry <- registry

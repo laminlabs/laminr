@@ -61,10 +61,19 @@ create_instance <- function(instance_settings) {
   RichInstance$new(settings = instance_settings, api = api, schema = schema)
 }
 
+#' @title Instance
+#'
+#' @noRd
+#'
+#' @description
+#' A LaminDB instance.
 Instance <- R6::R6Class( # nolint object_name_linter
   "Instance",
   cloneable = FALSE,
   public = list(
+    #' @param settings The settings for the instance
+    #' @param api The API for the instance
+    #' @param schema The schema for the instance
     initialize = function(settings, api, schema) {
       private$.settings <- settings
       private$.api <- api
@@ -83,13 +92,16 @@ Instance <- R6::R6Class( # nolint object_name_linter
       ) |>
         set_names(names(schema))
     },
+    #' Get the modules for the instance.
     get_modules = function() {
       private$.module_classes
     },
+    #' Get a module by name.
     get_module = function(module_name) {
       # todo: assert module exists
       private$.module_classes[[module_name]]
     },
+    #' Get the names of the modules. Example: `c("core", "bionty")`.
     get_module_names = function() {
       names(private$.module_classes)
     }
