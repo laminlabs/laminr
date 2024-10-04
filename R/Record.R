@@ -1,4 +1,4 @@
-create_record <- function(instance, registry, api, data) {
+create_record_class <- function(instance, registry, api) {
   super <- NULL # satisfy linter
 
   # create active fields for the exposed instance
@@ -27,12 +27,12 @@ create_record <- function(instance, registry, api, data) {
     }
 
   # create the record class
-  RichRecord <- R6::R6Class( # nolint object_name_linter
+  RichRecordClass <- R6::R6Class( # nolint object_name_linter
     "RichRecord",
     cloneable = FALSE,
     inherit = RecordClass,
     public = list(
-      initialize = function(instance, registry, api, data) {
+      initialize = function(data) {
         super$initialize(
           instance = instance,
           registry = registry,
@@ -45,7 +45,7 @@ create_record <- function(instance, registry, api, data) {
   )
 
   # create the record
-  RichRecord$new(instance, registry, api, data)
+  RichRecordClass
 }
 
 Record <- R6::R6Class( # nolint object_name_linter
@@ -72,13 +72,13 @@ Record <- R6::R6Class( # nolint object_name_linter
 
         ## TODO: use related_registry_class$get_records instead
         related_data <- private$.api$get_record(
-          module_name = field$schema_name,
+          module_name = field$module_name,
           registry_name = field$registry_name,
           id_or_uid = private$.data[["uid"]],
           select = key
         )[[key]]
 
-        related_module_class <- private$.instance$get_module(field$related_schema_name)
+        related_module_class <- private$.instance$get_module(field$related_module_name)
         related_registry_class <- related_module_class$get_registry(field$related_registry_name)
 
         if (field$relation_type %in% c("one-to-one", "many-to-one")) {

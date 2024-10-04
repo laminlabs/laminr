@@ -12,22 +12,29 @@ Registry <- R6::R6Class( # nolint object_name_linter
       private$.fields <- map(
         registry_schema$fields_metadata,
         function(field) {
+          # note: the 'schema_name' and 'model_name' fields
+          # are mapped to 'module_name' and 'registry_name' respectively
           Field$new(
             type = field$type,
             through = field$through,
             field_name = field$field_name,
-            registry_name = field$registry_name,
+            registry_name = field$model_name,
             column_name = field$column_name,
-            schema_name = field$schema_name,
+            module_name = field$schema_name,
             is_link_table = field$is_link_table,
             relation_type = field$relation_type,
             related_field_name = field$related_field_name,
-            related_registry_name = field$related_registry_name,
-            related_schema_name = field$related_schema_name
+            related_registry_name = field$related_model_name,
+            related_module_name = field$related_schema_name
           )
         }
       ) |>
         set_names(names(registry_schema$fields_metadata))
+      private$.record_class <- create_record_class(
+        instance = instance,
+        registry = self,
+        api = api
+      )
     },
     get_fields = function() {
       private$.fields
@@ -68,10 +75,7 @@ Registry <- R6::R6Class( # nolint object_name_linter
         ))
       }
 
-      create_record(
-        instance = private$.instance,
-        registry = self,
-        api = private$.api,
+      private$.record_class$new(
         data = data
       )
     }
@@ -83,7 +87,8 @@ Registry <- R6::R6Class( # nolint object_name_linter
     .registry_name = NULL,
     .class_name = NULL,
     .is_link_table = NULL,
-    .fields = NULL
+    .fields = NULL,
+    .record_class = NULL
   ),
   active = list(
     module = function() {
