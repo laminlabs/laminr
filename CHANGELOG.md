@@ -6,6 +6,8 @@
 
 * Read user settings from env file created by lamin Python package (PR #2, PR #8).
 
+* Render a pkgdown website (PR #13).
+
 ## MAJOR CHANGES
 
 * Refactored the internal class data structures for better modularity and extensibility (PR #8).
