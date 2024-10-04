@@ -9,7 +9,7 @@
     instance_settings_file <- .settings_store__current_instance_settings_file()
   }
   if (!file.exists(instance_settings_file)) {
-    stop("No instance is loaded! Call `lamin init` or `lamin load`")
+    cli_abort("No instance is loaded! Call `lamin init` or `lamin load`")
   }
   settings_store <-
     tryCatch(
@@ -18,7 +18,7 @@
       },
       error = function(e) {
         content <- readLines(instance_settings_file)
-        stop(paste0(
+        cli_abort(paste0(
           "\n\n", e$message, "\n\n",
           "Your instance settings file with\n\n",
           paste(content, collapse = "\n"), "\n",
@@ -37,8 +37,8 @@
   file <- .settings_store__current_user_settings_file()
 
   if (!file.exists(file)) {
-    warning("using anonymous user (to identify, call `lamin login`)")
-    stop("TODO: implement this")
+    cli_warn("using anonymous user (to identify, call `lamin login`)")
+    cli_abort("TODO: implement this")
   } else {
     .settings_load__load_user_settings(file)
   }
@@ -51,7 +51,7 @@
         .settings_store__parse_user_settings(user_settings_file)
       },
       error = function(e) {
-        stop(paste0(
+        cli_abort(paste0(
           "Your user settings file is invalid, please delete ",
           user_settings_file, " and log in again."
         ))

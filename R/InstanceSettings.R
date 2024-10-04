@@ -25,11 +25,11 @@ InstanceSettings <- R6::R6Class( # nolint object_name_linter
       )
       missing_column <- setdiff(expected_columns, names(settings))
       if (length(missing_column) > 0) {
-        cli::cli_abort("Missing column: ", missing_column)
+        cli_abort("Missing column: ", missing_column)
       }
       unexpected_columns <- setdiff(names(settings), expected_columns)
       if (length(unexpected_columns) > 0) {
-        cli::cli_abort("Unexpected column: ", unexpected_columns)
+        cli_abort("Unexpected column: ", unexpected_columns)
       }
       private$.settings <- settings
     }

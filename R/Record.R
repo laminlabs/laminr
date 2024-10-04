@@ -87,7 +87,7 @@ Record <- R6::R6Class( # nolint object_name_linter
           map(related_data, related_registry_class$cast_data_to_class)
         }
       } else {
-        cli::cli_abort(
+        cli_abort(
           paste0(
             "Field '", key, "' not found in registry '",
             private$.registry$name, "'"

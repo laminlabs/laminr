@@ -38,10 +38,10 @@ connect <- function(slug) {
     }
     split <- strsplit(identifier, "/")[[1]]
     if (length(split) > 2) {
-      stop(
+      cli_abort(paste0(
         "The instance identifier needs to be 'owner/name', the instance name",
         " (owner is current user) or the URL: https://lamin.ai/owner/name."
-      )
+      ))
     }
     owner <- split[[1]]
     name <- split[[2]]
@@ -84,10 +84,10 @@ connect <- function(slug) {
   content <- httr::content(request)
 
   if (httr::http_error(request)) {
-    cli::cli_abort(content)
+    cli_abort(content)
   }
   if (length(content) == 0) {
-    cli::cli_abort(paste0("Instance '", owner, "/", name, "' not found"))
+    cli_abort(paste0("Instance '", owner, "/", name, "' not found"))
   }
 
   InstanceSettings$new(content)

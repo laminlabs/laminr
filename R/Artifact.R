@@ -11,7 +11,7 @@ Artifact <- R6::R6Class(
         requireNamespace("anndata", quietly = TRUE)
         anndata::read_h5ad(file_path)
       } else {
-        stop("Unsupported accessor: ", artifact_accessor)
+        cli_abort(paste0("Unsupported accessor: ", artifact_accessor))
       }
     },
     cache = function() {
@@ -29,7 +29,7 @@ Artifact <- R6::R6Class(
           data_dir = root_dir
         )
       } else {
-        stop("Unsupported storage type: ", artifact_storage$type)
+        cli_abort(paste0("Unsupported storage type: ", artifact_storage$type))
       }
     }
   )

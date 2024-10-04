@@ -62,14 +62,14 @@ Registry <- R6::R6Class( # nolint object_name_linter
         unname()
 
       if (!all(names(data) %in% column_names)) {
-        cli::cli_warn(paste0(
+        cli_warn(paste0(
           "Data contains unexpected fields: ",
           paste(setdiff(names(data), column_names), collapse = ", ")
         ))
       }
 
       if (!all(column_names %in% names(data))) {
-        cli::cli_warn(paste0(
+        cli_warn(paste0(
           "Data is missing expected fields: ",
           paste(setdiff(column_names, names(data)), collapse = ", ")
         ))

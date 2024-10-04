@@ -18,7 +18,7 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
 
       content <- httr::content(request)
       if (httr::http_error(request)) {
-        cli::cli_abort(content$detail)
+        cli_abort(content$detail)
       }
 
       content
@@ -31,7 +31,7 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
                           select = NULL,
                           verbose = FALSE) {
       if (!is.null(select) && !is.character(select)) {
-        cli::cli_abort("select must be a character vector")
+        cli_abort("select must be a character vector")
       }
       if (verbose) {
         field_name_str <-
@@ -40,7 +40,7 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
           } else {
             ""
           }
-        cli::cli_inform(paste0(
+        cli_inform(paste0(
           "Getting record from module '", module_name, "', ",
           "registry '", registry_name, "', ",
           "id_or_uid '", id_or_uid, "'",
@@ -85,7 +85,7 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
 
       content <- httr::content(request)
       if (httr::http_error(request)) {
-        cli::cli_abort(content$detail)
+        cli_abort(content$detail)
       }
 
       content

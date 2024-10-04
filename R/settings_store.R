@@ -73,19 +73,19 @@
     x_split <- strsplit(x, "=")[[1]]
 
     if (length(x_split) != 2) {
-      stop("Invalid line: ", x)
+      cli_abort(paste0("Invalid line: ", x))
     }
 
     name_with_prefix <- x_split[[1]]
     raw_value <- x_split[[2]]
 
     if (!grepl(env_prefix, name_with_prefix)) {
-      stop("Invalid prefix: ", name_with_prefix)
+      cli_abort(paste0("Invalid prefix: ", name_with_prefix))
     }
     name <- gsub(env_prefix, "", name_with_prefix)
 
     if (!name %in% names(field_types)) {
-      stop("Unknown field: ", name)
+      cli_abort(paste0("Unknown field: ", name))
     }
     raw_type <- field_types[[name]]
 
@@ -104,7 +104,7 @@
       } else if (type == "bool") {
         as.logical(raw_value)
       } else {
-        stop("Unknown type: ", type)
+        cli_abort(paste0("Unknown type: ", type))
       }
 
     list(name = name, value = value)
