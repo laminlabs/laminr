@@ -15,7 +15,7 @@ create_module <- function(instance, api, module_name, module_schema) {
     fun <- NULL
     fun_src <- paste0(
       "fun <- function() {",
-      "  self$get_registry('", registry_name, "')",
+      "  private$.registry_classes[['", registry_name, "']]",
       "}"
     )
     eval(parse(text = fun_src))
