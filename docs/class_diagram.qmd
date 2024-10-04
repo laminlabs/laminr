@@ -106,12 +106,12 @@ classDiagram
         +field_name: String
         +registry_name: String
         +column_name: String
-        +schema_name: String
+        +module_name: String
         +is_link_table: Bool
         +relation_type: String
         +related_field_name: String
         +related_registry_name: String
-        +related_schema_name: String
+        +related_module_name: String
 
     }
     class RichRecord{

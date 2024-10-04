@@ -7,23 +7,23 @@ Field <- R6::R6Class( # nolint object_name_linter
                           field_name,
                           registry_name,
                           column_name,
-                          schema_name,
+                          module_name,
                           is_link_table,
                           relation_type,
                           related_field_name,
                           related_registry_name,
-                          related_schema_name) {
+                          related_module_name) {
       private$.type <- type
       private$.through <- through
       private$.field_name <- field_name
       private$.registry_name <- registry_name
       private$.column_name <- column_name
-      private$.schema_name <- schema_name
+      private$.module_name <- module_name
       private$.is_link_table <- is_link_table
       private$.relation_type <- relation_type
       private$.related_field_name <- related_field_name
       private$.related_registry_name <- related_registry_name
-      private$.related_schema_name <- related_schema_name
+      private$.related_module_name <- related_module_name
     }
   ),
   private = list(
@@ -32,12 +32,12 @@ Field <- R6::R6Class( # nolint object_name_linter
     .field_name = NULL,
     .registry_name = NULL,
     .column_name = NULL,
-    .schema_name = NULL,
+    .module_name = NULL,
     .is_link_table = NULL,
     .relation_type = NULL,
     .related_field_name = NULL,
     .related_registry_name = NULL,
-    .related_schema_name = NULL
+    .related_module_name = NULL
   ),
   active = list(
     type = function() {
@@ -55,8 +55,8 @@ Field <- R6::R6Class( # nolint object_name_linter
     column_name = function() {
       private$.column_name
     },
-    schema_name = function() {
-      private$.schema_name
+    module_name = function() {
+      private$.module_name
     },
     is_link_table = function() {
       private$.is_link_table
@@ -70,8 +70,8 @@ Field <- R6::R6Class( # nolint object_name_linter
     related_registry_name = function() {
       private$.related_registry_name
     },
-    related_schema_name = function() {
-      private$.related_schema_name
+    related_module_name = function() {
+      private$.related_module_name
     }
   )
 )
