@@ -10,9 +10,9 @@
 #'
 #' @examples
 #' \dontrun{
-#'   # first run 'lamin login' to authenticate
-#'   instance <- connect("laminlabs/cellxgene")
-#'   instance
+#' # first run 'lamin login' to authenticate
+#' instance <- connect("laminlabs/cellxgene")
+#' instance
 #' }
 connect <- function(slug) {
   user_settings <- .settings_load__load_or_create_user_settings()
@@ -90,5 +90,5 @@ connect <- function(slug) {
     cli::cli_abort(paste0("Instance '", owner, "/", name, "' not found"))
   }
 
-  do.call(InstanceSettings$new, content)
+  InstanceSettings$new(content)
 }

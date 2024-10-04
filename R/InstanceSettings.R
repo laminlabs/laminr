@@ -2,112 +2,95 @@ InstanceSettings <- R6::R6Class( # nolint object_name_linter
   "InstanceSettings",
   cloneable = FALSE,
   public = list(
-    initialize = function(owner,
-                          name,
-                          id,
-                          schema_str,
-                          schema_id,
-                          git_repo,
-                          keep_artifacts_local,
-                          api_url,
-                          lamindb_version,
-                          storage,
-                          db_scheme,
-                          db_host,
-                          db_port,
-                          db_database,
-                          db_permissions,
-                          db_user_name,
-                          db_user_password) {
-      private$.owner <- owner
-      private$.name <- name
-      private$.id <- id
-      private$.schema_str <- schema_str
-      private$.schema_id <- schema_id
-      private$.git_repo <- git_repo
-      private$.keep_artifacts_local <- keep_artifacts_local
-      private$.api_url <- api_url
-      private$.lamindb_version <- lamindb_version
-      private$.storage <- storage
-      private$.db_scheme <- db_scheme
-      private$.db_host <- db_host
-      private$.db_port <- db_port
-      private$.db_database <- db_database
-      private$.db_permissions <- db_permissions
-      private$.db_user_name <- db_user_name
-      private$.db_user_password <- db_user_password
+    initialize = function(settings) {
+      expected_columns <- c(
+        "owner",
+        "name",
+        "id",
+        "lnid",
+        "schema_str",
+        "schema_id",
+        "git_repo",
+        "keep_artifacts_local",
+        "api_url",
+        "lamindb_version",
+        "storage",
+        "db_scheme",
+        "db_host",
+        "db_port",
+        "db_database",
+        "db_permissions",
+        "db_user_name",
+        "db_user_password"
+      )
+      missing_column <- setdiff(expected_columns, names(settings))
+      if (length(missing_column) > 0) {
+        cli::cli_abort("Missing column: ", missing_column)
+      }
+      unexpected_columns <- setdiff(names(settings), expected_columns)
+      if (length(unexpected_columns) > 0) {
+        cli::cli_abort("Unexpected column: ", unexpected_columns)
+      }
+      private$.settings <- settings
     }
   ),
   private = list(
-    .owner = NULL,
-    .name = NULL,
-    .id = NULL,
-    .schema_str = NULL,
-    .schema_id = NULL,
-    .git_repo = NULL,
-    .keep_artifacts_local = NULL,
-    .api_url = NULL,
-    .lamindb_version = NULL,
-    .storage = NULL,
-    .db_scheme = NULL,
-    .db_host = NULL,
-    .db_port = NULL,
-    .db_database = NULL,
-    .db_permissions = NULL,
-    .db_user_name = NULL,
-    .db_user_password = NULL
+    .settings = NULL
   ),
   active = list(
     owner = function() {
-      private$.owner
+      private$.settings$owner
     },
     name = function() {
-      private$.name
+      private$.settings$name
     },
     id = function() {
-      private$.id
+      private$.settings$id
+    },
+    lnid = function() {
+      private$.settings$lnid
     },
     schema_str = function() {
-      private$.schema_str
+      private$.settings$schema_str
     },
     schema_id = function() {
-      private$.schema_id
+      private$.settings$schema_id
     },
     git_repo = function() {
-      private$.git_repo
+      private$.settings$git_repo
     },
     keep_artifacts_local = function() {
-      private$.keep_artifacts_local
+      private$.settings$keep_artifacts_local
     },
     api_url = function() {
-      private$.api_url
+      private$.settings$api_url
     },
     lamindb_version = function() {
-      private$.lamindb_version
+      private$.settings$lamindb_version
     },
     storage = function() {
-      private$.storage
+      private$.settings$storage
     },
     db_scheme = function() {
-      private$.db_scheme
+      private$.settings$db_scheme
     },
     db_host = function() {
-      private$.db_host
+      private$.settings$db_host
     },
     db_port = function() {
-      private$.db_port
+      private$.settings$db_port
     },
     db_database = function() {
-      private$.db_database
+      private$.settings$db_database
     },
     db_permissions = function() {
-      private$.db_permissions
+      private$.settings$db_permissions
     },
     db_user_name = function() {
-      private$.db_user_name
+      private$.settings$db_user_name
     },
     db_user_password = function() {
-      private$.db_user_password
+      private$.settings$db_user_password
     }
   )
 )
