@@ -1,6 +1,11 @@
 # LaminDB interface in R
 
 
+<!-- badges: start -->
+
+[![R-CMD-check](https://github.com/laminlabs/laminr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/laminlabs/laminr/actions/workflows/R-CMD-check.yaml)
+<!-- badges: end -->
+
 This package provides an interface to the LaminDB database. It allows
 you to query the database and download data from it.
 
@@ -201,8 +206,8 @@ artifact <- db$Artifact$get("KBW89Mf7IGcekja2hADu")
 artifact
 ```
 
-    <RichRecord>
-      Inherits from: <Artifact>
+    <Artifact>
+      Inherits from: <ArtifactRecord>
       Public:
         _accessor: active binding
         _action_targets: active binding
@@ -309,7 +314,7 @@ artifact$storage
 
     Warning: Data is missing expected fields: run_id, created_by_id
 
-    <RichRecord>
+    <Storage>
       Inherits from: <Record>
       Public:
         _previous_runs: active binding
@@ -337,7 +342,7 @@ artifact$storage
 artifact$created_by
 ```
 
-    <RichRecord>
+    <User>
       Inherits from: <Record>
       Public:
         created_artifacts: active binding
@@ -367,7 +372,7 @@ artifact$experimental_factors
     Data is missing expected fields: run_id, source_id, created_by_id
 
     [[1]]
-    <RichRecord>
+    <ExperimentalFactor>
       Inherits from: <Record>
       Public:
         _previous_runs: active binding
@@ -399,7 +404,7 @@ artifact$experimental_factors
         get_value: function (key) 
 
     [[2]]
-    <RichRecord>
+    <ExperimentalFactor>
       Inherits from: <Record>
       Public:
         _previous_runs: active binding
@@ -431,7 +436,7 @@ artifact$experimental_factors
         get_value: function (key) 
 
     [[3]]
-    <RichRecord>
+    <ExperimentalFactor>
       Inherits from: <Record>
       Public:
         _previous_runs: active binding

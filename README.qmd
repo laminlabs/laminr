@@ -3,6 +3,10 @@ title: LaminDB interface in R
 format: gfm
 ---
 
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/laminlabs/laminr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/laminlabs/laminr/actions/workflows/R-CMD-check.yaml)
+<!-- badges: end -->
+
 This package provides an interface to the LaminDB database. It allows you to query the database and download data from it.
 
 ## Installation

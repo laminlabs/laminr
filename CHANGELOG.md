@@ -10,6 +10,11 @@
 
 * Refactored the internal class data structures for better modularity and extensibility (PR #8).
 
+* Added GitHub actions to the project (PR #11):
+  - Standard R-CMD-check workflow.
+  - Linting action.
+  - Commands for roxygenizing (`/document`) and restyling the source code (`/style`).
+
 # laminr v0.0.1
 
 Initial POC implementation of the LaminDB API client for R.
