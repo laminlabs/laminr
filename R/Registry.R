@@ -30,6 +30,7 @@ Registry <- R6::R6Class( # nolint object_name_linter
         }
       ) |>
         set_names(names(registry_schema$fields_metadata))
+
       private$.record_class <- create_record_class(
         instance = instance,
         registry = self,
@@ -45,6 +46,9 @@ Registry <- R6::R6Class( # nolint object_name_linter
     get_field_names = function() {
       names(private$.fields)
     },
+    get_record_class = function() {
+      private$.record_class
+    },
     get = function(id_or_uid, include_foreign_keys = TRUE, verbose = FALSE) {
       data <- private$.api$get_record(
         module_name = private$.module$name,
@@ -54,30 +58,7 @@ Registry <- R6::R6Class( # nolint object_name_linter
         verbose = verbose
       )
 
-      self$cast_data_to_class(data)
-    },
-    cast_data_to_class = function(data) {
-      column_names <- map(private$.fields, "column_name") |>
-        unlist() |>
-        unname()
-
-      if (!all(names(data) %in% column_names)) {
-        cli_warn(paste0(
-          "Data contains unexpected fields: ",
-          paste(setdiff(names(data), column_names), collapse = ", ")
-        ))
-      }
-
-      if (!all(column_names %in% names(data))) {
-        cli_warn(paste0(
-          "Data is missing expected fields: ",
-          paste(setdiff(column_names, names(data)), collapse = ", ")
-        ))
-      }
-
-      private$.record_class$new(
-        data = data
-      )
+      private$.record_class$new(data = data)
     }
   ),
   private = list(

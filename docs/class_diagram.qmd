@@ -92,7 +92,7 @@ classDiagram
         +get_field(String field_name): Field
         +get_field_names(): String[]
         +get(String id_or_uid, Bool include_foreign_keys, List~String~ select, Bool verbose): RichRecord
-        +cast_data_to_class(Map<String, Any> data): RichRecord
+        +get_registry_class(): RichRecordClass
     }
     class Artifact{
         +initialize(...): Artifact

@@ -57,6 +57,30 @@ Record <- R6::R6Class( # nolint object_name_linter
       private$.registry <- registry
       private$.api <- api
       private$.data <- data
+
+      column_names <- map(registry$get_fields(), "column_name") |>
+        unlist() |>
+        unname()
+
+      unexpected_fields <- setdiff(names(data), column_names)
+      if (length(unexpected_fields) > 0) {
+        cli_warn(
+          paste0(
+            "Data contains unexpected fields: ",
+            paste(unexpected_fields, collapse = ", ")
+          )
+        )
+      }
+
+      missing_fields <- setdiff(column_names, names(data))
+      if (length(missing_fields) > 0) {
+        cli_warn(
+          paste0(
+            "Data is missing expected fields: ",
+            paste(missing_fields, collapse = ", ")
+          )
+        )
+      }
     }
   ),
   private = list(
@@ -78,13 +102,14 @@ Record <- R6::R6Class( # nolint object_name_linter
           select = key
         )[[key]]
 
-        related_module_class <- private$.instance$get_module(field$related_module_name)
-        related_registry_class <- related_module_class$get_registry(field$related_registry_name)
+        related_module <- private$.instance$get_module(field$related_module_name)
+        related_registry <- related_module$get_registry(field$related_registry_name)
+        related_registry_class <- related_registry$get_record_class()
 
         if (field$relation_type %in% c("one-to-one", "many-to-one")) {
-          related_registry_class$cast_data_to_class(related_data)
+          related_registry_class$new(related_data)
         } else {
-          map(related_data, related_registry_class$cast_data_to_class)
+          map(related_data, ~ related_registry_class$new(.x))
         }
       } else {
         cli_abort(

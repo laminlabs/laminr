@@ -141,12 +141,12 @@ db$Artifact
 
     <Registry>
       Public:
-        cast_data_to_class: function (data) 
         class_name: active binding
         get: function (id_or_uid, include_foreign_keys = TRUE, verbose = FALSE) 
         get_field: function (field_name) 
         get_field_names: function () 
         get_fields: function () 
+        get_record_class: function () 
         initialize: function (instance, module, api, registry_name, registry_schema) 
         is_link_table: active binding
         module: active binding
@@ -167,12 +167,12 @@ db$bionty$CellLine
 
     <Registry>
       Public:
-        cast_data_to_class: function (data) 
         class_name: active binding
         get: function (id_or_uid, include_foreign_keys = TRUE, verbose = FALSE) 
         get_field: function (field_name) 
         get_field_names: function () 
         get_fields: function () 
+        get_record_class: function () 
         initialize: function (instance, module, api, registry_name, registry_schema) 
         is_link_table: active binding
         module: active binding
