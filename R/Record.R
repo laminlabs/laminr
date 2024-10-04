@@ -18,14 +18,14 @@ create_record_class <- function(instance, registry, api) {
   # (core.artifact gets additional methods)
   base_class <-
     if (registry$module$name == "core" && registry$name == "artifact") {
-      Artifact
+      ArtifactRecord
     } else {
       Record
     }
 
   # create the record class
   RichRecordClass <- R6::R6Class( # nolint object_name_linter
-    "RichRecord",
+    registry$class_name,
     cloneable = FALSE,
     inherit = base_class,
     public = list(

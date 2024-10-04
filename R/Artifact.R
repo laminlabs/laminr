@@ -1,5 +1,5 @@
-Artifact <- R6::R6Class(
-  "Artifact",
+ArtifactRecord <- R6::R6Class( # nolint object_name_linter
+  "ArtifactRecord",
   inherit = Record,
   public = list(
     load = function() {
