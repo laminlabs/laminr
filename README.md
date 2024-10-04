@@ -83,9 +83,9 @@ db$get_module("core")
         Feature: active binding
         FeatureSet: active binding
         FeatureValue: active binding
+        get_registries: function () 
         get_registry: function (registry_name) 
         get_registry_names: function () 
-        get_registries: function () 
         initialize: function (instance, api, module_name, module_schema) 
         name: active binding
         Param: active binding
@@ -98,8 +98,8 @@ db$get_module("core")
       Private:
         .api: API, R6
         .instance: cellxgene, Instance, R6
-        .registry_classes: list
         .module_name: core
+        .registry_classes: list
 
 ``` r
 db$bionty
@@ -116,9 +116,9 @@ db$bionty
         Ethnicity: active binding
         ExperimentalFactor: active binding
         Gene: active binding
+        get_registries: function () 
         get_registry: function (registry_name) 
         get_registry_names: function () 
-        get_registries: function () 
         initialize: function (instance, api, module_name, module_schema) 
         name: active binding
         Organism: active binding
@@ -130,8 +130,8 @@ db$bionty
       Private:
         .api: API, R6
         .instance: cellxgene, Instance, R6
-        .registry_classes: list
         .module_name: bionty
+        .registry_classes: list
 
 ## Registry
 
@@ -157,8 +157,9 @@ db$Artifact
         .fields: list
         .instance: cellxgene, Instance, R6
         .is_link_table: FALSE
-        .registry_name: artifact
         .module: core, Module, R6
+        .record_class: R6ClassGenerator
+        .registry_name: artifact
 
 ``` r
 db$bionty$CellLine
@@ -182,8 +183,9 @@ db$bionty$CellLine
         .fields: list
         .instance: cellxgene, Instance, R6
         .is_link_table: FALSE
-        .registry_name: cellline
         .module: bionty, Module, R6
+        .record_class: R6ClassGenerator
+        .registry_name: cellline
 
 ## Record
 
@@ -233,7 +235,7 @@ artifact
         genes: active binding
         hash: active binding
         id: active binding
-        initialize: function (instance, registry, api, data) 
+        initialize: function (data) 
         input_of_runs: active binding
         is_latest: active binding
         key: active binding
@@ -316,7 +318,7 @@ artifact$storage
         created_by: active binding
         description: active binding
         id: active binding
-        initialize: function (instance, registry, api, data) 
+        initialize: function (data) 
         instance_uid: active binding
         region: active binding
         root: active binding
@@ -344,7 +346,7 @@ artifact$created_by
         created_transforms: active binding
         handle: active binding
         id: active binding
-        initialize: function (instance, registry, api, data) 
+        initialize: function (data) 
         name: active binding
         uid: active binding
         updated_at: active binding
@@ -376,7 +378,7 @@ artifact$experimental_factors
         created_by: active binding
         description: active binding
         id: active binding
-        initialize: function (instance, registry, api, data) 
+        initialize: function (data) 
         instrument: active binding
         links_artifact: active binding
         measurement: active binding
@@ -408,7 +410,7 @@ artifact$experimental_factors
         created_by: active binding
         description: active binding
         id: active binding
-        initialize: function (instance, registry, api, data) 
+        initialize: function (data) 
         instrument: active binding
         links_artifact: active binding
         measurement: active binding
@@ -440,7 +442,7 @@ artifact$experimental_factors
         created_by: active binding
         description: active binding
         id: active binding
-        initialize: function (instance, registry, api, data) 
+        initialize: function (data) 
         instrument: active binding
         links_artifact: active binding
         measurement: active binding
