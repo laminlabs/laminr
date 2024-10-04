@@ -1,7 +1,7 @@
 create_instance <- function(instance_settings) {
   super <- NULL # satisfy linter
 
-  api <- API$new(instance_settings = instance_settings)
+  api <- InstanceAPI$new(instance_settings = instance_settings)
 
   # fetch schema from the API
   schema <- api$get_schema()

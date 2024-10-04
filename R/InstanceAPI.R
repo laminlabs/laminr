@@ -1,4 +1,4 @@
-API <- R6::R6Class( # nolint object_name_linter
+InstanceAPI <- R6::R6Class( # nolint object_name_linter
   "API",
   cloneable = FALSE,
   public = list(

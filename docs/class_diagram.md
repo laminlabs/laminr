@@ -7,7 +7,7 @@ classDiagram
     laminr --> UserSettings
     laminr --> InstanceSettings
     RichInstance --|> Instance
-    Instance --> API
+    Instance --> InstanceAPI
     Instance --> Module
     Core --|> Module
     Bionty --|> Module
@@ -49,7 +49,7 @@ classDiagram
         +get_module_names(): String[]
 
     }
-    class API{
+    class InstanceAPI{
         +initialize(InstanceSettings Instance_settings)
         +get_schema(): Map~String, Any~
         +get_record(...): Map~String, Any~
