@@ -20,69 +20,34 @@ remotes::install_github("laminlabs/laminr")
 
 ## Set up environment
 
-
-For this package to work, we first need to run the following commands in the terminal:
+For this package to work, we first need to install `lamindb-setup` and log in to LaminDB.
 
 ```bash
-pip install lamindb
-lamin login
-lamin load laminlabs/cellxgene
+pip install lamindb-setup
+lamin login <your-email> --key <your-token>
 ```
 
-## Usage
+:::{.callout-tip}
+You can get your token from the [LaminDB web interface](https://lamin.ai/settings).
+:::
+
+## Quick start
+
+Let's first connect to a LaminDB instance:
 
 ```{r setup}
 library(laminr)
-```
 
-## Instance
-
-### Connect to a LaminDB instance
-
-```{r connect}
 db <- connect("laminlabs/cellxgene")
 ```
 
-
-### Print a LaminDB instance
-
-```{r print_instance}
-db
-```
-
-### Get module
-
-```{r get_module}
-db$get_module("core")
-
-db$bionty
-```
-
-## Registry
-
-```{r get_artifact_registry}
-db$Artifact
-```
-
-```{r get_bionty_celline}
-db$bionty$CellLine
-```
-
-## Record
-
-### Get artifact
+Get an artifact:
 
 ```{r get_artifact}
 artifact <- db$Artifact$get("KBW89Mf7IGcekja2hADu")
 ```
 
-### Print artifact
-
-```{r print_artifact}
-artifact
-```
-
-### Print simple fields
+Access some of its fields:
 
 ```{r print_simple_fields}
 artifact$id
@@ -92,31 +57,15 @@ artifact$uid
 artifact$key
 ```
 
-### Print related fields
+Fetch related fields:
 
 ```{r print_related_fields}
-artifact$storage
+artifact$storage$root
 
-artifact$created_by
-
-artifact$experimental_factors
+artifact$created_by$handle
 ```
 
-### Cache artifact
-
-:::{.callout-note}
-Only S3 storage is supported at the moment.
-:::
-
-```{r cache_artifact}
-artifact$cache()
-```
-
-### Load artifact
-
-:::{.callout-note}
-Only S3 storage and AnnData accessors are supported at the moment.
-:::
+Load the artifact:
 
 ```{r load_artifact}
 artifact$load()
