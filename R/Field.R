@@ -5,24 +5,24 @@ Field <- R6::R6Class( # nolint object_name_linter
     initialize = function(type,
                           through,
                           field_name,
-                          model_name,
+                          registry_name,
                           column_name,
                           schema_name,
                           is_link_table,
                           relation_type,
                           related_field_name,
-                          related_model_name,
+                          related_registry_name,
                           related_schema_name) {
       private$.type <- type
       private$.through <- through
       private$.field_name <- field_name
-      private$.model_name <- model_name
+      private$.registry_name <- registry_name
       private$.column_name <- column_name
       private$.schema_name <- schema_name
       private$.is_link_table <- is_link_table
       private$.relation_type <- relation_type
       private$.related_field_name <- related_field_name
-      private$.related_model_name <- related_model_name
+      private$.related_registry_name <- related_registry_name
       private$.related_schema_name <- related_schema_name
     }
   ),
@@ -30,13 +30,13 @@ Field <- R6::R6Class( # nolint object_name_linter
     .type = NULL,
     .through = NULL,
     .field_name = NULL,
-    .model_name = NULL,
+    .registry_name = NULL,
     .column_name = NULL,
     .schema_name = NULL,
     .is_link_table = NULL,
     .relation_type = NULL,
     .related_field_name = NULL,
-    .related_model_name = NULL,
+    .related_registry_name = NULL,
     .related_schema_name = NULL
   ),
   active = list(
@@ -49,8 +49,8 @@ Field <- R6::R6Class( # nolint object_name_linter
     field_name = function() {
       private$.field_name
     },
-    model_name = function() {
-      private$.model_name
+    registry_name = function() {
+      private$.registry_name
     },
     column_name = function() {
       private$.column_name
@@ -67,8 +67,8 @@ Field <- R6::R6Class( # nolint object_name_linter
     related_field_name = function() {
       private$.related_field_name
     },
-    related_model_name = function() {
-      private$.related_model_name
+    related_registry_name = function() {
+      private$.related_registry_name
     },
     related_schema_name = function() {
       private$.related_schema_name

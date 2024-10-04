@@ -83,9 +83,9 @@ db$get_module("core")
         Feature: active binding
         FeatureSet: active binding
         FeatureValue: active binding
-        get_model: function (model_name) 
-        get_model_names: function () 
-        get_models: function () 
+        get_registry: function (registry_name) 
+        get_registry_names: function () 
+        get_registries: function () 
         initialize: function (instance, api, module_name, module_schema) 
         name: active binding
         Param: active binding
@@ -98,7 +98,7 @@ db$get_module("core")
       Private:
         .api: API, R6
         .instance: cellxgene, Instance, R6
-        .model_classes: list
+        .registry_classes: list
         .module_name: core
 
 ``` r
@@ -116,9 +116,9 @@ db$bionty
         Ethnicity: active binding
         ExperimentalFactor: active binding
         Gene: active binding
-        get_model: function (model_name) 
-        get_model_names: function () 
-        get_models: function () 
+        get_registry: function (registry_name) 
+        get_registry_names: function () 
+        get_registries: function () 
         initialize: function (instance, api, module_name, module_schema) 
         name: active binding
         Organism: active binding
@@ -130,16 +130,16 @@ db$bionty
       Private:
         .api: API, R6
         .instance: cellxgene, Instance, R6
-        .model_classes: list
+        .registry_classes: list
         .module_name: bionty
 
-## Model
+## Registry
 
 ``` r
 db$Artifact
 ```
 
-    <Model>
+    <Registry>
       Public:
         cast_data_to_class: function (data) 
         class_name: active binding
@@ -147,7 +147,7 @@ db$Artifact
         get_field: function (field_name) 
         get_field_names: function () 
         get_fields: function () 
-        initialize: function (instance, module, api, model_name, model_schema) 
+        initialize: function (instance, module, api, registry_name, registry_schema) 
         is_link_table: active binding
         module: active binding
         name: active binding
@@ -157,14 +157,14 @@ db$Artifact
         .fields: list
         .instance: cellxgene, Instance, R6
         .is_link_table: FALSE
-        .model_name: artifact
+        .registry_name: artifact
         .module: core, Module, R6
 
 ``` r
 db$bionty$CellLine
 ```
 
-    <Model>
+    <Registry>
       Public:
         cast_data_to_class: function (data) 
         class_name: active binding
@@ -172,7 +172,7 @@ db$bionty$CellLine
         get_field: function (field_name) 
         get_field_names: function () 
         get_fields: function () 
-        initialize: function (instance, module, api, model_name, model_schema) 
+        initialize: function (instance, module, api, registry_name, registry_schema) 
         is_link_table: active binding
         module: active binding
         name: active binding
@@ -182,7 +182,7 @@ db$bionty$CellLine
         .fields: list
         .instance: cellxgene, Instance, R6
         .is_link_table: FALSE
-        .model_name: cellline
+        .registry_name: cellline
         .module: bionty, Module, R6
 
 ## Record
@@ -233,7 +233,7 @@ artifact
         genes: active binding
         hash: active binding
         id: active binding
-        initialize: function (instance, model, api, data) 
+        initialize: function (instance, registry, api, data) 
         input_of_runs: active binding
         is_latest: active binding
         key: active binding
@@ -276,7 +276,7 @@ artifact
         .api: API, R6
         .data: list
         .instance: cellxgene, Instance, R6
-        .model: Model, R6
+        .registry: Registry, R6
         get_value: function (key) 
 
 ### Print simple fields
@@ -316,7 +316,7 @@ artifact$storage
         created_by: active binding
         description: active binding
         id: active binding
-        initialize: function (instance, model, api, data) 
+        initialize: function (instance, registry, api, data) 
         instance_uid: active binding
         region: active binding
         root: active binding
@@ -328,7 +328,7 @@ artifact$storage
         .api: API, R6
         .data: list
         .instance: cellxgene, Instance, R6
-        .model: Model, R6
+        .registry: Registry, R6
         get_value: function (key) 
 
 ``` r
@@ -344,7 +344,7 @@ artifact$created_by
         created_transforms: active binding
         handle: active binding
         id: active binding
-        initialize: function (instance, model, api, data) 
+        initialize: function (instance, registry, api, data) 
         name: active binding
         uid: active binding
         updated_at: active binding
@@ -352,7 +352,7 @@ artifact$created_by
         .api: API, R6
         .data: list
         .instance: cellxgene, Instance, R6
-        .model: Model, R6
+        .registry: Registry, R6
         get_value: function (key) 
 
 ``` r
@@ -376,7 +376,7 @@ artifact$experimental_factors
         created_by: active binding
         description: active binding
         id: active binding
-        initialize: function (instance, model, api, data) 
+        initialize: function (instance, registry, api, data) 
         instrument: active binding
         links_artifact: active binding
         measurement: active binding
@@ -393,7 +393,7 @@ artifact$experimental_factors
         .api: API, R6
         .data: list
         .instance: cellxgene, Instance, R6
-        .model: Model, R6
+        .registry: Registry, R6
         get_value: function (key) 
 
     [[2]]
@@ -408,7 +408,7 @@ artifact$experimental_factors
         created_by: active binding
         description: active binding
         id: active binding
-        initialize: function (instance, model, api, data) 
+        initialize: function (instance, registry, api, data) 
         instrument: active binding
         links_artifact: active binding
         measurement: active binding
@@ -425,7 +425,7 @@ artifact$experimental_factors
         .api: API, R6
         .data: list
         .instance: cellxgene, Instance, R6
-        .model: Model, R6
+        .registry: Registry, R6
         get_value: function (key) 
 
     [[3]]
@@ -440,7 +440,7 @@ artifact$experimental_factors
         created_by: active binding
         description: active binding
         id: active binding
-        initialize: function (instance, model, api, data) 
+        initialize: function (instance, registry, api, data) 
         instrument: active binding
         links_artifact: active binding
         measurement: active binding
@@ -457,7 +457,7 @@ artifact$experimental_factors
         .api: API, R6
         .data: list
         .instance: cellxgene, Instance, R6
-        .model: Model, R6
+        .registry: Registry, R6
         get_value: function (key) 
 
 ### Cache artifact

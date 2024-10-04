@@ -11,9 +11,9 @@ classDiagram
     Instance --> Module
     Core --|> Module
     Bionty --|> Module
-    Module --> Model
-    Model --> Field
-    Model --> RichRecord
+    Module --> Registry
+    Registry --> Field
+    Registry --> RichRecord
     Artifact --|> Record
     RichInstance --> Core
     RichInstance --> Bionty
@@ -56,33 +56,33 @@ classDiagram
     }
     class RichInstance{
         +initialize(InstanceSettings Instance_settings, API api, Map<String, any> schema): RichInstance
-        +Model Artifact
-        +Model Collection
-        +...model accessors...
-        +Model User
+        +Registry Artifact
+        +Registry Collection
+        +...registry accessors...
+        +Registry User
         +Bionty bionty
     }
     class Core{
-        +Model Artifact
-        +Model Collection
-        +...model accessors...
-        +Model User
+        +Registry Artifact
+        +Registry Collection
+        +...registry accessors...
+        +Registry User
     }
     class Bionty{
-        +Model CellLine
-        +Model CellMarker
-        +...model accessors...
-        +Model Tissue
+        +Registry CellLine
+        +Registry CellMarker
+        +...registry accessors...
+        +Registry Tissue
     }
     class Module{
         +initialize(Instance Instance, API api, String module_name, Map<String, any> module_schema): Module
         +name: String
-        +get_models(): Model[]
-        +get_model(String model_name): Model
-        +get_model_names(): String[]
+        +get_registries(): Registry[]
+        +get_registry(String registry_name): Registry
+        +get_registry_names(): String[]
     }
-    class Model{
-        +initialize(Instance Instance, Module module, API api, String model_name, Map<String, Any> model_schema): Model
+    class Registry{
+        +initialize(Instance Instance, Module module, API api, String registry_name, Map<String, Any> registry_schema): Registry
         +name: String
         +class_name: String
         +is_link_table: Bool
@@ -102,13 +102,13 @@ classDiagram
         +type: String
         +through: Map
         +field_name: String
-        +model_name: String
+        +registry_name: String
         +column_name: String
         +schema_name: String
         +is_link_table: Bool
         +relation_type: String
         +related_field_name: String
-        +related_model_name: String
+        +related_registry_name: String
         +related_schema_name: String
 
     }
@@ -116,7 +116,7 @@ classDiagram
         +...field value accessors...
     }
     class Record{
-        +initialize(Instance Instance, Model model, API api, Map<String, Any> data): Record
+        +initialize(Instance Instance, Registry registry, API api, Map<String, Any> data): Record
         +get_value(String field_name): Any
     }
 ```

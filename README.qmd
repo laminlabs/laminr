@@ -54,9 +54,9 @@ db$get_module("core")
 db$bionty
 ```
 
-## Model
+## Registry
 
-```{r get_artifact_model}
+```{r get_artifact_registry}
 db$Artifact
 ```
 

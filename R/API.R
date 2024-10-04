@@ -25,7 +25,7 @@ API <- R6::R6Class( # nolint object_name_linter
     },
     #' @importFrom jsonlite toJSON
     get_record = function(module_name,
-                          model_name,
+                          registry_name,
                           id_or_uid,
                           include_foreign_keys = FALSE,
                           select = NULL,
@@ -39,7 +39,7 @@ API <- R6::R6Class( # nolint object_name_linter
           }
         cli::cli_inform(paste0(
           "Getting record from module '", module_name, "', ",
-          "model '", model_name, "', ",
+          "registry '", registry_name, "', ",
           "id_or_uid '", id_or_uid, "'",
           field_name_str, "\n"
         ))
@@ -65,7 +65,7 @@ API <- R6::R6Class( # nolint object_name_linter
         "/modules/",
         module_name,
         "/",
-        model_name,
+        registry_name,
         "/",
         id_or_uid,
         "?schema_id=",

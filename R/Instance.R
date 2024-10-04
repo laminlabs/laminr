@@ -9,23 +9,23 @@ create_instance <- function(instance_settings) {
   # create active fields for the exposed instance
   active <- list()
 
-  # add core models to active fields
-  for (model_name in names(schema$core)) {
-    model <- schema$core[[model_name]]
+  # add core registries to active fields
+  for (registry_name in names(schema$core)) {
+    registry <- schema$core[[registry_name]]
 
-    if (model$is_link_table) {
+    if (registry$is_link_table) {
       next
     }
 
     fun <- NULL
     fun_src <- paste0(
       "fun <- function() {",
-      "  private$.module_classes$core$get_model('", model_name, "')",
+      "  private$.module_classes$core$get_registry('", registry_name, "')",
       "}"
     )
     eval(parse(text = fun_src))
 
-    active[[model$class_name]] <- fun
+    active[[registry$class_name]] <- fun
   }
 
   # add non-core modules to active fields

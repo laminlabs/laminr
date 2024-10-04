@@ -4,23 +4,23 @@ create_module <- function(instance, api, module_name, module_schema) {
   # create active fields for the exposed instance
   active <- list()
 
-  # add models to active fields
-  for (model_name in names(module_schema)) {
-    model <- module_schema[[model_name]]
+  # add registries to active fields
+  for (registry_name in names(module_schema)) {
+    registry <- module_schema[[registry_name]]
 
-    if (model$is_link_table) {
+    if (registry$is_link_table) {
       next
     }
 
     fun <- NULL
     fun_src <- paste0(
       "fun <- function() {",
-      "  self$get_model('", model_name, "')",
+      "  self$get_registry('", registry_name, "')",
       "}"
     )
     eval(parse(text = fun_src))
 
-    active[[model$class_name]] <- fun
+    active[[registry$class_name]] <- fun
   }
 
   # create the module class
@@ -54,35 +54,35 @@ Module <- R6::R6Class( # nolint object_name_linter
       private$.api <- api
       private$.module_name <- module_name
 
-      private$.model_classes <- map(
+      private$.registry_classes <- map(
         names(module_schema),
-        function(model_name) {
-          Model$new(
+        function(registry_name) {
+          Registry$new(
             instance = instance,
             module = self,
             api = api,
-            model_name = model_name,
-            model_schema = module_schema[[model_name]]
+            registry_name = registry_name,
+            registry_schema = module_schema[[registry_name]]
           )
         }
       ) |>
         set_names(names(module_schema))
     },
-    get_models = function() {
-      private$.model_classes
+    get_registries = function() {
+      private$.registry_classes
     },
-    get_model = function(model_name) {
-      private$.model_classes[[model_name]]
+    get_registry = function(registry_name) {
+      private$.registry_classes[[registry_name]]
     },
-    get_model_names = function() {
-      names(private$.model_classes)
+    get_registry_names = function() {
+      names(private$.registry_classes)
     }
   ),
   private = list(
     .instance = NULL,
     .api = NULL,
     .module_name = NULL,
-    .model_classes = NULL
+    .registry_classes = NULL
   ),
   active = list(
     name = function() {
