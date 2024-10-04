@@ -17,7 +17,7 @@
 
 ## BUG FIXES
 
-* Fixed the parsing of the env files in `~/.lamin` due to changes in the lamindb-setup Python package (PR #xx).
+* Fixed the parsing of the env files in `~/.lamin` due to changes in the lamindb-setup Python package (PR #12).
 
 # laminr v0.0.1
 
