@@ -17,15 +17,13 @@ create_instance <- function(instance_settings) {
       next
     }
 
-    fun <- NULL
     fun_src <- paste0(
-      "fun <- function() {",
+      "function() {",
       "  private$.module_classes$core$get_registry('", registry_name, "')",
       "}"
     )
-    eval(parse(text = fun_src))
 
-    active[[registry$class_name]] <- fun
+    active[[registry$class_name]] <- eval(parse(text = fun_src))
   }
 
   # add non-core modules to active fields
@@ -34,16 +32,12 @@ create_instance <- function(instance_settings) {
       next
     }
 
-    fun <- NULL
     fun_src <- paste0(
-      "fun <- function() {",
-      "  self$get_module('", module_name, "')",
+      "function() {",
+      "  private$.module_classes[['", module_name, "']]",
       "}"
     )
-
-    eval(parse(text = fun_src))
-
-    active[[module_name]] <- fun
+    active[[module_name]] <- eval(parse(text = fun_src))
   }
 
   # create the instance class

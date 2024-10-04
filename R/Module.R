@@ -12,15 +12,12 @@ create_module <- function(instance, api, module_name, module_schema) {
       next
     }
 
-    fun <- NULL
     fun_src <- paste0(
-      "fun <- function() {",
+      "function() {",
       "  private$.registry_classes[['", registry_name, "']]",
       "}"
     )
-    eval(parse(text = fun_src))
-
-    active[[registry$class_name]] <- fun
+    active[[registry$class_name]] <- eval(parse(text = fun_src))
   }
 
   # create the module class

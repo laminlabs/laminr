@@ -6,15 +6,12 @@ create_record_class <- function(instance, registry, api) {
 
   # add fields to active
   for (field_name in registry$get_field_names()) {
-    fun <- NULL
     fun_src <- paste0(
-      "fun <- function() {",
+      "function() {",
       "  private$get_value('", field_name, "')",
       "}"
     )
-    eval(parse(text = fun_src))
-
-    active[[field_name]] <- fun
+    active[[field_name]] <- eval(parse(text = fun_src))
   }
 
   # determine the base class
