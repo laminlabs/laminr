@@ -4,3 +4,6 @@
 ^experiments$
 ^\.lintr$
 ^\.github$
+^CHANGELOG\.md$
+^README\.qmd$
+^docs$

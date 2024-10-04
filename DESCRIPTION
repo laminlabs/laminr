@@ -18,10 +18,11 @@ BugReports: https://github.com/laminlabs/laminr/issues
 Depends:
     R (>= 4.0.0)
 Imports:
-    anndata,
     cli,
     httr,
     jsonlite,
     purrr,
-    R6,
+    R6
+Suggests:
+    anndata,
     s3 (>= 1.1.0)
