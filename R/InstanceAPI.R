@@ -30,6 +30,9 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
                           include_foreign_keys = FALSE,
                           select = NULL,
                           verbose = FALSE) {
+      if (!is.null(select) && !is.character(select)) {
+        cli::cli_abort("select must be a character vector")
+      }
       if (verbose) {
         field_name_str <-
           if (!is.null(select)) {
@@ -46,9 +49,6 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
       }
       body_data <- list()
       if (!is.null(select)) {
-        if (!is.character(select)) {
-          cli::cli_abort("select must be a character vector")
-        }
         body_data$select <- select
       }
       body <-
