@@ -24,7 +24,7 @@ create_module <- function(instance, api, module_name, module_schema) {
   }
 
   # create the module class
-  CurrentModule <- R6::R6Class( # nolint object_name_linter
+  RichModule <- R6::R6Class( # nolint object_name_linter
     module_name,
     cloneable = FALSE,
     inherit = Module,
@@ -42,7 +42,7 @@ create_module <- function(instance, api, module_name, module_schema) {
   )
 
   # create the module
-  CurrentModule$new(instance, api, module_name, module_schema)
+  RichModule$new(instance, api, module_name, module_schema)
 }
 
 Module <- R6::R6Class( # nolint object_name_linter
