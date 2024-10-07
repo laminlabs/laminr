@@ -15,6 +15,10 @@
   - Linting action.
   - Commands for roxygenizing (`/document`) and restyling the source code (`/style`).
 
+## BUG FIXES
+
+* Fixed the parsing of the env files in `~/.lamin` due to changes in the lamindb-setup Python package (PR #12).
+
 # laminr v0.0.1
 
 Initial POC implementation of the LaminDB API client for R.
