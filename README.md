@@ -6,8 +6,7 @@
 [![R-CMD-check](https://github.com/laminlabs/laminr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/laminlabs/laminr/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-This package provides an interface to the LaminDB database. It allows
-you to query the database and download data from it.
+This package allows you to query & download from LaminDB instances.
 
 ## Installation
 
@@ -24,9 +23,8 @@ For this package to work, we first need to run the following commands in
 the terminal:
 
 ``` bash
-pip install lamindb
+pip install lamin-cli
 lamin login
-lamin load laminlabs/cellxgene
 ```
 
 ## Usage
