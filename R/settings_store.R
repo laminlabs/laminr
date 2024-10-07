@@ -85,7 +85,8 @@
     name <- gsub(env_prefix, "", name_with_prefix)
 
     if (!name %in% names(field_types)) {
-      cli_abort(paste0("Unknown field: ", name))
+      cli_warn(paste0("Unexpected field in '", env_file, "': ", name))
+      return(list(name = name, value = NULL))
     }
     raw_type <- field_types[[name]]
 
@@ -120,12 +121,14 @@
   env_prefix <- "lamindb_instance_"
 
   field_types <- list(
+    api_url = "Optional[str]",
     owner = "str",
     name = "str",
     storage_root = "str",
     storage_region = "str",
     db = "Optional[str]",
     schema_str = "Optional[str]",
+    schema_id = "Optional[str]",
     id = "str",
     git_repo = "Optional[str]",
     keep_artifacts_local = "Optional[bool]"
@@ -141,6 +144,7 @@
     email = "str",
     password = "str",
     access_token = "str",
+    api_key = "Optional[str]",
     uid = "str",
     uuid = "str",
     handle = "str",
