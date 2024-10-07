@@ -1,56 +1,50 @@
 ---
-title: LaminDB interface in R
+title: "LaminR: Work with LaminDB instances in R"
 format: gfm
 ---
+
+<!-- The README.md file is created by rendering README.qmd using `quarto render README.qmd`. -->
+<!-- DO NOT edit README.md directly, instead all changes should be made to README.qmd. -->
+
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/laminlabs/laminr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/laminlabs/laminr/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-This package provides an interface to the LaminDB database. It allows you to query the database and download data from it.
+This package allows you to query and download data from LaminDB instances.
 
-## Installation
+## Setup
 
-You can install the development version from GitHub with:
+Install the development version from GitHub:
 
 ```R
 # install.packages("remotes")
 remotes::install_github("laminlabs/laminr")
 ```
 
-## Set up environment
-
-
-For this package to work, we first need to run the following commands in the terminal:
+Install the Lamin CLI and authenticate:
 
 ```bash
-pip install lamindb
+pip install lamin-cli
 lamin login
-lamin load laminlabs/cellxgene
 ```
 
 ## Usage
+
+Load the library
 
 ```{r setup}
 library(laminr)
 ```
 
-## Instance
-
-### Connect to a LaminDB instance
+## Database instance
 
 ```{r connect}
 db <- connect("laminlabs/cellxgene")
-```
-
-
-### Print a LaminDB instance
-
-```{r print_instance}
 db
 ```
 
-### Get module
+### Schema module
 
 ```{r get_module}
 db$get_module("core")
@@ -58,7 +52,7 @@ db$get_module("core")
 db$bionty
 ```
 
-## Registry
+### Registry
 
 ```{r get_artifact_registry}
 db$Artifact
@@ -68,21 +62,16 @@ db$Artifact
 db$bionty$CellLine
 ```
 
-## Record
+### Record
 
-### Get artifact
+#### Get artifact
 
 ```{r get_artifact}
 artifact <- db$Artifact$get("KBW89Mf7IGcekja2hADu")
-```
-
-### Print artifact
-
-```{r print_artifact}
 artifact
 ```
 
-### Print simple fields
+#### Print simple fields
 
 ```{r print_simple_fields}
 artifact$id
@@ -92,7 +81,7 @@ artifact$uid
 artifact$key
 ```
 
-### Print related fields
+#### Print related fields
 
 ```{r print_related_fields}
 artifact$storage
@@ -102,7 +91,7 @@ artifact$created_by
 artifact$experimental_factors
 ```
 
-### Cache artifact
+### Download and cache an artifact
 
 :::{.callout-note}
 Only S3 storage is supported at the moment.
@@ -112,7 +101,7 @@ Only S3 storage is supported at the moment.
 artifact$cache()
 ```
 
-### Load artifact
+### Load an artifact
 
 :::{.callout-note}
 Only S3 storage and AnnData accessors are supported at the moment.
