@@ -1,11 +1,15 @@
 # LaminR: Work with LaminDB instances in R
 
+
+<!-- The README.md file is created by rendering README.qmd using `quarto render README.qmd`. -->
+<!-- DO NOT edit README.md directly, instead all changes should be made to README.qmd. -->
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/laminlabs/laminr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/laminlabs/laminr/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-This package allows you to query & download data from LaminDB instances.
+This package allows you to query and download data from LaminDB
+instances.
 
 ## Setup
 
@@ -16,7 +20,7 @@ Install the development version from GitHub:
 remotes::install_github("laminlabs/laminr")
 ```
 
-Install the Lamin CLI & authenticate:
+Install the Lamin CLI and authenticate:
 
 ``` bash
 pip install lamin-cli
@@ -25,17 +29,16 @@ lamin login
 
 ## Usage
 
+Load the library
+
 ``` r
 library(laminr)
 ```
 
-### Datbaase instance
+## Database instance
 
 ``` r
 db <- connect("laminlabs/cellxgene")
-```
-
-``` r
 db
 ```
 
@@ -182,17 +185,12 @@ db$bionty$CellLine
         .record_class: R6ClassGenerator
         .registry_name: cellline
 
-## Record
+### Record
 
-### Get artifact
+#### Get artifact
 
 ``` r
 artifact <- db$Artifact$get("KBW89Mf7IGcekja2hADu")
-```
-
-### Print artifact
-
-``` r
 artifact
 ```
 
@@ -276,7 +274,7 @@ artifact
         .registry: Registry, R6
         get_value: function (key) 
 
-### Print simple fields
+#### Print simple fields
 
 ``` r
 artifact$id
@@ -296,7 +294,7 @@ artifact$key
 
     [1] "cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad"
 
-### Print related fields
+#### Print related fields
 
 ``` r
 artifact$storage
@@ -457,7 +455,7 @@ artifact$experimental_factors
         .registry: Registry, R6
         get_value: function (key) 
 
-### Download & cache an artifact
+### Download and cache an artifact
 
 > [!NOTE]
 >
@@ -469,7 +467,7 @@ artifact$cache()
 
     Warning: Data is missing expected fields: run_id, created_by_id
 
-    ℹ 's3://cellxgene-data-public/cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad' already exists at '/home/rcannood/.cache/lamindb/cellxgene-data-public/cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad'
+    ℹ 's3://cellxgene-data-public/cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad' already exists at '/home/luke/.cache/lamindb/cellxgene-data-public/cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad'
 
 ### Load an artifact
 
@@ -483,7 +481,7 @@ artifact$load()
 
     Warning: Data is missing expected fields: run_id, created_by_id
 
-    ℹ 's3://cellxgene-data-public/cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad' already exists at '/home/rcannood/.cache/lamindb/cellxgene-data-public/cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad'
+    ℹ 's3://cellxgene-data-public/cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad' already exists at '/home/luke/.cache/lamindb/cellxgene-data-public/cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad'
 
     AnnData object with n_obs × n_vars = 51552 × 36398
         obs: 'donor_id', 'Predicted_labels_CellTypist', 'Majority_voting_CellTypist', 'Manually_curated_celltype', 'assay_ontology_term_id', 'cell_type_ontology_term_id', 'development_stage_ontology_term_id', 'disease_ontology_term_id', 'self_reported_ethnicity_ontology_term_id', 'is_primary_data', 'organism_ontology_term_id', 'sex_ontology_term_id', 'tissue_ontology_term_id', 'suspension_type', 'tissue_type', 'cell_type', 'assay', 'disease', 'organism', 'sex', 'tissue', 'self_reported_ethnicity', 'development_stage', 'observation_joinid'
