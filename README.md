@@ -1,26 +1,22 @@
-# LaminDB interface in R
-
+# LaminR: Work with LaminDB instances in R
 
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/laminlabs/laminr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/laminlabs/laminr/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-This package allows you to query & download from LaminDB instances.
+This package allows you to query & download data from LaminDB instances.
 
-## Installation
+## Setup
 
-You can install the development version from GitHub with:
+Install the development version from GitHub:
 
 ``` r
 # install.packages("remotes")
 remotes::install_github("laminlabs/laminr")
 ```
 
-## Set up environment
-
-For this package to work, we first need to run the following commands in
-the terminal:
+Install the Lamin CLI & authenticate:
 
 ``` bash
 pip install lamin-cli
@@ -33,15 +29,11 @@ lamin login
 library(laminr)
 ```
 
-## Instance
-
-### Connect to a LaminDB instance
+### Datbaase instance
 
 ``` r
 db <- connect("laminlabs/cellxgene")
 ```
-
-### Print a LaminDB instance
 
 ``` r
 db
@@ -72,7 +64,7 @@ db
         .module_classes: list
         .settings: InstanceSettings, R6
 
-### Get module
+### Schema module
 
 ``` r
 db$get_module("core")
@@ -136,7 +128,7 @@ db$bionty
         .module_name: bionty
         .registry_classes: list
 
-## Registry
+### Registry
 
 ``` r
 db$Artifact
@@ -465,7 +457,7 @@ artifact$experimental_factors
         .registry: Registry, R6
         get_value: function (key) 
 
-### Cache artifact
+### Download & cache an artifact
 
 > [!NOTE]
 >
@@ -479,7 +471,7 @@ artifact$cache()
 
     ℹ 's3://cellxgene-data-public/cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad' already exists at '/home/rcannood/.cache/lamindb/cellxgene-data-public/cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad'
 
-### Load artifact
+### Load an artifact
 
 > [!NOTE]
 >
