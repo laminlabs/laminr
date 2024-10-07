@@ -15,6 +15,10 @@
   - Linting action.
   - Commands for roxygenizing (`/document`) and restyling the source code (`/style`).
 
+## MINOR CHANGES
+
+* Update `README` with new set up instructions and simplify (PR #14)
+
 ## BUG FIXES
 
 * Fixed the parsing of the env files in `~/.lamin` due to changes in the lamindb-setup Python package (PR #12).
