@@ -50,11 +50,11 @@ jobs:
       # caused by https://github.com/quarto-dev/quarto-cli/issues/2671
       - name: Create tempdir in home directory
         run:
-          mkdir -p ~/tmp
+          mkdir -p /home/runner/tmp
 
       - uses: r-lib/actions/check-r-package@v2
         env:
-          TMPDIR: $HOME/tmp
+          TMPDIR: /home/runner/tmp
         with:
           upload-snapshots: true
           build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
