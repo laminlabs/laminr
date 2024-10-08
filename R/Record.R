@@ -67,7 +67,7 @@ Record <- R6::R6Class( # nolint object_name_linter
 
       expected_fields <-
         registry$get_fields() |>
-        discard(~is.null(.x$column_name)) |>
+        discard(~ is.null(.x$column_name)) |>
         map_chr("column_name") |>
         unname()
       unexpected_fields <- setdiff(names(data), expected_fields)
@@ -82,7 +82,7 @@ Record <- R6::R6Class( # nolint object_name_linter
 
       required_fields <-
         registry$get_fields() |>
-        keep(~is.null(.x$relation_type)) |>
+        keep(~ is.null(.x$relation_type)) |>
         map_chr("column_name") |>
         unname()
       missing_fields <- setdiff(required_fields, names(data))
