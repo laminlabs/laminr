@@ -20,6 +20,7 @@ When connecting to a LaminDB instance, laminr will interact with the LaminDB ins
 
 ```{mermaid}
 classDiagram
+%% # nolint start
     laminr --> Instance
     laminr --> UserSettings
     laminr --> InstanceSettings
@@ -98,6 +99,7 @@ classDiagram
         +initialize(Instance Instance, Registry registry, API api, Map<String, Any> data): Record
         +get_value(String field_name): Any
     }
+%% # nolint end
 ```
 
 ## Sugar syntax
@@ -130,6 +132,7 @@ This sugar syntax is achieved by creating RichInstance and RichRecord classes th
 
 ```{mermaid}
 classDiagram
+%% # nolint start
     laminr --> RichInstance
     laminr --> UserSettings
     laminr --> InstanceSettings
@@ -244,4 +247,5 @@ classDiagram
         +initialize(Instance Instance, Registry registry, API api, Map<String, Any> data): Record
         +get_value(String field_name): Any
     }
+%% # nolint end
 ```
