@@ -54,7 +54,7 @@ jobs:
 
       - uses: r-lib/actions/check-r-package@v2
         env:
-          TMPDIR=$HOME/tmp
+          TMPDIR: $HOME/tmp
         with:
           upload-snapshots: true
           build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
