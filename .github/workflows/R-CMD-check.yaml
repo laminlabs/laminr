@@ -46,10 +46,15 @@ jobs:
           extra-packages: any::rcmdcheck
           needs: check
 
+      # this is a workaround for issue https://github.com/r-lib/pkgdown/issues/2791
+      # caused by https://github.com/quarto-dev/quarto-cli/issues/2671
       - name: Create tempdir in home directory
-        run: echo "::set-env name=TMPDIR::$(mktemp -d $HOME/tmpdir-XXXXXX)"
+        run:
+          mkdir -p ~/tmp
 
       - uses: r-lib/actions/check-r-package@v2
+        env:
+          TMPDIR=$HOME/tmp
         with:
           upload-snapshots: true
           build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
