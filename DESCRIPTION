@@ -26,6 +26,7 @@ Imports:
 Suggests:
     anndata,
     quarto,
+    Rdpack,
     s3 (>= 1.1.0)
 VignetteBuilder: quarto
 RdMacros: Rdpack
