@@ -21,6 +21,8 @@
 
 * Do not complain when foreign keys are not found in a record, but also do not complain when they are (PR #13).
 
+* Update `README` with new set up instructions and simplify (PR #14).
+
 ## BUG FIXES
 
 * Fixed the parsing of the env files in `~/.lamin` due to changes in the lamindb-setup Python package (PR #12).
