@@ -46,6 +46,9 @@ jobs:
           extra-packages: any::rcmdcheck
           needs: check
 
+      - name: Create tempdir in home directory
+        run: echo "::set-env name=TMPDIR::$(mktemp -d $HOME/tmpdir-XXXXXX)"
+
       - uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
