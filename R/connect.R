@@ -3,8 +3,13 @@
 
 #' Connect to instance
 #'
+#' Note that prior to connecting to an instance, you need to authenticate with
+#' `lamin login`. If no slug is provided, the default instance is loaded, which is
+#' set by running `lamin load <slug>`.
+#'
 #' @param slug The instance slug `account_handle/instance_name` or URL.
 #'   If the instance is owned by you, it suffices to pass the instance name.
+#'   If no slug is provided, the default instance is loaded.
 #'
 #' @export
 #'
@@ -14,16 +19,48 @@
 #' instance <- connect("laminlabs/cellxgene")
 #' instance
 #' }
-connect <- function(slug) {
-  user_settings <- .settings_load__load_or_create_user_settings()
+connect <- function(slug = NULL) {
+  instance_settings <-
+    if (is.null(slug)) {
+      instance <- .settings_load__load_instance_settings()
 
-  owner_name <- .connect_get_owner_name_from_identifier(slug)
+      # if the instance is not loaded but the user is logged in,
+      # we can query the instance settings from hub.lamin.ai
+      if (is.null(instance$id) || is.null(instance$schema_id) || is.null(instance$api_url)) {
+        slug <- paste0(instance$owner, "/", instance$name)
 
-  instance_settings <- .connect_get_instance_settings(
-    owner = owner_name$owner,
-    name = owner_name$name,
-    access_token = user_settings$access_token
-  )
+        user_settings <- .settings_load__load_or_create_user_settings()
+
+        owner_name <- .connect_get_owner_name_from_identifier(slug)
+
+        .connect_get_instance_settings(
+          owner = owner_name$owner,
+          name = owner_name$name,
+          access_token = user_settings$access_token
+        )
+      } else {
+        instance
+      }
+    } else {
+      owner_name <- .connect_get_owner_name_from_identifier(slug)
+
+      instance_file <- .settings_store__instance_settings_file(
+        name = owner_name$name,
+        owner = owner_name$owner
+      )
+
+      if (file.exists(instance_file)) {
+        .settings_load__load_instance_settings(instance_file)
+      } else {
+        user_settings <- .settings_load__load_or_create_user_settings()
+
+        .connect_get_instance_settings(
+          owner = owner_name$owner,
+          name = owner_name$name,
+          access_token = user_settings$access_token
+        )
+      }
+    }
 
   create_instance(instance_settings = instance_settings)
 }

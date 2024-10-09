@@ -15,9 +15,11 @@
   - Linting action.
   - Commands for roxygenizing (`/document`) and restyling the source code (`/style`).
 
+* Allow unauthenticated users to query an instance if they ran `lamin load <instance>` beforehand (PR #xx).
+
 ## MINOR CHANGES
 
-* Update `README` with new set up instructions and simplify (PR #14)
+* Update `README` with new set up instructions and simplify (PR #14).
 
 ## BUG FIXES
 

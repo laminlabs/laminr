@@ -15,27 +15,33 @@ InstanceSettings <- R6::R6Class( # nolint object_name_linter
         "owner",
         "name",
         "id",
-        "lnid",
         "schema_str",
         "schema_id",
         "git_repo",
         "keep_artifacts_local",
-        "api_url",
-        "lamindb_version",
-        "storage",
-        "db_scheme",
-        "db_host",
-        "db_port",
-        "db_database",
-        "db_permissions",
-        "db_user_name",
-        "db_user_password"
+        "api_url"
+      )
+      optional_columns <- c(
+        "lnid", # api
+        "lamindb_version", # api
+        "storage", # api
+        "storage_root", # lamin-cli
+        "storage_region", # lamin-cli
+        "db", # lamin-cli
+        "db_scheme", # api
+        "db_host", # api
+        "db_port", # api
+        "db_database", # api
+        "db_permissions", # api
+        "db_user_name", # api
+        "db_user_password", # api
+        "lamindb_version" # api
       )
       missing_column <- setdiff(expected_columns, names(settings))
       if (length(missing_column) > 0) {
         cli_abort("Missing column: ", missing_column)
       }
-      unexpected_columns <- setdiff(names(settings), expected_columns)
+      unexpected_columns <- setdiff(names(settings), c(expected_columns, optional_columns))
       if (length(unexpected_columns) > 0) {
         cli_abort("Unexpected column: ", unexpected_columns)
       }
@@ -58,10 +64,6 @@ InstanceSettings <- R6::R6Class( # nolint object_name_linter
     id = function() {
       private$.settings$id
     },
-    #' Get the LNID of the instance.
-    lnid = function() {
-      private$.settings$lnid
-    },
     #' Get the schema string of the instance.
     schema_str = function() {
       private$.settings$schema_str
@@ -81,42 +83,6 @@ InstanceSettings <- R6::R6Class( # nolint object_name_linter
     #' Get the API URL of the instance.
     api_url = function() {
       private$.settings$api_url
-    },
-    #' Get the LaminDB version of the instance.
-    lamindb_version = function() {
-      private$.settings$lamindb_version
-    },
-    #' Get the storage of the instance.
-    storage = function() {
-      private$.settings$storage
-    },
-    #' Get the database scheme of the instance.
-    db_scheme = function() {
-      private$.settings$db_scheme
-    },
-    #' Get the database host of the instance.
-    db_host = function() {
-      private$.settings$db_host
-    },
-    #' Get the database port of the instance.
-    db_port = function() {
-      private$.settings$db_port
-    },
-    #' Get the database of the instance.
-    db_database = function() {
-      private$.settings$db_database
-    },
-    #' Get the database permissions of the instance.
-    db_permissions = function() {
-      private$.settings$db_permissions
-    },
-    #' Get the database user name of the instance.
-    db_user_name = function() {
-      private$.settings$db_user_name
-    },
-    #' Get the database user password of the instance.
-    db_user_password = function() {
-      private$.settings$db_user_password
     }
   )
 )
