@@ -91,11 +91,7 @@ Record <- R6::R6Class( # nolint object_name_linter
     },
 
     print = function(style = TRUE) {
-      if (isTRUE(style)) {
-        cli::cli_text(self$to_string(style = TRUE))
-      } else {
-        cat(self$to_string())
-      }
+      cli::cat_line(self$to_string(style))
     },
 
     to_string = function(style = FALSE) {

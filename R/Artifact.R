@@ -49,6 +49,57 @@ ArtifactRecord <- R6::R6Class( # nolint object_name_linter
       } else {
         cli_abort(paste0("Unsupported storage type: ", artifact_storage$type))
       }
+    },
+
+    describe = function(style = TRUE) {
+
+      provenance_fields <- c(
+        storage = "root",
+        transform = "name",
+        run = "started_at",
+        created_by = "handle",
+        test = "fail"
+      )
+
+      output_strings <- character()
+
+      provenance_strings <- purrr::map_chr(
+        names(provenance_fields),
+        function(.field) {
+          field_name <- try(self[[.field]][[provenance_fields[.field]]])
+          if (inherits(field_name, "try-error") || is.null(field_name)) {
+            return(NA_character_)
+          }
+
+          if (is.character(field_name)) {
+            field_name <- paste0("'", field_name, "'")
+          }
+
+          paste0(
+            cli::col_blue("    $", .field),
+            cli::col_br_blue(" = "),
+            cli::col_yellow(field_name)
+          )
+        }
+      ) |>
+        purrr::discard(is.na)
+
+      if (length(provenance_strings) > 0) {
+        output_strings <- c(
+          output_strings,
+          cli::style_italic(cli::col_br_magenta("  Provenance")),
+          provenance_strings
+        )
+      }
+
+      self$print(style)
+      for (.line in output_strings) {
+        if (isFALSE(style)) {
+          .line <- cli::ansi_strip(.line)
+        }
+
+        cli::cat_line(.line)
+      }
     }
   )
 )
