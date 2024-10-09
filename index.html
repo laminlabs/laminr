@@ -32,6 +32,12 @@
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
+<li><a class="dropdown-item" href="articles/structure.html">Package structure</a></li>
+  </ul>
+</li>
       </ul>
 <ul class="navbar-nav">
 <li class="nav-item"><form class="form-inline" role="search">
@@ -46,25 +52,25 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="lamindb-interface-in-r">LaminDB interface in R<a class="anchor" aria-label="anchor" href="#lamindb-interface-in-r"></a>
+<div class="page-header"><h1 id="laminr-work-with-lamindb-instances-in-r">LaminR: Work with LaminDB instances in R<a class="anchor" aria-label="anchor" href="#laminr-work-with-lamindb-instances-in-r"></a>
 </h1></div>
+<!--
+DO NOT edit the README.md directly.
+&#10;Instead, edit the README.qmd file and render it using `quarto render README.qmd`.
+-->
 <!-- badges: start -->
 
-<p>This package provides an interface to the LaminDB database. It allows you to query the database and download data from it.</p>
+<p>This package allows you to query and download data from LaminDB instances.</p>
 <div class="section level2">
-<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+<h2 id="setup">Setup<a class="anchor" aria-label="anchor" href="#setup"></a>
 </h2>
-<p>You can install the development version from GitHub with:</p>
+<p>Install the development version from GitHub:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"laminlabs/laminr"</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="set-up-environment">Set up environment<a class="anchor" aria-label="anchor" href="#set-up-environment"></a>
-</h2>
-<p>For this package to work, we first need to install <code>lamindb-setup</code> and log in to LaminDB.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="ex">pip</span> install lamindb-setup</span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="ex">lamin</span> login <span class="op">&lt;</span>your-email<span class="op">&gt;</span> --key <span class="op">&lt;</span>your-token<span class="op">&gt;</span></span></code></pre></div>
+<p>Install the Lamin CLI and authenticate:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="ex">pip</span> install lamin-cli</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="ex">lamin</span> login</span></code></pre></div>
 <blockquote>
 <p>[!TIP]</p>
 <p>You can get your token from the <a href="https://lamin.ai/settings" class="external-link">LaminDB web interface</a>.</p>
@@ -75,7 +81,7 @@
 </h2>
 <p>Let’s first connect to a LaminDB instance:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/laminlabs/laminr" class="external-link">laminr</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://laminr.lamin.ai">laminr</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">db</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/connect.html">connect</a></span><span class="op">(</span><span class="st">"laminlabs/cellxgene"</span><span class="op">)</span></span></code></pre></div>
 <p>Get an artifact:</p>
