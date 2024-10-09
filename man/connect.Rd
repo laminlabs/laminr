@@ -4,14 +4,17 @@
 \alias{connect}
 \title{Connect to instance}
 \usage{
-connect(slug)
+connect(slug = NULL)
 }
 \arguments{
 \item{slug}{The instance slug \code{account_handle/instance_name} or URL.
-If the instance is owned by you, it suffices to pass the instance name.}
+If the instance is owned by you, it suffices to pass the instance name.
+If no slug is provided, the default instance is loaded.}
 }
 \description{
-Connect to instance
+Note that prior to connecting to an instance, you need to authenticate with
+\verb{lamin login}. If no slug is provided, the default instance is loaded, which is
+set by running \verb{lamin load <slug>}.
 }
 \examples{
 \dontrun{
