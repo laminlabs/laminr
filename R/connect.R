@@ -22,26 +22,22 @@
 connect <- function(slug = NULL) {
   instance_settings <-
     if (is.null(slug)) {
-      instance <- .settings_load__load_instance_settings()
+      # if the slug is null, see if we can load the default instance
+      instance_file <- .settings_store__current_instance_settings_file()
 
-      # if the instance is not loaded but the user is logged in,
-      # we can query the instance settings from hub.lamin.ai
-      if (is.null(instance$id) || is.null(instance$schema_id) || is.null(instance$api_url)) {
-        slug <- paste0(instance$owner, "/", instance$name)
-
-        user_settings <- .settings_load__load_or_create_user_settings()
-
-        owner_name <- .connect_get_owner_name_from_identifier(slug)
-
-        .connect_get_instance_settings(
-          owner = owner_name$owner,
-          name = owner_name$name,
-          access_token = user_settings$access_token
-        )
+      if (file.exists(instance_file)) {
+        .settings_load__load_instance_settings(instance_file)
       } else {
-        instance
+        cli_abort(
+          paste0(
+            "Could not load default instance. Either:\n",
+            " - Provide a slug. For example: `connect(\"laminlabs/cellxgene\")`)\n",
+            " - Set a default instance by running `lamin load <slug>`."
+          )
+        )
       }
     } else {
+      # if the slug is not null, try to load the instance from the local settings
       owner_name <- .connect_get_owner_name_from_identifier(slug)
 
       instance_file <- .settings_store__instance_settings_file(
@@ -52,15 +48,36 @@ connect <- function(slug = NULL) {
       if (file.exists(instance_file)) {
         .settings_load__load_instance_settings(instance_file)
       } else {
-        user_settings <- .settings_load__load_or_create_user_settings()
+        # try to load the user settings from the api
+        user_file <- .settings_store__current_user_settings_file()
 
-        .connect_get_instance_settings(
-          owner = owner_name$owner,
-          name = owner_name$name,
-          access_token = user_settings$access_token
-        )
+        if (!file.exists(user_file)) {
+          cli_abort(paste0(
+            "No default user or instance is loaded! Either:\n",
+            " - Call `lamin login` to set a default user.\n",
+            " - Call `lamin load <slug>` to set a default instance.\n"
+          ))
+        } else {
+          user_settings <- .settings_load__load_user_settings(user_file)
+
+          .connect_get_instance_settings(
+            owner = owner_name$owner,
+            name = owner_name$name,
+            access_token = user_settings$access_token
+          )
+        }
       }
     }
+
+  for (required_field in c("id", "api_url", "schema_id")) {
+    if (is.null(instance_settings[[required_field]])) {
+      cli_abort(paste0(
+        "Invalid instance settings: missing field '", required_field, "'\n",
+        "Your instance settings file is likely outdated. Please update lamin-cli,\n",
+        "delete the instance settings file, and reload the instance."
+      ))
+    }
+  }
 
   create_instance(instance_settings = instance_settings)
 }
