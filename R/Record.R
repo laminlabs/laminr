@@ -88,6 +88,135 @@ Record <- R6::R6Class( # nolint object_name_linter
           )
         )
       }
+    },
+
+    print = function(style = TRUE) {
+      if (isTRUE(style)) {
+        cli::cli_text(self$to_string(style = TRUE))
+      } else {
+        cat(self$to_string())
+      }
+    },
+
+    to_string = function(style = FALSE) {
+
+      field_order <- c(
+        # Simple fields
+        "uid",
+        "handle",
+        "name",
+        "root",
+        "n",
+        "dtype",
+        "unit",
+        "description",
+        "synonyms",
+        "key",
+        "suffix",
+        "type",
+        "size",
+        "source_code",
+        "registry",
+        "hash",
+        "n_objects",
+        "n_observations",
+        "started_at",
+        "finished_at",
+        "is_consecutive",
+        "reference",
+        "reference_type",
+        "visibility",
+        "version",
+        "is_latest",
+        "region",
+        "instance_uid",
+        "created_at",
+        "updated_at",
+
+        # Relational fields
+        "created_by",
+        "storage",
+        "transform",
+        "transforms",
+        "run",
+        "report",
+        "environment",
+        "meta_artifact",
+        "ulabels",
+        "predecessors",
+        "successors",
+        "runs",
+        "parent",
+        "parents",
+        "children",
+        "output_artifacts",
+        "input_artifacts",
+        "output_collections",
+        "input_collections",
+        "input_of_runs",
+        "feature_sets",
+        "collections",
+        "features",
+        "artifacts",
+        "values",
+        "created_transforms",
+        "created_runs",
+        "created_artifacts"
+      )
+
+      column_names <- map(private$.registry$get_fields(), "column_name") |>
+         unlist()
+      column_names <- names(column_names)
+
+      # Reorder names according to set order
+      field_names <- intersect(field_order, column_names)
+      # Make sure any unknown names are included
+      field_names <- c(field_names, sort(setdiff(column_names, field_names)))
+
+      field_strings <- purrr::map_chr(field_names, function(.name) {
+
+        # Get value, handling missing/empty/inaccessible fields
+        value <- try(self[[.name]], silent = TRUE)
+        if (inherits(value, "try-error")) {
+          return(NA_character_)
+        }
+
+
+        if (inherits(value, c("Record", "R6"))) {
+          value <- try(value$id, silent = TRUE)
+
+          if (inherits(value, "try-error")) {
+            return(NA_character_)
+          }
+
+          .name <- paste0(.name, "_id")
+        }
+
+        if (is.null(value)) {
+          return(NA_character_)
+        }
+
+        if (is.character(value)) {
+          value <- paste0("'", value, "'")
+        }
+
+        paste0(
+          cli::col_blue(.name), cli::col_br_blue("="), cli::col_yellow(value)
+        )
+      })
+      field_strings <- field_strings[!is.na(field_strings)]
+
+      string <- paste0(
+        cli::style_bold(cli::col_green(private$.registry$class_name)), "(",
+        paste(field_strings, collapse = ", "),
+        ")"
+      )
+
+      if (isFALSE(style)) {
+        string <- cli::ansi_strip(string)
+      }
+
+      return(string)
     }
   ),
   private = list(
