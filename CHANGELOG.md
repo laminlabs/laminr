@@ -6,6 +6,8 @@
 
 * Read user settings from env file created by lamin Python package (PR #2, PR #8).
 
+* Add `to_string()` and `print()` methods to the `Record` class and (incomplete) `describe()` method to the `Artifact()` class (PR #22)
+
 ## MAJOR CHANGES
 
 * Refactored the internal class data structures for better modularity and extensibility (PR #8).
