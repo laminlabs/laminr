@@ -11,7 +11,7 @@ UserSettings <- R6::R6Class( # nolint object_name_linter
   public = list(
     #' @param settings A named list of settings for the user
     initialize = function(settings) {
-      expected_columns <- c(
+      expected_keys <- c(
         "email",
         "password",
         "access_token",
@@ -21,11 +21,11 @@ UserSettings <- R6::R6Class( # nolint object_name_linter
         "handle",
         "name"
       )
-      missing_column <- setdiff(expected_columns, names(settings))
+      missing_column <- setdiff(expected_keys, names(settings))
       if (length(missing_column) > 0) {
         cli_abort("Missing column: ", missing_column)
       }
-      unexpected_columns <- setdiff(names(settings), expected_columns)
+      unexpected_columns <- setdiff(names(settings), expected_keys)
       if (length(unexpected_columns) > 0) {
         cli_abort("Unexpected column: ", unexpected_columns)
       }

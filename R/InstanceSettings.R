@@ -11,7 +11,7 @@ InstanceSettings <- R6::R6Class( # nolint object_name_linter
   public = list(
     #' @param settings A named list of settings for the instance
     initialize = function(settings) {
-      expected_columns <- c(
+      expected_keys <- c(
         "owner",
         "name",
         "id",
@@ -21,7 +21,7 @@ InstanceSettings <- R6::R6Class( # nolint object_name_linter
         "keep_artifacts_local",
         "api_url"
       )
-      optional_columns <- c(
+      optional_keys <- c(
         "lnid", # api
         "lamindb_version", # api
         "storage", # api
@@ -37,11 +37,11 @@ InstanceSettings <- R6::R6Class( # nolint object_name_linter
         "db_user_password", # api
         "lamindb_version" # api
       )
-      missing_column <- setdiff(expected_columns, names(settings))
+      missing_column <- setdiff(expected_keys, names(settings))
       if (length(missing_column) > 0) {
         cli_abort("Missing column: ", missing_column)
       }
-      unexpected_columns <- setdiff(names(settings), c(expected_columns, optional_columns))
+      unexpected_columns <- setdiff(names(settings), c(expected_keys, optional_keys))
       if (length(unexpected_columns) > 0) {
         cli_abort("Unexpected column: ", unexpected_columns)
       }
