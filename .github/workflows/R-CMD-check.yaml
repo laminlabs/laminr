@@ -33,6 +33,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # - name: Install lamin-cli
+      #   env:
+      #     LAMIN_API_KEY: ${{ secrets.LAMIN_API_KEY }}
+      #   run: |
+      #     pip install lamin-cli
+      #     lamin login
+
       - uses: r-lib/actions/setup-pandoc@v2
 
       - uses: r-lib/actions/setup-tinytex@v2
