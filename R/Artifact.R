@@ -50,9 +50,7 @@ ArtifactRecord <- R6::R6Class( # nolint object_name_linter
         cli_abort(paste0("Unsupported storage type: ", artifact_storage$type))
       }
     },
-
     describe = function(style = TRUE) {
-
       provenance_fields <- c(
         storage = "root",
         transform = "name",

@@ -95,13 +95,10 @@ Record <- R6::R6Class( # nolint object_name_linter
         )
       }
     },
-
     print = function(style = TRUE) {
       cli::cat_line(self$to_string(style))
     },
-
     to_string = function(style = FALSE) {
-
       field_order <- c(
         # Simple fields
         "uid",
@@ -167,7 +164,7 @@ Record <- R6::R6Class( # nolint object_name_linter
       )
 
       column_names <- map(private$.registry$get_fields(), "column_name") |>
-         unlist()
+        unlist()
       column_names <- names(column_names)
 
       # Reorder names according to set order
@@ -176,7 +173,6 @@ Record <- R6::R6Class( # nolint object_name_linter
       field_names <- c(field_names, sort(setdiff(column_names, field_names)))
 
       field_strings <- purrr::map_chr(field_names, function(.name) {
-
         # Get value, handling missing/empty/inaccessible fields
         value <- try(self[[.name]], silent = TRUE)
         if (inherits(value, "try-error")) {
