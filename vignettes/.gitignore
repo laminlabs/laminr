@@ -1,0 +1,5 @@
+/.quarto/
+*.html
+*.R
+*_files
+_quarto.yaml

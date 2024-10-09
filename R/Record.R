@@ -65,11 +65,12 @@ Record <- R6::R6Class( # nolint object_name_linter
       private$.api <- api
       private$.data <- data
 
-      column_names <- map(registry$get_fields(), "column_name") |>
-        unlist() |>
+      expected_fields <-
+        registry$get_fields() |>
+        discard(~ is.null(.x$column_name)) |>
+        map_chr("column_name") |>
         unname()
-
-      unexpected_fields <- setdiff(names(data), column_names)
+      unexpected_fields <- setdiff(names(data), expected_fields)
       if (length(unexpected_fields) > 0) {
         cli_warn(
           paste0(
@@ -79,7 +80,12 @@ Record <- R6::R6Class( # nolint object_name_linter
         )
       }
 
-      missing_fields <- setdiff(column_names, names(data))
+      required_fields <-
+        registry$get_fields() |>
+        keep(~ is.null(.x$relation_type)) |>
+        map_chr("column_name") |>
+        unname()
+      missing_fields <- setdiff(required_fields, names(data))
       if (length(missing_fields) > 0) {
         cli_warn(
           paste0(

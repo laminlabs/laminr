@@ -124,14 +124,14 @@
     api_url = "Optional[str]",
     owner = "str",
     name = "str",
-    storage_root = "str",
-    storage_region = "str",
-    db = "Optional[str]",
     schema_str = "Optional[str]",
     schema_id = "Optional[str]",
     id = "str",
     git_repo = "Optional[str]",
-    keep_artifacts_local = "Optional[bool]"
+    keep_artifacts_local = "Optional[bool]",
+    storage_root = "Optional[str]",
+    storage_region = "Optional[str]",
+    db = "Optional[str]"
   )
 
   .settings_store__read_typed_env(env_file, env_prefix, field_types)

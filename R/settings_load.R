@@ -9,7 +9,7 @@
     instance_settings_file <- .settings_store__current_instance_settings_file()
   }
   if (!file.exists(instance_settings_file)) {
-    cli_abort("No instance is loaded! Call `lamin init` or `lamin load`")
+    cli_abort("No instance is loaded! Call `lamin load <instance_id>` to load an instance.")
   }
   settings_store <-
     tryCatch(
@@ -38,7 +38,17 @@
 
   if (!file.exists(file)) {
     cli_warn("using anonymous user (to identify, call `lamin login`)")
-    cli_abort("TODO: implement this")
+    content <- list(
+      email = NULL,
+      password = NULL,
+      access_token = NULL,
+      api_key = NULL,
+      uid = NULL,
+      uuid = NULL,
+      handle = "anonymous",
+      name = NULL
+    )
+    .settings_load__setup_user_from_store(content)
   } else {
     .settings_load__load_user_settings(file)
   }
@@ -61,11 +71,9 @@
 }
 
 .settings_load__setup_instance_from_store <- function(store) { # nolint object_length_linter
-  # TODO: implement this?
-  return(store)
+  InstanceSettings$new(store)
 }
 
 .settings_load__setup_user_from_store <- function(store) { # nolint object_length_linter
-  # TODO: implement this?
-  return(store)
+  UserSettings$new(store)
 }
