@@ -7,3 +7,6 @@
 ^CHANGELOG\.md$
 ^README\.qmd$
 ^docs$
+^_pkgdown\.yml$
+^pkgdown$
+^vignettes/*_files$

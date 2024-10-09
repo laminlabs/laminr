@@ -6,6 +6,8 @@
 
 * Read user settings from env file created by lamin Python package (PR #2, PR #8).
 
+* Render a pkgdown website (PR #13).
+
 ## MAJOR CHANGES
 
 * Refactored the internal class data structures for better modularity and extensibility (PR #8).
@@ -20,6 +22,14 @@
 ## MINOR CHANGES
 
 * Update `README` with new set up instructions and simplify (PR #14).
+
+* Do not complain when foreign keys are not found in a record, but also do not complain when they are (PR #13).
+
+* Further simplify the `README`, and move the detailed usage description to a separate vignette (PR #13).
+
+* Add a `pkgdown` website to the project (PR #13).
+
+* Generate vignettes using Quarto (PR #13).
 
 ## BUG FIXES
 

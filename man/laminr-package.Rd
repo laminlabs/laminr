@@ -11,6 +11,7 @@ The laminr package provides an interface to the LaminDB database. It allows you 
 \seealso{
 Useful links:
 \itemize{
+  \item \url{https://laminr.lamin.ai}
   \item \url{https://github.com/laminlabs/laminr}
   \item Report bugs at \url{https://github.com/laminlabs/laminr/issues}
 }

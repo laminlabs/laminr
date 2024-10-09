@@ -3,9 +3,11 @@ title: "LaminR: Work with LaminDB instances in R"
 format: gfm
 ---
 
-<!-- The README.md file is created by rendering README.qmd using `quarto render README.qmd`. -->
-<!-- DO NOT edit README.md directly, instead all changes should be made to README.qmd. -->
+<!-- 
+DO NOT edit the README.md directly.
 
+Instead, edit the README.qmd file and render it using `quarto render README.qmd`. 
+-->
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/laminlabs/laminr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/laminlabs/laminr/actions/workflows/R-CMD-check.yaml)
@@ -29,49 +31,27 @@ pip install lamin-cli
 lamin login
 ```
 
-## Usage
+:::{.callout-tip}
+You can get your token from the [LaminDB web interface](https://lamin.ai/settings).
+:::
 
-Load the library
+## Quick start
+
+Let's first connect to a LaminDB instance:
 
 ```{r setup}
 library(laminr)
-```
 
-## Database instance
-
-```{r connect}
 db <- connect("laminlabs/cellxgene")
-db
 ```
 
-### Schema module
-
-```{r get_module}
-db$get_module("core")
-
-db$bionty
-```
-
-### Registry
-
-```{r get_artifact_registry}
-db$Artifact
-```
-
-```{r get_bionty_celline}
-db$bionty$CellLine
-```
-
-### Record
-
-#### Get artifact
+Get an artifact:
 
 ```{r get_artifact}
 artifact <- db$Artifact$get("KBW89Mf7IGcekja2hADu")
-artifact
 ```
 
-#### Print simple fields
+Access some of its fields:
 
 ```{r print_simple_fields}
 artifact$id
@@ -81,31 +61,15 @@ artifact$uid
 artifact$key
 ```
 
-#### Print related fields
+Fetch related fields:
 
 ```{r print_related_fields}
-artifact$storage
+artifact$storage$root
 
-artifact$created_by
-
-artifact$experimental_factors
+artifact$created_by$handle
 ```
 
-### Download and cache an artifact
-
-:::{.callout-note}
-Only S3 storage is supported at the moment.
-:::
-
-```{r cache_artifact}
-artifact$cache()
-```
-
-### Load an artifact
-
-:::{.callout-note}
-Only S3 storage and AnnData accessors are supported at the moment.
-:::
+Load the artifact:
 
 ```{r load_artifact}
 artifact$load()
