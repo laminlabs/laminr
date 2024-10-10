@@ -27,6 +27,7 @@ Suggests:
     anndata,
     quarto,
     s3 (>= 1.1.0),
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    withr
 VignetteBuilder: quarto
 Config/testthat/edition: 3
