@@ -46,6 +46,44 @@ InstanceSettings <- R6::R6Class( # nolint object_name_linter
         cli_abort("Unexpected column: ", unexpected_columns)
       }
       private$.settings <- settings
+    },
+    print = function(style = TRUE) {
+      cli::cat_line(self$to_string(style))
+    },
+
+    to_string = function(style = FALSE)  {
+
+
+      settings_strings <- purrr::map_chr(
+        names(private$.settings), function(.name) {
+          value <- private$.settings[[.name]]
+
+          if (is.null(value)) {
+            return(NA_character_)
+          }
+
+          if (is.character(value)) {
+            value <- paste0("'", value, "'")
+          }
+
+          paste0(
+            cli::col_blue(.name), cli::col_br_blue("="), cli::col_yellow(value)
+          )
+        }
+      ) |>
+        purrr::discard(is.na)
+
+      string <- paste0(
+        cli::style_bold(cli::col_green("InstanceSettings")), "(",
+        paste(settings_strings, collapse = ", "),
+        ")"
+      )
+
+      if (isFALSE(style)) {
+        string <- cli::ansi_strip(string)
+      }
+
+      return(string)
     }
   ),
   private = list(
