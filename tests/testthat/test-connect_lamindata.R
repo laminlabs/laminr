@@ -1,3 +1,5 @@
+skip_if_offline()
+
 test_that("Connecting to lamindata works", {
   local_setup_lamindata_instance()
 
