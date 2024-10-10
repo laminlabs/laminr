@@ -1,14 +1,18 @@
 ---
 title: "Usage"
+output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Usage}
   %\VignetteEncoding{UTF-8}
-  %\VignetteEngine{quarto::html}
-knitr:
-  opts_chunk: 
-    collapse: true
-    comment: "#>"
+  %\VignetteEngine{knitr::rmarkdown}
 ---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
 
 ```{r setup}
 library(laminr)
