@@ -33,6 +33,8 @@
 
 * Define a current user and current instance with lamin-cli prior to testing and generating documentation in the CI (PR #23).
 
+* Add vignette to showcase laminr usage (PR #18).
+
 ## BUG FIXES
 
 * Fixed the parsing of the env files in `~/.lamin` due to changes in the lamindb-setup Python package (PR #12).
