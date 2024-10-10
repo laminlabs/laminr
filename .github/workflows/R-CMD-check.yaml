@@ -54,7 +54,7 @@ jobs:
 
       - name: Set cellxgene as default instance
         run: |
-          lamin load laminlabs/cellxgene
+          lamin connect laminlabs/cellxgene
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:

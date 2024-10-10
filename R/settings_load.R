@@ -9,7 +9,7 @@
     instance_settings_file <- .settings_store__current_instance_settings_file()
   }
   if (!file.exists(instance_settings_file)) {
-    cli_abort("No instance is loaded! Call `lamin load <instance_id>` to load an instance.")
+    cli_abort("No instance is loaded! Call `lamin connect <instance_id>` to load an instance.")
   }
   settings_store <-
     tryCatch(

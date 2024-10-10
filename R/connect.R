@@ -5,7 +5,7 @@
 #'
 #' Note that prior to connecting to an instance, you need to authenticate with
 #' `lamin login`. If no slug is provided, the default instance is loaded, which is
-#' set by running `lamin load <slug>`.
+#' set by running `lamin connect <slug>`.
 #'
 #' @param slug The instance slug `account_handle/instance_name` or URL.
 #'   If the instance is owned by you, it suffices to pass the instance name.
@@ -47,13 +47,13 @@ connect <- function(slug = NULL) {
             paste0(
               "Could not load default instance. Either:\n",
               " - Provide a slug. For example: `connect(\"laminlabs/cellxgene\")`)\n",
-              " - Set a default instance by running `lamin load <slug>`."
+              " - Set a default instance by running `lamin connect <slug>`."
             )
           } else {
             paste0(
               "No default user or instance is loaded! Either:\n",
               " - Call `lamin login` to set a default user.\n",
-              " - Call `lamin load <slug>` to set a default instance."
+              " - Call `lamin connect <slug>` to set a default instance."
             )
           }
         cli_abort(error_msg)

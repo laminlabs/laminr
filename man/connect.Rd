@@ -14,7 +14,7 @@ If no slug is provided, the default instance is loaded.}
 \description{
 Note that prior to connecting to an instance, you need to authenticate with
 \verb{lamin login}. If no slug is provided, the default instance is loaded, which is
-set by running \verb{lamin load <slug>}.
+set by running \verb{lamin connect <slug>}.
 }
 \examples{
 \dontrun{

@@ -24,53 +24,66 @@ Install the development version from GitHub:
 remotes::install_github("laminlabs/laminr")
 ```
 
-Install the Lamin CLI and authenticate:
+You will also need to install `lamindb`:
 
 ```bash
-pip install lamin-cli
-lamin login
+pip install lamindb[bionty,wetlab]
 ```
 
-:::{.callout-tip}
-You can get your token from the [LaminDB web interface](https://lamin.ai/settings).
-:::
+## Connect to an instance
 
-## Quick start
+To connect to a LaminDB instance, you will first need to run `lamin login` OR `lamin load <instance>` in the terminal. This will create a `.lamin` file in your home directory with the necessary credentials.
 
-Let's first connect to a LaminDB instance:
+```bash
+lamin login
+lamin load laminlabs/cellxgene
+```
+
+Then, you can use the `connect` function to connect to the instance:
 
 ```{r setup}
 library(laminr)
 
 db <- connect("laminlabs/cellxgene")
+db
 ```
 
-Get an artifact:
+## Query the instance
+
+You can use the `db` object to query the instance:
 
 ```{r get_artifact}
 artifact <- db$Artifact$get("KBW89Mf7IGcekja2hADu")
+```
+
+You can print the record:
+
+```{r print_artifact}
 artifact
 ```
 
-Access some of its fields:
+Or call the `$describe()` method to get a summary:
 
-```{r print_simple_fields}
-artifact$id
-
-artifact$uid
-
-artifact$key
+```{r describe_artifact}
+artifact$describe()
 ```
 
-Fetch related fields:
+## Access fields
 
-```{r print_related_fields}
-artifact$storage$root
+You can access its fields as follows:
 
-artifact$created_by$handle
-```
+* `artifact$id`: `r artifact$id`
+* `artifact$uid`: `r artifact$uid`
+* `artifact$key`: `r artifact$key`
 
-Load the artifact:
+You can also fetch related fields:
+
+* `artifact$root`: `r artifact$storage$root`
+* `artifact$created_by`: `r artifact$created_by$handle`
+
+## Load the artifact
+
+You can directly load the artifact to access its data:
 
 ```{r load_artifact}
 artifact$load()
