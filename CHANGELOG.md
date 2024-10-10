@@ -35,7 +35,7 @@
 
 * Define a current user and current instance with lamin-cli prior to testing and generating documentation in the CI (PR #23).
 
-* Add a simple unit test which queries laminlabs/lamindata (PR #xx).
+* Add a simple unit test which queries laminlabs/lamindata (PR #27).
 
 ## BUG FIXES
 
