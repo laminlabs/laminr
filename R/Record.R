@@ -94,6 +94,62 @@ Record <- R6::R6Class( # nolint object_name_linter
           )
         )
       }
+    },
+    print = function(style = TRUE) {
+      cli::cat_line(self$to_string(style))
+    },
+    to_string = function(style = FALSE) {
+      important_fields <- c(
+        "uid",
+        "handle",
+        "name",
+        "root",
+        "description",
+        "key"
+      )
+
+      record_fields <- private$.api$get_record(
+        module_name = private$.registry$module$name,
+        registry_name = private$.registry$name,
+        id_or_uid = private$.data[["uid"]],
+        include_foreign_keys = TRUE
+      )
+
+      # Get the important fields that are in the record
+      important_fields <- intersect(important_fields, names(record_fields))
+      # Put important fields before all other fields
+      field_names <- c(
+        important_fields, setdiff(names(record_fields), important_fields)
+      )
+
+      field_strings <- purrr::map_chr(field_names, function(.name) {
+        value <- record_fields[[.name]]
+
+        if (is.null(value)) {
+          return(NA_character_)
+        }
+
+        if (is.character(value)) {
+          value <- paste0("'", value, "'")
+        }
+
+        paste0(
+          cli::col_blue(.name), cli::col_br_blue("="), cli::col_yellow(value)
+        )
+      }) |>
+        purrr::discard(is.na)
+
+      string <- paste0(
+        cli::style_bold(cli::col_green(private$.registry$class_name)), "(",
+        paste(field_strings, collapse = ", "),
+        ")"
+      )
+
+      if (isFALSE(style)) {
+        string <- cli::ansi_strip(string)
+      }
+
+      return(string)
     }
   ),
   private = list(

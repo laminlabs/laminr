@@ -49,6 +49,7 @@ Get an artifact:
 
 ```{r get_artifact}
 artifact <- db$Artifact$get("KBW89Mf7IGcekja2hADu")
+artifact
 ```
 
 Access some of its fields:
