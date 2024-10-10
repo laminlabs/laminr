@@ -20,11 +20,18 @@ make_key_value_strings <- function(mapping, names = NULL) {
         value <- mapping[[.name]]
 
         if (is.null(value)) {
-            return(NA_character_)
+          return(NA_character_)
         }
 
         if (is.character(value)) {
             value <- paste0("'", value, "'")
+        }
+
+        if (is.list(value)) {
+          list_strings <- make_key_value_strings(value)
+          value <- paste0(
+            "list(", cli::ansi_strip(paste(list_strings, collapse = ", ")), ")"
+          )
         }
 
         paste0(
