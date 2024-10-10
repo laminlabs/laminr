@@ -99,68 +99,13 @@ Record <- R6::R6Class( # nolint object_name_linter
       cli::cat_line(self$to_string(style))
     },
     to_string = function(style = FALSE) {
-      field_order <- c(
-        # Simple fields
+      important_fields <- c(
         "uid",
         "handle",
         "name",
         "root",
-        "n",
-        "dtype",
-        "unit",
         "description",
-        "synonyms",
-        "key",
-        "suffix",
-        "type",
-        "size",
-        "source_code",
-        "registry",
-        "hash",
-        "n_objects",
-        "n_observations",
-        "started_at",
-        "finished_at",
-        "is_consecutive",
-        "reference",
-        "reference_type",
-        "visibility",
-        "version",
-        "is_latest",
-        "region",
-        "instance_uid",
-        "created_at",
-        "updated_at",
-
-        # Relational fields
-        "created_by",
-        "storage",
-        "transform",
-        "transforms",
-        "run",
-        "report",
-        "environment",
-        "meta_artifact",
-        "ulabels",
-        "predecessors",
-        "successors",
-        "runs",
-        "parent",
-        "parents",
-        "children",
-        "output_artifacts",
-        "input_artifacts",
-        "output_collections",
-        "input_collections",
-        "input_of_runs",
-        "feature_sets",
-        "collections",
-        "features",
-        "artifacts",
-        "values",
-        "created_transforms",
-        "created_runs",
-        "created_artifacts"
+        "key"
       )
 
       record_fields <- private$.api$get_record(
@@ -170,11 +115,11 @@ Record <- R6::R6Class( # nolint object_name_linter
         include_foreign_keys = TRUE
       )
 
-      # Reorder names according to set order
-      field_names <- intersect(field_order, names(record_fields))
-      # Make sure any unknown names are included
+      # Get the important fields that are in the record
+      important_fields <- intersect(important_fields, names(record_fields))
+      # Put important fields before all other fields
       field_names <- c(
-        field_names, sort(setdiff(names(record_fields), field_names))
+        important_fields, setdiff(names(record_fields), important_fields)
       )
 
       field_strings <- purrr::map_chr(field_names, function(.name) {
