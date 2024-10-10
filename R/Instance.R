@@ -105,6 +105,15 @@ Instance <- R6::R6Class( # nolint object_name_linter
     get_module_names = function() {
       names(private$.module_classes)
     },
+    #' Get instance settings.
+    get_settings = function() {
+      private$.settings
+    },
+    #' Get instance API.
+    get_api = function() {
+      private$.api
+    },
+
     print = function(style = TRUE) {
       cli::cat_line(self$to_string(style))
     },
