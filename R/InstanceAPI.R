@@ -108,34 +108,15 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
     },
 
     to_string = function(style = FALSE)  {
-      field_strings <- purrr::map_chr(
-        c("api_url", "id", "schema_id"), function(.name) {
-          value <- private$.instance_settings[[.name]]
-
-          if (is.character(value)) {
-            value <- paste0("'", value, "'")
-          }
-
-          paste0(
-            cli::col_blue(.name), cli::col_br_blue("="), cli::col_yellow(value)
-          )
-        }
+      field_strings <- make_key_value_strings(
+        private$.instance_settings, c("api_url", "id", "schema_id")
       )
 
-      string <- paste0(
-        cli::style_bold(cli::col_green("API")), "(",
-        paste(field_strings, collapse = ", "),
-        ")"
-      )
-
-      if (isFALSE(style)) {
-        string <- cli::ansi_strip(string)
-      }
-
-      return(string)
+      make_class_string("API", field_strings, style = style)
     }
   ),
   private = list(
     .instance_settings = NULL
   )
 )
+

@@ -119,22 +119,18 @@ Instance <- R6::R6Class( # nolint object_name_linter
     },
 
     to_string = function(style = FALSE)  {
-      string <- paste0(
-        cli::style_bold(cli::col_green(
-          paste(private$.settings$name, "Instance")
-        )), "(",
-        cli::col_blue("modules"), cli::col_br_blue("="),
-        cli::col_yellow(
-          paste0("c('", paste(self$get_module_names(), collapse = "', '"), "')")
-        ),
-        ")"
+
+      fields <- list(
+        modules = paste0(
+          "c('", paste(self$get_module_names(), collapse = "', '"), "')"
+        )
       )
 
-      if (isFALSE(style)) {
-        string <- cli::ansi_strip(string)
-      }
+      field_strings <- make_key_value_strings(fields)
 
-      return(string)
+      make_class_string(
+        paste(private$.settings$name, "Instance"), field_strings, style = style
+      )
     }
   ),
 

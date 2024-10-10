@@ -53,37 +53,9 @@ InstanceSettings <- R6::R6Class( # nolint object_name_linter
 
     to_string = function(style = FALSE)  {
 
+      field_strings <- make_key_value_strings(private$.settings)
 
-      settings_strings <- purrr::map_chr(
-        names(private$.settings), function(.name) {
-          value <- private$.settings[[.name]]
-
-          if (is.null(value)) {
-            return(NA_character_)
-          }
-
-          if (is.character(value)) {
-            value <- paste0("'", value, "'")
-          }
-
-          paste0(
-            cli::col_blue(.name), cli::col_br_blue("="), cli::col_yellow(value)
-          )
-        }
-      ) |>
-        purrr::discard(is.na)
-
-      string <- paste0(
-        cli::style_bold(cli::col_green("InstanceSettings")), "(",
-        paste(settings_strings, collapse = ", "),
-        ")"
-      )
-
-      if (isFALSE(style)) {
-        string <- cli::ansi_strip(string)
-      }
-
-      return(string)
+      make_class_string("InstanceSettings", field_strings, style = style)
     }
   ),
   private = list(

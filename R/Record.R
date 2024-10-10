@@ -122,34 +122,11 @@ Record <- R6::R6Class( # nolint object_name_linter
         important_fields, setdiff(names(record_fields), important_fields)
       )
 
-      field_strings <- purrr::map_chr(field_names, function(.name) {
-        value <- record_fields[[.name]]
+      field_strings <- make_key_value_strings(record_fields, field_names)
 
-        if (is.null(value)) {
-          return(NA_character_)
-        }
-
-        if (is.character(value)) {
-          value <- paste0("'", value, "'")
-        }
-
-        paste0(
-          cli::col_blue(.name), cli::col_br_blue("="), cli::col_yellow(value)
-        )
-      }) |>
-        purrr::discard(is.na)
-
-      string <- paste0(
-        cli::style_bold(cli::col_green(private$.registry$class_name)), "(",
-        paste(field_strings, collapse = ", "),
-        ")"
+      make_class_string(
+        private$.registry$class_name, field_strings, style = style
       )
-
-      if (isFALSE(style)) {
-        string <- cli::ansi_strip(string)
-      }
-
-      return(string)
     }
   ),
   private = list(
