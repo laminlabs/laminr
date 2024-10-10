@@ -16,13 +16,18 @@ permissions: read-all
 jobs:
   pkgdown:
     runs-on: ubuntu-latest
+
     # Only restrict concurrency for non-PR jobs
     concurrency:
       group: pkgdown-${{ github.event_name != 'pull_request' || github.run_id }}
+
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      LAMIN_API_KEY: ${{ secrets.LAMIN_API_KEY_TESTUSER1 }}
+
     permissions:
       contents: write
+
     steps:
       - uses: actions/checkout@v4
 
@@ -37,12 +42,17 @@ jobs:
           extra-packages: any::pkgdown, local::.
           needs: website
 
-      # - name: Install lamin-cli
-      #   env:
-      #     LAMIN_API_KEY: ${{ secrets.LAMIN_API_KEY }}
-      #   run: |
-      #     pip install lamin-cli
-      #     lamin login
+      - name: Install lamindb
+        run: |
+          pip install lamindb[bionty]
+
+      - name: Log in to Lamin
+        run: |
+          lamin login
+
+      - name: Set cellxgene as default instance
+        run: |
+          lamin load laminlabs/cellxgene
 
       - name: Build site
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
