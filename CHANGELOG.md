@@ -35,7 +35,7 @@
 
 * Define a current user and current instance with lamin-cli prior to testing and generating documentation in the CI (PR #23).
 
-* Replace all mentions of `lamin load` with `lamin connect`.
+* Replace all mentions of `lamin load` with `lamin connect` (PR #29).
 
 ## BUG FIXES
 
