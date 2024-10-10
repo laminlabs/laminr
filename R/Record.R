@@ -163,32 +163,22 @@ Record <- R6::R6Class( # nolint object_name_linter
         "created_artifacts"
       )
 
-      column_names <- map(private$.registry$get_fields(), "column_name") |>
-        unlist()
-      column_names <- names(column_names)
+      record_fields <- private$.api$get_record(
+        module_name = private$.registry$module$name,
+        registry_name = private$.registry$name,
+        id_or_uid = private$.data[["uid"]],
+        include_foreign_keys = TRUE
+      )
 
       # Reorder names according to set order
-      field_names <- intersect(field_order, column_names)
+      field_names <- intersect(field_order, names(record_fields))
       # Make sure any unknown names are included
-      field_names <- c(field_names, sort(setdiff(column_names, field_names)))
+      field_names <- c(
+        field_names, sort(setdiff(names(record_fields), field_names))
+      )
 
       field_strings <- purrr::map_chr(field_names, function(.name) {
-        # Get value, handling missing/empty/inaccessible fields
-        value <- try(self[[.name]], silent = TRUE)
-        if (inherits(value, "try-error")) {
-          return(NA_character_)
-        }
-
-
-        if (inherits(value, c("Record", "R6"))) {
-          value <- try(value$id, silent = TRUE)
-
-          if (inherits(value, "try-error")) {
-            return(NA_character_)
-          }
-
-          .name <- paste0(.name, "_id")
-        }
+        value <- record_fields[[.name]]
 
         if (is.null(value)) {
           return(NA_character_)
@@ -201,8 +191,8 @@ Record <- R6::R6Class( # nolint object_name_linter
         paste0(
           cli::col_blue(.name), cli::col_br_blue("="), cli::col_yellow(value)
         )
-      })
-      field_strings <- field_strings[!is.na(field_strings)]
+      }) |>
+        purrr::discard(is.na)
 
       string <- paste0(
         cli::style_bold(cli::col_green(private$.registry$class_name)), "(",
