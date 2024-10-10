@@ -60,8 +60,9 @@ jobs:
 
       - name: Deploy to GitHub pages 🚀
         if: github.event_name != 'pull_request'
-        uses: JamesIves/github-pages-deploy-action@v4.5.0
+        uses: cloudflare/wrangler-action@v3
         with:
-          clean: false
-          branch: gh-pages
-          folder: docs
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: 472bdad691b4483dea759eadb37110bd
+          command: pages deploy "_build/html" --project-name=laminr
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
