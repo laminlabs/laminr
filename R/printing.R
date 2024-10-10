@@ -7,10 +7,11 @@
 #'   `mapping[[name]]`
 #' @param names Vector of names to create strings for. Defaults to all names of
 #'   `mapping`
+#' @param quote_strings Logical, whether to quote string values
 #'
 #' @return A vector of `cli::cli_ansi_string` objects
 #' @noRd
-make_key_value_strings <- function(mapping, names = NULL) {
+make_key_value_strings <- function(mapping, names = NULL, quote_strings = TRUE) {
 
     if (is.null(names)) {
         names <- names(mapping)
@@ -23,7 +24,7 @@ make_key_value_strings <- function(mapping, names = NULL) {
           return(NA_character_)
         }
 
-        if (is.character(value)) {
+        if (quote_strings && is.character(value)) {
             value <- paste0("'", value, "'")
         }
 
