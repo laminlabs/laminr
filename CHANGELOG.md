@@ -37,6 +37,8 @@
 
 * Replace all mentions of `lamin load` with `lamin connect` (PR #29).
 
+* Improve the `README` (PR #29).
+
 ## BUG FIXES
 
 * Fixed the parsing of the env files in `~/.lamin` due to changes in the lamindb-setup Python package (PR #12).
