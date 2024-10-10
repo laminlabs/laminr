@@ -1,3 +1,5 @@
+skip_if_offline()
+
 test_that("Connecting to lamindata works", {
   temp_lamin_dir <- tempfile()
   temp_lamin_dir2 <- file.path(temp_lamin_dir, ".lamin")
