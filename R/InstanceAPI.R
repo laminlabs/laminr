@@ -30,7 +30,11 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
 
       content <- httr::content(request)
       if (httr::http_error(request)) {
-        cli_abort(content$detail)
+        if (is.list(content) && "detail" %in% names(content)) {
+          cli_abort(content$detail)
+        } else {
+          cli_abort(paste0("Failed to get schema from instance. Response output: ", content))
+        }
       }
 
       content
@@ -98,7 +102,11 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
 
       content <- httr::content(request)
       if (httr::http_error(request)) {
-        cli_abort(content$detail)
+        if (is.list(content) && "detail" %in% names(content)) {
+          cli_abort(content$detail)
+        } else {
+          cli_abort(paste0("Failed to get record from instance. Response output: ", content))
+        }
       }
 
       content

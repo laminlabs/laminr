@@ -41,6 +41,8 @@
 
 * Fixed the parsing of the env files in `~/.lamin` due to changes in the lamindb-setup Python package (PR #12).
 
+* Add alternative error message when no message is returned from the API (PR #xx).
+
 # laminr v0.0.1
 
 Initial POC implementation of the LaminDB API client for R.
