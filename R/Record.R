@@ -163,7 +163,7 @@ Record <- R6::R6Class( # nolint object_name_linter
       } else if (key %in% private$.registry$get_field_names()) {
         field <- private$.registry$get_field(key)
 
-        ## TODO: use related_registry_class$get_records instead
+        # refetch the record to get the related data
         related_data <- private$.api$get_record(
           module_name = field$module_name,
           registry_name = field$registry_name,
@@ -171,10 +171,17 @@ Record <- R6::R6Class( # nolint object_name_linter
           select = key
         )[[key]]
 
+        # return NULL if the related data is NULL
+        if (is.null(related_data)) {
+          return(NULL)
+        }
+
+        # if the related data is not NULL, create a record class for it
         related_module <- private$.instance$get_module(field$related_module_name)
         related_registry <- related_module$get_registry(field$related_registry_name)
         related_registry_class <- related_registry$get_record_class()
 
+        # if the relation type is one-to-many or many-to-many, iterate over the list
         if (field$relation_type %in% c("one-to-one", "many-to-one")) {
           related_registry_class$new(related_data)
         } else {

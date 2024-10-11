@@ -15,7 +15,13 @@ test_that("Connecting to lamindata works", {
   expect_equal(artifact$uid, "mePviem4DGM4SFzvLXf3")
   expect_equal(artifact$suffix, ".csv")
 
-  # try to fetch linked records
+  # try to fetch related field
   created_by <- artifact$created_by
   expect_equal(created_by$handle, "sunnyosun")
+
+  # access a related field which is empty for this record
+  expect_null(artifact$type) # one to one
+
+  expect_type(artifact$wells, "list") # one-to-many
+  expect_length(artifact$wells, 0)
 })
