@@ -35,6 +35,8 @@
 
 * Define a current user and current instance with lamin-cli prior to testing and generating documentation in the CI (PR #23).
 
+* Add a simple unit test which queries laminlabs/lamindata (PR #27).
+
 * Replace all mentions of `lamin load` with `lamin connect` (PR #29).
 
 * Improve the `README` (PR #29).
