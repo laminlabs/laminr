@@ -14,10 +14,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
-library(laminr)
-```
-
 LaminDB is an open-source data framework for biology. You can find out about some of its features in the [documentation of the lamindb Python package](https://docs.lamin.ai/introduction).
 
 This vignette will show you how to use the `laminr` package to interact with LaminDB.
@@ -43,6 +39,8 @@ This vignette uses the [`laminlabs/cellxgene`](https://lamin.ai/laminlabs/cellxg
 You can connect to the instance using the `connect` R function:
 
 ```{r connect}
+library(laminr)
+
 db <- connect("laminlabs/cellxgene")
 ```
 
