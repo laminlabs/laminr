@@ -100,62 +100,70 @@ have a corresponding <a href="https://docs.lamin.ai/lamindb" class="external-lin
 class</a>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">db</span></span>
-<span><span class="co">#&gt; &lt;cellxgene&gt;</span></span>
-<span><span class="co">#&gt;   Inherits from: &lt;Instance&gt;</span></span>
-<span><span class="co">#&gt;   Public:</span></span>
-<span><span class="co">#&gt;     Artifact: active binding</span></span>
-<span><span class="co">#&gt;     bionty: active binding</span></span>
-<span><span class="co">#&gt;     Collection: active binding</span></span>
-<span><span class="co">#&gt;     Feature: active binding</span></span>
-<span><span class="co">#&gt;     FeatureSet: active binding</span></span>
-<span><span class="co">#&gt;     FeatureValue: active binding</span></span>
-<span><span class="co">#&gt;     get_module: function (module_name) </span></span>
-<span><span class="co">#&gt;     get_module_names: function () </span></span>
-<span><span class="co">#&gt;     get_modules: function () </span></span>
-<span><span class="co">#&gt;     initialize: function (settings, api, schema) </span></span>
-<span><span class="co">#&gt;     Param: active binding</span></span>
-<span><span class="co">#&gt;     ParamValue: active binding</span></span>
-<span><span class="co">#&gt;     Run: active binding</span></span>
-<span><span class="co">#&gt;     Storage: active binding</span></span>
-<span><span class="co">#&gt;     Transform: active binding</span></span>
-<span><span class="co">#&gt;     ULabel: active binding</span></span>
-<span><span class="co">#&gt;     User: active binding</span></span>
-<span><span class="co">#&gt;   Private:</span></span>
-<span><span class="co">#&gt;     .api: API, R6</span></span>
-<span><span class="co">#&gt;     .module_classes: list</span></span>
-<span><span class="co">#&gt;     .settings: InstanceSettings, R6</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BB00; font-weight: bold;">cellxgene</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BB00BB; font-style: italic;">  Core registries</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    $Run</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    $User</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    $Param</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    $ULabel</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    $Feature</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    $Storage</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    $Artifact</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    $Transform</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    $Collection</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    $FeatureSet</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    $ParamValue</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    $FeatureValue</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BB00BB; font-style: italic;">  Core link tables</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    runparamvalue</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    artifactulabel</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    collectionulabel</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    featuresetfeature</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    artifactfeatureset</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    artifactparamvalue</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    collectionartifact</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    artifactfeaturevalue</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BB00BB; font-style: italic;">  Additional modules</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    bionty</span></span></span></code></pre></div>
 <p>All of the ‘core’ registries are directly available from the
 <code>db</code> object, while registries from other modules can be
 accessed via <code>db$&lt;module_name&gt;</code>, e.g.:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">db</span><span class="op">$</span><span class="va">bionty</span></span>
-<span><span class="co">#&gt; &lt;bionty&gt;</span></span>
-<span><span class="co">#&gt;   Inherits from: &lt;Module&gt;</span></span>
-<span><span class="co">#&gt;   Public:</span></span>
-<span><span class="co">#&gt;     CellLine: active binding</span></span>
-<span><span class="co">#&gt;     CellMarker: active binding</span></span>
-<span><span class="co">#&gt;     CellType: active binding</span></span>
-<span><span class="co">#&gt;     DevelopmentalStage: active binding</span></span>
-<span><span class="co">#&gt;     Disease: active binding</span></span>
-<span><span class="co">#&gt;     Ethnicity: active binding</span></span>
-<span><span class="co">#&gt;     ExperimentalFactor: active binding</span></span>
-<span><span class="co">#&gt;     Gene: active binding</span></span>
-<span><span class="co">#&gt;     get_registries: function () </span></span>
-<span><span class="co">#&gt;     get_registry: function (registry_name) </span></span>
-<span><span class="co">#&gt;     get_registry_names: function () </span></span>
-<span><span class="co">#&gt;     initialize: function (instance, api, module_name, module_schema) </span></span>
-<span><span class="co">#&gt;     name: active binding</span></span>
-<span><span class="co">#&gt;     Organism: active binding</span></span>
-<span><span class="co">#&gt;     Pathway: active binding</span></span>
-<span><span class="co">#&gt;     Phenotype: active binding</span></span>
-<span><span class="co">#&gt;     Protein: active binding</span></span>
-<span><span class="co">#&gt;     Source: active binding</span></span>
-<span><span class="co">#&gt;     Tissue: active binding</span></span>
-<span><span class="co">#&gt;   Private:</span></span>
-<span><span class="co">#&gt;     .api: API, R6</span></span>
-<span><span class="co">#&gt;     .instance: cellxgene, Instance, R6</span></span>
-<span><span class="co">#&gt;     .module_name: bionty</span></span>
-<span><span class="co">#&gt;     .registry_classes: list</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BB00; font-weight: bold;">bionty</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BB00BB; font-style: italic;">  Registries</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    $Gene</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    $Source</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    $Tissue</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    $Disease</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    $Pathway</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    $Protein</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    $CellLine</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    $CellType</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    $Organism</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    $Ethnicity</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    $Phenotype</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    $CellMarker</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    $DevelopmentalStage</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    $ExperimentalFactor</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BB00BB; font-style: italic;">  Link tables</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    artifactgene</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    artifacttissue</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    featuresetgene</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    artifactdisease</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    artifactpathway</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    artifactprotein</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    artifactcellline</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    artifactcelltype</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    artifactorganism</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    artifactethnicity</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    artifactphenotype</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    featuresetpathway</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    featuresetprotein</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    artifactcellmarker</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    featuresetcellmarker</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    artifactdevelopmentalstage</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    artifactexperimentalfactor</span></span></span></code></pre></div>
 <p>The <code>bionty</code> and other registries also have corresponding
 <a href="https://docs.lamin.ai/bionty" class="external-link">Python classes</a>.</p>
 </div>
@@ -169,27 +177,45 @@ folders, or arrays.</p>
 by printing the registry object:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">db</span><span class="op">$</span><span class="va">Artifact</span></span>
-<span><span class="co">#&gt; &lt;Registry&gt;</span></span>
-<span><span class="co">#&gt;   Public:</span></span>
-<span><span class="co">#&gt;     class_name: active binding</span></span>
-<span><span class="co">#&gt;     get: function (id_or_uid, include_foreign_keys = FALSE, verbose = FALSE) </span></span>
-<span><span class="co">#&gt;     get_field: function (field_name) </span></span>
-<span><span class="co">#&gt;     get_field_names: function () </span></span>
-<span><span class="co">#&gt;     get_fields: function () </span></span>
-<span><span class="co">#&gt;     get_record_class: function () </span></span>
-<span><span class="co">#&gt;     initialize: function (instance, module, api, registry_name, registry_schema) </span></span>
-<span><span class="co">#&gt;     is_link_table: active binding</span></span>
-<span><span class="co">#&gt;     module: active binding</span></span>
-<span><span class="co">#&gt;     name: active binding</span></span>
-<span><span class="co">#&gt;   Private:</span></span>
-<span><span class="co">#&gt;     .api: API, R6</span></span>
-<span><span class="co">#&gt;     .class_name: Artifact</span></span>
-<span><span class="co">#&gt;     .fields: list</span></span>
-<span><span class="co">#&gt;     .instance: cellxgene, Instance, R6</span></span>
-<span><span class="co">#&gt;     .is_link_table: FALSE</span></span>
-<span><span class="co">#&gt;     .module: core, Module, R6</span></span>
-<span><span class="co">#&gt;     .record_class: R6ClassGenerator</span></span>
-<span><span class="co">#&gt;     .registry_name: artifact</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BB00; font-weight: bold;">Artifact</span></span></span>
+<span><span class="co">#&gt; <span style="color: #FF55FF; font-style: italic;">  Simple fields</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    id</span>: <span style="color: #555555;">AutoField</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    key</span>: <span style="color: #555555;">CharField</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    uid</span>: <span style="color: #555555;">CharField</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    hash</span>: <span style="color: #555555;">CharField</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    size</span>: <span style="color: #555555;">BigIntegerField</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    type</span>: <span style="color: #555555;">CharField</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    suffix</span>: <span style="color: #555555;">CharField</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    version</span>: <span style="color: #555555;">CharField</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    is_latest</span>: <span style="color: #555555;">BooleanField</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    n_objects</span>: <span style="color: #555555;">BigIntegerField</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    created_at</span>: <span style="color: #555555;">DateTimeField</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    updated_at</span>: <span style="color: #555555;">DateTimeField</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    visibility</span>: <span style="color: #555555;">SmallIntegerField</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    description</span>: <span style="color: #555555;">CharField</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    n_observations</span>: <span style="color: #555555;">BigIntegerField</span></span></span>
+<span><span class="co">#&gt; <span style="color: #FF55FF; font-style: italic;">  Relational fields</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    run</span>: <span style="color: #555555;">run (many-to-one)</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    genes</span>: <span style="color: #555555;">gene (many-to-many)</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    storage</span>: <span style="color: #555555;">storage (many-to-one)</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    tissues</span>: <span style="color: #555555;">tissue (many-to-many)</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    ulabels</span>: <span style="color: #555555;">ulabel (many-to-many)</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    diseases</span>: <span style="color: #555555;">disease (many-to-many)</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    pathways</span>: <span style="color: #555555;">pathway (many-to-many)</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    proteins</span>: <span style="color: #555555;">protein (many-to-many)</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    organisms</span>: <span style="color: #555555;">organism (many-to-many)</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    transform</span>: <span style="color: #555555;">transform (many-to-one)</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    cell_lines</span>: <span style="color: #555555;">cellline (many-to-many)</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    cell_types</span>: <span style="color: #555555;">celltype (many-to-many)</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    created_by</span>: <span style="color: #555555;">user (many-to-one)</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    phenotypes</span>: <span style="color: #555555;">phenotype (many-to-many)</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    collections</span>: <span style="color: #555555;">collection (many-to-many)</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    ethnicities</span>: <span style="color: #555555;">ethnicity (many-to-many)</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    cell_markers</span>: <span style="color: #555555;">cellmarker (many-to-many)</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    feature_sets</span>: <span style="color: #555555;">featureset (many-to-many)</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    input_of_runs</span>: <span style="color: #555555;">run (many-to-many)</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    developmental_stages</span>: <span style="color: #555555;">developmentalstage (many-to-many)</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">    experimental_factors</span>: <span style="color: #555555;">experimentalfactor (many-to-many)</span></span></span></code></pre></div>
 <p>For instance, you can fetch an Artifact by ID or UID. For example,
 Artifact <a href="https://lamin.ai/laminlabs/cellxgene/artifact/KBW89Mf7IGcekja2hADu" class="external-link">KBW89Mf7IGcekja2hADu</a>
 is an AnnData object containing myeloid cells.</p>
