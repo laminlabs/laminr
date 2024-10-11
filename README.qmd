@@ -32,14 +32,14 @@ pip install lamindb[bionty,wetlab]
 
 ## Connect to an instance
 
-To connect to a LaminDB instance, you will first need to run `lamin login` OR `lamin load <instance>` in the terminal. This will create a `.lamin` file in your home directory with the necessary credentials.
+To connect to a LaminDB instance, you will first need to run `lamin login` OR `lamin load <instance>` in the terminal. This will create a directory in your home directory called `.lamin` with the necessary credentials.
 
 ```bash
 lamin login
-lamin load laminlabs/cellxgene
+lamin connect laminlabs/cellxgene
 ```
 
-Then, you can use the `connect` function to connect to the instance:
+Then, you can connect to the instance using the `laminr::connect()` function:
 
 ```{r setup}
 library(laminr)

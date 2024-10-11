@@ -32,15 +32,16 @@ pip install lamindb[bionty,wetlab]
 
 To connect to a LaminDB instance, you will first need to run
 `lamin login` OR `lamin load <instance>` in the terminal. This will
-create a directory in your home directory called `.lamin` with the necessary
-credentials.
+create a directory in your home directory called `.lamin` with the
+necessary credentials.
 
 ``` bash
 lamin login
 lamin connect laminlabs/cellxgene
 ```
 
-Then, you can connect to the instance in R using the `connect()` function:
+Then, you can connect to the instance using the `laminr::connect()`
+function:
 
 ``` r
 library(laminr)
@@ -88,7 +89,7 @@ You can print the record:
 artifact
 ```
 
-    Artifact(uid='KBW89Mf7IGcekja2hADu', description='Myeloid compartment', key='cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad', version='2024-07-01', _accessor='AnnData', id=3659, transform_id=22, size=691757462, is_latest=TRUE, created_by_id=1, _hash_type='md5-n', type='dataset', created_at='2024-07-12T12:34:10.345829+00:00', n_observations=51552, updated_at='2024-07-12T12:40:48.837026+00:00', run_id=27, suffix='.h5ad', visibility=1, _key_is_virtual=FALSE, hash='SZ5tB0T4YKfiUuUkAL09ZA', storage_id=2)
+    Artifact(uid='KBW89Mf7IGcekja2hADu', description='Myeloid compartment', key='cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad', storage_id=2, version='2024-07-01', _accessor='AnnData', id=3659, transform_id=22, n_observations=51552, created_by_id=1, size=691757462, _hash_type='md5-n', is_latest=TRUE, type='dataset', created_at='2024-07-12T12:34:10.345829+00:00', updated_at='2024-07-12T12:40:48.837026+00:00', _key_is_virtual=FALSE, visibility=1, run_id=27, suffix='.h5ad', hash='SZ5tB0T4YKfiUuUkAL09ZA')
 
 Or call the `$describe()` method to get a summary:
 
@@ -96,7 +97,7 @@ Or call the `$describe()` method to get a summary:
 artifact$describe()
 ```
 
-    Artifact(uid='KBW89Mf7IGcekja2hADu', description='Myeloid compartment', key='cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad', version='2024-07-01', _accessor='AnnData', id=3659, transform_id=22, size=691757462, is_latest=TRUE, created_by_id=1, _hash_type='md5-n', type='dataset', created_at='2024-07-12T12:34:10.345829+00:00', n_observations=51552, updated_at='2024-07-12T12:40:48.837026+00:00', run_id=27, suffix='.h5ad', visibility=1, _key_is_virtual=FALSE, hash='SZ5tB0T4YKfiUuUkAL09ZA', storage_id=2)
+    Artifact(uid='KBW89Mf7IGcekja2hADu', description='Myeloid compartment', key='cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad', storage_id=2, version='2024-07-01', _accessor='AnnData', id=3659, transform_id=22, n_observations=51552, created_by_id=1, size=691757462, _hash_type='md5-n', is_latest=TRUE, type='dataset', created_at='2024-07-12T12:34:10.345829+00:00', updated_at='2024-07-12T12:40:48.837026+00:00', _key_is_virtual=FALSE, visibility=1, run_id=27, suffix='.h5ad', hash='SZ5tB0T4YKfiUuUkAL09ZA')
       Provenance
         $storage = 's3://cellxgene-data-public'
         $transform = 'Census release 2024-07-01 (LTS)'
