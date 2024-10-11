@@ -30,6 +30,16 @@ UserSettings <- R6::R6Class( # nolint object_name_linter
         cli_abort("Unexpected column: ", unexpected_columns)
       }
       private$.settings <- settings
+    },
+    print = function(style = TRUE) {
+      cli::cat_line(self$to_string(style))
+    },
+
+    to_string = function(style = FALSE)  {
+
+      field_strings <- make_key_value_strings(private$.settings)
+
+      make_class_string("UserSettings", field_strings, style = style)
     }
   ),
   private = list(
