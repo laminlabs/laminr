@@ -37,13 +37,13 @@ InstanceSettings <- R6::R6Class( # nolint object_name_linter
         "db_user_password", # api
         "lamindb_version" # api
       )
-      missing_key <- setdiff(expected_keys, names(settings))
+      missing_keys <- setdiff(expected_keys, names(settings))
       if (length(missing_key) > 0) {
-        cli_abort(paste0("Missing key: ", paste(missing_key, collapse = ", ")))
+        cli_abort("Missing key{?s}: {missing_keys}")
       }
       unexpected_keys <- setdiff(names(settings), c(expected_keys, optional_keys))
       if (length(unexpected_keys) > 0) {
-        cli_abort(paste0("Unexpected key: ", paste(unexpected_keys, collapse = ", ")))
+        cli_abort("Unexpected key{?s}: {unexpected_keys}")
       }
       private$.settings <- settings
     }
