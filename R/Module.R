@@ -74,14 +74,17 @@ Module <- R6::R6Class( # nolint object_name_linter
       ) |>
         set_names(names(module_schema))
     },
+    #' @description
     #' Get the registries in the module.
     get_registries = function() {
       private$.registry_classes
     },
+    #' @description
     #' Get a registry by name.
     get_registry = function(registry_name) {
       private$.registry_classes[[registry_name]]
     },
+    #' @description
     #' Get the names of the registries in the module. E.g. `c("User", "Artifact")`.
     get_registry_names = function() {
       names(private$.registry_classes)

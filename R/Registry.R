@@ -48,6 +48,7 @@ Registry <- R6::R6Class( # nolint object_name_linter
         api = api
       )
     },
+    #' @description
     #' Get a record by ID or UID.
     get = function(id_or_uid, include_foreign_keys = FALSE, verbose = FALSE) {
       data <- private$.api$get_record(
@@ -60,18 +61,22 @@ Registry <- R6::R6Class( # nolint object_name_linter
 
       private$.record_class$new(data = data)
     },
+    #' @description
     #' Get the fields in the registry.
     get_fields = function() {
       private$.fields
     },
+    #' @description
     #' Get a field by name.
     get_field = function(field_name) {
       private$.fields[[field_name]]
     },
+    #' @description
     #' Get the field names in the registry.
     get_field_names = function() {
       names(private$.fields)
     },
+    #' @description
     #' Get the record class for the registry.
     get_record_class = function() {
       private$.record_class

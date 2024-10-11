@@ -16,6 +16,7 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
     initialize = function(instance_settings) {
       private$.instance_settings <- instance_settings
     },
+    #' @description
     #' Get the schema for the instance.
     get_schema = function() {
       # TODO: replace with laminr.api get_schema call
@@ -35,7 +36,9 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
 
       content
     },
+    #' @description
     #' Get a record from the instance.
+    #'
     #' @importFrom jsonlite toJSON
     get_record = function(module_name,
                           registry_name,
