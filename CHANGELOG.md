@@ -43,6 +43,8 @@
 
 * Fixed the parsing of the env files in `~/.lamin` due to changes in the lamindb-setup Python package (PR #12).
 
+* Return `NULL` when a record's related field is empty (PR #28).
+
 # laminr v0.0.1
 
 Initial POC implementation of the LaminDB API client for R.
