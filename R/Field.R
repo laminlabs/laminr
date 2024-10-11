@@ -45,6 +45,39 @@ Field <- R6::R6Class( # nolint object_name_linter
       private$.related_field_name <- related_field_name
       private$.related_registry_name <- related_registry_name
       private$.related_module_name <- related_module_name
+    },
+    #' @description
+    #' Print a `Field`
+    #'
+    #' @param style Logical, whether the output is styled using ANSI codes
+    print = function(style = TRUE) {
+      cli::cat_line(self$to_string(style))
+    },
+    #' @description
+    #' Create a string representation of a `Field`
+    #'
+    #' @param style Logical, whether the output is styled using ANSI codes
+    #'
+    #' @return A `cli::cli_ansi_string` if `style = TRUE` or a character vector
+    to_string = function(style = FALSE) {
+      field_strings <- make_key_value_strings(
+        self,
+        c(
+          "field_name",
+          "column_name",
+          "type",
+          "registry_name",
+          "module_name",
+          "through",
+          "is_link_table",
+          "relation_type",
+          "related_field_name",
+          "related_registry_name",
+          "related_module_name"
+        )
+      )
+
+      make_class_string("Field", field_strings, style = style)
     }
   ),
   private = list(

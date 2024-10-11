@@ -104,6 +104,114 @@ Instance <- R6::R6Class( # nolint object_name_linter
     #' Get the names of the modules. Example: `c("core", "bionty")`.
     get_module_names = function() {
       names(private$.module_classes)
+    },
+    #' Get instance settings.
+    get_settings = function() {
+      private$.settings
+    },
+    #' Get instance API.
+    get_api = function() {
+      private$.api
+    },
+    #' @description
+    #' Print an `Instance`
+    #'
+    #' @param style Logical, whether the output is styled using ANSI codes
+    print = function(style = TRUE) {
+
+      registries <- self$get_module("core")$get_registries()
+
+      is_link_table <- purrr::map(registries, "is_link_table") |>
+        unlist()
+
+      standard_lines <- purrr::map_chr(
+        names(registries)[!is_link_table],
+        function(.registry) {
+          cli::col_blue(paste0("    $", registries[[.registry]]$class_name))
+        }
+      )
+
+      link_lines <- purrr::map_chr(
+        names(registries)[is_link_table],
+        function(.registry) {
+          cli::col_blue(paste0("    ", .registry))
+        }
+      )
+
+      lines <- c(
+        cli::style_bold(cli::col_green(private$.settings$name)),
+        cli::style_italic(cli::col_magenta("  Core registries")),
+        standard_lines,
+        cli::style_italic(cli::col_magenta("  Core link tables")),
+        link_lines
+      )
+
+      module_names <- self$get_module_names()
+      module_names <- module_names[module_names != "core"]
+
+      if (length(module_names) > 0) {
+        lines <- c(
+          lines,
+          cli::style_italic(cli::col_magenta("  Additional modules")),
+          cli::col_blue(paste0("    ", module_names))
+        )
+      }
+
+      if (isFALSE(style)) {
+        lines <- cli::ansi_strip(lines)
+      }
+
+      purrr::walk(lines, cli::cat_line)
+    },
+    #' @description
+    #' Create a string representation of an `Instance`
+    #'
+    #' @param style Logical, whether the output is styled using ANSI codes
+    #'
+    #' @return A `cli::cli_ansi_string` if `style = TRUE` or a character vector
+    to_string = function(style = FALSE) {
+      registries <- self$get_module("core")$get_registries()
+
+      is_link_table <- purrr::map(registries, "is_link_table") |>
+        unlist()
+
+      mapping <- list(
+        "CoreRegistries" = paste0(
+          "[",
+          paste(
+            paste0(
+              "$",
+              purrr::map_chr(registries[!is_link_table], "class_name")
+            ),
+            collapse = ", "
+          ),
+          "]"
+        ),
+        "CoreLinkTables" = paste0(
+          "[",
+          paste(names(registries[is_link_table]), collapse = ", "),
+          "]"
+        )
+      )
+
+      module_names <- self$get_module_names()
+      module_names <- module_names[module_names != "core"]
+
+      if (length(module_names) > 0) {
+        mapping["AdditionalModules"] <- paste0(
+          "[",
+          paste(module_names, collapse = ", "),
+          "]"
+        )
+      }
+
+      key_value_strings <- make_key_value_strings(
+        mapping, quote_strings = FALSE
+      )
+
+      make_class_string(
+        private$.settings$name, key_value_strings, style = style
+      )
     }
   ),
   private = list(

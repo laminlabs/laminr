@@ -16,6 +16,7 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
     initialize = function(instance_settings) {
       private$.instance_settings <- instance_settings
     },
+    #' @description
     #' Get the schema for the instance.
     get_schema = function() {
       # TODO: replace with laminr.api get_schema call
@@ -30,7 +31,9 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
 
       private$process_response(response, "get schema")
     },
+    #' @description
     #' Get a record from the instance.
+    #'
     #' @importFrom jsonlite toJSON
     get_record = function(module_name,
                           registry_name,
@@ -107,6 +110,26 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
       }
 
       content
+    },
+    #' @description
+    #' Print an `API`
+    #'
+    #' @param style Logical, whether the output is styled using ANSI codes
+    print = function(style = TRUE) {
+      cli::cat_line(self$to_string(style))
+    },
+    #' @description
+    #' Create a string representation of an `API`
+    #'
+    #' @param style Logical, whether the output is styled using ANSI codes
+    #'
+    #' @return A `cli::cli_ansi_string` if `style = TRUE` or a character vector
+    to_string = function(style = FALSE) {
+      field_strings <- make_key_value_strings(
+        private$.instance_settings, c("api_url", "id", "schema_id")
+      )
+
+      make_class_string("API", field_strings, style = style)
     }
   )
 )
