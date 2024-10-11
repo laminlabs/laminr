@@ -19,21 +19,16 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
     #' Get the schema for the instance.
     get_schema = function() {
       # TODO: replace with laminr.api get_schema call
-      request <- httr::GET(
-        paste0(
-          private$.instance_settings$api_url,
-          "/instances/",
-          private$.instance_settings$id,
-          "/schema"
-        )
+      url <- paste0(
+        private$.instance_settings$api_url,
+        "/instances/",
+        private$.instance_settings$id,
+        "/schema"
       )
 
-      content <- httr::content(request)
-      if (httr::http_error(request)) {
-        cli_abort(content$detail)
-      }
+      response <- httr::GET(url)
 
-      content
+      private$process_response(response, "get schema")
     },
     #' Get a record from the instance.
     #' @importFrom jsonlite toJSON
@@ -87,7 +82,7 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
         tolower(include_foreign_keys)
       )
 
-      request <- httr::POST(
+      response <- httr::POST(
         url,
         httr::add_headers(
           accept = "application/json",
@@ -96,15 +91,22 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
         body = body
       )
 
-      content <- httr::content(request)
-      if (httr::http_error(request)) {
-        cli_abort(content$detail)
+      private$process_response(response, "get record")
+    }
+  ),
+  private = list(
+    .instance_settings = NULL,
+    process_response = function(response, request_type) {
+      content <- httr::content(response)
+      if (httr::http_error(response)) {
+        if (is.list(content) && "detail" %in% names(content)) {
+          cli_abort(content$detail)
+        } else {
+          cli_abort("Failed to {request_type} from instance. Output: {content}")
+        }
       }
 
       content
     }
-  ),
-  private = list(
-    .instance_settings = NULL
   )
 )

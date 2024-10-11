@@ -25,7 +25,11 @@
 
 * Define a current user and current instance with lamin-cli prior to testing and generating documentation in the CI (PR #23).
 
+## TESTING
+
 * Add a simple unit test which queries laminlabs/lamindata (PR #27).
+
+* Added unit test for the InstanceAPI class (PR #30).
 
 ## DOCUMENTATION
 
@@ -48,6 +52,8 @@
 * Fixed the parsing of the env files in `~/.lamin` due to changes in the lamindb-setup Python package (PR #12).
 
 * Return `NULL` when a record's related field is empty (PR #28).
+
+* Add alternative error message when no message is returned from the API (PR #30).
 
 # laminr v0.0.1
 
