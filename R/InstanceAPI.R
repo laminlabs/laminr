@@ -26,9 +26,9 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
         "/schema"
       )
 
-      request <- httr::GET(url)
+      response <- httr::GET(url)
 
-      private$process_request(request, "get schema")
+      private$process_response(response, "get schema")
     },
     #' Get a record from the instance.
     #' @importFrom jsonlite toJSON
@@ -82,7 +82,7 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
         tolower(include_foreign_keys)
       )
 
-      request <- httr::POST(
+      response <- httr::POST(
         url,
         httr::add_headers(
           accept = "application/json",
@@ -91,18 +91,18 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
         body = body
       )
 
-      private$process_request(request, "get record")
+      private$process_response(response, "get record")
     }
   ),
   private = list(
     .instance_settings = NULL,
-    process_request = function(request, request_type) {
-      content <- httr::content(request)
-      if (httr::http_error(request)) {
+    process_response = function(response, request_type) {
+      content <- httr::content(response)
+      if (httr::http_error(response)) {
         if (is.list(content) && "detail" %in% names(content)) {
           cli_abort(content$detail)
         } else {
-          cli_abort(paste0("Failed to ", request_type, " from instance. Response output: ", content))
+          cli_abort("Failed to {request_type} from instance. Output: {content}")
         }
       }
 
