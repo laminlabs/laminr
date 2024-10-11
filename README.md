@@ -48,7 +48,10 @@ Get an artifact:
 
 ``` r
 artifact <- db$Artifact$get("KBW89Mf7IGcekja2hADu")
+artifact
 ```
+
+    Artifact(uid='KBW89Mf7IGcekja2hADu', description='Myeloid compartment', key='cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad', version='2024-07-01', _accessor='AnnData', id=3659, transform_id=22, size=691757462, is_latest=TRUE, created_by_id=1, _hash_type='md5-n', type='dataset', created_at='2024-07-12T12:34:10.345829+00:00', n_observations=51552, updated_at='2024-07-12T12:40:48.837026+00:00', run_id=27, suffix='.h5ad', visibility=1, _key_is_virtual=FALSE, hash='SZ5tB0T4YKfiUuUkAL09ZA', storage_id=2)
 
 Access some of its fields:
 

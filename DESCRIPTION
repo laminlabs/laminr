@@ -1,6 +1,6 @@
 Package: laminr
 Title: LaminDB interface in R
-Version: 0.1.0.9000
+Version: 0.1.0.9001
 Authors@R:
     c(person("Robrecht", "Cannoodt",
         role = c("aut", "cre"),
@@ -26,5 +26,8 @@ Imports:
 Suggests:
     anndata,
     quarto,
-    s3 (>= 1.1.0)
+    s3 (>= 1.1.0),
+    testthat (>= 3.0.0),
+    withr
 VignetteBuilder: quarto
+Config/testthat/edition: 3
