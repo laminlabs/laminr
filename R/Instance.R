@@ -198,7 +198,7 @@ Instance <- R6::R6Class( # nolint object_name_linter
       module_names <- module_names[module_names != "core"]
 
       if (length(module_names) > 0) {
-        mapping["AdditionModules"] = paste0(
+        mapping["AdditionalModules"] <- paste0(
           "[",
           paste(module_names, collapse = ", "),
           "]"
