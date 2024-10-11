@@ -69,54 +69,99 @@ DO NOT edit the README.md directly.
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"laminlabs/laminr"</span><span class="op">)</span></span></code></pre></div>
-<p>Install the Lamin CLI and authenticate:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="ex">pip</span> install lamin-cli</span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="ex">lamin</span> login</span></code></pre></div>
-<blockquote>
-<p>[!TIP]</p>
-<p>You can get your token from the <a href="https://lamin.ai/settings" class="external-link">LaminDB web interface</a>.</p>
-</blockquote>
+<p>You will also need to install <code>lamindb</code>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="ex">pip</span> install lamindb<span class="pp">[</span><span class="ss">bionty,wetlab</span><span class="pp">]</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="quick-start">Quick start<a class="anchor" aria-label="anchor" href="#quick-start"></a>
+<h2 id="connect-to-an-instance">Connect to an instance<a class="anchor" aria-label="anchor" href="#connect-to-an-instance"></a>
 </h2>
-<p>Let’s first connect to a LaminDB instance:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<p>To connect to a LaminDB instance, you will first need to run <code>lamin login</code> OR <code>lamin load &lt;instance&gt;</code> in the terminal. This will create a directory in your home directory called <code>.lamin</code> with the necessary credentials.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="ex">lamin</span> login</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="ex">lamin</span> connect laminlabs/cellxgene</span></code></pre></div>
+<p>Then, you can connect to the instance using the <code><a href="reference/connect.html">laminr::connect()</a></code> function:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://laminr.lamin.ai">laminr</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">db</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/connect.html">connect</a></span><span class="op">(</span><span class="st">"laminlabs/cellxgene"</span><span class="op">)</span></span></code></pre></div>
-<p>Get an artifact:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">artifact</span> <span class="op">&lt;-</span> <span class="va">db</span><span class="op">$</span><span class="va">Artifact</span><span class="op">$</span><span class="fu">get</span><span class="op">(</span><span class="st">"KBW89Mf7IGcekja2hADu"</span><span class="op">)</span></span>
-<span><span class="va">artifact</span></span></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">Artifact</span>(<span class="at">uid=</span><span class="st">'KBW89Mf7IGcekja2hADu'</span>, <span class="at">description=</span><span class="st">'Myeloid compartment'</span>, <span class="at">key=</span><span class="st">'cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad'</span>, <span class="at">version=</span><span class="st">'2024-07-01'</span>, <span class="at">_accessor=</span><span class="st">'AnnData'</span>, <span class="at">id=</span><span class="dv">3659</span>, <span class="at">transform_id=</span><span class="dv">22</span>, <span class="at">size=</span><span class="dv">691757462</span>, <span class="at">is_latest=</span><span class="cn">TRUE</span>, <span class="at">created_by_id=</span><span class="dv">1</span>, <span class="at">_hash_type=</span><span class="st">'md5-n'</span>, <span class="at">type=</span><span class="st">'dataset'</span>, <span class="at">created_at=</span><span class="st">'2024-07-12T12:34:10.345829+00:00'</span>, <span class="at">n_observations=</span><span class="dv">51552</span>, <span class="at">updated_at=</span><span class="st">'2024-07-12T12:40:48.837026+00:00'</span>, <span class="at">run_id=</span><span class="dv">27</span>, <span class="at">suffix=</span><span class="st">'.h5ad'</span>, <span class="at">visibility=</span><span class="dv">1</span>, <span class="at">_key_is_virtual=</span><span class="cn">FALSE</span>, <span class="at">hash=</span><span class="st">'SZ5tB0T4YKfiUuUkAL09ZA'</span>, <span class="at">storage_id=</span><span class="dv">2</span>)</span></code></pre></div>
-<p>Access some of its fields:</p>
+<span><span class="va">db</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/connect.html">connect</a></span><span class="op">(</span><span class="st">"laminlabs/cellxgene"</span><span class="op">)</span></span>
+<span><span class="va">db</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="sc">&lt;</span>cellxgene<span class="sc">&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  Inherits from<span class="sc">:</span> <span class="er">&lt;</span>Instance<span class="sc">&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  Public<span class="sc">:</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>    Artifact<span class="sc">:</span> active binding</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>    bionty<span class="sc">:</span> active binding</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>    Collection<span class="sc">:</span> active binding</span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>    Feature<span class="sc">:</span> active binding</span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>    FeatureSet<span class="sc">:</span> active binding</span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>    FeatureValue<span class="sc">:</span> active binding</span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a>    get_module<span class="sc">:</span> <span class="cf">function</span> (module_name) </span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a>    get_module_names<span class="sc">:</span> <span class="cf">function</span> () </span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a>    get_modules<span class="sc">:</span> <span class="cf">function</span> () </span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a>    initialize<span class="sc">:</span> <span class="cf">function</span> (settings, api, schema) </span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a>    Param<span class="sc">:</span> active binding</span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a>    ParamValue<span class="sc">:</span> active binding</span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a>    Run<span class="sc">:</span> active binding</span>
+<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a>    Storage<span class="sc">:</span> active binding</span>
+<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a>    Transform<span class="sc">:</span> active binding</span>
+<span id="cb5-19"><a href="#cb5-19" tabindex="-1"></a>    ULabel<span class="sc">:</span> active binding</span>
+<span id="cb5-20"><a href="#cb5-20" tabindex="-1"></a>    User<span class="sc">:</span> active binding</span>
+<span id="cb5-21"><a href="#cb5-21" tabindex="-1"></a>  Private<span class="sc">:</span></span>
+<span id="cb5-22"><a href="#cb5-22" tabindex="-1"></a>    .api<span class="sc">:</span> API, R6</span>
+<span id="cb5-23"><a href="#cb5-23" tabindex="-1"></a>    .module_classes<span class="sc">:</span> list</span>
+<span id="cb5-24"><a href="#cb5-24" tabindex="-1"></a>    .settings<span class="sc">:</span> InstanceSettings, R6</span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="query-the-instance">Query the instance<a class="anchor" aria-label="anchor" href="#query-the-instance"></a>
+</h2>
+<p>You can use the <code>db</code> object to query the instance:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">artifact</span><span class="op">$</span><span class="va">id</span></span></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">3659</span></span></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">artifact</span><span class="op">$</span><span class="va">uid</span></span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"KBW89Mf7IGcekja2hADu"</span></span></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">artifact</span><span class="op">$</span><span class="va">key</span></span></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad"</span></span></code></pre></div>
-<p>Fetch related fields:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">artifact</span><span class="op">$</span><span class="va">storage</span><span class="op">$</span><span class="va">root</span></span></code></pre></div>
-<div class="sourceCode" id="cb13"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"s3://cellxgene-data-public"</span></span></code></pre></div>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">artifact</span><span class="op">$</span><span class="va">created_by</span><span class="op">$</span><span class="va">handle</span></span></code></pre></div>
-<div class="sourceCode" id="cb15"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"sunnyosun"</span></span></code></pre></div>
-<p>Load the artifact:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">artifact</span> <span class="op">&lt;-</span> <span class="va">db</span><span class="op">$</span><span class="va">Artifact</span><span class="op">$</span><span class="fu">get</span><span class="op">(</span><span class="st">"KBW89Mf7IGcekja2hADu"</span><span class="op">)</span></span></code></pre></div>
+<p>You can print the record:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">artifact</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">Artifact</span>(<span class="at">uid=</span><span class="st">'KBW89Mf7IGcekja2hADu'</span>, <span class="at">description=</span><span class="st">'Myeloid compartment'</span>, <span class="at">key=</span><span class="st">'cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad'</span>, <span class="at">storage_id=</span><span class="dv">2</span>, <span class="at">version=</span><span class="st">'2024-07-01'</span>, <span class="at">_accessor=</span><span class="st">'AnnData'</span>, <span class="at">id=</span><span class="dv">3659</span>, <span class="at">transform_id=</span><span class="dv">22</span>, <span class="at">n_observations=</span><span class="dv">51552</span>, <span class="at">created_by_id=</span><span class="dv">1</span>, <span class="at">size=</span><span class="dv">691757462</span>, <span class="at">_hash_type=</span><span class="st">'md5-n'</span>, <span class="at">is_latest=</span><span class="cn">TRUE</span>, <span class="at">type=</span><span class="st">'dataset'</span>, <span class="at">created_at=</span><span class="st">'2024-07-12T12:34:10.345829+00:00'</span>, <span class="at">updated_at=</span><span class="st">'2024-07-12T12:40:48.837026+00:00'</span>, <span class="at">_key_is_virtual=</span><span class="cn">FALSE</span>, <span class="at">visibility=</span><span class="dv">1</span>, <span class="at">run_id=</span><span class="dv">27</span>, <span class="at">suffix=</span><span class="st">'.h5ad'</span>, <span class="at">hash=</span><span class="st">'SZ5tB0T4YKfiUuUkAL09ZA'</span>)</span></code></pre></div>
+<p>Or call the <code>$describe()</code> method to get a summary:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">artifact</span><span class="op">$</span><span class="fu">describe</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">Artifact</span>(<span class="at">uid=</span><span class="st">'KBW89Mf7IGcekja2hADu'</span>, <span class="at">description=</span><span class="st">'Myeloid compartment'</span>, <span class="at">key=</span><span class="st">'cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad'</span>, <span class="at">storage_id=</span><span class="dv">2</span>, <span class="at">version=</span><span class="st">'2024-07-01'</span>, <span class="at">_accessor=</span><span class="st">'AnnData'</span>, <span class="at">id=</span><span class="dv">3659</span>, <span class="at">transform_id=</span><span class="dv">22</span>, <span class="at">n_observations=</span><span class="dv">51552</span>, <span class="at">created_by_id=</span><span class="dv">1</span>, <span class="at">size=</span><span class="dv">691757462</span>, <span class="at">_hash_type=</span><span class="st">'md5-n'</span>, <span class="at">is_latest=</span><span class="cn">TRUE</span>, <span class="at">type=</span><span class="st">'dataset'</span>, <span class="at">created_at=</span><span class="st">'2024-07-12T12:34:10.345829+00:00'</span>, <span class="at">updated_at=</span><span class="st">'2024-07-12T12:40:48.837026+00:00'</span>, <span class="at">_key_is_virtual=</span><span class="cn">FALSE</span>, <span class="at">visibility=</span><span class="dv">1</span>, <span class="at">run_id=</span><span class="dv">27</span>, <span class="at">suffix=</span><span class="st">'.h5ad'</span>, <span class="at">hash=</span><span class="st">'SZ5tB0T4YKfiUuUkAL09ZA'</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  Provenance</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>    <span class="sc">$</span>storage <span class="ot">=</span> <span class="st">'s3://cellxgene-data-public'</span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>    <span class="sc">$</span>transform <span class="ot">=</span> <span class="st">'Census release 2024-07-01 (LTS)'</span></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>    <span class="sc">$</span>run <span class="ot">=</span> <span class="st">'2024-07-16T12:49:41.81955+00:00'</span></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>    <span class="sc">$</span>created_by <span class="ot">=</span> <span class="st">'sunnyosun'</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="access-fields">Access fields<a class="anchor" aria-label="anchor" href="#access-fields"></a>
+</h2>
+<p>You can access its fields as follows:</p>
+<ul>
+<li>
+<code>artifact$id</code>: 3659</li>
+<li>
+<code>artifact$uid</code>: KBW89Mf7IGcekja2hADu</li>
+<li>
+<code>artifact$key</code>: cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad</li>
+</ul>
+<p>You can also fetch related fields:</p>
+<ul>
+<li>
+<code>artifact$root</code>: s3://cellxgene-data-public</li>
+<li>
+<code>artifact$created_by</code>: sunnyosun</li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="load-the-artifact">Load the artifact<a class="anchor" aria-label="anchor" href="#load-the-artifact"></a>
+</h2>
+<p>You can directly load the artifact to access its data:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">artifact</span><span class="op">$</span><span class="fu">load</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb17"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>ℹ <span class="st">'s3://cellxgene-data-public/cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad'</span> already exists at <span class="st">'/home/rcannood/.cache/lamindb/cellxgene-data-public/cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad'</span></span>
-<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a></span>
-<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>AnnData object with n_obs × n_vars <span class="ot">=</span> <span class="dv">51552</span> × <span class="dv">36398</span></span>
-<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a>    obs<span class="sc">:</span> <span class="st">'donor_id'</span>, <span class="st">'Predicted_labels_CellTypist'</span>, <span class="st">'Majority_voting_CellTypist'</span>, <span class="st">'Manually_curated_celltype'</span>, <span class="st">'assay_ontology_term_id'</span>, <span class="st">'cell_type_ontology_term_id'</span>, <span class="st">'development_stage_ontology_term_id'</span>, <span class="st">'disease_ontology_term_id'</span>, <span class="st">'self_reported_ethnicity_ontology_term_id'</span>, <span class="st">'is_primary_data'</span>, <span class="st">'organism_ontology_term_id'</span>, <span class="st">'sex_ontology_term_id'</span>, <span class="st">'tissue_ontology_term_id'</span>, <span class="st">'suspension_type'</span>, <span class="st">'tissue_type'</span>, <span class="st">'cell_type'</span>, <span class="st">'assay'</span>, <span class="st">'disease'</span>, <span class="st">'organism'</span>, <span class="st">'sex'</span>, <span class="st">'tissue'</span>, <span class="st">'self_reported_ethnicity'</span>, <span class="st">'development_stage'</span>, <span class="st">'observation_joinid'</span></span>
-<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a>    var<span class="sc">:</span> <span class="st">'gene_symbols'</span>, <span class="st">'feature_is_filtered'</span>, <span class="st">'feature_name'</span>, <span class="st">'feature_reference'</span>, <span class="st">'feature_biotype'</span>, <span class="st">'feature_length'</span></span>
-<span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a>    uns<span class="sc">:</span> <span class="st">'cell_type_ontology_term_id_colors'</span>, <span class="st">'citation'</span>, <span class="st">'default_embedding'</span>, <span class="st">'schema_reference'</span>, <span class="st">'schema_version'</span>, <span class="st">'sex_ontology_term_id_colors'</span>, <span class="st">'title'</span></span>
-<span id="cb17-7"><a href="#cb17-7" tabindex="-1"></a>    obsm<span class="sc">:</span> <span class="st">'X_umap'</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>ℹ <span class="st">'s3://cellxgene-data-public/cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad'</span> already exists at <span class="st">'/home/rcannood/.cache/lamindb/cellxgene-data-public/cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad'</span></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>AnnData object with n_obs × n_vars <span class="ot">=</span> <span class="dv">51552</span> × <span class="dv">36398</span></span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>    obs<span class="sc">:</span> <span class="st">'donor_id'</span>, <span class="st">'Predicted_labels_CellTypist'</span>, <span class="st">'Majority_voting_CellTypist'</span>, <span class="st">'Manually_curated_celltype'</span>, <span class="st">'assay_ontology_term_id'</span>, <span class="st">'cell_type_ontology_term_id'</span>, <span class="st">'development_stage_ontology_term_id'</span>, <span class="st">'disease_ontology_term_id'</span>, <span class="st">'self_reported_ethnicity_ontology_term_id'</span>, <span class="st">'is_primary_data'</span>, <span class="st">'organism_ontology_term_id'</span>, <span class="st">'sex_ontology_term_id'</span>, <span class="st">'tissue_ontology_term_id'</span>, <span class="st">'suspension_type'</span>, <span class="st">'tissue_type'</span>, <span class="st">'cell_type'</span>, <span class="st">'assay'</span>, <span class="st">'disease'</span>, <span class="st">'organism'</span>, <span class="st">'sex'</span>, <span class="st">'tissue'</span>, <span class="st">'self_reported_ethnicity'</span>, <span class="st">'development_stage'</span>, <span class="st">'observation_joinid'</span></span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>    var<span class="sc">:</span> <span class="st">'gene_symbols'</span>, <span class="st">'feature_is_filtered'</span>, <span class="st">'feature_name'</span>, <span class="st">'feature_reference'</span>, <span class="st">'feature_biotype'</span>, <span class="st">'feature_length'</span></span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a>    uns<span class="sc">:</span> <span class="st">'cell_type_ontology_term_id_colors'</span>, <span class="st">'citation'</span>, <span class="st">'default_embedding'</span>, <span class="st">'schema_reference'</span>, <span class="st">'schema_version'</span>, <span class="st">'sex_ontology_term_id_colors'</span>, <span class="st">'title'</span></span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a>    obsm<span class="sc">:</span> <span class="st">'X_umap'</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
