@@ -118,7 +118,50 @@ Instance <- R6::R6Class( # nolint object_name_linter
     #'
     #' @param style Logical, whether the output is styled using ANSI codes
     print = function(style = TRUE) {
-      cli::cat_line(self$to_string(style))
+
+      registries <- self$get_module("core")$get_registries()
+
+      is_link_table <- purrr::map(registries, "is_link_table") |>
+        unlist()
+
+      standard_lines <- purrr::map_chr(
+        names(registries)[!is_link_table],
+        function(.registry) {
+          cli::col_blue(paste0("    $", registries[[.registry]]$class_name))
+        }
+      )
+
+      link_lines <- purrr::map_chr(
+        names(registries)[is_link_table],
+        function(.registry) {
+          cli::col_blue(paste0("    ", .registry))
+        }
+      )
+
+      lines <- c(
+        cli::style_bold(cli::col_green(private$.settings$name)),
+        cli::style_italic(cli::col_magenta("  Core registries")),
+        standard_lines,
+        cli::style_italic(cli::col_magenta("  Core link tables")),
+        link_lines
+      )
+
+      module_names <- self$get_module_names()
+      module_names <- module_names[module_names != "core"]
+
+      if (length(module_names) > 0) {
+        lines <- c(
+          lines,
+          cli::style_italic(cli::col_magenta("  Additional modules")),
+          cli::col_blue(paste0("    ", module_names))
+        )
+      }
+
+      if (isFALSE(style)) {
+        lines <- cli::ansi_strip(lines)
+      }
+
+      purrr::walk(lines, cli::cat_line)
     },
     #' @description
     #' Create a string representation of an `Instance`
@@ -127,17 +170,47 @@ Instance <- R6::R6Class( # nolint object_name_linter
     #'
     #' @return A `cli::cli_ansi_string` if `style = TRUE` or a character vector
     to_string = function(style = FALSE) {
-      fields <- list(
-        modules = paste0(
-          "c('", paste(self$get_module_names(), collapse = "', '"), "')"
+      registries <- self$get_module("core")$get_registries()
+
+      is_link_table <- purrr::map(registries, "is_link_table") |>
+        unlist()
+
+      mapping <- list(
+        "CoreRegistries" = paste0(
+          "[",
+          paste(
+            paste0(
+              "$",
+              purrr::map_chr(registries[!is_link_table], "class_name")
+            ),
+            collapse = ", "
+          ),
+          "]"
+        ),
+        "CoreLinkTables" = paste0(
+          "[",
+          paste(names(registries[is_link_table]), collapse = ", "),
+          "]"
         )
       )
 
-      field_strings <- make_key_value_strings(fields)
+      module_names <- self$get_module_names()
+      module_names <- module_names[module_names != "core"]
+
+      if (length(module_names) > 0) {
+        mapping["AdditionModules"] = paste0(
+          "[",
+          paste(module_names, collapse = ", "),
+          "]"
+        )
+      }
+
+      key_value_strings <- make_key_value_strings(
+        mapping, quote_strings = FALSE
+      )
 
       make_class_string(
-        paste(private$.settings$name, "Instance"), field_strings,
-        style = style
+        private$.settings$name, key_value_strings, style = style
       )
     }
   ),

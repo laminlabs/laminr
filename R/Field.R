@@ -53,6 +53,12 @@ Field <- R6::R6Class( # nolint object_name_linter
     print = function(style = TRUE) {
       cli::cat_line(self$to_string(style))
     },
+    #' @description
+    #' Create a string representation of a `Field`
+    #'
+    #' @param style Logical, whether the output is styled using ANSI codes
+    #'
+    #' @return A `cli::cli_ansi_string` if `style = TRUE` or a character vector
     to_string = function(style = FALSE) {
       field_strings <- make_key_value_strings(
         self,
