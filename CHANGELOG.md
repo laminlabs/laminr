@@ -17,7 +17,7 @@
   - Linting action.
   - Commands for roxygenizing (`/document`) and restyling the source code (`/style`).
 
-* Allow unauthenticated users to connect to an instance if they ran `lamin load <instance>` beforehand (PR #19).
+* Allow unauthenticated users to connect to an instance if they ran `lamin connect <instance>` beforehand (PR #19).
 
 ## MINOR CHANGES
 
@@ -38,6 +38,10 @@
 * Generate vignettes using Quarto (PR #13).
 
 * Add vignette to showcase laminr usage (PR #18).
+
+* Replace all mentions of `lamin load` with `lamin connect` (PR #29).
+
+* Improve the `README` (PR #29).
 
 ## BUG FIXES
 
