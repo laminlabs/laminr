@@ -96,8 +96,8 @@ You can access its fields as follows:
 
 Or fetch data from related registries:
 
-* `artifact$root`: `r artifact$storage`
-* `artifact$created_by`: `r artifact$created_by`
+* `artifact$root`: `r artifact$storage$to_string()`
+* `artifact$created_by`: `r artifact$created_by$to_string()`
 
 Finally, for Artifact objects, you can directly fetch or download the data using `$cache()` and `$load()`, respectively.
 
