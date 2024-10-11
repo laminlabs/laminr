@@ -38,7 +38,7 @@ InstanceSettings <- R6::R6Class( # nolint object_name_linter
         "lamindb_version" # api
       )
       missing_keys <- setdiff(expected_keys, names(settings))
-      if (length(missing_key) > 0) {
+      if (length(missing_keys) > 0) {
         cli_abort("Missing key{?s}: {missing_keys}")
       }
       unexpected_keys <- setdiff(names(settings), c(expected_keys, optional_keys))
