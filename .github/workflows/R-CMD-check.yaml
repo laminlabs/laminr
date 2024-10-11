@@ -46,7 +46,7 @@ jobs:
 
       - name: Install lamindb
         run: |
-          pip install lamindb[bionty,wetlab]
+          pip install lamin_cli
 
       - name: Log in to Lamin
         run: |
