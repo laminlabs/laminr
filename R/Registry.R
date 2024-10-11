@@ -81,6 +81,8 @@ Registry <- R6::R6Class( # nolint object_name_linter
       fields <- self$get_fields()
       # Remove hidden fields
       fields <- fields[grep("^_", names(fields), value = TRUE, invert = TRUE)]
+      # Remove link fields
+      fields <- fields[grep("^links_", names(fields), value = TRUE, invert = TRUE)]
 
       relational_fields <- purrr::map(fields, "relation_type") |>
         unlist() |>
@@ -126,6 +128,8 @@ Registry <- R6::R6Class( # nolint object_name_linter
       fields <- self$get_fields()
       # Remove hidden fields
       fields <- fields[grep("^_", names(fields), value = TRUE, invert = TRUE)]
+      # Remove link fields
+      fields <- fields[grep("^links_", names(fields), value = TRUE, invert = TRUE)]
 
       relational_fields <- purrr::map(fields, "relation_type") |>
         unlist() |>
