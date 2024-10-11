@@ -15,7 +15,7 @@ broken_instance_settings <- function() {
   )
 }
 
-test_that("test get_schema", {
+test_that("get_schema works", {
   local_setup_lamindata_instance()
 
   instance_file <- .settings_store__instance_settings_file("laminlabs", "lamindata")
@@ -33,7 +33,7 @@ test_that("test get_schema", {
   expect_named(schema$core$artifact, c("fields_metadata", "class_name", "is_link_table"))
 })
 
-test_that("test get_schema fails gracefully", {
+test_that("get_schema fails gracefully", {
   instance_settings <- broken_instance_settings()
 
   api <- InstanceAPI$new(instance_settings)
@@ -41,7 +41,7 @@ test_that("test get_schema fails gracefully", {
   expect_error(api$get_schema(), regexp = "Could not resolve host: foo.lamin.ai")
 })
 
-test_that("test get_record", {
+test_that("get_record works", {
   local_setup_lamindata_instance()
 
   instance_file <- .settings_store__instance_settings_file("laminlabs", "lamindata")
@@ -67,7 +67,7 @@ test_that("test get_record fails gracefully with incorrect host", {
   )
 })
 
-test_that("test get_record with select", {
+test_that("get_record with select works", {
   local_setup_lamindata_instance()
 
   instance_file <- .settings_store__instance_settings_file("laminlabs", "lamindata")
@@ -83,7 +83,7 @@ test_that("test get_record with select", {
   expect_true(all(c("uid", "type", "region", "root") %in% names(artifact$storage)))
 })
 
-test_that("test get_record fails gracefully with incorrect inputs", {
+test_that("get_record fails gracefully", {
   local_setup_lamindata_instance()
 
   instance_file <- .settings_store__instance_settings_file("laminlabs", "lamindata")
