@@ -22,78 +22,88 @@ Install the development version from GitHub:
 remotes::install_github("laminlabs/laminr")
 ```
 
-Install the Lamin CLI and authenticate:
+You will also need to install `lamindb`:
 
 ``` bash
-pip install lamin-cli
-lamin login
+pip install lamindb[bionty,wetlab]
 ```
 
-> [!TIP]
->
-> You can get your token from the [LaminDB web
-> interface](https://lamin.ai/settings).
+## Connect to an instance
 
-## Quick start
+To connect to a LaminDB instance, you will first need to run
+`lamin login` OR `lamin load <instance>` in the terminal. This will
+create a directory in your home directory called `.lamin` with the
+necessary credentials.
 
-Let’s first connect to a LaminDB instance:
+``` bash
+lamin login
+lamin connect laminlabs/cellxgene
+```
+
+Then, you can connect to the instance using the `laminr::connect()`
+function:
 
 ``` r
 library(laminr)
 
 db <- connect("laminlabs/cellxgene")
+db
 ```
 
-Get an artifact:
+    cellxgene Instance(modules='c('core', 'bionty')')
+
+## Query the instance
+
+You can use the `db` object to query the instance:
 
 ``` r
 artifact <- db$Artifact$get("KBW89Mf7IGcekja2hADu")
+```
+
+You can print the record:
+
+``` r
 artifact
 ```
 
-    Artifact(uid='KBW89Mf7IGcekja2hADu', description='Myeloid compartment', key='cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad', suffix='.h5ad', type='dataset', size=691757462, hash='SZ5tB0T4YKfiUuUkAL09ZA', n_observations=51552, visibility=1, version='2024-07-01', is_latest=TRUE, created_at='2024-07-12T12:34:10.345829+00:00', updated_at='2024-07-12T12:40:48.837026+00:00', created_by_id=1, storage_id=2, transform_id=22, run_id=27, _accessor='AnnData', _hash_type='md5-n', _key_is_virtual=FALSE, id=3659)
+    Artifact(uid='KBW89Mf7IGcekja2hADu', description='Myeloid compartment', key='cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad', storage_id=2, version='2024-07-01', _accessor='AnnData', id=3659, transform_id=22, size=691757462, is_latest=TRUE, created_by_id=1, type='dataset', _hash_type='md5-n', n_observations=51552, created_at='2024-07-12T12:34:10.345829+00:00', updated_at='2024-07-12T12:40:48.837026+00:00', run_id=27, suffix='.h5ad', visibility=1, _key_is_virtual=FALSE, hash='SZ5tB0T4YKfiUuUkAL09ZA')
 
-Access some of its fields:
-
-``` r
-artifact$id
-```
-
-    [1] 3659
+Or call the `$describe()` method to get a summary:
 
 ``` r
-artifact$uid
+artifact$describe()
 ```
 
-    [1] "KBW89Mf7IGcekja2hADu"
+    Artifact(uid='KBW89Mf7IGcekja2hADu', description='Myeloid compartment', key='cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad', storage_id=2, version='2024-07-01', _accessor='AnnData', id=3659, transform_id=22, size=691757462, is_latest=TRUE, created_by_id=1, type='dataset', _hash_type='md5-n', n_observations=51552, created_at='2024-07-12T12:34:10.345829+00:00', updated_at='2024-07-12T12:40:48.837026+00:00', run_id=27, suffix='.h5ad', visibility=1, _key_is_virtual=FALSE, hash='SZ5tB0T4YKfiUuUkAL09ZA')
+      Provenance
+        $storage = 's3://cellxgene-data-public'
+        $transform = 'Census release 2024-07-01 (LTS)'
+        $run = '2024-07-16T12:49:41.81955+00:00'
+        $created_by = 'sunnyosun'
 
-``` r
-artifact$key
-```
+## Access fields
 
-    [1] "cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad"
+You can access its fields as follows:
 
-Fetch related fields:
+- `artifact$id`: 3659
+- `artifact$uid`: KBW89Mf7IGcekja2hADu
+- `artifact$key`:
+  cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad
 
-``` r
-artifact$storage$root
-```
+You can also fetch related fields:
 
-    [1] "s3://cellxgene-data-public"
+- `artifact$root`: s3://cellxgene-data-public
+- `artifact$created_by`: sunnyosun
 
-``` r
-artifact$created_by$handle
-```
+## Load the artifact
 
-    [1] "sunnyosun"
-
-Load the artifact:
+You can directly load the artifact to access its data:
 
 ``` r
 artifact$load()
 ```
 
-    ℹ 's3://cellxgene-data-public/cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad' already exists at '/home/luke/.cache/lamindb/cellxgene-data-public/cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad'
+    ℹ 's3://cellxgene-data-public/cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad' already exists at '/home/rcannood/.cache/lamindb/cellxgene-data-public/cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad'
 
     AnnData object with n_obs × n_vars = 51552 × 36398
         obs: 'donor_id', 'Predicted_labels_CellTypist', 'Majority_voting_CellTypist', 'Manually_curated_celltype', 'assay_ontology_term_id', 'cell_type_ontology_term_id', 'development_stage_ontology_term_id', 'disease_ontology_term_id', 'self_reported_ethnicity_ontology_term_id', 'is_primary_data', 'organism_ontology_term_id', 'sex_ontology_term_id', 'tissue_ontology_term_id', 'suspension_type', 'tissue_type', 'cell_type', 'assay', 'disease', 'organism', 'sex', 'tissue', 'self_reported_ethnicity', 'development_stage', 'observation_joinid'

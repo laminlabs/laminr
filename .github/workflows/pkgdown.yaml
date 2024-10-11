@@ -44,7 +44,7 @@ jobs:
 
       - name: Install lamindb
         run: |
-          pip install lamindb[bionty]
+          pip install lamindb[bionty,wetlab]
 
       - name: Log in to Lamin
         run: |
@@ -52,7 +52,7 @@ jobs:
 
       - name: Set cellxgene as default instance
         run: |
-          lamin load laminlabs/cellxgene
+          lamin connect laminlabs/cellxgene
 
       - name: Build site
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
@@ -60,7 +60,7 @@ jobs:
 
       - name: Deploy to GitHub pages 🚀
         if: github.event_name != 'pull_request'
-        uses: JamesIves/github-pages-deploy-action@v4.5.0
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
           clean: false
           branch: gh-pages
