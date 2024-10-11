@@ -12,34 +12,33 @@
 #' @return A vector of `cli::cli_ansi_string` objects
 #' @noRd
 make_key_value_strings <- function(mapping, names = NULL, quote_strings = TRUE) {
+  if (is.null(names)) {
+    names <- names(mapping)
+  }
 
-    if (is.null(names)) {
-        names <- names(mapping)
+  purrr::map_chr(names, function(.name) {
+    value <- mapping[[.name]]
+
+    if (is.null(value)) {
+      return(NA_character_)
     }
 
-    purrr::map_chr(names, function(.name) {
-        value <- mapping[[.name]]
+    if (quote_strings && is.character(value)) {
+      value <- paste0("'", value, "'")
+    }
 
-        if (is.null(value)) {
-          return(NA_character_)
-        }
+    if (is.list(value)) {
+      list_strings <- make_key_value_strings(value)
+      value <- paste0(
+        "list(", cli::ansi_strip(paste(list_strings, collapse = ", ")), ")"
+      )
+    }
 
-        if (quote_strings && is.character(value)) {
-            value <- paste0("'", value, "'")
-        }
-
-        if (is.list(value)) {
-          list_strings <- make_key_value_strings(value)
-          value <- paste0(
-            "list(", cli::ansi_strip(paste(list_strings, collapse = ", ")), ")"
-          )
-        }
-
-        paste0(
-            cli::col_blue(.name), cli::col_br_blue("="), cli::col_yellow(value)
-        )
-    }) |>
-        purrr::discard(is.na)
+    paste0(
+      cli::col_blue(.name), cli::col_br_blue("="), cli::col_yellow(value)
+    )
+  }) |>
+    purrr::discard(is.na)
 }
 
 #' Make a string representation of a class
@@ -53,15 +52,15 @@ make_key_value_strings <- function(mapping, names = NULL, quote_strings = TRUE) 
 #'   character vector
 #' @noRd
 make_class_string <- function(class_name, field_strings, style = TRUE) {
-    string <- paste0(
-        cli::style_bold(cli::col_green(class_name)), "(",
-        paste(field_strings, collapse = ", "),
-        ")"
-    )
+  string <- paste0(
+    cli::style_bold(cli::col_green(class_name)), "(",
+    paste(field_strings, collapse = ", "),
+    ")"
+  )
 
-    if (isFALSE(style)) {
-        string <- cli::ansi_strip(string)
-    }
+  if (isFALSE(style)) {
+    string <- cli::ansi_strip(string)
+  }
 
-    return(string)
+  return(string)
 }

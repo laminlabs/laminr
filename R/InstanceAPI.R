@@ -103,11 +103,20 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
 
       content
     },
+    #' @description
+    #' Print an `API`
+    #'
+    #' @param style Logical, whether the output is styled using ANSI codes
     print = function(style = TRUE) {
       cli::cat_line(self$to_string(style))
     },
-
-    to_string = function(style = FALSE)  {
+    #' @description
+    #' Create a string representation of an `API`
+    #'
+    #' @param style Logical, whether the output is styled using ANSI codes
+    #'
+    #' @return A `cli::cli_ansi_string` if `style = TRUE` or a character vector
+    to_string = function(style = FALSE) {
       field_strings <- make_key_value_strings(
         private$.instance_settings, c("api_url", "id", "schema_id")
       )
@@ -119,4 +128,3 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
     .instance_settings = NULL
   )
 )
-

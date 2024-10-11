@@ -76,8 +76,11 @@ Registry <- R6::R6Class( # nolint object_name_linter
     get_record_class = function() {
       private$.record_class
     },
+    #' @description
+    #' Print a `Registry`
+    #'
+    #' @param style Logical, whether the output is styled using ANSI codes
     print = function(style = TRUE) {
-
       fields <- self$get_fields()
       # Remove hidden fields
       fields <- fields[grep("^_", names(fields), value = TRUE, invert = TRUE)]
@@ -93,7 +96,8 @@ Registry <- R6::R6Class( # nolint object_name_linter
         function(.field) {
           paste0(
             cli::col_blue(paste0("    ", .field)), ": ",
-            cli::col_grey(fields[[.field]]$type))
+            cli::col_grey(fields[[.field]]$type)
+          )
         }
       )
 
@@ -110,9 +114,9 @@ Registry <- R6::R6Class( # nolint object_name_linter
 
       lines <- c(
         cli::style_bold(cli::col_green(private$.class_name)),
-        cli::style_italic(cli::col_magenta("  Simple fields")),
+        cli::style_italic(cli::col_br_magenta("  Simple fields")),
         simple_lines,
-        cli::style_italic(cli::col_magenta("  Relational fields")),
+        cli::style_italic(cli::col_br_magenta("  Relational fields")),
         relational_lines
       )
 
@@ -122,9 +126,13 @@ Registry <- R6::R6Class( # nolint object_name_linter
 
       purrr::walk(lines, cli::cat_line)
     },
-
-    to_string = function(style = FALSE)  {
-
+    #' @description
+    #' Create a string representation of a `Registry`
+    #'
+    #' @param style Logical, whether the output is styled using ANSI codes
+    #'
+    #' @return A `cli::cli_ansi_string` if `style = TRUE` or a character vector
+    to_string = function(style = FALSE) {
       fields <- self$get_fields()
       # Remove hidden fields
       fields <- fields[grep("^_", names(fields), value = TRUE, invert = TRUE)]
@@ -153,7 +161,6 @@ Registry <- R6::R6Class( # nolint object_name_linter
 
       make_class_string(private$.class_name, field_strings, style = style)
     }
-
   ),
   private = list(
     .instance = NULL,

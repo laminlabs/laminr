@@ -113,13 +113,20 @@ Instance <- R6::R6Class( # nolint object_name_linter
     get_api = function() {
       private$.api
     },
-
+    #' @description
+    #' Print an `Instance`
+    #'
+    #' @param style Logical, whether the output is styled using ANSI codes
     print = function(style = TRUE) {
       cli::cat_line(self$to_string(style))
     },
-
-    to_string = function(style = FALSE)  {
-
+    #' @description
+    #' Create a string representation of an `Instance`
+    #'
+    #' @param style Logical, whether the output is styled using ANSI codes
+    #'
+    #' @return A `cli::cli_ansi_string` if `style = TRUE` or a character vector
+    to_string = function(style = FALSE) {
       fields <- list(
         modules = paste0(
           "c('", paste(self$get_module_names(), collapse = "', '"), "')"
@@ -129,11 +136,11 @@ Instance <- R6::R6Class( # nolint object_name_linter
       field_strings <- make_key_value_strings(fields)
 
       make_class_string(
-        paste(private$.settings$name, "Instance"), field_strings, style = style
+        paste(private$.settings$name, "Instance"), field_strings,
+        style = style
       )
     }
   ),
-
   private = list(
     .settings = NULL,
     .api = NULL,

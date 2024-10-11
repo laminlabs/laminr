@@ -46,11 +46,14 @@ Field <- R6::R6Class( # nolint object_name_linter
       private$.related_registry_name <- related_registry_name
       private$.related_module_name <- related_module_name
     },
+    #' @description
+    #' Print a `Field`
+    #'
+    #' @param style Logical, whether the output is styled using ANSI codes
     print = function(style = TRUE) {
       cli::cat_line(self$to_string(style))
     },
     to_string = function(style = FALSE) {
-
       field_strings <- make_key_value_strings(
         self,
         c(

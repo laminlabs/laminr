@@ -86,8 +86,11 @@ Module <- R6::R6Class( # nolint object_name_linter
     get_registry_names = function() {
       names(private$.registry_classes)
     },
+    #' @description
+    #' Print a `Module`
+    #'
+    #' @param style Logical, whether the output is styled using ANSI codes
     print = function(style = TRUE) {
-
       registries <- self$get_registries()
 
       is_link_table <- purrr::map(registries, "is_link_table") |>
@@ -96,7 +99,7 @@ Module <- R6::R6Class( # nolint object_name_linter
       standard_lines <- purrr::map_chr(
         names(registries)[!is_link_table],
         function(.registry) {
-            cli::col_blue(paste0("    $", registries[[.registry]]$class_name))
+          cli::col_blue(paste0("    $", registries[[.registry]]$class_name))
         }
       )
 
@@ -121,9 +124,13 @@ Module <- R6::R6Class( # nolint object_name_linter
 
       purrr::walk(lines, cli::cat_line)
     },
-
-    to_string = function(style = FALSE)  {
-
+    #' @description
+    #' Create a string representation of a `Module`
+    #'
+    #' @param style Logical, whether the output is styled using ANSI codes
+    #'
+    #' @return A `cli::cli_ansi_string` if `style = TRUE` or a character vector
+    to_string = function(style = FALSE) {
       registries <- self$get_registries()
 
       is_link_table <- purrr::map(registries, "is_link_table") |>
