@@ -1,7 +1,5 @@
 #' @title Field
 #'
-#' @noRd
-#'
 #' @description
 #' A field in a registry.
 Field <- R6::R6Class( # nolint object_name_linter

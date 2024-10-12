@@ -1,7 +1,5 @@
 #' @title Registry
 #'
-#' @noRd
-#'
 #' @description
 #' A registry in a module.
 Registry <- R6::R6Class( # nolint object_name_linter

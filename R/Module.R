@@ -44,8 +44,6 @@ create_module <- function(instance, api, module_name, module_schema) {
 
 #' @title Module
 #'
-#' @noRd
-#'
 #' @description
 #' A LaminDB module containing one or more registries.
 Module <- R6::R6Class( # nolint object_name_linter

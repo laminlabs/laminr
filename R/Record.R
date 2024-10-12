@@ -47,8 +47,6 @@ create_record_class <- function(instance, registry, api) {
 
 #' @title Record
 #'
-#' @noRd
-#'
 #' @description
 #' A record from a registry.
 Record <- R6::R6Class( # nolint object_name_linter

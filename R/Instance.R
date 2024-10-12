@@ -63,10 +63,35 @@ create_instance <- function(instance_settings) {
 
 #' @title Instance
 #'
-#' @noRd
-#'
 #' @description
-#' A LaminDB instance.
+#' Connect to a LaminDB instance using the [connect()] function.
+#' The instance object provides access to the modules and registries
+#' of the instance.
+#'
+#' @details
+#' Note that by connecting to an instance via [connect()], you receive
+#' a "richer" version of the Instance class documented here, providing
+#' direct access to all core registries and additional modules.
+#' See the vignette on "Package Architecture" for more information:
+#' `vignette("architecture", package = "laminr")`.
+#'
+#' @examples
+#' \dontrun{
+#' # Connect to an instance
+#' db <- connect("laminlabs/cellxgene")
+#'
+#' # fetch an artifact
+#' artifact <- db$Artifact$get("KBW89Mf7IGcekja2hADu")
+#'
+#' # describe the artifact
+#' artifact$describe()
+#'
+#' # view field
+#' artifact$id
+#'
+#' # load dataset
+#' artifact$load()
+#' }
 Instance <- R6::R6Class( # nolint object_name_linter
   "Instance",
   cloneable = FALSE,
