@@ -1,7 +1,7 @@
 ---
-title: "Package structure"
+title: "Architecture"
 vignette: >
-  %\VignetteIndexEntry{Package structure}
+  %\VignetteIndexEntry{Architecture}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{quarto::html}
 knitr:
