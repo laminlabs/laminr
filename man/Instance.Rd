@@ -63,12 +63,7 @@ but rather by connecting to a LaminDB instance using the \code{\link[=connect]{c
 
 \item{\code{api}}{The API for the instance}
 
-\item{\code{schema}}{The schema for the instance
-Get the modules for the instance.
-Get a module by name.
-Get the names of the modules. Example: \code{c("core", "bionty")}.
-Get instance settings.
-Get instance API.}
+\item{\code{schema}}{The schema for the instance}
 }
 \if{html}{\out{</div>}}
 }
@@ -77,46 +72,77 @@ Get instance API.}
 \if{html}{\out{<a id="method-Instance-get_modules"></a>}}
 \if{latex}{\out{\hypertarget{method-Instance-get_modules}{}}}
 \subsection{Method \code{get_modules()}}{
+Get the modules for the instance.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Instance$get_modules()}\if{html}{\out{</div>}}
 }
 
+\subsection{Returns}{
+A list of \link{Module} objects.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Instance-get_module"></a>}}
 \if{latex}{\out{\hypertarget{method-Instance-get_module}{}}}
 \subsection{Method \code{get_module()}}{
+Get a module by name.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Instance$get_module(module_name)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{module_name}}{The name of the module.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+The \link{Module} object.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Instance-get_module_names"></a>}}
 \if{latex}{\out{\hypertarget{method-Instance-get_module_names}{}}}
 \subsection{Method \code{get_module_names()}}{
+Get the names of the modules. Example: \code{c("core", "bionty")}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Instance$get_module_names()}\if{html}{\out{</div>}}
 }
 
+\subsection{Returns}{
+A character vector of module names.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Instance-get_settings"></a>}}
 \if{latex}{\out{\hypertarget{method-Instance-get_settings}{}}}
 \subsection{Method \code{get_settings()}}{
+Get instance settings.
+
+Note: This method is intended for internal use only and may be removed in the future.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Instance$get_settings()}\if{html}{\out{</div>}}
 }
 
+\subsection{Returns}{
+The settings for the instance.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Instance-get_api"></a>}}
 \if{latex}{\out{\hypertarget{method-Instance-get_api}{}}}
 \subsection{Method \code{get_api()}}{
+Get instance API.
+
+Note: This method is intended for internal use only and may be removed in the future.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Instance$get_api()}\if{html}{\out{</div>}}
 }
 
+\subsection{Returns}{
+The API for the instance.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Instance-print"></a>}}

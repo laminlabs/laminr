@@ -94,7 +94,7 @@ test_that("get_record fails gracefully", {
   # nolint start: commented_code
   # TODO: improve error messages for these cases
   expect_error(
-    api$get_record("core", "artifact", "foobar")#,
+    api$get_record("core", "artifact", "foobar") # ,
     # regexp = "Error getting record: list index out of range"
   )
   expect_error(

@@ -121,24 +121,40 @@ Instance <- R6::R6Class( # nolint object_name_linter
       ) |>
         set_names(names(schema))
     },
-    #' Get the modules for the instance.
+    #' @description Get the modules for the instance.
+    #'
+    #' @return A list of [Module] objects.
     get_modules = function() {
       private$.module_classes
     },
-    #' Get a module by name.
+    #' @description Get a module by name.
+    #'
+    #' @param module_name The name of the module.
+    #'
+    #' @return The [Module] object.
     get_module = function(module_name) {
       # todo: assert module exists
       private$.module_classes[[module_name]]
     },
-    #' Get the names of the modules. Example: `c("core", "bionty")`.
+    #' @description Get the names of the modules. Example: `c("core", "bionty")`.
+    #'
+    #' @return A character vector of module names.
     get_module_names = function() {
       names(private$.module_classes)
     },
-    #' Get instance settings.
+    #' @description Get instance settings.
+    #'
+    #' Note: This method is intended for internal use only and may be removed in the future.
+    #'
+    #' @return The settings for the instance.
     get_settings = function() {
       private$.settings
     },
-    #' Get instance API.
+    #' @description Get instance API.
+    #'
+    #' Note: This method is intended for internal use only and may be removed in the future.
+    #'
+    #' @return The API for the instance.
     get_api = function() {
       private$.api
     },
@@ -147,7 +163,6 @@ Instance <- R6::R6Class( # nolint object_name_linter
     #'
     #' @param style Logical, whether the output is styled using ANSI codes
     print = function(style = TRUE) {
-
       registries <- self$get_module("core")$get_registries()
 
       is_link_table <- purrr::map(registries, "is_link_table") |>
@@ -235,11 +250,13 @@ Instance <- R6::R6Class( # nolint object_name_linter
       }
 
       key_value_strings <- make_key_value_strings(
-        mapping, quote_strings = FALSE
+        mapping,
+        quote_strings = FALSE
       )
 
       make_class_string(
-        private$.settings$name, key_value_strings, style = style
+        private$.settings$name, key_value_strings,
+        style = style
       )
     }
   ),
