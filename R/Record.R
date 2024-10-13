@@ -53,6 +53,10 @@ Record <- R6::R6Class( # nolint object_name_linter
   "Record",
   cloneable = FALSE,
   public = list(
+    #' @description
+    #' Creates an instance of this R6 class. This class should not be instantiated directly,
+    #' but rather by connecting to a LaminDB instance using the [connect()] function.
+    #'
     #' @param instance The instance the record belongs to.
     #' @param registry The registry the record belongs to.
     #' @param api The API for the instance.

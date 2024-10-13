@@ -6,6 +6,23 @@
 \description{
 A registry in a module.
 }
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{module}}{(\verb{[Module]})\cr
+The instance the registry belongs to.}
+
+\item{\code{name}}{(\code{character(1)})\cr
+The API for the instance.}
+
+\item{\code{class_name}}{(\code{character(1)})\cr
+The class name for the registry.}
+
+\item{\code{is_link_table}}{(\code{logical(1)})\cr
+Whether the registry is a link table.}
+}
+\if{html}{\out{</div>}}
+}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
@@ -23,6 +40,8 @@ A registry in a module.
 \if{html}{\out{<a id="method-Registry-new"></a>}}
 \if{latex}{\out{\hypertarget{method-Registry-new}{}}}
 \subsection{Method \code{new()}}{
+Creates an instance of this R6 class. This class should not be instantiated directly,
+but rather by connecting to a LaminDB instance using the \code{\link[=connect]{connect()}} function.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Registry$new(instance, module, api, registry_name, registry_schema)}\if{html}{\out{</div>}}
 }

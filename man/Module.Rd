@@ -21,6 +21,8 @@ A LaminDB module containing one or more registries.
 \if{html}{\out{<a id="method-Module-new"></a>}}
 \if{latex}{\out{\hypertarget{method-Module-new}{}}}
 \subsection{Method \code{new()}}{
+Creates an instance of this R6 class. This class should not be instantiated directly,
+but rather by connecting to a LaminDB instance using the \code{\link[=connect]{connect()}} function.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Module$new(instance, api, module_name, module_schema)}\if{html}{\out{</div>}}
 }

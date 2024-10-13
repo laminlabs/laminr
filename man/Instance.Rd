@@ -50,6 +50,8 @@ artifact$load()
 \if{html}{\out{<a id="method-Instance-new"></a>}}
 \if{latex}{\out{\hypertarget{method-Instance-new}{}}}
 \subsection{Method \code{new()}}{
+Creates an instance of this R6 class. This class should not be instantiated directly,
+but rather by connecting to a LaminDB instance using the \code{\link[=connect]{connect()}} function.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Instance$new(settings, api, schema)}\if{html}{\out{</div>}}
 }

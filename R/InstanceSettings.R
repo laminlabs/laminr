@@ -9,6 +9,10 @@ InstanceSettings <- R6::R6Class( # nolint object_name_linter
   "InstanceSettings",
   cloneable = FALSE,
   public = list(
+    #' @description
+    #' Creates an instance of this R6 class. This class should not be instantiated directly,
+    #' but rather by connecting to a LaminDB instance using the [connect()] function.
+    #'
     #' @param settings A named list of settings for the instance
     initialize = function(settings) {
       expected_keys <- c(

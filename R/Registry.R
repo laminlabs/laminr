@@ -6,6 +6,10 @@ Registry <- R6::R6Class( # nolint object_name_linter
   "Registry",
   cloneable = FALSE,
   public = list(
+    #' @description
+    #' Creates an instance of this R6 class. This class should not be instantiated directly,
+    #' but rather by connecting to a LaminDB instance using the [connect()] function.
+    #'
     #' @param instance The instance the registry belongs to.
     #' @param module The module the registry belongs to.
     #' @param api The API for the instance.
@@ -176,19 +180,23 @@ Registry <- R6::R6Class( # nolint object_name_linter
     .record_class = NULL
   ),
   active = list(
-    #' @return The instance the registry belongs to.
+    #' @field module (`[Module]`)\cr
+    #' The instance the registry belongs to.
     module = function() {
       private$.module
     },
-    #' @return The API for the instance.
+    #' @field name (`character(1)`)\cr
+    #' The API for the instance.
     name = function() {
       private$.registry_name
     },
-    #' @return The class name for the registry.
+    #' @field class_name (`character(1)`)\cr
+    #' The class name for the registry.
     class_name = function() {
       private$.class_name
     },
-    #' @return Whether the registry is a link table.
+    #' @field is_link_table (`logical(1)`)\cr
+    #' Whether the registry is a link table.
     is_link_table = function() {
       private$.is_link_table
     }

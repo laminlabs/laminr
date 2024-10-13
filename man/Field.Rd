@@ -6,6 +6,44 @@
 \description{
 A field in a registry.
 }
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{type}}{(\code{character(1)})\cr
+The type of the field.}
+
+\item{\code{through}}{(\code{list()} or \code{NULL})\cr
+The through value of the field.}
+
+\item{\code{field_name}}{(\code{character(1)})\cr
+The field name.}
+
+\item{\code{registry_name}}{(\code{character(1)})\cr
+The registry name.}
+
+\item{\code{column_name}}{(\code{character(1)})\cr
+The column name.}
+
+\item{\code{module_name}}{(\code{character(1)})\cr
+The module name.}
+
+\item{\code{is_link_table}}{(\code{logical(1)})\cr
+Whether the field is a link table.}
+
+\item{\code{relation_type}}{(\code{character(1)} or \code{NULL})\cr
+The relation type. Can be one of: "one-to-many", "many-to-one", "many-to-many".}
+
+\item{\code{related_field_name}}{(\code{character(1)} or \code{NULL})\cr
+The related field name.}
+
+\item{\code{related_registry_name}}{(\code{character(1)} or \code{NULL})\cr
+The related registry name.}
+
+\item{\code{related_module_name}}{(\code{character(1)} or \code{NULL})\cr
+The related module name.}
+}
+\if{html}{\out{</div>}}
+}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
@@ -18,6 +56,8 @@ A field in a registry.
 \if{html}{\out{<a id="method-Field-new"></a>}}
 \if{latex}{\out{\hypertarget{method-Field-new}{}}}
 \subsection{Method \code{new()}}{
+Creates an instance of this R6 class. This class should not be instantiated directly,
+but rather by connecting to a LaminDB instance using the \code{\link[=connect]{connect()}} function.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Field$new(
   type,
