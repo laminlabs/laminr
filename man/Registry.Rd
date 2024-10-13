@@ -9,7 +9,7 @@ A registry in a module.
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{module}}{(\verb{[Module]})\cr
+\item{\code{module}}{(\link{Module})\cr
 The instance the registry belongs to.}
 
 \item{\code{name}}{(\code{character(1)})\cr
@@ -71,6 +71,20 @@ Get a record by ID or UID.
 \if{html}{\out{<div class="r">}}\preformatted{Registry$get(id_or_uid, include_foreign_keys = FALSE, verbose = FALSE)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{id_or_uid}}{The ID or UID of the record.}
+
+\item{\code{include_foreign_keys}}{Logical, whether to include foreign keys in the record.}
+
+\item{\code{verbose}}{Logical, whether to print verbose output.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A \link{Record} object.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Registry-get_fields"></a>}}
@@ -81,6 +95,9 @@ Get the fields in the registry.
 \if{html}{\out{<div class="r">}}\preformatted{Registry$get_fields()}\if{html}{\out{</div>}}
 }
 
+\subsection{Returns}{
+A list of \link{Field} objects.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Registry-get_field"></a>}}
@@ -91,6 +108,16 @@ Get a field by name.
 \if{html}{\out{<div class="r">}}\preformatted{Registry$get_field(field_name)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{field_name}}{The name of the field.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A \link{Field} object.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Registry-get_field_names"></a>}}
@@ -101,16 +128,24 @@ Get the field names in the registry.
 \if{html}{\out{<div class="r">}}\preformatted{Registry$get_field_names()}\if{html}{\out{</div>}}
 }
 
+\subsection{Returns}{
+A character vector of field names.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Registry-get_record_class"></a>}}
 \if{latex}{\out{\hypertarget{method-Registry-get_record_class}{}}}
 \subsection{Method \code{get_record_class()}}{
 Get the record class for the registry.
+
+Note: This method is intended for internal use only and may be removed in the future.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Registry$get_record_class()}\if{html}{\out{</div>}}
 }
 
+\subsection{Returns}{
+A \link{Record} class.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Registry-print"></a>}}
@@ -127,6 +162,9 @@ Print a \code{Registry}
 \item{\code{style}}{Logical, whether the output is styled using ANSI codes}
 }
 \if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A character vector
 }
 }
 \if{html}{\out{<hr>}}
