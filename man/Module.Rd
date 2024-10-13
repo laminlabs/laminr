@@ -6,6 +6,14 @@
 \description{
 A LaminDB module containing one or more registries.
 }
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{name}}{(\code{character(1)})\cr
+Get the name of the module.}
+}
+\if{html}{\out{</div>}}
+}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
@@ -35,6 +43,8 @@ but rather by connecting to a LaminDB instance using the \code{\link[=connect]{c
 \item{\code{api}}{The API for the instance.}
 
 \item{\code{module_name}}{The name of the module.}
+
+\item{\code{module_schema}}{The schema of the module.}
 }
 \if{html}{\out{</div>}}
 }
@@ -48,6 +58,9 @@ Get the registries in the module.
 \if{html}{\out{<div class="r">}}\preformatted{Module$get_registries()}\if{html}{\out{</div>}}
 }
 
+\subsection{Returns}{
+A list of \link{Registry} objects.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Module-get_registry"></a>}}
@@ -58,6 +71,16 @@ Get a registry by name.
 \if{html}{\out{<div class="r">}}\preformatted{Module$get_registry(registry_name)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{registry_name}}{The name of the registry.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A \link{Registry} object.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Module-get_registry_names"></a>}}
@@ -68,6 +91,9 @@ Get the names of the registries in the module. E.g. \code{c("User", "Artifact")}
 \if{html}{\out{<div class="r">}}\preformatted{Module$get_registry_names()}\if{html}{\out{</div>}}
 }
 
+\subsection{Returns}{
+A character vector of registry names.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Module-print"></a>}}
@@ -81,7 +107,7 @@ Print a \code{Module}
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{style}}{Logical, whether the output is styled using ANSI codes}
+\item{\code{style}}{Logical, whether the output is styled using ANSI codes.}
 }
 \if{html}{\out{</div>}}
 }
@@ -104,7 +130,6 @@ Create a string representation of a \code{Module}
 }
 \subsection{Returns}{
 A \code{cli::cli_ansi_string} if \code{style = TRUE} or a character vector
-Get the name of the module.
 }
 }
 }
