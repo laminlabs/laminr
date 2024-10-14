@@ -4,9 +4,9 @@
 \name{laminr-package}
 \alias{laminr}
 \alias{laminr-package}
-\title{laminr: LaminDB interface in R}
+\title{laminr: 'LaminDB' Interface in R}
 \description{
-The laminr package provides an interface to the LaminDB database. It allows you to query the database and download data from it.
+Interact with 'LaminDB' from R. 'LaminDB' is an open-source data framework for biology. This package allows you to query and download data from 'LaminDB' instances.
 }
 \seealso{
 Useful links:
@@ -18,11 +18,12 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Robrecht Cannoodt \email{rcannood@gmail.com} (\href{https://orcid.org/0000-0003-3641-729X}{ORCID})
+\strong{Maintainer}: Robrecht Cannoodt \email{robrecht@data-intuitive.com} (\href{https://orcid.org/0000-0003-3641-729X}{ORCID}) (rcannood)
 
 Authors:
 \itemize{
-  \item Lamin Labs \email{open-source@lamin.ai}
+  \item Luke Zappia \email{luke@data-intuitive.com} (\href{https://orcid.org/0000-0001-7744-8565}{ORCID}) (lazappi)
+  \item Lamin Labs \email{open-source@lamin.ai} [copyright holder]
 }
 
 }
