@@ -8,10 +8,9 @@ ArtifactRecord <- R6::R6Class( # nolint object_name_linter
   "ArtifactRecord",
   inherit = Record,
   public = list(
-    #' Load the artifact into memory
-    #'
     #' @description
-    #' This currently only supports AnnData artifacts.
+    #' Load the artifact into memory. This currently only supports AnnData
+    #' artifacts.
     #'
     #' @return The artifact
     load = function() {
@@ -26,10 +25,9 @@ ArtifactRecord <- R6::R6Class( # nolint object_name_linter
         cli_abort(paste0("Unsupported accessor: ", artifact_accessor))
       }
     },
-    #' Cache the artifact to the local filesystem
-    #'
     #' @description
-    #' This currently only supports S3 storage.
+    #' Cache the artifact to the local filesystem. This currently only supports
+    #' S3 storage.
     #'
     #' @return The path to the cached artifact
     cache = function() {
@@ -50,6 +48,10 @@ ArtifactRecord <- R6::R6Class( # nolint object_name_linter
         cli_abort(paste0("Unsupported storage type: ", artifact_storage$type))
       }
     },
+    #' @description
+    #' Print a more detailed description of an `ArtifactRecord`
+    #'
+    #' @param style Logical, whether the output is styled using ANSI codes
     describe = function(style = TRUE) {
       provenance_fields <- c(
         storage = "root",

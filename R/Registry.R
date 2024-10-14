@@ -48,6 +48,7 @@ Registry <- R6::R6Class( # nolint object_name_linter
         api = api
       )
     },
+    #' @description
     #' Get a record by ID or UID.
     get = function(id_or_uid, include_foreign_keys = FALSE, verbose = FALSE) {
       data <- private$.api$get_record(
@@ -60,21 +61,110 @@ Registry <- R6::R6Class( # nolint object_name_linter
 
       private$.record_class$new(data = data)
     },
+    #' @description
     #' Get the fields in the registry.
     get_fields = function() {
       private$.fields
     },
+    #' @description
     #' Get a field by name.
     get_field = function(field_name) {
       private$.fields[[field_name]]
     },
+    #' @description
     #' Get the field names in the registry.
     get_field_names = function() {
       names(private$.fields)
     },
+    #' @description
     #' Get the record class for the registry.
     get_record_class = function() {
       private$.record_class
+    },
+    #' @description
+    #' Print a `Registry`
+    #'
+    #' @param style Logical, whether the output is styled using ANSI codes
+    print = function(style = TRUE) {
+      fields <- self$get_fields()
+      # Remove hidden fields
+      fields <- fields[grep("^_", names(fields), value = TRUE, invert = TRUE)]
+      # Remove link fields
+      fields <- fields[grep("^links_", names(fields), value = TRUE, invert = TRUE)]
+
+      relational_fields <- purrr::map(fields, "relation_type") |>
+        unlist() |>
+        names()
+
+      simple_lines <- purrr::map_chr(
+        setdiff(names(fields), relational_fields),
+        function(.field) {
+          paste0(
+            cli::col_blue(paste0("    ", .field)), ": ",
+            cli::col_grey(fields[[.field]]$type)
+          )
+        }
+      )
+
+      relational_lines <- purrr::map_chr(relational_fields, function(.field) {
+        field_object <- fields[[.field]]
+        paste0(
+          cli::col_blue(paste0("    ", .field)), ": ",
+          cli::col_grey(paste0(
+            field_object$related_registry_name,
+            " (", field_object$relation_type, ")"
+          ))
+        )
+      })
+
+      lines <- c(
+        cli::style_bold(cli::col_green(private$.class_name)),
+        cli::style_italic(cli::col_br_magenta("  Simple fields")),
+        simple_lines,
+        cli::style_italic(cli::col_br_magenta("  Relational fields")),
+        relational_lines
+      )
+
+      if (isFALSE(style)) {
+        lines <- cli::ansi_strip(lines)
+      }
+
+      purrr::walk(lines, cli::cat_line)
+    },
+    #' @description
+    #' Create a string representation of a `Registry`
+    #'
+    #' @param style Logical, whether the output is styled using ANSI codes
+    #'
+    #' @return A `cli::cli_ansi_string` if `style = TRUE` or a character vector
+    to_string = function(style = FALSE) {
+      fields <- self$get_fields()
+      # Remove hidden fields
+      fields <- fields[grep("^_", names(fields), value = TRUE, invert = TRUE)]
+      # Remove link fields
+      fields <- fields[grep("^links_", names(fields), value = TRUE, invert = TRUE)]
+
+      relational_fields <- purrr::map(fields, "relation_type") |>
+        unlist() |>
+        names()
+
+      field_strings <- make_key_value_strings(
+        list(
+          "SimpleFields" = paste0(
+            "[",
+            paste(setdiff(names(fields), relational_fields), collapse = ", "),
+            "]"
+          ),
+          "RelationalFields" = paste0(
+            "[",
+            paste(relational_fields, collapse = ", "),
+            "]"
+          )
+        ),
+        quote_strings = FALSE
+      )
+
+      make_class_string(private$.class_name, field_strings, style = style)
     }
   ),
   private = list(

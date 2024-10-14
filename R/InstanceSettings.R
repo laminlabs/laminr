@@ -37,15 +37,33 @@ InstanceSettings <- R6::R6Class( # nolint object_name_linter
         "db_user_password", # api
         "lamindb_version" # api
       )
-      missing_column <- setdiff(expected_keys, names(settings))
-      if (length(missing_column) > 0) {
-        cli_abort("Missing column: ", missing_column)
+      missing_keys <- setdiff(expected_keys, names(settings))
+      if (length(missing_keys) > 0) {
+        cli_abort("Missing key{?s}: {missing_keys}")
       }
-      unexpected_columns <- setdiff(names(settings), c(expected_keys, optional_keys))
-      if (length(unexpected_columns) > 0) {
-        cli_abort("Unexpected column: ", unexpected_columns)
+      unexpected_keys <- setdiff(names(settings), c(expected_keys, optional_keys))
+      if (length(unexpected_keys) > 0) {
+        cli_abort("Unexpected key{?s}: {unexpected_keys}")
       }
       private$.settings <- settings
+    },
+    #' @description
+    #' Print an `InstanceSettings`
+    #'
+    #' @param style Logical, whether the output is styled using ANSI codes
+    print = function(style = TRUE) {
+      cli::cat_line(self$to_string(style))
+    },
+    #' @description
+    #' Create a string representation of an `InstanceSettings`
+    #'
+    #' @param style Logical, whether the output is styled using ANSI codes
+    #'
+    #' @return A `cli::cli_ansi_string` if `style = TRUE` or a character vector
+    to_string = function(style = FALSE) {
+      field_strings <- make_key_value_strings(private$.settings)
+
+      make_class_string("InstanceSettings", field_strings, style = style)
     }
   ),
   private = list(

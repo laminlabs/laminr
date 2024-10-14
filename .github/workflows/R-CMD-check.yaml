@@ -46,7 +46,7 @@ jobs:
 
       - name: Install lamindb
         run: |
-          pip install lamindb[bionty]
+          pip install lamindb[bionty,wetlab]
 
       - name: Log in to Lamin
         run: |
@@ -54,7 +54,7 @@ jobs:
 
       - name: Set cellxgene as default instance
         run: |
-          lamin load laminlabs/cellxgene
+          lamin connect laminlabs/cellxgene
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:

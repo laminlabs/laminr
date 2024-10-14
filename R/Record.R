@@ -95,9 +95,19 @@ Record <- R6::R6Class( # nolint object_name_linter
         )
       }
     },
+    #' @description
+    #' Print a `Record`
+    #'
+    #' @param style Logical, whether the output is styled using ANSI codes
     print = function(style = TRUE) {
       cli::cat_line(self$to_string(style))
     },
+    #' @description
+    #' Create a string representation of a `Record`
+    #'
+    #' @param style Logical, whether the output is styled using ANSI codes
+    #'
+    #' @return A `cli::cli_ansi_string` if `style = TRUE` or a character vector
     to_string = function(style = FALSE) {
       important_fields <- c(
         "uid",
@@ -122,34 +132,12 @@ Record <- R6::R6Class( # nolint object_name_linter
         important_fields, setdiff(names(record_fields), important_fields)
       )
 
-      field_strings <- purrr::map_chr(field_names, function(.name) {
-        value <- record_fields[[.name]]
+      field_strings <- make_key_value_strings(record_fields, field_names)
 
-        if (is.null(value)) {
-          return(NA_character_)
-        }
-
-        if (is.character(value)) {
-          value <- paste0("'", value, "'")
-        }
-
-        paste0(
-          cli::col_blue(.name), cli::col_br_blue("="), cli::col_yellow(value)
-        )
-      }) |>
-        purrr::discard(is.na)
-
-      string <- paste0(
-        cli::style_bold(cli::col_green(private$.registry$class_name)), "(",
-        paste(field_strings, collapse = ", "),
-        ")"
+      make_class_string(
+        private$.registry$class_name, field_strings,
+        style = style
       )
-
-      if (isFALSE(style)) {
-        string <- cli::ansi_strip(string)
-      }
-
-      return(string)
     }
   ),
   private = list(
@@ -163,7 +151,7 @@ Record <- R6::R6Class( # nolint object_name_linter
       } else if (key %in% private$.registry$get_field_names()) {
         field <- private$.registry$get_field(key)
 
-        ## TODO: use related_registry_class$get_records instead
+        # refetch the record to get the related data
         related_data <- private$.api$get_record(
           module_name = field$module_name,
           registry_name = field$registry_name,
@@ -171,10 +159,17 @@ Record <- R6::R6Class( # nolint object_name_linter
           select = key
         )[[key]]
 
+        # return NULL if the related data is NULL
+        if (is.null(related_data)) {
+          return(NULL)
+        }
+
+        # if the related data is not NULL, create a record class for it
         related_module <- private$.instance$get_module(field$related_module_name)
         related_registry <- related_module$get_registry(field$related_registry_name)
         related_registry_class <- related_registry$get_record_class()
 
+        # if the relation type is one-to-many or many-to-many, iterate over the list
         if (field$relation_type %in% c("one-to-one", "many-to-one")) {
           related_registry_class$new(related_data)
         } else {

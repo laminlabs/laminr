@@ -18,6 +18,7 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
       private$.api_client <- laminr.api::ApiClient$new(instance_settings$api_url)
       private$.default_api <- laminr.api::DefaultApi$new(private$.api_client)
     },
+    #' @description
     #' Get the schema for the instance.
     get_schema = function(id) {
       schema <- try(
@@ -35,7 +36,9 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
 
       return(schema)
     },
+    #' @description
     #' Get a record from the instance.
+    #'
     #' @importFrom jsonlite toJSON
     get_record = function(module_name,
                           registry_name,
@@ -87,12 +90,42 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
         ))
       }
 
-      return(record)
+      content
     }
   ),
   private = list(
     .instance_settings = NULL,
-    .api_client = NULL,
-    .default_api = NULL
+    process_response = function(response, request_type) {
+      content <- httr::content(response)
+      if (httr::http_error(response)) {
+        if (is.list(content) && "detail" %in% names(content)) {
+          cli_abort(content$detail)
+        } else {
+          cli_abort("Failed to {request_type} from instance. Output: {content}")
+        }
+      }
+
+      content
+    },
+    #' @description
+    #' Print an `API`
+    #'
+    #' @param style Logical, whether the output is styled using ANSI codes
+    print = function(style = TRUE) {
+      cli::cat_line(self$to_string(style))
+    },
+    #' @description
+    #' Create a string representation of an `API`
+    #'
+    #' @param style Logical, whether the output is styled using ANSI codes
+    #'
+    #' @return A `cli::cli_ansi_string` if `style = TRUE` or a character vector
+    to_string = function(style = FALSE) {
+      field_strings <- make_key_value_strings(
+        private$.instance_settings, c("api_url", "id", "schema_id")
+      )
+
+      make_class_string("API", field_strings, style = style)
+    }
   )
 )
