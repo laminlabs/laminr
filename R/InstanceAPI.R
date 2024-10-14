@@ -95,21 +95,6 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
       )
 
       private$process_response(response, "get record")
-    }
-  ),
-  private = list(
-    .instance_settings = NULL,
-    process_response = function(response, request_type) {
-      content <- httr::content(response)
-      if (httr::http_error(response)) {
-        if (is.list(content) && "detail" %in% names(content)) {
-          cli_abort(content$detail)
-        } else {
-          cli_abort("Failed to {request_type} from instance. Output: {content}")
-        }
-      }
-
-      content
     },
     #' @description
     #' Print an `API`
@@ -130,6 +115,21 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
       )
 
       make_class_string("API", field_strings, style = style)
+    }
+  ),
+  private = list(
+    .instance_settings = NULL,
+    process_response = function(response, request_type) {
+      content <- httr::content(response)
+      if (httr::http_error(response)) {
+        if (is.list(content) && "detail" %in% names(content)) {
+          cli_abort(content$detail)
+        } else {
+          cli_abort("Failed to {request_type} from instance. Output: {content}")
+        }
+      }
+
+      content
     }
   )
 )
