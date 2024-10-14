@@ -8,6 +8,10 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
   "API",
   cloneable = FALSE,
   public = list(
+    #' @description
+    #' Creates an instance of this R6 class. This class should not be instantiated directly,
+    #' but rather by connecting to a LaminDB instance using the [connect()] function.
+    #'
     #' @param instance_settings The settings for the instance
     #' Should have the following fields:
     #'  - id: The ID of the instance

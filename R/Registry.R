@@ -1,13 +1,15 @@
 #' @title Registry
 #'
-#' @noRd
-#'
 #' @description
 #' A registry in a module.
 Registry <- R6::R6Class( # nolint object_name_linter
   "Registry",
   cloneable = FALSE,
   public = list(
+    #' @description
+    #' Creates an instance of this R6 class. This class should not be instantiated directly,
+    #' but rather by connecting to a LaminDB instance using the [connect()] function.
+    #'
     #' @param instance The instance the registry belongs to.
     #' @param module The module the registry belongs to.
     #' @param api The API for the instance.
@@ -50,6 +52,12 @@ Registry <- R6::R6Class( # nolint object_name_linter
     },
     #' @description
     #' Get a record by ID or UID.
+    #'
+    #' @param id_or_uid The ID or UID of the record.
+    #' @param include_foreign_keys Logical, whether to include foreign keys in the record.
+    #' @param verbose Logical, whether to print verbose output.
+    #'
+    #' @return A [Record] object.
     get = function(id_or_uid, include_foreign_keys = FALSE, verbose = FALSE) {
       data <- private$.api$get_record(
         module_name = private$.module$name,
@@ -63,21 +71,33 @@ Registry <- R6::R6Class( # nolint object_name_linter
     },
     #' @description
     #' Get the fields in the registry.
+    #'
+    #' @return A list of [Field] objects.
     get_fields = function() {
       private$.fields
     },
     #' @description
     #' Get a field by name.
+    #'
+    #' @param field_name The name of the field.
+    #'
+    #' @return A [Field] object.
     get_field = function(field_name) {
       private$.fields[[field_name]]
     },
     #' @description
     #' Get the field names in the registry.
+    #'
+    #' @return A character vector of field names.
     get_field_names = function() {
       names(private$.fields)
     },
     #' @description
     #' Get the record class for the registry.
+    #'
+    #' Note: This method is intended for internal use only and may be removed in the future.
+    #'
+    #' @return A [Record] class.
     get_record_class = function() {
       private$.record_class
     },
@@ -85,6 +105,8 @@ Registry <- R6::R6Class( # nolint object_name_linter
     #' Print a `Registry`
     #'
     #' @param style Logical, whether the output is styled using ANSI codes
+    #'
+    #' @return A character vector
     print = function(style = TRUE) {
       fields <- self$get_fields()
       # Remove hidden fields
@@ -178,19 +200,23 @@ Registry <- R6::R6Class( # nolint object_name_linter
     .record_class = NULL
   ),
   active = list(
-    #' @return The instance the registry belongs to.
+    #' @field module ([Module])\cr
+    #' The instance the registry belongs to.
     module = function() {
       private$.module
     },
-    #' @return The API for the instance.
+    #' @field name (`character(1)`)\cr
+    #' The API for the instance.
     name = function() {
       private$.registry_name
     },
-    #' @return The class name for the registry.
+    #' @field class_name (`character(1)`)\cr
+    #' The class name for the registry.
     class_name = function() {
       private$.class_name
     },
-    #' @return Whether the registry is a link table.
+    #' @field is_link_table (`logical(1)`)\cr
+    #' Whether the registry is a link table.
     is_link_table = function() {
       private$.is_link_table
     }

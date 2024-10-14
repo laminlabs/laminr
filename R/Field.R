@@ -1,13 +1,15 @@
 #' @title Field
 #'
-#' @noRd
-#'
 #' @description
 #' A field in a registry.
 Field <- R6::R6Class( # nolint object_name_linter
   "Field",
   cloneable = FALSE,
   public = list(
+    #' @description
+    #' Creates an instance of this R6 class. This class should not be instantiated directly,
+    #' but rather by connecting to a LaminDB instance using the [connect()] function.
+    #'
     #' @param type The type of the field. Can be one of:
     #'   "IntegerField", "JSONField", "OneToOneField", "SmallIntegerField",
     #'   "BigIntegerField", "AutoField", "BigAutoField", "BooleanField", "TextField",
@@ -94,47 +96,58 @@ Field <- R6::R6Class( # nolint object_name_linter
     .related_module_name = NULL
   ),
   active = list(
-    #' @return The type of the field.
+    #' @field type (`character(1)`)\cr
+    #' The type of the field.
     type = function() {
       private$.type
     },
-    #' @return The through value of the field.
+    #' @field through (`list()` or `NULL`)\cr
+    #' The through value of the field.
     through = function() {
       private$.through
     },
-    #' @return The field name.
+    #' @field field_name (`character(1)`)\cr
+    #' The field name.
     field_name = function() {
       private$.field_name
     },
-    #' @return The registry name.
+    #' @field registry_name (`character(1)`)\cr
+    #' The registry name.
     registry_name = function() {
       private$.registry_name
     },
-    #' @return The column name.
+    #' @field column_name (`character(1)`)\cr
+    #' The column name.
     column_name = function() {
       private$.column_name
     },
-    #' @return The module name.
+    #' @field module_name (`character(1)`)\cr
+    #' The module name.
     module_name = function() {
       private$.module_name
     },
-    #' @return Whether the field is a link table.
+    #' @field is_link_table (`logical(1)`)\cr
+    #' Whether the field is a link table.
     is_link_table = function() {
       private$.is_link_table
     },
-    #' @return The relation type.
+    #' @field relation_type (`character(1)` or `NULL`)\cr
+    #' The relation type. Can be one of: "one-to-many", "many-to-one", "many-to-many".
     relation_type = function() {
       private$.relation_type
     },
-    #' @return The related field name.
+    #' @field related_field_name (`character(1)` or `NULL`)\cr
+    #' The related field name.
     related_field_name = function() {
       private$.related_field_name
     },
-    #' @return The related registry name.
+    #' @field related_registry_name (`character(1)` or `NULL`)\cr
+    #' The related registry name.
     related_registry_name = function() {
       private$.related_registry_name
     },
-    #' @return The related module name.
+    #' @field related_module_name (`character(1)` or `NULL`)\cr
+    #' The related module name.
     related_module_name = function() {
       private$.related_module_name
     }
