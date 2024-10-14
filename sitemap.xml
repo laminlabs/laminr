@@ -2,11 +2,16 @@
 <url><loc>https://laminr.lamin.ai/404.html</loc></url>
 <url><loc>https://laminr.lamin.ai/CHANGELOG.html</loc></url>
 <url><loc>https://laminr.lamin.ai/LICENSE.html</loc></url>
+<url><loc>https://laminr.lamin.ai/articles/architecture.html</loc></url>
 <url><loc>https://laminr.lamin.ai/articles/index.html</loc></url>
-<url><loc>https://laminr.lamin.ai/articles/structure.html</loc></url>
 <url><loc>https://laminr.lamin.ai/articles/usage.html</loc></url>
 <url><loc>https://laminr.lamin.ai/authors.html</loc></url>
 <url><loc>https://laminr.lamin.ai/index.html</loc></url>
+<url><loc>https://laminr.lamin.ai/reference/Field.html</loc></url>
+<url><loc>https://laminr.lamin.ai/reference/Instance.html</loc></url>
+<url><loc>https://laminr.lamin.ai/reference/Module.html</loc></url>
+<url><loc>https://laminr.lamin.ai/reference/Record.html</loc></url>
+<url><loc>https://laminr.lamin.ai/reference/Registry.html</loc></url>
 <url><loc>https://laminr.lamin.ai/reference/connect.html</loc></url>
 <url><loc>https://laminr.lamin.ai/reference/index.html</loc></url>
 <url><loc>https://laminr.lamin.ai/reference/laminr-package.html</loc></url>
