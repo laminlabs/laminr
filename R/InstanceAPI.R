@@ -19,21 +19,19 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
     #'  - schema_id: The ID of the schema
     initialize = function(instance_settings) {
       private$.instance_settings <- instance_settings
+      private$.api_client <- laminr.api::ApiClient$new(instance_settings$api_url)
+      private$.default_api <- laminr.api::DefaultApi$new(private$.api_client)
     },
     #' @description
     #' Get the schema for the instance.
-    get_schema = function() {
-      # TODO: replace with laminr.api get_schema call
-      url <- paste0(
-        private$.instance_settings$api_url,
-        "/instances/",
-        private$.instance_settings$id,
-        "/schema"
-      )
-
-      response <- httr::GET(url)
-
-      private$process_response(response, "get schema")
+    get_schema = function(id) {
+      try(
+        private$.default_api$GetSchemaInstancesInstanceIdSchemaGet(
+          private$.instance_settings$id
+        ),
+        silent = TRUE
+      ) |>
+        private$process_response("schema")
     },
     #' @description
     #' Get a record from the instance.
@@ -48,6 +46,7 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
       if (!is.null(select) && !is.character(select)) {
         cli_abort("select must be a character vector")
       }
+
       if (verbose) {
         field_name_str <-
           if (!is.null(select)) {
@@ -62,43 +61,20 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
           field_name_str, "\n"
         ))
       }
-      body_data <- list()
-      if (!is.null(select)) {
-        body_data$select <- select
-      }
-      body <-
-        if (length(body_data) > 0) {
-          jsonlite::toJSON(body_data)
-        } else {
-          "{}"
-        }
 
-      url <- paste0(
-        private$.instance_settings$api_url,
-        "/instances/",
-        private$.instance_settings$id,
-        "/modules/",
-        module_name,
-        "/",
-        registry_name,
-        "/",
-        id_or_uid,
-        "?schema_id=",
-        private$.instance_settings$schema_id,
-        "&include_foreign_keys=",
-        tolower(include_foreign_keys)
-      )
-
-      response <- httr::POST(
-        url,
-        httr::add_headers(
-          accept = "application/json",
-          `Content-Type` = "application/json"
+      try(
+        private$.default_api$GetRecordInstancesInstanceIdModulesModuleNameModelNameIdOrUidPost(
+          instance_id = private$.instance_settings$id,
+          module_name = module_name,
+          model_name = registry_name,
+          id_or_uid = id_or_uid,
+          schema_id = private$.instance_settings$schema_id,
+          include_foreign_keys = tolower(include_foreign_keys),
+          get_record_request_body = laminr.api::GetRecordRequestBody$new(select)
         ),
-        body = body
-      )
-
-      private$process_response(response, "get record")
+        silent = TRUE
+      ) |>
+        private$process_response("record")
     },
     #' @description
     #' Print an `API`
@@ -123,17 +99,17 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
   ),
   private = list(
     .instance_settings = NULL,
+    .api_client = NULL,
+    .default_api = NULL,
     process_response = function(response, request_type) {
-      content <- httr::content(response)
-      if (httr::http_error(response)) {
-        if (is.list(content) && "detail" %in% names(content)) {
-          cli_abort(content$detail)
-        } else {
-          cli_abort("Failed to {request_type} from instance. Output: {content}")
-        }
+      if (inherits(response, "try-error")) {
+        cli::cli_abort(c(
+          "Request for {request_type} failed",
+          "i" = "Error message: {.code {response[1]}}"
+        ))
       }
 
-      content
+      return(response)
     }
   )
 )
