@@ -24,7 +24,8 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
       try(
         private$.default_api$GetSchemaInstancesInstanceIdSchemaGet(
           private$.instance_settings$id
-        )
+        ),
+        silent = TRUE
       ) |>
         private$process_response("schema")
     },
@@ -66,7 +67,8 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
           schema_id = private$.instance_settings$schema_id,
           include_foreign_keys = tolower(include_foreign_keys),
           get_record_request_body = laminr.api::GetRecordRequestBody$new(select)
-        )
+        ),
+        silent = TRUE
       ) |>
         private$process_response("record")
     },
