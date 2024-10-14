@@ -21,20 +21,12 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
     #' @description
     #' Get the schema for the instance.
     get_schema = function(id) {
-      schema <- try(
+      try(
         private$.default_api$GetSchemaInstancesInstanceIdSchemaGet(
           private$.instance_settings$id
         )
-      )
-
-      if (inherits(schema, "try-error")) {
-        cli::cli_abort(c(
-          "Failed to get schema",
-          "i" = "Error message: {.code {schema[1]}}"
-        ))
-      }
-
-      return(schema)
+      ) |>
+        private$process_response("schema")
     },
     #' @description
     #' Get a record from the instance.
@@ -65,13 +57,7 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
         ))
       }
 
-      if (!is.null(select)) {
-        body <- jsonlite::toJSON(list(select = select))
-      } else {
-        body <- "{}"
-      }
-
-      record <- try(
+      try(
         private$.default_api$GetRecordInstancesInstanceIdModulesModuleNameModelNameIdOrUidPost(
           instance_id = private$.instance_settings$id,
           module_name = module_name,
@@ -79,33 +65,26 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
           id_or_uid = id_or_uid,
           schema_id = private$.instance_settings$schema_id,
           include_foreign_keys = tolower(include_foreign_keys),
-          get_record_request_body = body
+          get_record_request_body = laminr.api::GetRecordRequestBody$new(select)
         )
-      )
-
-      if (inherits(record, "try-error")) {
-        cli::cli_abort(c(
-          "Failed to get schema",
-          "i" = "Error message: {.code {record[1]}}"
-        ))
-      }
-
-      content
+      ) |>
+        private$process_response("record")
     }
   ),
   private = list(
     .instance_settings = NULL,
+    .api_client = NULL,
+    .default_api = NULL,
     process_response = function(response, request_type) {
-      content <- httr::content(response)
-      if (httr::http_error(response)) {
-        if (is.list(content) && "detail" %in% names(content)) {
-          cli_abort(content$detail)
-        } else {
-          cli_abort("Failed to {request_type} from instance. Output: {content}")
-        }
+
+      if (inherits(response, "try-error")) {
+        cli::cli_abort(c(
+          "Request for {request_type} failed",
+          "i" = "Error message: {.code {response[1]}}"
+        ))
       }
 
-      content
+      return(response)
     },
     #' @description
     #' Print an `API`
