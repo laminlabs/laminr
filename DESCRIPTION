@@ -1,12 +1,19 @@
 Package: laminr
 Title: LaminDB interface in R
-Version: 0.1.0.9001
+Version: 0.1.0
 Authors@R:
     c(person("Robrecht", "Cannoodt",
         role = c("aut", "cre"),
-        email = "rcannood@gmail.com",
-        comment = c(ORCID = "0000-0003-3641-729X")),
-    person("Lamin Labs", email = "open-source@lamin.ai", role = c("aut")))
+        email = "robrecht@data-intuitive.com",
+        comment = c(ORCID = "0000-0003-3641-729X", github = "rcannood")
+    ),
+    person(
+        "Luke", "Zappia",
+        role = "aut",
+        email = "luke@data-intuitive.com",
+        comment = c(ORCID = "0000-0001-7744-8565", github = "lazappi")
+    ),
+    person("Lamin Labs", email = "open-source@lamin.ai", role = c("aut", "cph")))
 Description: The laminr package provides an interface to the LaminDB database.
   It allows you to query the database and download data from it.
 License: Apache License (>= 2)
