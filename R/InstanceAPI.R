@@ -76,7 +76,6 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
     .api_client = NULL,
     .default_api = NULL,
     process_response = function(response, request_type) {
-
       if (inherits(response, "try-error")) {
         cli::cli_abort(c(
           "Request for {request_type} failed",
