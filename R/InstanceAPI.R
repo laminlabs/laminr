@@ -69,21 +69,6 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
         )
       ) |>
         private$process_response("record")
-    }
-  ),
-  private = list(
-    .instance_settings = NULL,
-    .api_client = NULL,
-    .default_api = NULL,
-    process_response = function(response, request_type) {
-      if (inherits(response, "try-error")) {
-        cli::cli_abort(c(
-          "Request for {request_type} failed",
-          "i" = "Error message: {.code {response[1]}}"
-        ))
-      }
-
-      return(response)
     },
     #' @description
     #' Print an `API`
@@ -104,6 +89,21 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
       )
 
       make_class_string("API", field_strings, style = style)
+    }
+  ),
+  private = list(
+    .instance_settings = NULL,
+    .api_client = NULL,
+    .default_api = NULL,
+    process_response = function(response, request_type) {
+      if (inherits(response, "try-error")) {
+        cli::cli_abort(c(
+          "Request for {request_type} failed",
+          "i" = "Error message: {.code {response[1]}}"
+        ))
+      }
+
+      return(response)
     }
   )
 )
