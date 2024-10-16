@@ -47,6 +47,9 @@
 
 * Improve the `README` (PR #29).
 
+* Set Python requirements to `lamindb[aws]` for now (PR #33). Will be changed to `lamin_cli` once 
+  [laminlabs/lamin-cli#90](https://github.com/laminlabs/lamin-cli/issues/90) is solved.
+
 ## BUG FIXES
 
 * Fixed the parsing of the env files in `~/.lamin` due to changes in the lamindb-setup Python package (PR #12).

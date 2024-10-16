@@ -44,7 +44,7 @@ jobs:
 
       - name: Install lamindb
         run: |
-          pip install lamin_cli
+          pip install lamindb[aws]
 
       - name: Log in to Lamin
         run: |
