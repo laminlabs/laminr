@@ -47,14 +47,16 @@ create_record_class <- function(instance, registry, api) {
 
 #' @title Record
 #'
-#' @noRd
-#'
 #' @description
 #' A record from a registry.
 Record <- R6::R6Class( # nolint object_name_linter
   "Record",
   cloneable = FALSE,
   public = list(
+    #' @description
+    #' Creates an instance of this R6 class. This class should not be instantiated directly,
+    #' but rather by connecting to a LaminDB instance using the [connect()] function.
+    #'
     #' @param instance The instance the record belongs to.
     #' @param registry The registry the record belongs to.
     #' @param api The API for the instance.
@@ -95,9 +97,19 @@ Record <- R6::R6Class( # nolint object_name_linter
         )
       }
     },
+    #' @description
+    #' Print a `Record`
+    #'
+    #' @param style Logical, whether the output is styled using ANSI codes
     print = function(style = TRUE) {
       cli::cat_line(self$to_string(style))
     },
+    #' @description
+    #' Create a string representation of a `Record`
+    #'
+    #' @param style Logical, whether the output is styled using ANSI codes
+    #'
+    #' @return A `cli::cli_ansi_string` if `style = TRUE` or a character vector
     to_string = function(style = FALSE) {
       important_fields <- c(
         "uid",
@@ -122,34 +134,12 @@ Record <- R6::R6Class( # nolint object_name_linter
         important_fields, setdiff(names(record_fields), important_fields)
       )
 
-      field_strings <- purrr::map_chr(field_names, function(.name) {
-        value <- record_fields[[.name]]
+      field_strings <- make_key_value_strings(record_fields, field_names)
 
-        if (is.null(value)) {
-          return(NA_character_)
-        }
-
-        if (is.character(value)) {
-          value <- paste0("'", value, "'")
-        }
-
-        paste0(
-          cli::col_blue(.name), cli::col_br_blue("="), cli::col_yellow(value)
-        )
-      }) |>
-        purrr::discard(is.na)
-
-      string <- paste0(
-        cli::style_bold(cli::col_green(private$.registry$class_name)), "(",
-        paste(field_strings, collapse = ", "),
-        ")"
+      make_class_string(
+        private$.registry$class_name, field_strings,
+        style = style
       )
-
-      if (isFALSE(style)) {
-        string <- cli::ansi_strip(string)
-      }
-
-      return(string)
     }
   ),
   private = list(

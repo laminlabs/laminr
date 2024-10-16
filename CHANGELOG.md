@@ -1,5 +1,18 @@
 # laminr v0.1.0
 
+First CRAN release of the LaminDB API client for R. This release focuses on connecting to a LaminDB instance, fetching an individual record from the instance, and fetching related data for that record.
+
+Features:
+
+* Connect to a LaminDB instance
+* Auto-generate modules and classes from the instance schema
+* Fetch a record
+* Fetch a record's related data
+* Cache S3 artifact
+* Load AnnData artifact
+
+For more information, please visit the [package website](https://laminr.lamin.ai).
+
 ## NEW FUNCTIONALITY
 
 * Query instance settings from Lamin Hub (PR #8).
@@ -7,6 +20,8 @@
 * Read user settings from env file created by lamin Python package (PR #2, PR #8).
 
 * Add `to_string()` and `print()` methods to the `Record` class and (incomplete) `describe()` method to the `Artifact()` class (PR #22).
+
+* Add `to_string()` and `print()` methods to remaining classes (PR #31)
 
 ## MAJOR CHANGES
 

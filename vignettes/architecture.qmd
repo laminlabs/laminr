@@ -1,7 +1,7 @@
 ---
-title: "Package structure"
+title: "Architecture"
 vignette: >
-  %\VignetteIndexEntry{Package structure}
+  %\VignetteIndexEntry{Architecture}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{quarto::html}
 knitr:
@@ -104,7 +104,7 @@ classDiagram
 
 ## Sugar syntax
 
-The `laminr` package adds some sugar syntax to the `Instance` and `Registry` classes. This allows to directly access an instance's registies and a record's fields.
+The `laminr` package adds some sugar syntax to the `Instance`, `Module`, and `Record` classes. This allows to directly access an instance's and module's registries and a record's fields.
 
 For instance, instead of writing:
 

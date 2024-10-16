@@ -9,6 +9,10 @@ UserSettings <- R6::R6Class( # nolint object_name_linter
   "UserSettings",
   cloneable = FALSE,
   public = list(
+    #' @description
+    #' Creates an instance of this R6 class. This class should not be instantiated directly,
+    #' but rather by connecting to a LaminDB instance using the [connect()] function.
+    #'
     #' @param settings A named list of settings for the user
     initialize = function(settings) {
       expected_keys <- c(
@@ -30,6 +34,24 @@ UserSettings <- R6::R6Class( # nolint object_name_linter
         cli_abort("Unexpected column: ", unexpected_columns)
       }
       private$.settings <- settings
+    },
+    #' @description
+    #' Print a `UserSettings`
+    #'
+    #' @param style Logical, whether the output is styled using ANSI codes
+    print = function(style = TRUE) {
+      cli::cat_line(self$to_string(style))
+    },
+    #' @description
+    #' Create a string representation of a `UserSettings`
+    #'
+    #' @param style Logical, whether the output is styled using ANSI codes
+    #'
+    #' @return A `cli::cli_ansi_string` if `style = TRUE` or a character vector
+    to_string = function(style = FALSE) {
+      field_strings <- make_key_value_strings(private$.settings)
+
+      make_class_string("UserSettings", field_strings, style = style)
     }
   ),
   private = list(
