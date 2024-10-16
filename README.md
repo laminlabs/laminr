@@ -25,7 +25,7 @@ remotes::install_github("laminlabs/laminr")
 You will also need to install `lamindb`:
 
 ``` bash
-pip install lamindb[bionty,wetlab]
+pip install lamindb[aws]
 ```
 
 ## Connect to an instance
