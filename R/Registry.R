@@ -77,7 +77,6 @@ Registry <- R6::R6Class( # nolint object_name_linter
     #'
     #' @return A data.frame containing the available records
     df = function(limit = 100, verbose = FALSE) {
-
       # The API is limited to 200 records at a time so we need multiple requests
       n_requests <- ceiling(limit / 200)
       if ((verbose && n_requests > 1) || n_requests >= 10) {
@@ -92,14 +91,13 @@ Registry <- R6::R6Class( # nolint object_name_linter
       data_list <- purrr::reduce(
         cli::cli_progress_along(seq_len(n_requests), name = "Sending requests"),
         \(.data_list, .n) {
-
           # Hacky way of avoiding unneeded requests until there is an easy way
           # to get the total number of records
           if (isTRUE(attr(.data_list, "finished"))) {
             return(.data_list)
           }
 
-          offset = (.n - 1) * 200
+          offset <- (.n - 1) * 200
           # Reduce limit for final request to get the correct total
           current_limit <- ifelse(.n == n_requests, limit %% 200, 200)
           if (verbose) {
