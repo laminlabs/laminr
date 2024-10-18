@@ -112,7 +112,7 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
     #' @param registry_name Name of the registry to query
     #' @param limit Maximum number of records to return
     #' @param offset Offset for the first returned record
-    #' @param limit_to_many
+    #' @param limit_to_many Maximum number of related foreign fields to return
     #' @param include_foreign_keys Boolean, whether to return foreign keys
     #' @param search Search string included in the query body
     #' @param verbose Boolean, whether to print progress messages
