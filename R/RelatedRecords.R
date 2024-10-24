@@ -1,9 +1,10 @@
-#' @title RecordsList
+#' @title RelatedRecords
 #'
 #' @description
-#' A container for accessing several records of one type.
-RecordsList <- R6::R6Class( # nolint object_name_linter
-  "RecordsList",
+#' A container for accessing records with a one-to-many or many-to-many
+#' relationship.
+RelatedRecords <- R6::R6Class( # nolint object_name_linter
+  "RelatedRecords",
   cloneable = FALSE,
   public = list(
     #' @description
@@ -13,14 +14,14 @@ RecordsList <- R6::R6Class( # nolint object_name_linter
     #' @param instance The instance the records list belongs to.
     #' @param registry The registry the records list belongs to.
     #' @param field The field associated with the records list.
-    #' @param parent ID or UID of the parent record the records list belongs to.
+    #' @param related_to ID or UID of the parent that records are related to.
     #' @param api The API for the instance.
-    initialize = function(instance, registry, field, parent, api) {
+    initialize = function(instance, registry, field, related_to, api) {
       private$.instance <- instance
       private$.registry <- registry
       private$.api <- api
       private$.field <- field
-      private$.parent <- parent
+      private$.related_to <- related_to
     },
     #' @description
     #' Get a data frame summarising records in the registry
@@ -30,17 +31,17 @@ RecordsList <- R6::R6Class( # nolint object_name_linter
     #'
     #' @return A data.frame containing the available records
     df = function(limit = 100, verbose = FALSE) {
-      private$get_values(as_df = TRUE)
+      private$get_records(as_df = TRUE)
     },
     #' @description
-    #' Print a `RecordsList`
+    #' Print a `RelatedRecords`
     #'
     #' @param style Logical, whether the output is styled using ANSI codes
     print = function(style = TRUE) {
       cli::cat_line(self$to_string(style))
     },
     #' @description
-    #' Create a string representation of a `RecordsList`
+    #' Create a string representation of a `RelatedRecords`
     #'
     #' @param style Logical, whether the output is styled using ANSI codes
     #'
@@ -49,13 +50,13 @@ RecordsList <- R6::R6Class( # nolint object_name_linter
       fields <- list(
         field_name = private$.field$field_name,
         relation_type = private$.field$relation_type,
-        parent = private$.parent
+        related_to = private$.related_to
       )
 
       field_strings <- make_key_value_strings(fields)
 
       make_class_string(
-        "RecordsList", field_strings,
+        "RelatedRecords", field_strings,
         style = style
       )
     }
@@ -72,15 +73,15 @@ RecordsList <- R6::R6Class( # nolint object_name_linter
     .registry = NULL,
     .api = NULL,
     .field = NULL,
-    .parent = NULL,
-    get_values = function(as_df = FALSE) {
+    .related_to = NULL,
+    get_records = function(as_df = FALSE) {
       field <- private$.field
 
       # Fetch the field to get the related data
       related_data <- private$.api$get_record(
         module_name = field$module_name,
         registry_name = field$registry_name,
-        id_or_uid = private$.parent,
+        id_or_uid = private$.related_to,
         select = field$field_name
       )[[field$field_name]]
 

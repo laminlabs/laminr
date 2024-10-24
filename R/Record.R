@@ -153,13 +153,13 @@ Record <- R6::R6Class( # nolint object_name_linter
       } else if (key %in% private$.registry$get_field_names()) {
         field <- private$.registry$get_field(key)
 
-        # For many relationships return a RecordsList object
+        # For many relationships return a RelatedRecords object
         if (field$relation_type %in% c("one-to-many", "many-to-many")) {
-          records_list <- RecordsList$new(
+          records_list <- RelatedRecords$new(
             instance = private$.instance,
             registry = private$.registry,
             field = field,
-            parent = self$uid,
+            related_to = self$uid,
             api = private$.api
           )
 
