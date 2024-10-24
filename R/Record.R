@@ -153,6 +153,19 @@ Record <- R6::R6Class( # nolint object_name_linter
       } else if (key %in% private$.registry$get_field_names()) {
         field <- private$.registry$get_field(key)
 
+        # For many relationships return a RecordsList object
+        if (field$relation_type %in% c("one-to-many", "many-to-many")) {
+          records_list <- RecordsList$new(
+            instance = private$.instance,
+            registry = private$.registry,
+            field = field,
+            parent = self$uid,
+            api = private$.api
+          )
+
+          return(records_list)
+        }
+
         # refetch the record to get the related data
         related_data <- private$.api$get_record(
           module_name = field$module_name,
@@ -171,12 +184,8 @@ Record <- R6::R6Class( # nolint object_name_linter
         related_registry <- related_module$get_registry(field$related_registry_name)
         related_registry_class <- related_registry$get_record_class()
 
-        # if the relation type is one-to-many or many-to-many, iterate over the list
-        if (field$relation_type %in% c("one-to-one", "many-to-one")) {
-          related_registry_class$new(related_data)
-        } else {
-          map(related_data, ~ related_registry_class$new(.x))
-        }
+        # Return the related record class
+        related_registry_class$new(related_data)
       } else {
         cli_abort(
           paste0(
