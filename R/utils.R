@@ -11,14 +11,13 @@
 #'   [cli::cli_abort()]
 #' @noRd
 check_requires <- function(what, requires) {
-
   is_available <- purrr::map_lgl(requires, requireNamespace, quietly = TRUE)
 
   if (any(!is_available)) {
     missing <- requires[!is_available]
-    missing_str <- paste0("'", paste(missing, collapse = "', '"), "'")
+    missing_str <- paste0("'", paste(missing, collapse = "', '"), "'") # nolint object_usage_linter
     cli_abort(
-        c(
+      c(
         "{what} requires the {.pkg {missing}} package{?s}",
         "i" = paste(
           "To continue, install {cli::qty(missing)}{?it/them} using",
