@@ -1,3 +1,5 @@
+skip_if_offline()
+
 test_that("df works", {
   local_setup_lamindata_instance()
 
