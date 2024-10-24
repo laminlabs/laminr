@@ -28,6 +28,7 @@ Whether the registry is a link table.}
 \itemize{
 \item \href{#method-Registry-new}{\code{Registry$new()}}
 \item \href{#method-Registry-get}{\code{Registry$get()}}
+\item \href{#method-Registry-df}{\code{Registry$df()}}
 \item \href{#method-Registry-get_fields}{\code{Registry$get_fields()}}
 \item \href{#method-Registry-get_field}{\code{Registry$get_field()}}
 \item \href{#method-Registry-get_field_names}{\code{Registry$get_field_names()}}
@@ -84,6 +85,28 @@ Get a record by ID or UID.
 }
 \subsection{Returns}{
 A \link{Record} object.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Registry-df"></a>}}
+\if{latex}{\out{\hypertarget{method-Registry-df}{}}}
+\subsection{Method \code{df()}}{
+Get a data frame summarising records in the registry
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Registry$df(limit = 100, verbose = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{limit}}{Maximum number of records to return}
+
+\item{\code{verbose}}{Boolean, whether to print progress messages}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A data.frame containing the available records
 }
 }
 \if{html}{\out{<hr>}}

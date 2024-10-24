@@ -89,6 +89,99 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
         tolower(include_foreign_keys)
       )
 
+      if (verbose) {
+        cli_inform("URL: {url}")
+        cli_inform("Body: {jsonlite::minify(body)}")
+      }
+
+      response <- httr::POST(
+        url,
+        httr::add_headers(
+          accept = "application/json",
+          `Content-Type` = "application/json"
+        ),
+        body = body
+      )
+
+      private$process_response(response, "get record")
+    },
+    #' @description
+    #' Get a summary of available records from the instance.
+    #'
+    #' @param module_name Name of the module to query, e.g. "core"
+    #' @param registry_name Name of the registry to query
+    #' @param limit Maximum number of records to return
+    #' @param offset Offset for the first returned record
+    #' @param limit_to_many Maximum number of related foreign fields to return
+    #' @param include_foreign_keys Boolean, whether to return foreign keys
+    #' @param search Search string included in the query body
+    #' @param verbose Boolean, whether to print progress messages
+    #'
+    #' @return Content of the API response, if successful a list of record
+    #' summaries
+    #'
+    #' @importFrom jsonlite toJSON
+    get_records = function(module_name,
+                           registry_name,
+                           limit = 50,
+                           offset = 0,
+                           limit_to_many = 10,
+                           include_foreign_keys = FALSE,
+                           search = NULL,
+                           verbose = FALSE) {
+      if (!is.null(search) && !is.character(search)) {
+        cli_abort("search must be a character vector")
+      }
+
+      if (limit > 200) {
+        cli::cli_abort("This API call is limited to 200 results per call")
+      }
+
+      if (verbose) {
+        cli_inform(c(
+          paste0(
+            "Getting records from module '", module_name, "', ",
+            "registry '", registry_name, "' with the following arguments:"
+          ),
+          " " = "limit: {limit}",
+          " " = "offset: {offset}",
+          " " = "limit_to_many: {limit_to_many}",
+          " " = "include_foreign_keys: {include_foreign_keys}",
+          " " = "search: '{search}'"
+        ))
+      }
+
+      body_data <- list(search = jsonlite::unbox(""))
+      if (!is.null(search)) {
+        body_data$search <- jsonlite::unbox(search)
+      }
+      body <- jsonlite::toJSON(body_data)
+
+      url <- paste0(
+        private$.instance_settings$api_url,
+        "/instances/",
+        private$.instance_settings$id,
+        "/modules/",
+        module_name,
+        "/",
+        registry_name,
+        "?schema_id=",
+        private$.instance_settings$schema_id,
+        "&limit=",
+        limit,
+        "&offset=",
+        offset,
+        "&limit_to_many=",
+        limit_to_many,
+        "&include_foreign_keys=",
+        tolower(include_foreign_keys)
+      )
+
+      if (verbose) {
+        cli_inform("URL: {url}")
+        cli_inform("Body: {jsonlite::minify(body)}")
+      }
+
       response <- httr::POST(
         url,
         httr::add_headers(
