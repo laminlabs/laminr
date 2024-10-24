@@ -117,7 +117,8 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
     #' @param search Search string included in the query body
     #' @param verbose Boolean, whether to print progress messages
     #'
-    #' @return Content of the API response
+    #' @return Content of the API response, if successful a list of record
+    #' summaries
     #'
     #' @importFrom jsonlite toJSON
     get_records = function(module_name,
