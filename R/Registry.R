@@ -117,9 +117,10 @@ Registry <- R6::R6Class( # nolint object_name_linter
           # If not the final request and less than 200 records returned then
           # there are no more records and we can skip remaining requests
           if ((.n != n_requests) && length(.data_list) < 200) {
-            cli::cli_alert_info(
-              "Found all records. Stopping early with {length(.data_list)} record{?s} after {(.n)} request{?s}."
-            )
+            cli::cli_alert_info(paste(
+              "Found all records. Stopping early with {length(.data_list)}",
+              "record{?s} after {(.n)} request{?s}."
+            ))
             attr(.data_list, "finished") <- TRUE
           }
 

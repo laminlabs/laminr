@@ -104,8 +104,7 @@ test_that("get_record fails gracefully", {
   # nolint end: commented_code
 })
 
-test_that("get_records workds", {
-
+test_that("get_records works", {
   local_setup_lamindata_instance()
 
   instance_file <- .settings_store__instance_settings_file("laminlabs", "lamindata")
@@ -118,5 +117,4 @@ test_that("get_records workds", {
   expect_type(records, "list")
   expect_type(records[[1]], "list")
   expect_true(all(c("description", "created_at", "id", "uid") %in% names(records[[1]])))
-
 })
