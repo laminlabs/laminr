@@ -53,7 +53,7 @@ make_key_value_strings <- function(mapping, names = NULL, quote_strings = TRUE) 
 #' @noRd
 make_class_string <- function(class_name, field_strings, style = TRUE) {
   string <- paste0(
-    cli::style_bold(cli::col_green(class_name)), "(",
+    cli::style_bold(cli::col_br_green(class_name)), "(",
     paste(field_strings, collapse = ", "),
     ")"
   )

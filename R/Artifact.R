@@ -76,9 +76,9 @@ ArtifactRecord <- R6::R6Class( # nolint object_name_linter
           }
 
           paste0(
-            cli::col_blue("    $", .field),
-            cli::col_br_blue(" = "),
-            cli::col_yellow(field_name)
+            cli::col_br_blue("    $", .field),
+            cli::col_blue(" = "),
+            cli::col_br_yellow(field_name)
           )
         }
       ) |>

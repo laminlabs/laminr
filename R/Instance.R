@@ -171,22 +171,22 @@ Instance <- R6::R6Class( # nolint object_name_linter
       standard_lines <- purrr::map_chr(
         names(registries)[!is_link_table],
         function(.registry) {
-          cli::col_blue(paste0("    $", registries[[.registry]]$class_name))
+          cli::col_br_blue(paste0("    $", registries[[.registry]]$class_name))
         }
       )
 
       link_lines <- purrr::map_chr(
         names(registries)[is_link_table],
         function(.registry) {
-          cli::col_blue(paste0("    ", .registry))
+          cli::col_br_blue(paste0("    ", .registry))
         }
       )
 
       lines <- c(
-        cli::style_bold(cli::col_green(private$.settings$name)),
-        cli::style_italic(cli::col_magenta("  Core registries")),
+        cli::style_bold(cli::col_br_green(private$.settings$name)),
+        cli::style_italic(cli::col_br_magenta("  Core registries")),
         standard_lines,
-        cli::style_italic(cli::col_magenta("  Core link tables")),
+        cli::style_italic(cli::col_br_magenta("  Core link tables")),
         link_lines
       )
 
@@ -196,8 +196,8 @@ Instance <- R6::R6Class( # nolint object_name_linter
       if (length(module_names) > 0) {
         lines <- c(
           lines,
-          cli::style_italic(cli::col_magenta("  Additional modules")),
-          cli::col_blue(paste0("    ", module_names))
+          cli::style_italic(cli::col_br_magenta("  Additional modules")),
+          cli::col_br_blue(paste0("    ", module_names))
         )
       }
 
