@@ -1,18 +1,14 @@
 ---
 title: "Usage"
-output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Usage}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
+knitr:
+  opts_chunk: 
+    collapse: true
+    comment: "#>"
 ---
-
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-```
 
 LaminDB is an open-source data framework for biology. You can find out about some of its features in the [documentation of the lamindb Python package](https://docs.lamin.ai/introduction).
 
