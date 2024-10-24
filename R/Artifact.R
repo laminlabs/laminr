@@ -42,6 +42,7 @@ ArtifactRecord <- R6::R6Class( # nolint object_name_linter
         s3::s3_get(
           paste0(artifact_storage$root, "/", artifact_key),
           region = artifact_storage$region,
+          progress = TRUE,
           data_dir = root_dir
         )
       } else {

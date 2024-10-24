@@ -40,6 +40,8 @@ For more information, please visit the [package website](https://laminr.lamin.ai
 
 * Define a current user and current instance with lamin-cli prior to testing and generating documentation in the CI (PR #23).
 
+* Add progress bars to `Artifact$cache()` (PR #58)
+
 ## TESTING
 
 * Add a simple unit test which queries laminlabs/lamindata (PR #27).
