@@ -8,6 +8,7 @@ Features:
 * Auto-generate modules and classes from the instance schema
 * Fetch a record
 * Fetch a record's related data
+* Fetch record summary table
 * Cache S3 artifact
 * Load AnnData artifact
 
@@ -22,6 +23,8 @@ For more information, please visit the [package website](https://laminr.lamin.ai
 * Add `to_string()` and `print()` methods to the `Record` class and (incomplete) `describe()` method to the `Artifact()` class (PR #22).
 
 * Add `to_string()` and `print()` methods to remaining classes (PR #31)
+
+* Add `InstanceAPI$get_records()` and `Registry$df()` methods (PR #54)
 
 ## MAJOR CHANGES
 
@@ -40,7 +43,9 @@ For more information, please visit the [package website](https://laminr.lamin.ai
 
 * Define a current user and current instance with lamin-cli prior to testing and generating documentation in the CI (PR #23).
 
-* Remove link tables for object print output (PR #55)
+* Add progress bars to `Artifact$cache()` (PR #58)
+
+* Remove link tables from object print output (PR #55)
 
 ## TESTING
 
