@@ -45,6 +45,8 @@ For more information, please visit the [package website](https://laminr.lamin.ai
 
 * Add progress bars to `Artifact$cache()` (PR #58)
 
+* Remove link tables from object print output (PR #55)
+
 ## TESTING
 
 * Add a simple unit test which queries laminlabs/lamindata (PR #27).
