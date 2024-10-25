@@ -44,10 +44,14 @@ jobs:
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
 
-      - name: Install macOS dependencies
+      - name: Install conda on macOS
+        if: runner.os == 'macOS'
+        uses: conda-incubator/setup-miniconda@v3
+
+      - name: Install scipy with conda on macOS
         if: runner.os == 'macOS'
         run: |
-          brew install pkg-config
+          conda install scipy==1.12.0
 
       - name: Install lamindb
         run: |
