@@ -47,7 +47,7 @@ jobs:
       - name: Install macOS dependencies
         if: runner.os == 'macOS'
         run: |
-          pip install meson=1.5.0
+          pip install meson==1.5.0
 
       - name: Install lamindb
         run: |
