@@ -47,7 +47,7 @@ jobs:
       - name: Install macOS dependencies
         if: runner.os == 'macOS'
         run: |
-          brew install openblas
+          pip3 install --user meson=1.5.0
 
       - name: Install lamindb
         run: |
