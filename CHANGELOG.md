@@ -65,6 +65,8 @@ For more information, please visit the [package website](https://laminr.lamin.ai
 * Set Python requirements to `lamindb[aws]` for now (PR #33). Will be changed to `lamin_cli` once 
   [laminlabs/lamin-cli#90](https://github.com/laminlabs/lamin-cli/issues/90) is solved.
 
+* Use quarto 1.6 for rendering the vignettes (PR #60).
+
 ## BUG FIXES
 
 * Fixed the parsing of the env files in `~/.lamin` due to changes in the lamindb-setup Python package (PR #12).
