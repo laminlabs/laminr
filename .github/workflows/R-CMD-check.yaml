@@ -48,8 +48,11 @@ jobs:
         if: runner.os == 'macOS'
         # Force brew to install old meson version using https://nelson.cloud/how-to-install-older-versions-of-homebrew-packages/
         run: |
+          which meson
           wget https://github.com/Homebrew/homebrew-core/raw/4db31300bcbad724244d3767f8e8bc4fd7a5d881/Formula/m/meson.rb
+          brew remove meson
           brew install meson.rb
+          which meson
 
       - name: Install lamindb
         run: |
