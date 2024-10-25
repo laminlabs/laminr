@@ -3,7 +3,7 @@ title: "Usage"
 vignette: >
   %\VignetteIndexEntry{Usage}
   %\VignetteEncoding{UTF-8}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEngine{quarto::html}
 knitr:
   opts_chunk: 
     collapse: true
