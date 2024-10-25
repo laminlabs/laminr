@@ -83,8 +83,7 @@ RelatedRecords <- R6::R6Class( # nolint object_name_linter
         registry_name = field$registry_name,
         id_or_uid = private$.related_to,
         select = field$field_name,
-        limit_to_many = 100000L, # Make this high to get all related records
-        verbose = TRUE
+        limit_to_many = 100000L # Make this high to get all related records
       )[[field$field_name]]
 
       if (as_df) {

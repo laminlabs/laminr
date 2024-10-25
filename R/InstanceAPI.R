@@ -223,10 +223,17 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
       content <- httr::content(response)
       if (httr::http_error(response)) {
         if (is.list(content) && "detail" %in% names(content)) {
-          cli_abort(content$detail)
+          detail <- content$detail
+          if (is.list(detail)) {
+            detail <- jsonlite::minify(jsonlite::toJSON(content$detail))
+          }
         } else {
-          cli_abort("Failed to {request_type} from instance. Output: {content}")
+          detail <- content
         }
+        cli_abort(c(
+          "Failed to {request_type} from instance",
+          "i" = "Details: {detail}"
+        ))
       }
 
       content
