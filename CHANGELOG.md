@@ -47,6 +47,8 @@ For more information, please visit the [package website](https://laminr.lamin.ai
 
 * Remove link tables from object print output (PR #55)
 
+* Improve checking for suggested packages and provide installation instructions if missing (PR #56)
+
 ## TESTING
 
 * Add a simple unit test which queries laminlabs/lamindata (PR #27).
@@ -71,6 +73,8 @@ For more information, please visit the [package website](https://laminr.lamin.ai
 
 * Set Python requirements to `lamindb[aws]` for now (PR #33). Will be changed to `lamin_cli` once 
   [laminlabs/lamin-cli#90](https://github.com/laminlabs/lamin-cli/issues/90) is solved.
+  
+* Improve documentation for installing suggested dependencies and what they are requrire for (PR #56)
 
 ## BUG FIXES
 
