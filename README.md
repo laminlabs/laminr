@@ -71,15 +71,6 @@ db
         $FeatureSet
         $ParamValue
         $FeatureValue
-      Core link tables
-        runparamvalue
-        artifactulabel
-        collectionulabel
-        featuresetfeature
-        artifactfeatureset
-        artifactparamvalue
-        collectionartifact
-        artifactfeaturevalue
       Additional modules
         bionty
 
