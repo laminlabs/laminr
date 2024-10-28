@@ -19,7 +19,7 @@ ArtifactRecord <- R6::R6Class( # nolint object_name_linter
       file_path <- self$cache()
 
       if (artifact_accessor == "AnnData") {
-        requireNamespace("anndata", quietly = TRUE)
+        check_requires("Loading AnnData objects", "anndata")
         anndata::read_h5ad(file_path)
       } else {
         cli_abort(paste0("Unsupported accessor: ", artifact_accessor))
@@ -37,11 +37,12 @@ ArtifactRecord <- R6::R6Class( # nolint object_name_linter
       artifact_key <- private$get_value("key")
 
       if (artifact_storage$type == "s3") {
-        requireNamespace("s3", quietly = TRUE)
+        check_requires("Caching artifacts from s3", "s3")
         root_dir <- file.path(Sys.getenv("HOME"), ".cache", "lamindb")
         s3::s3_get(
           paste0(artifact_storage$root, "/", artifact_key),
           region = artifact_storage$region,
+          progress = TRUE,
           data_dir = root_dir
         )
       } else {

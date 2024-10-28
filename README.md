@@ -22,6 +22,13 @@ Install the development version from GitHub:
 remotes::install_github("laminlabs/laminr")
 ```
 
+To install all suggested dependencies required for some functionality,
+use:
+
+``` r
+remotes::install_github("laminlabs/laminr", dependencies = TRUE)
+```
+
 You will also need to install `lamindb`:
 
 ``` bash
@@ -64,15 +71,6 @@ db
         $FeatureSet
         $ParamValue
         $FeatureValue
-      Core link tables
-        runparamvalue
-        artifactulabel
-        collectionulabel
-        featuresetfeature
-        artifactfeatureset
-        artifactparamvalue
-        collectionartifact
-        artifactfeaturevalue
       Additional modules
         bionty
 
@@ -90,7 +88,7 @@ You can print the record:
 artifact
 ```
 
-    Artifact(uid='KBW89Mf7IGcekja2hADu', description='Myeloid compartment', key='cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad', storage_id=2, _accessor='AnnData', version='2024-07-01', id=3659, size=691757462, transform_id=22, is_latest=TRUE, type='dataset', n_observations=51552, created_by_id=1, _hash_type='md5-n', created_at='2024-07-12T12:34:10.345829+00:00', suffix='.h5ad', updated_at='2024-07-12T12:40:48.837026+00:00', _key_is_virtual=FALSE, visibility=1, run_id=27, hash='SZ5tB0T4YKfiUuUkAL09ZA')
+    Artifact(uid='KBW89Mf7IGcekja2hADu', description='Myeloid compartment', key='cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad', created_by_id=1, run_id=27, suffix='.h5ad', created_at='2024-07-12T12:34:10.345829+00:00', hash='SZ5tB0T4YKfiUuUkAL09ZA', _hash_type='md5-n', storage_id=2, version='2024-07-01', _accessor='AnnData', id=3659, is_latest=TRUE, _key_is_virtual=FALSE, transform_id=22, n_observations=51552, size=691757462, visibility=1, updated_at='2024-07-12T12:40:48.837026+00:00', type='dataset')
 
 Or call the `$describe()` method to get a summary:
 
@@ -98,7 +96,7 @@ Or call the `$describe()` method to get a summary:
 artifact$describe()
 ```
 
-    Artifact(uid='KBW89Mf7IGcekja2hADu', description='Myeloid compartment', key='cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad', storage_id=2, _accessor='AnnData', version='2024-07-01', id=3659, size=691757462, transform_id=22, is_latest=TRUE, type='dataset', n_observations=51552, created_by_id=1, _hash_type='md5-n', created_at='2024-07-12T12:34:10.345829+00:00', suffix='.h5ad', updated_at='2024-07-12T12:40:48.837026+00:00', _key_is_virtual=FALSE, visibility=1, run_id=27, hash='SZ5tB0T4YKfiUuUkAL09ZA')
+    Artifact(uid='KBW89Mf7IGcekja2hADu', description='Myeloid compartment', key='cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad', created_by_id=1, run_id=27, suffix='.h5ad', created_at='2024-07-12T12:34:10.345829+00:00', hash='SZ5tB0T4YKfiUuUkAL09ZA', _hash_type='md5-n', storage_id=2, version='2024-07-01', _accessor='AnnData', id=3659, is_latest=TRUE, _key_is_virtual=FALSE, transform_id=22, n_observations=51552, size=691757462, visibility=1, updated_at='2024-07-12T12:40:48.837026+00:00', type='dataset')
       Provenance
         $storage = 's3://cellxgene-data-public'
         $transform = 'Census release 2024-07-01 (LTS)'
@@ -127,7 +125,7 @@ You can directly load the artifact to access its data:
 artifact$load()
 ```
 
-    ℹ 's3://cellxgene-data-public/cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad' already exists at '/home/rcannood/.cache/lamindb/cellxgene-data-public/cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad'
+    ℹ 's3://cellxgene-data-public/cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad' already exists at '/home/luke/.cache/lamindb/cellxgene-data-public/cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad'
 
     AnnData object with n_obs × n_vars = 51552 × 36398
         obs: 'donor_id', 'Predicted_labels_CellTypist', 'Majority_voting_CellTypist', 'Manually_curated_celltype', 'assay_ontology_term_id', 'cell_type_ontology_term_id', 'development_stage_ontology_term_id', 'disease_ontology_term_id', 'self_reported_ethnicity_ontology_term_id', 'is_primary_data', 'organism_ontology_term_id', 'sex_ontology_term_id', 'tissue_ontology_term_id', 'suspension_type', 'tissue_type', 'cell_type', 'assay', 'disease', 'organism', 'sex', 'tissue', 'self_reported_ethnicity', 'development_stage', 'observation_joinid'
