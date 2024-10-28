@@ -23,7 +23,8 @@ jobs:
           # workaround for
           # -> https://github.com/laminlabs/laminr/issues/57
           # -> https://github.com/scipy/scipy/issues/21738
-          - { os: macos-13, r: "release" }
+          # - { os: macos-13, r: "release" }
+          - { os: macos-latest, r: "release" }
           - { os: windows-latest, r: "release" }
           - { os: ubuntu-latest, r: "devel", http-user-agent: "release" }
           - { os: ubuntu-latest, r: "release" }
@@ -47,14 +48,24 @@ jobs:
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
 
-      # # workaround for
-      # # -> https://github.com/laminlabs/laminr/issues/57
-      # # -> https://github.com/scipy/scipy/issues/21738
-      # - name: Install scipy from github
-      #   if: runner.os == 'macOS'
-      #   run: |
-      #     brew install openblas
-      #     pip install git+https://github.com/scipy/scipy.git
+      # workaround for
+      # -> https://github.com/laminlabs/laminr/issues/57
+      # -> https://github.com/scipy/scipy/issues/21738
+      - name: Set env
+        if: runner.os == 'macOS'
+        run: |
+          echo "LDFLAGS=-L/opt/homebrew/opt/openblas/lib" >> $GITHUB_ENV
+          echo "CPPFLAGS=-I/opt/homebrew/opt/openblas/include" >> $GITHUB_ENV
+          echo "PKG_CONFIG_PATH=/opt/homebrew/opt/openblas/lib/pkgconfig" >> $GITHUB_ENV
+          
+      - name: Install scipy from github
+        if: runner.os == 'macOS'
+        run: |
+          # export LDFLAGS="-L/opt/homebrew/opt/openblas/lib"
+          # export CPPFLAGS="-I/opt/homebrew/opt/openblas/include"
+          # export PKG_CONFIG_PATH="/opt/homebrew/opt/openblas/lib/pkgconfig"
+          brew install openblas
+          pip install git+https://github.com/scipy/scipy.git
 
       - name: Install lamindb
         run: |
