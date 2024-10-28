@@ -51,12 +51,12 @@ jobs:
       # workaround for
       # -> https://github.com/laminlabs/laminr/issues/57
       # -> https://github.com/scipy/scipy/issues/21738
-      # - name: Set env
-      #   if: runner.os == 'macOS'
-      #   run: |
-      #     echo "LDFLAGS=-L/opt/homebrew/opt/openblas/lib" >> $GITHUB_ENV
-      #     echo "CPPFLAGS=-I/opt/homebrew/opt/openblas/include" >> $GITHUB_ENV
-      #     echo "PKG_CONFIG_PATH=/opt/homebrew/opt/openblas/lib/pkgconfig" >> $GITHUB_ENV
+      - name: Set env
+        if: runner.os == 'macOS'
+        run: |
+          echo "LDFLAGS=-L/opt/homebrew/opt/openblas/lib" >> $GITHUB_ENV
+          echo "CPPFLAGS=-I/opt/homebrew/opt/openblas/include" >> $GITHUB_ENV
+          echo "PKG_CONFIG_PATH=/opt/homebrew/opt/openblas/lib/pkgconfig" >> $GITHUB_ENV
       # - name: Install openblas
       #   if: runner.os == 'macOS'
       #   run: |
@@ -65,8 +65,16 @@ jobs:
       - name: Install dependencies
         if: runner.os == 'macOS'
         run: |
-          brew install gfortran openblas pkg-config
+          brew install openblas
+
+      - name: install numpy
+        if: runner.os == 'macOS'
+        run: |
           OPENBLAS=$(brew --prefix openblas) CFLAGS="-falign-functions=8 ${CFLAGS}" pip install numpy
+      
+      - name: install scipy
+        if: runner.os == 'macOS'
+        run: |
           OPENBLAS=$(brew --prefix openblas) CFLAGS="-falign-functions=8 ${CFLAGS}" pip install scipy==1.12.0
 
       - name: Install lamindb
