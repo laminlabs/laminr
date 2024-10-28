@@ -20,7 +20,10 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - { os: macos-latest, r: "release" }
+          # workaround for
+          # -> https://github.com/laminlabs/laminr/issues/57
+          # -> https://github.com/scipy/scipy/issues/21738
+          - { os: macos-13, r: "release" }
           - { os: windows-latest, r: "release" }
           - { os: ubuntu-latest, r: "devel", http-user-agent: "release" }
           - { os: ubuntu-latest, r: "release" }
@@ -44,14 +47,14 @@ jobs:
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
 
-      # workaround for
-      # -> https://github.com/laminlabs/laminr/issues/57
-      # -> https://github.com/scipy/scipy/issues/21738
-      - name: Install scipy from github
-        if: runner.os == 'macOS'
-        run: |
-          brew install openblas
-          pip install git+https://github.com/scipy/scipy.git
+      # # workaround for
+      # # -> https://github.com/laminlabs/laminr/issues/57
+      # # -> https://github.com/scipy/scipy/issues/21738
+      # - name: Install scipy from github
+      #   if: runner.os == 'macOS'
+      #   run: |
+      #     brew install openblas
+      #     pip install git+https://github.com/scipy/scipy.git
 
       - name: Install lamindb
         run: |
