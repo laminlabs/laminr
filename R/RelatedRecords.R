@@ -87,6 +87,27 @@ RelatedRecords <- R6::R6Class( # nolint object_name_linter
       )[[field$field_name]]
 
       if (as_df) {
+        # Get field names so output always has the same order and empty output
+        # has column names
+        related_module <- private$.instance$get_module(field$related_module_name)
+        related_registry <- related_module$get_registry(field$related_registry_name)
+        related_fields <- related_registry$get_field_names()
+        # Remove hidden and link fields
+        is_hidden <- grepl("^_", related_fields)
+        is_link <- grepl("^links_", related_fields)
+        related_fields <- related_fields[!is_hidden & !is_link]
+
+        if (length(related_data) == 0) {
+          template_df <- as.data.frame(
+            matrix(
+              ncol = length(related_fields), nrow = 0,
+              dimnames = list(NULL, related_fields)
+            )
+          )
+
+          return(template_df)
+        }
+
         values <- related_data |>
           # Replace NULL with NA so columns aren't lost
           purrr::modify_depth(2, \(x) ifelse(is.null(x), NA, x)) |>
@@ -94,6 +115,17 @@ RelatedRecords <- R6::R6Class( # nolint object_name_linter
           purrr::map(as.data.frame) |>
           # Bind entries as rows
           purrr::list_rbind()
+
+        purrr::map(related_fields, function(.field) {
+          if (.field %in% colnames(values)) {
+            return(values[, .field, drop = FALSE])
+          } else {
+            column <- data.frame(rep(NA, nrow(values)))
+            colnames(column) <- .field
+            return(column)
+          }
+        }) |>
+          purrr::list_cbind()
       } else {
         # Get record class for records in the list
         related_module <- private$.instance$get_module(field$related_module_name)
