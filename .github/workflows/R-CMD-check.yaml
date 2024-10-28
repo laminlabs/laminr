@@ -52,26 +52,19 @@ jobs:
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
 
-      - name: Install dependencies
+      # workaround for
+      # -> https://github.com/laminlabs/laminr/issues/57
+      # -> https://github.com/scipy/scipy/issues/21738
+      - name: Install OpenBLAS
         if: runner.os == 'macOS'
         run: |
           brew install openblas
 
-      # workaround for
-      # -> https://github.com/laminlabs/laminr/issues/57
-      # -> https://github.com/scipy/scipy/issues/21738
-      - name: Set env
-        if: runner.os == 'macOS'
-        run: |
           # Set environment variables for OpenBLAS
           OPENBLAS=$(brew --prefix openblas)
           echo "OPENBLAS=$OPENBLAS" >> $GITHUB_ENV
           echo "LDFLAGS=-L$OPENBLAS/lib" >> $GITHUB_ENV
           echo "CPPFLAGS=-I$OPENBLAS/include" >> $GITHUB_ENV
-          echo "PKG_CONFIG_PATH=$OPENBLAS/lib/pkgconfig" >> $GITHUB_ENV
-
-          # Set MACOSX_DEPLOYMENT_TARGET for compatibility
-          echo "MACOSX_DEPLOYMENT_TARGET=12.3" >> $GITHUB_ENV
 
       - name: install scipy
         if: runner.os == 'macOS'
