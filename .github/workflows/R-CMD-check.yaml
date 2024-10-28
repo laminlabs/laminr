@@ -49,25 +49,15 @@ jobs:
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
 
-      # workaround for
-      # -> https://github.com/laminlabs/laminr/issues/57
+      # manually installing openblas as a workaround for issue
+      # https://github.com/laminlabs/laminr/issues/57
       - name: Install OpenBLAS
         if: runner.os == 'macOS'
         run: |
           brew install openblas
-
-          # Set environment variables for OpenBLAS
           OPENBLAS=$(brew --prefix openblas)
-          echo "OPENBLAS=$OPENBLAS" >> $GITHUB_ENV
           echo "LDFLAGS=-L$OPENBLAS/lib" >> $GITHUB_ENV
           echo "CPPFLAGS=-I$OPENBLAS/include" >> $GITHUB_ENV
-
-      # # workaround for
-      # # -> https://github.com/laminlabs/laminr/issues/57
-      # - name: install scipy
-      #   if: runner.os == 'macOS'
-      #   run: |
-      #     pip install scipy<1.13.0
 
       - name: Install lamindb
         run: |
