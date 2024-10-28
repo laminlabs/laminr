@@ -68,7 +68,15 @@ You can see which functions you can use to interact with the registry by printin
 db$Artifact
 ```
 
-For instance, you can fetch an Artifact by ID or UID. For example, Artifact [KBW89Mf7IGcekja2hADu](https://lamin.ai/laminlabs/cellxgene/artifact/KBW89Mf7IGcekja2hADu) is an AnnData object containing myeloid cells.
+You can also get a data frame summarising the records associated with a registry.
+
+```{r artifact-registry-df}
+db$Artifact$df(limit = 5)
+```
+
+## Artifact
+
+Artifacts can be fetched from the Artifact registry by ID or UID. For example, Artifact [KBW89Mf7IGcekja2hADu](https://lamin.ai/laminlabs/cellxgene/artifact/KBW89Mf7IGcekja2hADu) is an AnnData object containing myeloid cells.
 
 ```{r get_artifact}
 artifact <- db$Artifact$get("KBW89Mf7IGcekja2hADu")
@@ -97,7 +105,19 @@ Or fetch data from related registries:
 * `artifact$root`: `r artifact$storage$to_string()`
 * `artifact$created_by`: `r artifact$created_by$to_string()`
 
-Finally, for Artifact objects, you can directly fetch or download the data using `$cache()` and `$load()`, respectively.
+Some fields of an Artifact contain links to related information.
+
+```{r artifact-related}
+artifact$developmental_stages
+```
+
+Summaries of related information can be retrieved as a data frame.
+
+```{r}
+artifact$developmental_stages$df()
+```
+
+Finally, you can directly fetch or download the data for the Artifact using `$cache()` and `$load()`, respectively.
 
 ```{r cache_artifact}
 artifact$cache()
