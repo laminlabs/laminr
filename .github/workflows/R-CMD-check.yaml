@@ -53,7 +53,9 @@ jobs:
           use-public-rspm: true
 
       - name: Install dependencies
-        if: runner.os == 'macOS'          
+        if: runner.os == 'macOS'
+        run: |
+          brew install gfortran openblas pkg-config
 
       # workaround for
       # -> https://github.com/laminlabs/laminr/issues/57
