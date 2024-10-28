@@ -57,15 +57,11 @@ jobs:
           echo "LDFLAGS=-L/opt/homebrew/opt/openblas/lib" >> $GITHUB_ENV
           echo "CPPFLAGS=-I/opt/homebrew/opt/openblas/include" >> $GITHUB_ENV
           echo "PKG_CONFIG_PATH=/opt/homebrew/opt/openblas/lib/pkgconfig" >> $GITHUB_ENV
-          
-      - name: Install scipy from github
+      - name: Install openblas
         if: runner.os == 'macOS'
         run: |
-          # export LDFLAGS="-L/opt/homebrew/opt/openblas/lib"
-          # export CPPFLAGS="-I/opt/homebrew/opt/openblas/include"
-          # export PKG_CONFIG_PATH="/opt/homebrew/opt/openblas/lib/pkgconfig"
-          brew install openblas
-          pip install git+https://github.com/scipy/scipy.git
+          # brew install openblas
+          pip install scipy==1.12.0
 
       - name: Install lamindb
         run: |
