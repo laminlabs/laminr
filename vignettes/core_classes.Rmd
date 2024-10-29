@@ -55,11 +55,10 @@ for (registry_name in registry_names) {
   cat(paste0("Bases: ", paste(class_urls, collapse = ", "), "\n\n"))
 
   cat(paste0("### Simple fields\n\n"))
-  
-  simple_fields <- fields |> keep( ~
+
+  simple_fields <- fields |> keep(~
     is.null(.x$related_field_name) &&
-    !grepl("^_", .x$field_name)
-  )
+      !grepl("^_", .x$field_name))
 
   for (field in simple_fields) {
     field_type <-
@@ -77,10 +76,9 @@ for (registry_name in registry_names) {
 
   relational_fields <- fields |> keep(~
     !is.null(.x$related_field_name) &&
-    !grepl("^_", .x$field_name) &&
-    !.x$is_link_table &&
-    .x$related_module_name == "core"
-  )
+      !grepl("^_", .x$field_name) &&
+      !.x$is_link_table &&
+      .x$related_module_name == "core")
 
   for (field in relational_fields) {
     related_module <- db$get_module(field$related_module_name)
