@@ -22,6 +22,13 @@ Install the development version from GitHub:
 remotes::install_github("laminlabs/laminr")
 ```
 
+To install all suggested dependencies required for some functionality,
+use:
+
+``` r
+remotes::install_github("laminlabs/laminr", dependencies = TRUE)
+```
+
 You will also need to install `lamindb`:
 
 ``` bash

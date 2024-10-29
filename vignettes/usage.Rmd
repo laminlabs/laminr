@@ -20,17 +20,43 @@ This vignette will show you how to use the `laminr` package to interact with Lam
 
 ## Initial setup
 
-As part of a first-time set up, you will need to install `laminr`, the Python `lamin-cli` package, and set up an instance for first use.
+### Python package
+
+As part of a first-time set up, you will need to install the Python `lamin-cli` package, and set up an instance for first use.
 
 ```bash
 pip install lamin-cli
 lamin connect laminlabs/cellxgene
 ```
 
-```R
-install.packages("remotes")
+### R package
+
+You will also need to install the `laminr` R package.
+
+```{r install, eval = FALSE}
+# Install the remotes package if needed
+if (!requireMethods("remotes", quiety = TRUE)) {
+  install.packages("remotes")
+}
 remotes::install_github("laminlabs/laminr")
 ```
+
+#### Suggested dependencies
+
+Some functionality requires additional suggested dependencies.
+You will be prompted to install these packages when needed, or you can install them in advance.
+Setting `dependencies = TRUE` will install all suggested packages.
+
+```{r install-suggested, eval = FALSE}
+remotes::install_github("laminlabs/laminr", dependencies = TRUE)
+```
+
+Or individual suggested packages can be installed with `install.packages()`.
+
+Suggested dependecies:
+
+- [anndata](https://cran.r-project.org/package=anndata) - Loading and saving `AnnData` objects
+- [s3](https://cran.r-project.org/package=s3) - Caching objects to/from S3 storage
 
 ## Connect to a LaminDB instance
 
