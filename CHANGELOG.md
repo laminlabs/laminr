@@ -74,7 +74,14 @@ For more information, please visit the [package website](https://laminr.lamin.ai
 * Set Python requirements to `lamindb[aws]` for now (PR #33). Will be changed to `lamin_cli` once 
   [laminlabs/lamin-cli#90](https://github.com/laminlabs/lamin-cli/issues/90) is solved.
   
-* Improve documentation for installing suggested dependencies and what they are requrire for (PR #56)
+* Improve documentation for installing suggested dependencies and what they are requrire for (PR #56).
+
+* Add a `development` vignette to showcase the current features and future development plans (PR #67).
+
+* Add a `core_classes` vignette to showcase the core LaminDB classes (PR #67).
+
+* Update the README to give a better overview of the package (PR #67).
+
 
 ## BUG FIXES
 
