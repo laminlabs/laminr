@@ -39,7 +39,7 @@ type_map <- c(
 )
 
 
-for (registry_name in registry_names) {
+for (registry_name in registry_names) { # nolint cyclocomp_linter
   registry <- core$get_registry(registry_name)
   fields <- registry$get_fields()
 
@@ -56,9 +56,10 @@ for (registry_name in registry_names) {
 
   cat(paste0("### Simple fields\n\n"))
 
-  simple_fields <- fields |> keep(~
-    is.null(.x$related_field_name) &&
-      !grepl("^_", .x$field_name))
+  simple_fields <- fields |> keep(
+    ~ is.null(.x$related_field_name) &&
+      !grepl("^_", .x$field_name)
+  )
 
   for (field in simple_fields) {
     field_type <-
@@ -74,11 +75,12 @@ for (registry_name in registry_names) {
 
   cat(paste0("### Relational fields\n\n"))
 
-  relational_fields <- fields |> keep(~
-    !is.null(.x$related_field_name) &&
+  relational_fields <- fields |> keep(
+    ~ !is.null(.x$related_field_name) &&
       !grepl("^_", .x$field_name) &&
       !.x$is_link_table &&
-      .x$related_module_name == "core")
+      .x$related_module_name == "core"
+  )
 
   for (field in relational_fields) {
     related_module <- db$get_module(field$related_module_name)
