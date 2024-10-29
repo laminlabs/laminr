@@ -84,6 +84,10 @@ For more information, please visit the [package website](https://laminr.lamin.ai
 
 * Add alternative error message when no message is returned from the API (PR #30).
 
+* Manually install OpenBLAS on macOS (PR #62).
+
+* Switch to Python 3.12 for being able to install scipy on macOS (PR #66).
+
 # laminr v0.0.1
 
 Initial POC implementation of the LaminDB API client for R.

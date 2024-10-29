@@ -20,11 +20,12 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - { os: macos-latest, r: "release" }
-          - { os: windows-latest, r: "release" }
-          - { os: ubuntu-latest, r: "devel", http-user-agent: "release" }
-          - { os: ubuntu-latest, r: "release" }
-          - { os: ubuntu-latest, r: "oldrel-1" }
+          # note: we use python 3.12 on mac os x so we can install scipy 1.13 from a wheel
+          - { os: macos-latest, r: "release", python: "3.12" }
+          - { os: windows-latest, r: "release", python: "3.x" }
+          - { os: ubuntu-latest, r: "devel", http-user-agent: "release", python: "3.x" }
+          - { os: ubuntu-latest, r: "release", python: "3.x" }
+          - { os: ubuntu-latest, r: "oldrel-1", python: "3.9" }
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -38,11 +39,25 @@ jobs:
 
       - uses: r-lib/actions/setup-tinytex@v2
 
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.config.python }}
+
       - uses: r-lib/actions/setup-r@v2
         with:
           r-version: ${{ matrix.config.r }}
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
+
+      # manually installing openblas as a workaround for issue
+      # https://github.com/laminlabs/laminr/issues/57
+      - name: Install OpenBLAS
+        if: runner.os == 'macOS'
+        run: |
+          brew install openblas
+          OPENBLAS=$(brew --prefix openblas)
+          echo "LDFLAGS=-L$OPENBLAS/lib" >> $GITHUB_ENV
+          echo "CPPFLAGS=-I$OPENBLAS/include" >> $GITHUB_ENV
 
       - name: Install lamindb
         run: |
