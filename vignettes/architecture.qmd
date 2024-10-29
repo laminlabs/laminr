@@ -64,7 +64,10 @@ classDiagram
         +api_url: String
     }
     class Instance{
-        +initialize(InstanceSettings Instance_settings, API api, Map<String, any> schema): Instance
+        +initialize(
+          #emsp;InstanceSettings Instance_settings, API api,
+          #emsp;Map<String, any> schema
+        ): Instance
         +get_modules(): Module[]
         +get_module(String module_name): Module
         +get_module_names(): String[]
@@ -75,14 +78,20 @@ classDiagram
         +get_record(...): Map<String, Any>
     }
     class Module{
-        +initialize(Instance Instance, API api, String module_name, Map<String, any> module_schema): Module
+        +initialize(
+          #emsp;Instance Instance, API api, String module_name,
+          #emsp;Map<String, any> module_schema
+        ): Module
         +name: String
         +get_registries(): Registry[]
         +get_registry(String registry_name): Registry
         +get_registry_names(): String[]
     }
     class Registry{
-        +initialize(Instance Instance, Module module, API api, String registry_name, Map<String, Any> registry_schema): Registry
+        +initialize(
+          #emsp;Instance Instance, Module module, API api,
+          #emsp;String registry_name, Map<String, Any> registry_schema
+        ): Registry
         +name: String
         +class_name: String
         +is_link_table: Bool
@@ -211,7 +220,10 @@ classDiagram
         +api_url: String
     }
     class Instance{
-        +initialize(InstanceSettings Instance_settings, API api, Map<String, any> schema): Instance
+        +initialize(
+          #emsp;InstanceSettings Instance_settings, API api,
+          #emsp;Map<String, any> schema
+        ): Instance
         +get_modules(): Module[]
         +get_module(String module_name): Module
         +get_module_names(): String[]
@@ -222,14 +234,20 @@ classDiagram
         +get_record(...): Map<String, Any>
     }
     class Module{
-        +initialize(Instance Instance, API api, String module_name, Map<String, any> module_schema): Module
+        +initialize(
+          #emsp;Instance Instance, API api, String module_name,
+          #emsp;Map<String, any> module_schema
+        ): Module
         +name: String
         +get_registries(): Registry[]
         +get_registry(String registry_name): Registry
         +get_registry_names(): String[]
     }
     class Registry{
-        +initialize(Instance Instance, Module module, API api, String registry_name, Map<String, Any> registry_schema): Registry
+        +initialize(
+          #emsp;Instance Instance, Module module, API api,
+          #emsp;String registry_name, Map<String, Any> registry_schema
+        ): Registry
         +name: String
         +class_name: String
         +is_link_table: Bool
@@ -274,7 +292,10 @@ classDiagram
     
     %% --- New Rich classes ----------------------------------------------------
     class RichInstance{
-        +initialize(InstanceSettings Instance_settings, API api, Map<String, any> schema): RichInstance
+        +initialize(
+          #emsp;InstanceSettings Instance_settings, API api,
+          #emsp;Map<String, any> schema
+        ): RichInstance
         +Registry Artifact
         +Registry Collection
         +...registry accessors...
