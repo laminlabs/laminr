@@ -182,6 +182,7 @@ classDiagram
     laminr --> RichInstance
     Core --|> Module
     RichInstance --> Core
+    Core --> Artifact
     Bionty --|> Module
     RichInstance --> Bionty
     Registry --> RichRecord
