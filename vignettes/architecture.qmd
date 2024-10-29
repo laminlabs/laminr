@@ -300,6 +300,11 @@ classDiagram
         +...field value accessors...
     }
     style RichRecord fill:#ffe1c9
+    class Artifact{
+        +cache(): String
+        +load(): AnnData | DataFrame | ...
+    }
+    style Artifact fill:#ffe1c9
     %% -------------------------------------------------------------------------
 %% # nolint end
 ```
