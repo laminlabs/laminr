@@ -4,7 +4,7 @@
 [![R-CMD-check](https://github.com/laminlabs/laminr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/laminlabs/laminr/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-**laminr** is an R package that provides an interface to LaminDB, a powerful open-source data framework designed specifically for biological research. LaminDB enables you to manage, query, and track your data and metadata in a unified and scalable way. With **laminr**, you can leverage the full capabilities of LaminDB directly within your R environment.
+**laminr** is an R package that provides an interface to LaminDB, a powerful open-source data framework designed specifically for biological research. LaminDB enables you to manage, query, and track your data and metadata in a unified and scalable way.
 
 ## Features
 
@@ -42,11 +42,13 @@ pip install lamindb[aws]
 
 ## Documentation
 
-* **Getting started**: Learn the basics of using laminr in the [Usage vignette](https://laminr.lamin.ai/articles/usage.html).
+* **Getting started** - Learn the basics of using laminr: `vignette("usage", package = "laminr")`
 
-* **Package architecture**: Understand the underlying structure of the package in the [Architecture vignette](https://laminr.lamin.ai/articles/architecture.html).
+* **Core classes** - Get an overview of the core LaminDB classes in any Lamin instance: `vignette("core_classes", package = "laminr")`
 
-* **Feature list and roadmap**: Explore the current features and future development plans in the [Development vignette](https://laminr.lamin.ai/articles/development.html).
+* **Package architecture** - Understand the underlying structure of the package: `vignette("architecture", package = "laminr")`
+
+* **Feature list and roadmap** - Explore the current features and future development plans: `vignette("development", package = "laminr")`
 
 ## LaminDB resources
 

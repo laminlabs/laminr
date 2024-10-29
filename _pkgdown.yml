@@ -10,9 +10,7 @@ navbar:
     - text: Usage
       href: articles/usage.html
     - text: Core classes
-      href: articles/classes_core.html
-    - text: Bionty classes
-      href: articles/classes_bionty.html
+      href: articles/core_classes.html
     - text: -------
     - text: More information
     - text: Package architecutre
