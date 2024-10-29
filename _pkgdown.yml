@@ -1,3 +1,21 @@
 url: https://laminr.lamin.ai/
 template:
   bootstrap: 5
+navbar:
+ components:
+   articles:
+    text: Articles
+    menu:
+    - text: Getting started
+    - text: Usage
+      href: articles/usage.html
+    - text: Core classes
+      href: articles/classes_core.html
+    - text: Bionty classes
+      href: articles/classes_bionty.html
+    - text: -------
+    - text: More information
+    - text: Package architecutre
+      href: articles/architecture.html
+    - text: Feature list and roadmap
+      href: articles/development.html
