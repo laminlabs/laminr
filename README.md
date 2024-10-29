@@ -50,7 +50,7 @@ pip install lamindb[aws]
 
 * **Feature list and roadmap** - Explore the current features and future development plans: `vignette("development", package = "laminr")`
 
-## LaminDB resources
+## Other resources
 
 * [LaminDB website](https://lamin.ai/)
 
