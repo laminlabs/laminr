@@ -85,7 +85,7 @@ for (registry_name in registry_names) { # nolint cyclocomp_linter
   for (field in relational_fields) {
     related_module <- db$get_module(field$related_module_name)
     related_registry <- related_module$get_registry(field$related_registry_name)
-    cat(paste0("* `", field$field_name, "` ([", related_registry$class_name, "](#", related_registry$name, "))\n"))
+    cat(paste0("* `", field$field_name, "` ([`", related_registry$class_name, "`](#", related_registry$name, "))\n"))
   }
 
   cat("\n\n")
