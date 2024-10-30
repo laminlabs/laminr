@@ -34,7 +34,7 @@ use:
 remotes::install_github("laminlabs/laminr", dependencies = TRUE)
 ```
 
-You will also need to install `lamindb` Python package:
+You will also need to install the `lamindb` Python package:
 
 ``` bash
 pip install lamindb[aws]
