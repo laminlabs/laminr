@@ -3,6 +3,16 @@ url: https://laminr.lamin.ai/
 template:
   bootstrap: 5
 
+authors:
+  Robrecht Cannoodt:
+    href: https://cannoodt.dev
+  Luke Zappia:
+    href: https://lazappi.id.au
+  Data Intuitive:
+    href: https://data-intuitive.com
+  Lamin Labs:
+    href: https://lamin.ai
+
 navbar:
  components:
    articles:
