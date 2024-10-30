@@ -84,9 +84,7 @@ For more information, please visit the [package website](https://laminr.lamin.ai
 
 * Add a `development` vignette to document the list of current, planned and unplanned functionality (PR #67).
 
-* Add a `module_core` vignette to document the registries in the core module (PR #67).
-
-* Add a `module_bionty` vignette to document the registries in the bionty module (PR #67).
+* Add vignettes to document registries in the core, bionty, and wetlab modules (PR #67).
 
 ## BUG FIXES
 
