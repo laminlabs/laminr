@@ -20,8 +20,7 @@ For reference, here is the documentation on the [core module](https://docs.lamin
 
 ## Key Concepts
 
-In **LaminDB**, data and metadata are organized using a system of 
-registries and modules.
+In **LaminDB**, data and metadata are organized using a system of registries and modules.
 
  * **Registries**: Centralized collections of related records, similar to database tables. Each registry stores specific types of metadata (e.g., artifacts, transforms, features).
  * **Modules**: Groupings of related registries that provide domain-specific functionality. The core module is fundamental to all LaminDB instances and includes essential registries for general data management. Other modules (like bionty for biological entities) can be added to extend functionality.

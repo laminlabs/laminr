@@ -64,7 +64,7 @@ generate_module_markdown <- function(db, module_name, allowed_related_modules = 
       ~ !is.null(.x$related_field_name) &&
         !grepl("^_", .x$field_name) &&
         !.x$is_link_table &&
-        .x$related_module_name == "core"
+        .x$related_module_name %in% allowed_related_modules
     )
 
     if (length(relational_fields) > 0) {
@@ -74,9 +74,23 @@ generate_module_markdown <- function(db, module_name, allowed_related_modules = 
     for (field in relational_fields) {
       related_module <- db$get_module(field$related_module_name)
       related_registry <- related_module$get_registry(field$related_registry_name)
+
+      related_class_name <-
+        if (related_module$name == "core") {
+          related_registry$class_name
+        } else {
+          paste0(related_module$name, "$", related_registry$class_name)
+        }
+      related_link <-
+        if (related_module$name == module_name) {
+          paste0("#", related_registry$name)
+        } else {
+          paste0("module_", related_module$name, ".html#", related_registry$name)
+        }
+
       output <- output |> c(paste0(
-        " * `", field$field_name, "` ([`", related_registry$class_name, "`](module_",
-        related_module$name, ".html#", related_registry$name, "))\n"
+        " * `", field$field_name, "` ([`", related_class_name, "`](",
+        related_link, "))\n"
       ))
     }
 
