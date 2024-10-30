@@ -10,5 +10,4 @@ test_that("RelatedRecord methods work", {
   expect_s3_class(related, "RelatedRecords")
   expect_s3_class(related$df(), "data.frame")
   expect_true(length(colnames(related$df())) > 0)
-  expect_s3_class(related$field, "Field")
 })

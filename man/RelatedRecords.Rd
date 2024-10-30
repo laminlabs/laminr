@@ -7,14 +7,6 @@
 A container for accessing records with a one-to-many or many-to-many
 relationship.
 }
-\section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{field}}{(\link{Field})\cr
-The field the records are related to.}
-}
-\if{html}{\out{</div>}}
-}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
