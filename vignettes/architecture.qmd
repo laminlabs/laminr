@@ -287,7 +287,6 @@ classDiagram
           #emsp;String related_to, API api
         ): RelatedRecords
         +df(): DataFrame
-        +field: Field
     }
     %% -------------------------------------------------------------------------
     

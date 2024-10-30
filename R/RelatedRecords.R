@@ -61,13 +61,6 @@ RelatedRecords <- R6::R6Class( # nolint object_name_linter
       )
     }
   ),
-  active = list(
-    #' @field field ([Field])\cr
-    #' The field the records are related to.
-    field = function() {
-      private$.field
-    }
-  ),
   private = list(
     .instance = NULL,
     .registry = NULL,
