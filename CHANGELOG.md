@@ -26,6 +26,8 @@ For more information, please visit the [package website](https://laminr.lamin.ai
 
 * Add `InstanceAPI$get_records()` and `Registry$df()` methods (PR #54)
 
+* Add a `RelatedRecords` class and `RelatedRecords$df()` method (PR #59)
+
 ## MAJOR CHANGES
 
 * Refactored the internal class data structures for better modularity and extensibility (PR #8).
@@ -94,9 +96,12 @@ For more information, please visit the [package website](https://laminr.lamin.ai
 
 * Add alternative error message when no message is returned from the API (PR #30).
 
+* Handle when error detail returned by the API is a list (PR #59)
+
 * Manually install OpenBLAS on macOS (PR #62).
 
 * Switch to Python 3.12 for being able to install scipy on macOS (PR #66).
+
 
 # laminr v0.0.1
 

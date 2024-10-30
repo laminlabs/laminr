@@ -104,7 +104,15 @@ To see the available functions for the `Artifact` registry, print the registry o
 db$Artifact
 ```
 
-You can fetch a specific artifact using its ID or UID. For instance, to get the artifact with UID [KBW89Mf7IGcekja2hADu](https://lamin.ai/laminlabs/cellxgene/artifact/KBW89Mf7IGcekja2hADu):
+You can also get a data frame summarising the records associated with a registry.
+
+```{r artifact_registry_df}
+db$Artifact$df(limit = 5)
+```
+
+## Working with records
+
+You can fetch a specific record from a registry using its ID or UID. For instance, to get the artifact with UID [KBW89Mf7IGcekja2hADu](https://lamin.ai/laminlabs/cellxgene/artifact/KBW89Mf7IGcekja2hADu):
 
 ```{r get_artifact}
 artifact <- db$Artifact$get("KBW89Mf7IGcekja2hADu")
@@ -116,13 +124,13 @@ This artifact contains an `AnnData` object with myeloid cell data. You can view 
 artifact
 ```
 
-Or get more detailed information:
+For artifact records, you can get more detailed information:
 
 ```{r describe_artifact}
 artifact$describe()
 ```
 
-Access specific fields of the artifact using the `$` operator:
+Access specific fields of the record using the `$` operator:
 
 ```{r access_fields}
 artifact$id
@@ -130,20 +138,26 @@ artifact$uid
 artifact$key
 ```
 
-You can also access related data:
+Some fields of a record contain links to related information.
 
-```{r access_related_data}
+```{r artifact_related}
 artifact$storage
-artifact$created_by
+artifact$developmental_stages
 ```
 
-Finally, you can download the actual data associated with the artifact:
+When those that are one-to-many or many-to-many relationship, a summary of the related information can be retrieved as a data frame.
+
+```{r artifact_related_df}
+artifact$developmental_stages$df()
+```
+
+Finally, for artifact records only, you can download the associated data:
 
 ```{r cache_artifact}
 artifact$cache() # Cache the data locally
 artifact$load() # Load the data into memory
 ```
 
-:::{.callout-note}
-Currently, laminr primarily supports S3 storage and AnnData objects. Support for other storage backends and data formats will be added in the future. For more information related to planned features and the roadmap, please refer to the Development vignette (`vignette("development", package = "laminr")`). 
-:::
+<div class="alert alert-warning" role="alert">
+  Currently, **{laminr}** primarily supports S3 storage and AnnData objects. Support for other storage backends and data formats will be added in the future. For more information related to planned features and the roadmap, please refer to the Development vignette (`vignette("development", package = "laminr")`).
+</div>

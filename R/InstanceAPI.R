@@ -42,6 +42,7 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
     get_record = function(module_name,
                           registry_name,
                           id_or_uid,
+                          limit_to_many = 10,
                           include_foreign_keys = FALSE,
                           select = NULL,
                           verbose = FALSE) {
@@ -85,6 +86,8 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
         id_or_uid,
         "?schema_id=",
         private$.instance_settings$schema_id,
+        "&limit_to_many=",
+        limit_to_many,
         "&include_foreign_keys=",
         tolower(include_foreign_keys)
       )
@@ -220,10 +223,17 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
       content <- httr::content(response)
       if (httr::http_error(response)) {
         if (is.list(content) && "detail" %in% names(content)) {
-          cli_abort(content$detail)
+          detail <- content$detail
+          if (is.list(detail)) {
+            detail <- jsonlite::minify(jsonlite::toJSON(content$detail))
+          }
         } else {
-          cli_abort("Failed to {request_type} from instance. Output: {content}")
+          detail <- content
         }
+        cli_abort(c(
+          "Failed to {request_type} from instance",
+          "i" = "Details: {detail}"
+        ))
       }
 
       content
