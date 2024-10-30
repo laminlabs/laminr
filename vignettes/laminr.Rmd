@@ -158,6 +158,6 @@ artifact$cache() # Cache the data locally
 artifact$load() # Load the data into memory
 ```
 
-:::{.callout-note}
-Currently, laminr primarily supports S3 storage and AnnData objects. Support for other storage backends and data formats will be added in the future. For more information related to planned features and the roadmap, please refer to the Development vignette (`vignette("development", package = "laminr")`). 
-:::
+<div class="alert alert-warning" role="alert">
+  Currently, **{laminr}** primarily supports S3 storage and AnnData objects. Support for other storage backends and data formats will be added in the future. For more information related to planned features and the roadmap, please refer to the Development vignette (`vignette("development", package = "laminr")`).
+</div>
