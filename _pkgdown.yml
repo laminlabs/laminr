@@ -19,3 +19,5 @@ navbar:
       href: articles/module_core.html
     - text: Bionty module
       href: articles/module_bionty.html
+    - text: Wetlab module
+      href: articles/module_wetlab.html
