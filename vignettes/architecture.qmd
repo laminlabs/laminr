@@ -180,7 +180,7 @@ classDiagram
 
 The sugar syntax classes provide a more user-friendly way to interact with LaminDB data. These classes are designed to make it easier to access and manipulate instances, modules, registries, fields, and records.
 
-For example, to get an artifact with a specific ID using the **only** base classes, you might write:
+For example, to get an artifact with a specific ID using **only** base classes, you might write:
 
 ```r
 db <- connect("laminlabs/cellxgene")
