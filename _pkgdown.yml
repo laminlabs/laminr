@@ -1,19 +1,21 @@
 url: https://laminr.lamin.ai/
+
 template:
   bootstrap: 5
+
 navbar:
  components:
    articles:
     text: Articles
     menu:
-    - text: Getting started
-    - text: Usage
-      href: articles/usage.html
-    - text: Core registries
-      href: articles/core_registries.html
-    - text: -------
-    - text: More information
-    - text: Package architecutre
+    - text: Introduction
+    - text: Package Architecture
       href: articles/architecture.html
-    - text: Feature list and roadmap
+    - text: Development Roadmap
       href: articles/development.html
+    - text: -------
+    - text: API reference
+    - text: Core module
+      href: articles/module_core.html
+    - text: Bionty module
+      href: articles/module_bionty.html

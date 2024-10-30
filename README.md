@@ -1,34 +1,33 @@
-# laminr: An R interface to LaminDB
+# {laminr}: An R interface to LaminDB
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/laminlabs/laminr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/laminlabs/laminr/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-**laminr** is an R package that provides an interface to LaminDB, a powerful open-source data framework designed specifically for biological research. LaminDB enables you to manage, query, and track your data and metadata in a unified and scalable way.
+**{laminr}** is an R package that provides an interface to [LaminDB](https://lamin.ai), a powerful open-source data framework designed specifically for biological research. With laminr, you can leverage LaminDB's powerful features to manage, query, and track your data and metadata with unparalleled efficiency and scalability, all within the familiar comfort of R.
 
-## Features
+## Why use {laminr}?
 
-laminr gives you access to the core functionalities of LaminDB, allowing you to:
+LaminDB offers a unique approach to data management in bioinformatics, providing:
 
-* **Manage data and metadata**: Organize and access your data using LaminDB's Artifact and Record concepts.
-* **Query and search**: Efficiently filter and search through your data and metadata.
-* **Cache and load data**: Optimize data access with caching mechanisms.
-* **Track data lineage**: Maintain a comprehensive history of your data transformations using Transform and Run.
-* **Leverage ontologies**: Access and use public ontologies via bionty for standardized metadata.
-* **Validate and standardize**: Ensure data quality with validation and standardization tools.
-* And much more!
+* **Unified Data and Metadata Handling**: Organize your data and its associated metadata in a structured and accessible manner.
+* **Powerful Querying and Search**: Effortlessly filter and retrieve specific data and metadata using intuitive query functions.
+* **Data Lineage Tracking**: Maintain a comprehensive history of your data transformations, ensuring reproducibility and transparency.
+* **Ontology Integration**: Leverage public ontologies (e.g., for genes, proteins, cell types) for standardized metadata annotation.
+* **Data Validation and Standardization**: Ensure data quality and consistency with built-in validation and standardization tools.
+
+**{laminr}** brings all these benefits to your R workflow, allowing you to seamlessly integrate LaminDB into your existing analysis pipelines.
 
 ## Installation
 
-Install the development version from GitHub:
+Get started with **{laminr}** by installing the development version directly from GitHub:
 
 ``` r
 # install.packages("remotes")
 remotes::install_github("laminlabs/laminr")
 ```
 
-To install all suggested dependencies required for some functionality,
-use:
+To include all suggested dependencies for enhanced functionality, use:
 
 ``` r
 remotes::install_github("laminlabs/laminr", dependencies = TRUE)
@@ -40,17 +39,22 @@ You will also need to install the `lamindb` Python package:
 pip install lamindb[aws]
 ```
 
-## Documentation
+## Getting started
 
-* **Getting started** - Learn the basics of using laminr: `vignette("usage", package = "laminr")`
+The best way to get started with **{laminr}** is to explore the package vignettes:
 
-* **Core registries** - Get an overview of the core LaminDB registries: `vignette("core_registries", package = "laminr")`
+* **Getting Started**: Learn the basics and explore practical examples (`vignette("laminr", package = "laminr")`).
+* **Package Architecture**: Get a better understanding of how **{laminr}** works (`vignette("architecture", package = "laminr")`).
+* **Development Roadmap**: Explore current features and future development plans (`vignette("development", package = "laminr")`).
 
-* **Package architecture** - Understand the underlying structure of the package: `vignette("architecture", package = "laminr")`
+For information on specific modules and functionalities, check out the following vignettes:
 
-* **Feature list and roadmap** - Explore the current features and future development plans: `vignette("development", package = "laminr")`
+* **Core Module**: Learn about the core registries available in a LaminDB instance (`vignette("module_core", package = "laminr")`).
+* **Bionty Module**: Explore the bionty module for biology-related entities (`vignette("module_bionty", package = "laminr")`).
+    
+## Learn more
 
-## Other resources
+For more information about LaminDB and its features, check out the following resources:
 
 * [LaminDB website](https://lamin.ai/)
 

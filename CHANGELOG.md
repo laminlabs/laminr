@@ -76,12 +76,17 @@ For more information, please visit the [package website](https://laminr.lamin.ai
   
 * Improve documentation for installing suggested dependencies and what they are required for (PR #56).
 
-* Add a `development` vignette to showcase the current features and future development plans (PR #67).
-
-* Add a `core_registries` vignette to showcase the core LaminDB classes (PR #67).
-
 * Update the README to give a better overview of the package (PR #67).
 
+* Rename the `usage` vignette to `laminr` and added an overview of the core concepts of LaminDB (PR #67).
+
+* Update the `architecture` vignette to relate the class structure of the package to the core concepts (PR #67).
+
+* Add a `development` vignette to document the list of current, planned and unplanned functionality (PR #67).
+
+* Add a `module_core` vignette to document the registries in the core module (PR #67).
+
+* Add a `module_bionty` vignette to document the registries in the bionty module (PR #67).
 
 ## BUG FIXES
 

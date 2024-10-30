@@ -1,0 +1,106 @@
+---
+title: "Bionty Module"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Bionty Module}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+This vignette provides documentation for the bionty module in **LaminDB**, which offers specialized registries for managing biological entities. These registries are linked to public ontologies, providing a standardized way to represent and work with common biological concepts.
+
+For reference, here is the documentation on the [bionty module](https://docs.lamin.ai/bionty) for the LaminDB Python package.
+
+## What is `bionty`?
+
+The bionty module extends LaminDB with registries for entities like genes, proteins, cell types, and more. It leverages public ontologies to ensure data consistency and interoperability. Key features of bionty include:
+
+* **Ontology Integration**: Connect to public ontologies like NCBI Taxonomy, Ensembl, UniProt, Cell Ontology, and others.
+* **Hierarchical Relationships**: Represent and navigate relationships between entities (e.g., parent-child relationships in ontologies).
+* **Synonym Management**: Handle synonyms and abbreviations for biological entities.
+* **Versioning**: Track changes in ontologies and maintain historical versions.
+
+
+```{r connect, include = FALSE}
+library(laminr)
+library(purrr)
+
+db <- connect("laminlabs/lamindata")
+
+bionty <- db$get_module("bionty")
+```
+
+```{r generate_docs, echo = FALSE, results = "asis"}
+registry_names <- bionty$get_registry_names()
+type_map <- c(
+  "BigAutoField" = "integer64",
+  "AutoField" = "integer",
+  "CharField" = "character",
+  "BooleanField" = "logical",
+  "DateTimeField" = "POSIXct",
+  "TextField" = "character",
+  "ForeignKey" = "integer64",
+  "BigIntegerField" = "integer64",
+  "SmallIntegerField" = "integer",
+  "JSONField" = "list"
+)
+
+
+for (registry_name in registry_names) { # nolint cyclocomp_linter
+  registry <- bionty$get_registry(registry_name)
+  fields <- registry$get_fields()
+
+  if (registry$is_link_table) {
+    next
+  }
+
+  cat(paste0("## ", registry$class_name, "\n\n"))
+
+  classes <- class(registry) |> discard(~ .x == "R6")
+  class_urls <- paste0("`?", classes, "`")
+
+  cat(paste0("Bases: ", paste(class_urls, collapse = ", "), "\n\n"))
+
+  cat(paste0("### Simple fields\n\n"))
+
+  simple_fields <- fields |> keep(
+    ~ is.null(.x$related_field_name) &&
+      !grepl("^_", .x$field_name)
+  )
+
+  for (field in simple_fields) {
+    field_type <-
+      if (field$type %in% names(type_map)) {
+        type_map[[field$type]]
+      } else {
+        field$type
+      }
+    cat(paste0("* `", field$field_name, "` (`", field_type, "`)\n"))
+  }
+
+  cat("\n\n")
+
+  cat(paste0("### Relational fields\n\n"))
+
+  relational_fields <- fields |> keep(
+    ~ !is.null(.x$related_field_name) &&
+      !grepl("^_", .x$field_name) &&
+      !.x$is_link_table
+  )
+
+  for (field in relational_fields) {
+    related_module <- db$get_module(field$related_module_name)
+    related_registry <- related_module$get_registry(field$related_registry_name)
+    cat(paste0("* `", field$field_name, "` ([`", related_registry$class_name, "`](#", related_registry$name, "))\n"))
+  }
+
+  cat("\n\n")
+}
+```
