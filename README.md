@@ -41,7 +41,7 @@ pip install lamindb[aws]
 
 ## Getting started
 
-The best way to get started with **{laminr}** is to explore the package vignettes:
+The best way to get started with **{laminr}** is to explore the package vignettes (available at [laminr.lamin.ai](https://laminr.lamin.ai)):
 
 * **Getting Started**: Learn the basics and explore practical examples (`vignette("laminr", package = "laminr")`).
 * **Package Architecture**: Get a better understanding of how **{laminr}** works (`vignette("architecture", package = "laminr")`).
