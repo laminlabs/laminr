@@ -169,11 +169,23 @@
     Module --&gt; Registry
     Registry --&gt; Field
     Registry --&gt; Record
+    Field --&gt; RelatedRecords
+    Record --&gt; RelatedRecords
+    UserSettings --&gt; InstanceSettings
+    InstanceSettings --&gt; Instance
+    InstanceAPI --&gt; Module
+    Instance --&gt; Registry
+    InstanceAPI --&gt; Registry
+    Instance --&gt; Record
+    InstanceAPI --&gt; Record
+    Instance --&gt; RelatedRecords
+    InstanceAPI --&gt; RelatedRecords
+
+    %% Use #emsp; to create indents in the rendered diagram when necessary
 
     class laminr{
-        +connect(String slug): Instance
+        +connect(String slug): RichInstance
     }
-
     class UserSettings{
         +initialize(...): UserSettings
         +email: String
@@ -183,7 +195,6 @@
         +handle: String
         +name: String
     }
-
     class InstanceSettings{
         +initialize(...): InstanceSettings
         +owner: String
@@ -193,7 +204,10 @@
         +api_url: String
     }
     class Instance{
-        +initialize(InstanceSettings Instance_settings, API api, Map&lt;String, any&gt; schema): Instance
+        +initialize(
+          #emsp;InstanceSettings Instance_settings, API api,
+          #emsp;Map&lt;String, any&gt; schema
+        ): Instance
         +get_modules(): Module[]
         +get_module(String module_name): Module
         +get_module_names(): String[]
@@ -204,14 +218,20 @@
         +get_record(...): Map&lt;String, Any&gt;
     }
     class Module{
-        +initialize(Instance Instance, API api, String module_name, Map&lt;String, any&gt; module_schema): Module
+        +initialize(
+          #emsp;Instance Instance, API api, String module_name,
+          #emsp;Map&lt;String, any&gt; module_schema
+        ): Module
         +name: String
         +get_registries(): Registry[]
         +get_registry(String registry_name): Registry
         +get_registry_names(): String[]
     }
     class Registry{
-        +initialize(Instance Instance, Module module, API api, String registry_name, Map&lt;String, Any&gt; registry_schema): Registry
+        +initialize(
+          #emsp;Instance Instance, Module module, API api,
+          #emsp;String registry_name, Map&lt;String, Any&gt; registry_schema
+        ): Registry
         +name: String
         +class_name: String
         +is_link_table: Bool
@@ -220,9 +240,14 @@
         +get_field_names(): String[]
         +get(String id_or_uid, Bool include_foreign_keys, List~String~ select, Bool verbose): RichRecord
         +get_registry_class(): RichRecordClass
+        +df(Integer limit, Bool verbose): DataFrame
     }
     class Field{
-        +initialize(...): Field
+        +initialize(
+          #emsp;String type, String through, String field_name, String registry_name,
+          #emsp;String column_name, String module_name, Bool is_link_table, String relation_type,
+          #emsp;String related_field_name, String related_registry_name, String related_module_name
+        ): Field
         +type: String
         +through: Map
         +field_name: String
@@ -238,6 +263,14 @@
     class Record{
         +initialize(Instance Instance, Registry registry, API api, Map&lt;String, Any&gt; data): Record
         +get_value(String field_name): Any
+    }
+    class RelatedRecords{
+        +initialize(
+          #emsp;Instance instance, Registry registry, Field field,
+          #emsp;String related_to, API api
+        ): RelatedRecords
+        +df(): DataFrame
+        +field: Field
     }
 %% # nolint end
 </pre>
@@ -275,27 +308,43 @@
 <div>
 <pre class="mermaid mermaid-js">classDiagram
 %% # nolint start
-    laminr --&gt; RichInstance
+    %% --- Copied from base diagram --------------------------------------------
     laminr --&gt; UserSettings
     laminr --&gt; InstanceSettings
-    RichInstance --|&gt; Instance
     Instance --&gt; InstanceAPI
     Instance --&gt; Module
-    Core --|&gt; Module
-    Bionty --|&gt; Module
     Module --&gt; Registry
     Registry --&gt; Field
-    Registry --&gt; RichRecord
-    Artifact --|&gt; Record
-    RichInstance --&gt; Core
-    RichInstance --&gt; Bionty
-    Core --&gt; Artifact
-    RichRecord --|&gt; Record
+    Field --&gt; RelatedRecords
+    Record --&gt; RelatedRecords
+    UserSettings --&gt; InstanceSettings
+    InstanceSettings --&gt; Instance
+    InstanceAPI --&gt; Module
+    Instance --&gt; Registry
+    InstanceAPI --&gt; Registry
+    Instance --&gt; Record
+    InstanceAPI --&gt; Record
+    Instance --&gt; RelatedRecords
+    InstanceAPI --&gt; RelatedRecords
+    %% -------------------------------------------------------------------------
 
+    %% --- New links for Rich classes ------------------------------------------
+    RichInstance --|&gt; Instance
+    laminr --&gt; RichInstance
+    Core --|&gt; Module
+    RichInstance --&gt; Core
+    Bionty --|&gt; Module
+    RichInstance --&gt; Bionty
+    Registry --&gt; RichRecord
+    RichRecord --|&gt; Record
+    Registry --&gt; Artifact
+    Artifact --|&gt; Record
+    %% -------------------------------------------------------------------------
+
+    %% --- Copied from base diagram --------------------------------------------
     class laminr{
         +connect(String slug): RichInstance
     }
-
     class UserSettings{
         +initialize(...): UserSettings
         +email: String
@@ -305,7 +354,6 @@
         +handle: String
         +name: String
     }
-
     class InstanceSettings{
         +initialize(...): InstanceSettings
         +owner: String
@@ -315,7 +363,10 @@
         +api_url: String
     }
     class Instance{
-        +initialize(InstanceSettings Instance_settings, API api, Map&lt;String, any&gt; schema): Instance
+        +initialize(
+          #emsp;InstanceSettings Instance_settings, API api,
+          #emsp;Map&lt;String, any&gt; schema
+        ): Instance
         +get_modules(): Module[]
         +get_module(String module_name): Module
         +get_module_names(): String[]
@@ -325,35 +376,21 @@
         +get_schema(): Map&lt;String, Any&gt;
         +get_record(...): Map&lt;String, Any&gt;
     }
-    class RichInstance{
-        +initialize(InstanceSettings Instance_settings, API api, Map&lt;String, any&gt; schema): RichInstance
-        +Registry Artifact
-        +Registry Collection
-        +...registry accessors...
-        +Registry User
-        +Bionty bionty
-    }
-    class Core{
-        +Registry Artifact
-        +Registry Collection
-        +...registry accessors...
-        +Registry User
-    }
-    class Bionty{
-        +Registry CellLine
-        +Registry CellMarker
-        +...registry accessors...
-        +Registry Tissue
-    }
     class Module{
-        +initialize(Instance Instance, API api, String module_name, Map&lt;String, any&gt; module_schema): Module
+        +initialize(
+          #emsp;Instance Instance, API api, String module_name,
+          #emsp;Map&lt;String, any&gt; module_schema
+        ): Module
         +name: String
         +get_registries(): Registry[]
         +get_registry(String registry_name): Registry
         +get_registry_names(): String[]
     }
     class Registry{
-        +initialize(Instance Instance, Module module, API api, String registry_name, Map&lt;String, Any&gt; registry_schema): Registry
+        +initialize(
+          #emsp;Instance Instance, Module module, API api,
+          #emsp;String registry_name, Map&lt;String, Any&gt; registry_schema
+        ): Registry
         +name: String
         +class_name: String
         +is_link_table: Bool
@@ -362,14 +399,14 @@
         +get_field_names(): String[]
         +get(String id_or_uid, Bool include_foreign_keys, List~String~ select, Bool verbose): RichRecord
         +get_registry_class(): RichRecordClass
-    }
-    class Artifact{
-        +initialize(...): Artifact
-        +cache(): String
-        +load(): Any
+        +df(Integer limit, Bool verbose): DataFrame
     }
     class Field{
-        +initialize(...): Field
+        +initialize(
+          #emsp;String type, String through, String field_name, String registry_name,
+          #emsp;String column_name, String module_name, Bool is_link_table, String relation_type,
+          #emsp;String related_field_name, String related_registry_name, String related_module_name
+        ): Field
         +type: String
         +through: Map
         +field_name: String
@@ -382,13 +419,58 @@
         +related_registry_name: String
         +related_module_name: String
     }
-    class RichRecord{
-        +...field value accessors...
-    }
     class Record{
         +initialize(Instance Instance, Registry registry, API api, Map&lt;String, Any&gt; data): Record
         +get_value(String field_name): Any
     }
+    class RelatedRecords{
+        +initialize(
+          #emsp;Instance instance, Registry registry, Field field,
+          #emsp;String related_to, API api
+        ): RelatedRecords
+        +df(): DataFrame
+    }
+    %% -------------------------------------------------------------------------
+
+    %% --- New Rich classes ----------------------------------------------------
+    class RichInstance{
+        +initialize(
+          #emsp;InstanceSettings Instance_settings, API api,
+          #emsp;Map&lt;String, any&gt; schema
+        ): RichInstance
+        +Registry Artifact
+        +Registry Collection
+        +...registry accessors...
+        +Registry User
+        +Bionty bionty
+    }
+    style RichInstance fill:#ffe1c9
+    class Core{
+        +Registry Artifact
+        +Registry Collection
+        +...registry accessors...
+        +Registry User
+    }
+    style Core fill:#ffe1c9
+    class Bionty{
+        +Registry CellLine
+        +Registry CellMarker
+        +...registry accessors...
+        +Registry Tissue
+    }
+    style Bionty fill:#ffe1c9
+    class RichRecord{
+        +...field value accessors...
+    }
+    style RichRecord fill:#ffe1c9
+    class Artifact{
+        +...field value accessors...
+        +cache(): String
+        +load(): AnnData | DataFrame | ...
+        +describe(): NULL
+    }
+    style Artifact fill:#ffe1c9
+    %% -------------------------------------------------------------------------
 %% # nolint end
 </pre>
 </div>
