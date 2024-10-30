@@ -78,7 +78,7 @@ For more information, please visit the [package website](https://laminr.lamin.ai
 
 * Add a `development` vignette to showcase the current features and future development plans (PR #67).
 
-* Add a `core_classes` vignette to showcase the core LaminDB classes (PR #67).
+* Add a `core_registries` vignette to showcase the core LaminDB classes (PR #67).
 
 * Update the README to give a better overview of the package (PR #67).
 

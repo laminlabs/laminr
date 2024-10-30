@@ -44,7 +44,7 @@ pip install lamindb[aws]
 
 * **Getting started** - Learn the basics of using laminr: `vignette("usage", package = "laminr")`
 
-* **Core classes** - Get an overview of the core LaminDB classes in any Lamin instance: `vignette("core_classes", package = "laminr")`
+* **Core registries** - Get an overview of the core LaminDB registries: `vignette("core_registries", package = "laminr")`
 
 * **Package architecture** - Understand the underlying structure of the package: `vignette("architecture", package = "laminr")`
 

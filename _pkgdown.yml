@@ -9,8 +9,8 @@ navbar:
     - text: Getting started
     - text: Usage
       href: articles/usage.html
-    - text: Core classes
-      href: articles/core_classes.html
+    - text: Core registries
+      href: articles/core_registries.html
     - text: -------
     - text: More information
     - text: Package architecutre

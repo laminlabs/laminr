@@ -1,8 +1,8 @@
 ---
-title: "Core classes"
+title: "Core registries"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Core classes}
+  %\VignetteIndexEntry{Core registries}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 ---
