@@ -10,7 +10,7 @@ Authors@R:c(
     person("Lamin Labs", , , "open-source@lamin.ai", role = c("aut", "cph"))
   )
 Description: Interact with 'LaminDB' from R. 'LaminDB' is an open-source
-    data framework for biology.  This package allows you to query and
+    data framework for biology. This package allows you to query and
     download data from 'LaminDB' instances.
 License: Apache License (>= 2)
 URL: https://laminr.lamin.ai, https://github.com/laminlabs/laminr

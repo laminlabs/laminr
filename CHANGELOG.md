@@ -76,7 +76,17 @@ For more information, please visit the [package website](https://laminr.lamin.ai
 * Set Python requirements to `lamindb[aws]` for now (PR #33). Will be changed to `lamin_cli` once 
   [laminlabs/lamin-cli#90](https://github.com/laminlabs/lamin-cli/issues/90) is solved.
   
-* Improve documentation for installing suggested dependencies and what they are requrire for (PR #56)
+* Improve documentation for installing suggested dependencies and what they are required for (PR #56).
+
+* Update the README to give a better overview of the package (PR #67).
+
+* Rename the `usage` vignette to `laminr` and added an overview of the core concepts of LaminDB (PR #67).
+
+* Update the `architecture` vignette to relate the class structure of the package to the core concepts (PR #67).
+
+* Add a `development` vignette to document the list of current, planned and unplanned functionality (PR #67).
+
+* Add vignettes to document registries in the core, bionty, and wetlab modules (PR #67).
 
 ## BUG FIXES
 

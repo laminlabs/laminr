@@ -1,0 +1,131 @@
+---
+title: "Feature List and Roadmap"
+vignette: >
+  %\VignetteIndexEntry{Feature List and Roadmap}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{quarto::html}
+knitr:
+  opts_chunk: 
+    collapse: true
+    comment: "#>"
+---
+
+This document outlines the features of the **{laminr}** package and the roadmap for future development.
+
+## Features
+
+### Connect to an instance
+
+* [x] Connect to a LaminDB instance (`connect()`).
+* [x] Handle authentication and authorization.
+* [ ] Connect to a LaminDB instance without needing to install the `lamin_cli` Python package.
+
+### Query & search
+
+* [x] **Query exactly one record** (`Registry$get(...)`): Fetch a single record by ID.
+* [ ] **Query sets of records** (`Registry$filter()`): Fetch multiple records based on filters.
+  - [x] `$df()`: Returns a data frame with each record in a row.
+  - [ ] `$all()`: Returns all records as a `QuerySet`.
+  - [ ] `$one()`: Return exactly one record.
+  - [ ] `$one_or_none()`: Return one record or `NULL`.
+* [ ] **Leverage relationships when querying** (`Artifact$filter(created_by__handle__startswith = "testuse")$df()`): Query records based on relationships.
+* [ ] **Comparators**: Use comparators in filters.
+  - [ ] `and`: Example: `Artifact$filter(suffix = ".jpg", created_by = user)`
+  - [ ] `less than` / `greater than`: Example: `Artifact$filter(size__lt = 1e4)`
+  - [ ] `in`: Example: `Artifact$filter(suffix_in = [".jpg", ".fastq.gz"])`
+  - [ ] `order by`: Example: `Artifact$filter().order_by("created_at")`
+  - [ ] `contains`: Example: `Artifact$filter(name__contains = "test")`
+  - [ ] `startswith`: Example: `Artifact$filter(name__startswith = "test")`
+  - [ ] `or`: Example: `...`
+  - [ ] `not`: Example: `...`
+* [ ] **Search for records** (`Registry$search(...)`): Search for records based on a query string.
+* [ ] **Pagination**: Support pagination for large query results.
+* [ ] **Field lookups**: Provide convenient functions for looking up field values (e.g., `Artifact$lookup("description")`).
+
+### Manage data & metadata
+
+* [ ] **Create artifacts**: Create new artifacts from various data sources (e.g., files, data frames, in-memory objects).
+* [ ] **Save artifacts**: Save artifacts to LaminDB with appropriate metadata.
+* [ ] **Load artifacts**: Load artifacts from LaminDB into R:
+  - [ ] `fcs`: Load flow cytometry data.
+  - [ ] `tsv`: Load tabular data.
+  - [x] `h5ad`: Load an HDF5-backed AnnData object.
+  - [ ] `h5mu`: Load an HDF5-backed MuData object.
+  - [ ] `html`: Load HTML content.
+  - [ ] `json`: Load JSON data.
+  - [ ] `image`: Load image data.
+  - [ ] `svg`: Load SVG data.
+* [ ] **Cache artifacts**: Cache artifacts locally for faster access:
+  - [x] `s3`: Interact with S3 storage.
+  - [ ] `gcp`: Interact with Google Cloud Storage.
+* [ ] **Version artifacts**: Create new versions of artifacts.
+* [ ] **Manage artifact metadata**: Add, update, and delete artifact metadata.
+* [ ] **Work with collections**: Create, manage, and query collections of artifacts.
+
+### Track notebooks & scripts
+
+* [ ] **Track code execution**: Automatically track the execution of R scripts and notebooks.
+* [ ] **Capture run context**: Record information about the execution environment (e.g., package versions, parameters).
+* [ ] **Link code to artifacts**: Associate code execution with generated artifacts.
+* [ ] **Visualize data lineage**: Create visualizations of data lineage and dependencies.
+
+### Curate datasets
+
+* [ ] **Validate data**: Validate data against predefined schemas or constraints.
+* [ ] **Standardize data**: Apply standardization rules to ensure data consistency.
+* [ ] **Annotate data**: Add annotations and labels to data.
+* [ ] **Use the Curator class**: Implement the `Curator` class for a streamlined curation workflow.
+
+### Access public ontologies
+
+* [ ] **Access ontology data**: Fetch data from public ontologies (e.g., gene names, protein IDs).
+* [ ] **Search ontologies**: Search for entities within ontologies.
+* [ ] **Use ontology terms in queries**: Use ontology terms to filter and query data.
+* [ ] **Manage ontology versions**: Access different versions of ontologies.
+
+### Manage biological registries
+
+* [ ] **Create and manage records in bionty registries**: Add, update, and delete records for genes, proteins, cell types, etc.
+* [ ] **Utilize hierarchical relationships**: Navigate and query based on parent-child relationships in ontologies.
+* [ ] **Manage synonyms**: Add and use synonyms for biological entities.
+
+### Manage schema modules
+
+* [x] **List available modules**: Retrieve a list of available modules in an instance.
+* [x] **Access module registries**: Access registries within specific modules.
+* [ ] **(Advanced) Create custom modules**: Define and register custom schema modules.
+
+### Transfer data
+
+* [ ] **Upload data**: Upload data files to LaminDB storage.
+* [x] **Download data**: Download data files from LaminDB storage.
+* [ ] **(Advanced) Support zero-copy data transfer**: Implement efficient data transfer mechanisms.
+
+## Roadmap
+
+### Version 0.1.0
+
+A first version of the package that allows users to:
+
+* Connect to a LaminDB instance.
+* List all records in a registry.
+* Fetch one record by ID or UID.
+* Cache S3 artifacts locally.
+* Load AnnData artifacts.
+
+### Version 0.2.0
+
+* Expand query functionality with comparators, relationships, and pagination.
+* Implement basic data and metadata management features (create, save, load artifacts).
+* Expand support for different data formats and storage backends.
+
+### Version 0.3.0
+
+* Implement code tracking and data lineage visualization.
+* Introduce data curation features (validation, standardization, annotation).
+* Enhance support for bionty registries and ontology interactions.
+
+### Future versions
+
+* Implement advanced features like custom module creation and zero-copy data transfer.
+* Continuously improve performance, usability, and documentation.
