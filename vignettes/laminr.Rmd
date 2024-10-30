@@ -20,7 +20,7 @@ This vignette provides a practical introduction to using the **{laminr}** packag
 
 Before diving into the practical usage of **{laminr}**, it's helpful to understand some core concepts in LaminDB. For a more detailed explanation, refer to the Architecture vignette (`vignette("architecture", package = "laminr")`).
 
-* **Instance**: A LaminDB instance is a self-contained environment for   storing and managing data and metadata. Think of it like a database or a   project directory. Each instance has its own schema, storage location, and   metadata database.
+* **Instance**: A LaminDB instance is a self-contained environment for storing and managing data and metadata. Think of it like a database or a project directory. Each instance has its own schema, storage location, and metadata database.
 * **Module**: A module is a collection of related registries that provide specific functionality. For example, the core module contains essential registries for general data management, while the bionty module provides registries for biological entities like genes and proteins.
 * **Registry**: A registry is a centralized collection of related records, similar to a table in a database. Each registry holds a specific type of metadata, such as information about artifacts, transforms, or features.
 * **Record**: A record is a single entry within a registry, analogous to a row in a database table. Each record represents a specific entity and combines multiple fields of information.
