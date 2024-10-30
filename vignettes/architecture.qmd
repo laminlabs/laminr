@@ -191,11 +191,12 @@ classDiagram
     laminr --> RichInstance
     Core --|> Module
     RichInstance --> Core
-    Core --> Artifact
     Bionty --|> Module
     RichInstance --> Bionty
     Registry --> RichRecord
     RichRecord --|> Record
+    Registry --> Artifact
+    Artifact --|> Record
     %% -------------------------------------------------------------------------
     
     %% --- Copied from base diagram --------------------------------------------
@@ -322,8 +323,10 @@ classDiagram
     }
     style RichRecord fill:#ffe1c9
     class Artifact{
+        +...field value accessors...
         +cache(): String
         +load(): AnnData | DataFrame | ...
+        +describe(): NULL
     }
     style Artifact fill:#ffe1c9
     %% -------------------------------------------------------------------------
