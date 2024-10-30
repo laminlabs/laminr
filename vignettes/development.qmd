@@ -49,15 +49,15 @@ This document outlines the features of the **{laminr}** package and the roadmap 
 * [ ] **Load artifacts**: Load artifacts from LaminDB into R:
   - [ ] `fcs`: Load flow cytometry data.
   - [ ] `tsv`: Load tabular data.
-  - [ ] `h5ad`: Load an HDF5-backed AnnData object.
+  - [x] `h5ad`: Load an HDF5-backed AnnData object.
   - [ ] `h5mu`: Load an HDF5-backed MuData object.
   - [ ] `html`: Load HTML content.
   - [ ] `json`: Load JSON data.
   - [ ] `image`: Load image data.
   - [ ] `svg`: Load SVG data.
 * [ ] **Cache artifacts**: Cache artifacts locally for faster access:
-  - [ ] `s3`: Store artifacts in S3-compatible storage.
-  - [ ] `gcp`: Store artifacts in Google Cloud Storage.
+  - [x] `s3`: Interact with S3 storage.
+  - [ ] `gcp`: Interact with Google Cloud Storage.
 * [ ] **Version artifacts**: Create new versions of artifacts.
 * [ ] **Manage artifact metadata**: Add, update, and delete artifact metadata.
 * [ ] **Work with collections**: Create, manage, and query collections of artifacts.
@@ -98,7 +98,7 @@ This document outlines the features of the **{laminr}** package and the roadmap 
 ### Transfer data
 
 * [ ] **Upload data**: Upload data files to LaminDB storage.
-* [ ] **Download data**: Download data files from LaminDB storage.
+* [x] **Download data**: Download data files from LaminDB storage.
 * [ ] **(Advanced) Support zero-copy data transfer**: Implement efficient data transfer mechanisms.
 
 ## Roadmap

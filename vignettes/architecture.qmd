@@ -37,7 +37,7 @@ A **module** in LaminDB is a collection of related registries that provide funct
 
 Modules help organize the system and make it easier to find the specific registries you need.
 
-For more information about modules, see `?Module`. The core module is documented in the `core_registries` vignette: `vignette("core_registries", package = "laminr")`.
+For more information about modules, see `?Module`. The core module is documented in the `module_core` vignette: `vignette("module_core", package = "laminr")`.
 
 ### Registry
 
@@ -51,7 +51,7 @@ A **registry** is a centralized collection of related records. It's like a table
 
 Each registry has a defined structure with specific fields that hold relevant information.
 
-For more information about registries, see `?Registry`. The core registries are documented in the `core_registries` vignette: `vignette("core_registries", package = "laminr")`.
+For more information about registries, see `?Registry`. The core registries are documented in the `module_core` vignette: `vignette("module_core", package = "laminr")`.
 
 ### Field
 
@@ -64,7 +64,7 @@ A **field** is a single piece of information within a registry. It's analogous t
 
 Fields define the type of data that can be stored in a registry and provide a way to organize and query the metadata.
 
-For more information about fields, see `?Field`. The fields of core registries are documented in the `core_registries` vignette: `vignette("core_registries", package = "laminr")`.
+For more information about fields, see `?Field`. The fields of core registries are documented in the `module_core` vignette: `vignette("module_core", package = "laminr")`.
 
 
 ### Record
