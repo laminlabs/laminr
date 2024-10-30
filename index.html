@@ -31,12 +31,19 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
+<li class="nav-item"><a class="nav-link" href="articles/laminr.html">Get started</a></li>
 <li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="articles/architecture.html">Architecture</a></li>
-    <li><a class="dropdown-item" href="articles/usage.html">Usage</a></li>
+<li><h6 class="dropdown-header" data-toc-skip>Introduction</h6></li>
+    <li><a class="dropdown-item" href="articles/architecture.html">Package Architecture</a></li>
+    <li><a class="dropdown-item" href="articles/development.html">Development Roadmap</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>API reference</h6></li>
+    <li><a class="dropdown-item" href="articles/module_core.html">Core module</a></li>
+    <li><a class="dropdown-item" href="articles/module_bionty.html">Bionty module</a></li>
+    <li><a class="dropdown-item" href="articles/module_wetlab.html">Wetlab module</a></li>
   </ul>
 </li>
       </ul>
@@ -53,110 +60,70 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="laminr-work-with-lamindb-instances-in-r">LaminR: Work with LaminDB instances in R<a class="anchor" aria-label="anchor" href="#laminr-work-with-lamindb-instances-in-r"></a>
+<div class="page-header"><h1 id="laminr-an-r-interface-to-lamindb">{laminr}: An R interface to LaminDB<a class="anchor" aria-label="anchor" href="#laminr-an-r-interface-to-lamindb"></a>
 </h1></div>
-<!--
-DO NOT edit the README.md directly.
-&#10;Instead, edit the README.qmd file and render it using `quarto render README.qmd`.
--->
 <!-- badges: start -->
 
-<p>This package allows you to query and download data from LaminDB instances.</p>
+<p><strong>{laminr}</strong> is an R package that provides an interface to <a href="https://lamin.ai" class="external-link">LaminDB</a>, a powerful open-source data framework designed specifically for biological research. With laminr, you can leverage LaminDB’s powerful features to manage, query, and track your data and metadata with unparalleled efficiency and scalability, all within the familiar comfort of R.</p>
 <div class="section level2">
-<h2 id="setup">Setup<a class="anchor" aria-label="anchor" href="#setup"></a>
+<h2 id="why-use-laminr">Why use {laminr}?<a class="anchor" aria-label="anchor" href="#why-use-laminr"></a>
 </h2>
-<p>Install the development version from GitHub:</p>
+<p>LaminDB offers a unique approach to data management in bioinformatics, providing:</p>
+<ul>
+<li>
+<strong>Unified Data and Metadata Handling</strong>: Organize your data and its associated metadata in a structured and accessible manner.</li>
+<li>
+<strong>Powerful Querying and Search</strong>: Effortlessly filter and retrieve specific data and metadata using intuitive query functions.</li>
+<li>
+<strong>Data Lineage Tracking</strong>: Maintain a comprehensive history of your data transformations, ensuring reproducibility and transparency.</li>
+<li>
+<strong>Ontology Integration</strong>: Leverage public ontologies (e.g., for genes, proteins, cell types) for standardized metadata annotation.</li>
+<li>
+<strong>Data Validation and Standardization</strong>: Ensure data quality and consistency with built-in validation and standardization tools.</li>
+</ul>
+<p><strong>{laminr}</strong> brings all these benefits to your R workflow, allowing you to seamlessly integrate LaminDB into your existing analysis pipelines.</p>
+</div>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<p>Get started with <strong>{laminr}</strong> by installing the development version directly from GitHub:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"laminlabs/laminr"</span><span class="op">)</span></span></code></pre></div>
-<p>To install all suggested dependencies required for some functionality, use:</p>
+<p>To include all suggested dependencies for enhanced functionality, use:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"laminlabs/laminr"</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p>You will also need to install <code>lamindb</code>:</p>
+<p>You will also need to install the <code>lamindb</code> Python package:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="ex">pip</span> install lamindb<span class="pp">[</span><span class="ss">aws</span><span class="pp">]</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="connect-to-an-instance">Connect to an instance<a class="anchor" aria-label="anchor" href="#connect-to-an-instance"></a>
+<h2 id="getting-started">Getting started<a class="anchor" aria-label="anchor" href="#getting-started"></a>
 </h2>
-<p>To connect to a LaminDB instance, you will first need to run <code>lamin login</code> OR <code>lamin load &lt;instance&gt;</code> in the terminal. This will create a directory in your home directory called <code>.lamin</code> with the necessary credentials.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="ex">lamin</span> login</span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="ex">lamin</span> connect laminlabs/cellxgene</span></code></pre></div>
-<p>Then, you can connect to the instance using the <code><a href="reference/connect.html">laminr::connect()</a></code> function:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://laminr.lamin.ai">laminr</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">db</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/connect.html">connect</a></span><span class="op">(</span><span class="st">"laminlabs/cellxgene"</span><span class="op">)</span></span>
-<span><span class="va">db</span></span></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>cellxgene</span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  Core registries</span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>    <span class="sc">$</span>Run</span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>    <span class="sc">$</span>User</span>
-<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>    <span class="sc">$</span>Param</span>
-<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>    <span class="sc">$</span>ULabel</span>
-<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>    <span class="sc">$</span>Feature</span>
-<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>    <span class="sc">$</span>Storage</span>
-<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a>    <span class="sc">$</span>Artifact</span>
-<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a>    <span class="sc">$</span>Transform</span>
-<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a>    <span class="sc">$</span>Collection</span>
-<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a>    <span class="sc">$</span>FeatureSet</span>
-<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a>    <span class="sc">$</span>ParamValue</span>
-<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a>    <span class="sc">$</span>FeatureValue</span>
-<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a>  Additional modules</span>
-<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a>    bionty</span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="query-the-instance">Query the instance<a class="anchor" aria-label="anchor" href="#query-the-instance"></a>
-</h2>
-<p>You can use the <code>db</code> object to query the instance:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">artifact</span> <span class="op">&lt;-</span> <span class="va">db</span><span class="op">$</span><span class="va">Artifact</span><span class="op">$</span><span class="fu">get</span><span class="op">(</span><span class="st">"KBW89Mf7IGcekja2hADu"</span><span class="op">)</span></span></code></pre></div>
-<p>You can print the record:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">artifact</span></span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">Artifact</span>(<span class="at">uid=</span><span class="st">'KBW89Mf7IGcekja2hADu'</span>, <span class="at">description=</span><span class="st">'Myeloid compartment'</span>, <span class="at">key=</span><span class="st">'cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad'</span>, <span class="at">created_by_id=</span><span class="dv">1</span>, <span class="at">run_id=</span><span class="dv">27</span>, <span class="at">suffix=</span><span class="st">'.h5ad'</span>, <span class="at">created_at=</span><span class="st">'2024-07-12T12:34:10.345829+00:00'</span>, <span class="at">hash=</span><span class="st">'SZ5tB0T4YKfiUuUkAL09ZA'</span>, <span class="at">_hash_type=</span><span class="st">'md5-n'</span>, <span class="at">storage_id=</span><span class="dv">2</span>, <span class="at">version=</span><span class="st">'2024-07-01'</span>, <span class="at">_accessor=</span><span class="st">'AnnData'</span>, <span class="at">id=</span><span class="dv">3659</span>, <span class="at">is_latest=</span><span class="cn">TRUE</span>, <span class="at">_key_is_virtual=</span><span class="cn">FALSE</span>, <span class="at">transform_id=</span><span class="dv">22</span>, <span class="at">n_observations=</span><span class="dv">51552</span>, <span class="at">size=</span><span class="dv">691757462</span>, <span class="at">visibility=</span><span class="dv">1</span>, <span class="at">updated_at=</span><span class="st">'2024-07-12T12:40:48.837026+00:00'</span>, <span class="at">type=</span><span class="st">'dataset'</span>)</span></code></pre></div>
-<p>Or call the <code>$describe()</code> method to get a summary:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">artifact</span><span class="op">$</span><span class="fu">describe</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">Artifact</span>(<span class="at">uid=</span><span class="st">'KBW89Mf7IGcekja2hADu'</span>, <span class="at">description=</span><span class="st">'Myeloid compartment'</span>, <span class="at">key=</span><span class="st">'cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad'</span>, <span class="at">created_by_id=</span><span class="dv">1</span>, <span class="at">run_id=</span><span class="dv">27</span>, <span class="at">suffix=</span><span class="st">'.h5ad'</span>, <span class="at">created_at=</span><span class="st">'2024-07-12T12:34:10.345829+00:00'</span>, <span class="at">hash=</span><span class="st">'SZ5tB0T4YKfiUuUkAL09ZA'</span>, <span class="at">_hash_type=</span><span class="st">'md5-n'</span>, <span class="at">storage_id=</span><span class="dv">2</span>, <span class="at">version=</span><span class="st">'2024-07-01'</span>, <span class="at">_accessor=</span><span class="st">'AnnData'</span>, <span class="at">id=</span><span class="dv">3659</span>, <span class="at">is_latest=</span><span class="cn">TRUE</span>, <span class="at">_key_is_virtual=</span><span class="cn">FALSE</span>, <span class="at">transform_id=</span><span class="dv">22</span>, <span class="at">n_observations=</span><span class="dv">51552</span>, <span class="at">size=</span><span class="dv">691757462</span>, <span class="at">visibility=</span><span class="dv">1</span>, <span class="at">updated_at=</span><span class="st">'2024-07-12T12:40:48.837026+00:00'</span>, <span class="at">type=</span><span class="st">'dataset'</span>)</span>
-<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>  Provenance</span>
-<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>    <span class="sc">$</span>storage <span class="ot">=</span> <span class="st">'s3://cellxgene-data-public'</span></span>
-<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>    <span class="sc">$</span>transform <span class="ot">=</span> <span class="st">'Census release 2024-07-01 (LTS)'</span></span>
-<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>    <span class="sc">$</span>run <span class="ot">=</span> <span class="st">'2024-07-16T12:49:41.81955+00:00'</span></span>
-<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>    <span class="sc">$</span>created_by <span class="ot">=</span> <span class="st">'sunnyosun'</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="access-fields">Access fields<a class="anchor" aria-label="anchor" href="#access-fields"></a>
-</h2>
-<p>You can access its fields as follows:</p>
+<p>The best way to get started with <strong>{laminr}</strong> is to explore the package vignettes (available at <a href="https://laminr.lamin.ai">laminr.lamin.ai</a>):</p>
 <ul>
 <li>
-<code>artifact$id</code>: 3659</li>
+<strong>Getting Started</strong>: Learn the basics and explore practical examples (<code><a href="articles/laminr.html">vignette("laminr", package = "laminr")</a></code>).</li>
 <li>
-<code>artifact$uid</code>: KBW89Mf7IGcekja2hADu</li>
+<strong>Package Architecture</strong>: Get a better understanding of how <strong>{laminr}</strong> works (<code><a href="articles/architecture.html">vignette("architecture", package = "laminr")</a></code>).</li>
 <li>
-<code>artifact$key</code>: cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad</li>
+<strong>Development Roadmap</strong>: Explore current features and future development plans (<code><a href="articles/development.html">vignette("development", package = "laminr")</a></code>).</li>
 </ul>
-<p>You can also fetch related fields:</p>
+<p>For information on specific modules and functionalities, check out the following vignettes:</p>
 <ul>
 <li>
-<code>artifact$root</code>: s3://cellxgene-data-public</li>
+<strong>Core Module</strong>: Learn about the core registries available in a LaminDB instance (<code><a href="articles/module_core.html">vignette("module_core", package = "laminr")</a></code>).</li>
 <li>
-<code>artifact$created_by</code>: sunnyosun</li>
+<strong>Bionty Module</strong>: Explore the bionty module for biology-related entities (<code><a href="articles/module_bionty.html">vignette("module_bionty", package = "laminr")</a></code>).</li>
 </ul>
 </div>
 <div class="section level2">
-<h2 id="load-the-artifact">Load the artifact<a class="anchor" aria-label="anchor" href="#load-the-artifact"></a>
+<h2 id="learn-more">Learn more<a class="anchor" aria-label="anchor" href="#learn-more"></a>
 </h2>
-<p>You can directly load the artifact to access its data:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">artifact</span><span class="op">$</span><span class="fu">load</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb13"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>ℹ <span class="st">'s3://cellxgene-data-public/cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad'</span> already exists at <span class="st">'/home/luke/.cache/lamindb/cellxgene-data-public/cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad'</span></span>
-<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>AnnData object with n_obs × n_vars <span class="ot">=</span> <span class="dv">51552</span> × <span class="dv">36398</span></span>
-<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>    obs<span class="sc">:</span> <span class="st">'donor_id'</span>, <span class="st">'Predicted_labels_CellTypist'</span>, <span class="st">'Majority_voting_CellTypist'</span>, <span class="st">'Manually_curated_celltype'</span>, <span class="st">'assay_ontology_term_id'</span>, <span class="st">'cell_type_ontology_term_id'</span>, <span class="st">'development_stage_ontology_term_id'</span>, <span class="st">'disease_ontology_term_id'</span>, <span class="st">'self_reported_ethnicity_ontology_term_id'</span>, <span class="st">'is_primary_data'</span>, <span class="st">'organism_ontology_term_id'</span>, <span class="st">'sex_ontology_term_id'</span>, <span class="st">'tissue_ontology_term_id'</span>, <span class="st">'suspension_type'</span>, <span class="st">'tissue_type'</span>, <span class="st">'cell_type'</span>, <span class="st">'assay'</span>, <span class="st">'disease'</span>, <span class="st">'organism'</span>, <span class="st">'sex'</span>, <span class="st">'tissue'</span>, <span class="st">'self_reported_ethnicity'</span>, <span class="st">'development_stage'</span>, <span class="st">'observation_joinid'</span></span>
-<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>    var<span class="sc">:</span> <span class="st">'gene_symbols'</span>, <span class="st">'feature_is_filtered'</span>, <span class="st">'feature_name'</span>, <span class="st">'feature_reference'</span>, <span class="st">'feature_biotype'</span>, <span class="st">'feature_length'</span></span>
-<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a>    uns<span class="sc">:</span> <span class="st">'cell_type_ontology_term_id_colors'</span>, <span class="st">'citation'</span>, <span class="st">'default_embedding'</span>, <span class="st">'schema_reference'</span>, <span class="st">'schema_version'</span>, <span class="st">'sex_ontology_term_id_colors'</span>, <span class="st">'title'</span></span>
-<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a>    obsm<span class="sc">:</span> <span class="st">'X_umap'</span></span></code></pre></div>
+<p>For more information about LaminDB and its features, check out the following resources:</p>
+<ul>
+<li><p><a href="https://lamin.ai/" class="external-link">LaminDB website</a></p></li>
+<li><p><a href="https://docs.lamin.ai/" class="external-link">LaminDB documentation</a></p></li>
+</ul>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
@@ -186,10 +153,14 @@ DO NOT edit the README.md directly.
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>Robrecht Cannoodt <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-3641-729X" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>Luke Zappia <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-7744-8565" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>Data Intuitive <br><small class="roles"> Author </small>  </li>
-<li>Lamin Labs <br><small class="roles"> Author, copyright holder </small>  </li>
+<li>
+<a href="https://cannoodt.dev" class="external-link">Robrecht Cannoodt</a> <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-3641-729X" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>
+<a href="https://lazappi.id.au" class="external-link">Luke Zappia</a> <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-7744-8565" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>
+<a href="https://data-intuitive.com" class="external-link">Data Intuitive</a> <br><small class="roles"> Author </small>  </li>
+<li>
+<a href="https://lamin.ai" class="external-link">Lamin Labs</a> <br><small class="roles"> Author, copyright holder </small>  </li>
 <li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
@@ -206,7 +177,7 @@ DO NOT edit the README.md directly.
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Robrecht Cannoodt, Luke Zappia, Data Intuitive, Lamin Labs.</p>
+  <p>Developed by <a href="https://cannoodt.dev" class="external-link">Robrecht Cannoodt</a>, <a href="https://lazappi.id.au" class="external-link">Luke Zappia</a>, <a href="https://data-intuitive.com" class="external-link">Data Intuitive</a>, <a href="https://lamin.ai" class="external-link">Lamin Labs</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">

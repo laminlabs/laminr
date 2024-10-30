@@ -32,12 +32,19 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
+<li class="nav-item"><a class="nav-link" href="../articles/laminr.html">Get started</a></li>
 <li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/architecture.html">Architecture</a></li>
-    <li><a class="dropdown-item" href="../articles/usage.html">Usage</a></li>
+<li><h6 class="dropdown-header" data-toc-skip>Introduction</h6></li>
+    <li><a class="dropdown-item" href="../articles/architecture.html">Package Architecture</a></li>
+    <li><a class="dropdown-item" href="../articles/development.html">Development Roadmap</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>API reference</h6></li>
+    <li><a class="dropdown-item" href="../articles/module_core.html">Core module</a></li>
+    <li><a class="dropdown-item" href="../articles/module_bionty.html">Bionty module</a></li>
+    <li><a class="dropdown-item" href="../articles/module_wetlab.html">Wetlab module</a></li>
   </ul>
 </li>
       </ul>
@@ -69,12 +76,83 @@
 
 
 
-    <p>This package is designed to interact with LaminDB instances.</p>
-<section class="level2"><h2 id="basic-structure">Basic structure<a class="anchor" aria-label="anchor" href="#basic-structure"></a>
+    <p>This vignette provides a high-level overview of the core architectural components in <strong>LaminDB</strong>. Understanding these concepts will help you navigate the system and effectively manage your data and metadata.</p>
+<section class="level2"><h2 id="core-concepts">Core concepts<a class="anchor" aria-label="anchor" href="#core-concepts"></a>
 </h2>
-<p>When connecting to a LaminDB instance, laminr will interact with the LaminDB instance API to retrieve the schema of the data structures in that instance. This schema is used to instantiate Modules containing Registries, which in turn contain Fields. A registry can be used to retrieve Records.</p>
-<section class="level3"><h3 id="class-diagram">Class diagram<a class="anchor" aria-label="anchor" href="#class-diagram"></a>
+<p><strong>LaminDB</strong> is built around a few key ideas:</p>
+<section class="level3"><h3 id="instance">Instance<a class="anchor" aria-label="anchor" href="#instance"></a>
 </h3>
+<p>A LaminDB <strong>instance</strong> is a self-contained environment for storing and managing data and metadata. You can think of it like a database or a project directory. Each instance has its own:</p>
+<ul>
+<li>
+<strong>Schema:</strong> Defines the structure of the metadata.</li>
+<li>
+<strong>Storage:</strong> Where the actual data files are stored (locally, on S3, etc.).</li>
+<li>
+<strong>Database:</strong> Stores the metadata records in registries.</li>
+</ul>
+<p>For more information about instances, see <code>?connect()</code> and <code><a href="../reference/Instance.html">?Instance</a></code>.</p>
+</section><section class="level3"><h3 id="module">Module<a class="anchor" aria-label="anchor" href="#module"></a>
+</h3>
+<p>A <strong>module</strong> in LaminDB is a collection of related registries that provide functionality in a specific domain. For example:</p>
+<ul>
+<li>
+<strong>core:</strong> Provides essential registries for general data management (Artifacts, Collections, Transforms, etc.). This module is included in every LaminDB instance.</li>
+<li>
+<strong>bionty:</strong> Offers registries for managing biological entities (genes, proteins, cell types) and links them to public ontologies.</li>
+<li>
+<strong>wetlab:</strong> Includes registries for managing experimental metadata (samples, treatments, etc.).</li>
+<li><strong>And many more…</strong></li>
+</ul>
+<p>Modules help organize the system and make it easier to find the specific registries you need.</p>
+<p>For more information about modules, see <code><a href="../reference/Module.html">?Module</a></code>. The core module is documented in the <code>module_core</code> vignette: <code><a href="../articles/module_core.html">vignette("module_core", package = "laminr")</a></code>.</p>
+</section><section class="level3"><h3 id="registry">Registry<a class="anchor" aria-label="anchor" href="#registry"></a>
+</h3>
+<p>A <strong>registry</strong> is a centralized collection of related records. It’s like a table in a database, where each row represents a specific entity. Examples of registries include:</p>
+<ul>
+<li>
+<strong>Artifacts</strong>: Datasets, models, or other data entities.</li>
+<li>
+<strong>Collections</strong>: Groupings of related artifacts.</li>
+<li>
+<strong>Transforms</strong>: Data processing operations.</li>
+<li>
+<strong>Features</strong>: Variables or measurements within datasets.</li>
+<li>
+<strong>Labels</strong>: Annotations or classifications applied to data.</li>
+</ul>
+<p>Each registry has a defined structure with specific fields that hold relevant information.</p>
+<p>For more information about registries, see <code><a href="../reference/Registry.html">?Registry</a></code>. The core registries are documented in the <code>module_core</code> vignette: <code><a href="../articles/module_core.html">vignette("module_core", package = "laminr")</a></code>.</p>
+</section><section class="level3"><h3 id="field">Field<a class="anchor" aria-label="anchor" href="#field"></a>
+</h3>
+<p>A <strong>field</strong> is a single piece of information within a registry. It’s analogous to a column in a database table. For example, the Artifact registry might have fields like:</p>
+<ul>
+<li>
+<code>key</code>: Storage key, the relative path within the storage location.</li>
+<li>
+<code>storage</code>: Storage location, e.g. an S3 or GCP bucket or a local directory.</li>
+<li>
+<code>description</code>: A description of the artifact.</li>
+<li>
+<code>created_by</code>: The user who created the artifact.</li>
+</ul>
+<p>Fields define the type of data that can be stored in a registry and provide a way to organize and query the metadata.</p>
+<p>For more information about fields, see <code><a href="../reference/Field.html">?Field</a></code>. The fields of core registries are documented in the <code>module_core</code> vignette: <code><a href="../articles/module_core.html">vignette("module_core", package = "laminr")</a></code>.</p>
+</section><section class="level3"><h3 id="record">Record<a class="anchor" aria-label="anchor" href="#record"></a>
+</h3>
+<p>A <strong>record</strong> is a single entry within a registry. It’s like a row in a database table. A record combines multiple fields to represent a specific entity. For example, a record in the Artifact registry might represent a single dataset with its key, storage location, description, creator, and other relevant information.</p>
+</section><section class="level3"><h3 id="putting-it-together">Putting it together<a class="anchor" aria-label="anchor" href="#putting-it-together"></a>
+</h3>
+<p>In essence, you have <strong>instances</strong> that contain <strong>modules</strong>. Each module contains <strong>registries</strong>, which in turn hold <strong>records</strong>. Each record is composed of multiple <strong>fields</strong>. This hierarchical structure allows for flexible and organized management of data and metadata within LaminDB.</p>
+</section></section><section class="level2"><h2 id="class-structure">Class structure<a class="anchor" aria-label="anchor" href="#class-structure"></a>
+</h2>
+<p>The <code>laminr</code> package provides a set of classes that mirror the core concepts of LaminDB. These classes allow you to interact with instances, modules, registries, fields, and records in a programmatic way.</p>
+<p>The package provides two sets of classes: the base classes and the sugar syntax classes.</p>
+<section class="level3"><h3 id="base-classes">Base classes<a class="anchor" aria-label="anchor" href="#base-classes"></a>
+</h3>
+<p>These classes provide the core functionality for interacting with LaminDB instances, modules, registries, fields, and records. These are the classes that are documented via <code><a href="../reference/Instance.html">?Instance</a></code>, <code><a href="../reference/Module.html">?Module</a></code>, <code><a href="../reference/Registry.html">?Registry</a></code>, <code><a href="../reference/Field.html">?Field</a></code>, and <code><a href="../reference/Record.html">?Record</a></code>.</p>
+<p>The class diagram below illustrates the relationships between these classes.</p>
+<p>However, they are not intended to be used directly in most cases. Instead, the sugar syntax classes provide a more user-friendly interface for working with LaminDB data.</p>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div>
@@ -168,26 +246,27 @@
 </div>
 </div>
 </div>
-</section></section><section class="level2"><h2 id="sugar-syntax">Sugar syntax<a class="anchor" aria-label="anchor" href="#sugar-syntax"></a>
-</h2>
-<p>The <code>laminr</code> package adds some sugar syntax to the <code>Instance</code>, <code>Module</code>, and <code>Record</code> classes. This allows to directly access an instance’s and module’s registries and a record’s fields.</p>
-<p>For instance, instead of writing:</p>
+</section><section class="level3"><h3 id="sugar-syntax-classes">Sugar syntax classes<a class="anchor" aria-label="anchor" href="#sugar-syntax-classes"></a>
+</h3>
+<p>The sugar syntax classes provide a more user-friendly way to interact with LaminDB data. These classes are designed to make it easier to access and manipulate instances, modules, registries, fields, and records.</p>
+<p>For example, to get an artifact with a specific ID using <strong>only</strong> base classes, you might write:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">db</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/connect.html">connect</a></span><span class="op">(</span><span class="st">"laminlabs/cellxgene"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">artifact</span> <span class="op">&lt;-</span> <span class="va">db</span><span class="op">$</span><span class="fu">get_module</span><span class="op">(</span><span class="st">"core"</span><span class="op">)</span><span class="op">$</span><span class="fu">get_registry</span><span class="op">(</span><span class="st">"artifact"</span><span class="op">)</span><span class="op">$</span><span class="fu">get</span><span class="op">(</span><span class="st">"KBW89Mf7IGcekja2hADu"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">artifact</span><span class="op">$</span><span class="fu">get_value</span><span class="op">(</span><span class="st">"id"</span><span class="op">)</span></span></code></pre></div>
-<p>Using the sugar syntax, you can write:</p>
+<p>With the sugar syntax classes, you can achieve the same result more concisely:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">db</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/connect.html">connect</a></span><span class="op">(</span><span class="st">"laminlabs/cellxgene"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">artifact</span> <span class="op">&lt;-</span> <span class="va">db</span><span class="op">$</span><span class="va">core</span><span class="op">$</span><span class="va">artifact</span><span class="op">$</span><span class="fu">get</span><span class="op">(</span><span class="st">"KBW89Mf7IGcekja2hADu"</span><span class="op">)</span></span>
+<span><span class="va">artifact</span> <span class="op">&lt;-</span> <span class="va">db</span><span class="op">$</span><span class="va">Artifact</span><span class="op">$</span><span class="fu">get</span><span class="op">(</span><span class="st">"KBW89Mf7IGcekja2hADu"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">artifact</span><span class="op">$</span><span class="va">id</span></span></code></pre></div>
-<p>This sugar syntax is achieved by creating RichInstance and RichRecord classes that inherit from Instance and Record, respectively.</p>
-<section class="level3"><h3 id="class-diagram-1">Class diagram<a class="anchor" aria-label="anchor" href="#class-diagram-1"></a>
+<p>This sugar syntax is achieved by creating RichInstance and RichRecord classes that inherit from Instance and Record, respectively. These classes provide additional methods and properties to simplify working with LaminDB data.</p>
+</section><section class="level3"><h3 id="class-diagram">Class diagram<a class="anchor" aria-label="anchor" href="#class-diagram"></a>
 </h3>
+<p>The class diagram below illustrates the relationships between the sugar syntax classes in the <code>laminr</code> package. These classes provide a more user-friendly interface for interacting with LaminDB data.</p>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div>
@@ -424,7 +503,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Robrecht Cannoodt, Luke Zappia, Data Intuitive, Lamin Labs.</p>
+  <p>Developed by <a href="https://cannoodt.dev" class="external-link">Robrecht Cannoodt</a>, <a href="https://lazappi.id.au" class="external-link">Luke Zappia</a>, <a href="https://data-intuitive.com" class="external-link">Data Intuitive</a>, <a href="https://lamin.ai" class="external-link">Lamin Labs</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">

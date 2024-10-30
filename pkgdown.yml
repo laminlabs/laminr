@@ -3,8 +3,12 @@ pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   architecture: architecture.html
-  usage: usage.html
-last_built: 2024-10-29T07:37Z
+  development: development.html
+  laminr: laminr.html
+  module_bionty: module_bionty.html
+  module_core: module_core.html
+  module_wetlab: module_wetlab.html
+last_built: 2024-10-30T09:58Z
 urls:
   reference: https://laminr.lamin.ai/reference
   article: https://laminr.lamin.ai/articles
