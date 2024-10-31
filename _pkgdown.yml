@@ -14,20 +14,20 @@ authors:
     href: https://lamin.ai
 
 navbar:
- components:
-   articles:
-    text: Articles
-    menu:
-    - text: Introduction
-    - text: Package Architecture
-      href: articles/architecture.html
-    - text: Development Roadmap
-      href: articles/development.html
-    - text: -------
-    - text: API reference
-    - text: Core module
-      href: articles/module_core.html
-    - text: Bionty module
-      href: articles/module_bionty.html
-    - text: Wetlab module
-      href: articles/module_wetlab.html
+  components:
+    articles:
+      text: Articles
+      menu:
+        - text: Introduction
+        - text: Package Architecture
+          href: articles/architecture.html
+        - text: Development Roadmap
+          href: articles/development.html
+        - text: -------
+        - text: API reference
+        - text: Core module
+          href: articles/module_core.html
+        - text: Bionty module
+          href: articles/module_bionty.html
+        - text: Wetlab module
+          href: articles/module_wetlab.html
