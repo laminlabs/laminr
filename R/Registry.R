@@ -193,7 +193,6 @@ Registry <- R6::R6Class( # nolint object_name_linter
         }
       )
 
-
       relational_field_modules <- purrr::map_chr(relational_fields, function(.field) {
         fields[[.field]][["related_module_name"]]
       }) |>
@@ -254,20 +253,39 @@ Registry <- R6::R6Class( # nolint object_name_linter
         unlist() |>
         names()
 
-      field_strings <- make_key_value_strings(
+      relational_field_modules <- purrr::map_chr(relational_fields, function(.field) {
+        fields[[.field]][["related_module_name"]]
+      }) |>
+        setNames(relational_fields)
+      related_modules <- c("core", setdiff(sort(unique(relational_field_modules)), "core"))
+
+      relational_strings <- purrr::map_chr(related_modules, function(.module) {
+        if (.module == "core") {
+          module_heading <- "RelationalFields"
+        } else {
+          module_heading <- paste0(tools::toTitleCase(.module), "Fields")
+        }
+        module_fields <- relational_fields[relational_field_modules == .module]
+
         list(
-          "SimpleFields" = paste0(
-            "[",
-            paste(setdiff(names(fields), relational_fields), collapse = ", "),
-            "]"
+          paste0("[", paste(module_fields, collapse = ", "), "]")
+        ) |>
+          setNames(module_heading) |>
+          make_key_value_strings(quote_strings = FALSE)
+      })
+
+      field_strings <- c(
+        make_key_value_strings(
+          list(
+            "SimpleFields" = paste0(
+              "[",
+              paste(setdiff(names(fields), relational_fields), collapse = ", "),
+              "]"
+            )
           ),
-          "RelationalFields" = paste0(
-            "[",
-            paste(relational_fields, collapse = ", "),
-            "]"
-          )
+          quote_strings = FALSE
         ),
-        quote_strings = FALSE
+        relational_strings
       )
 
       make_class_string(private$.class_name, field_strings, style = style)
