@@ -109,7 +109,7 @@ Module <- R6::R6Class( # nolint object_name_linter
       standard_lines <- purrr::map_chr(
         names(registries)[!is_link_table],
         function(.registry) {
-          cli::col_br_blue(paste0("    $", registries[[.registry]]$class_name))
+          paste0("    $", registries[[.registry]]$class_name)
         }
       )
 

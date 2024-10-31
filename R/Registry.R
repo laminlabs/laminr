@@ -190,7 +190,7 @@ Registry <- R6::R6Class( # nolint object_name_linter
         setdiff(names(fields), relational_fields),
         function(.field) {
           paste0(
-            cli::col_br_blue(paste0("    ", .field)), ": ",
+            paste0("    ", .field), ": ",
             cli::col_grey(fields[[.field]]$type)
           )
         }
@@ -199,7 +199,7 @@ Registry <- R6::R6Class( # nolint object_name_linter
       relational_lines <- purrr::map_chr(relational_fields, function(.field) {
         field_object <- fields[[.field]]
         paste0(
-          cli::col_br_blue(paste0("    ", .field)), ": ",
+          paste0("    ", .field), ": ",
           cli::col_grey(paste0(
             field_object$related_registry_name,
             " (", field_object$relation_type, ")"

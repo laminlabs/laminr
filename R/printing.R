@@ -34,9 +34,7 @@ make_key_value_strings <- function(mapping, names = NULL, quote_strings = TRUE) 
       )
     }
 
-    paste0(
-      cli::col_blue(.name), cli::col_br_blue("="), cli::col_yellow(value)
-    )
+    paste0(.name, "=", value)
   }) |>
     purrr::discard(is.na)
 }
