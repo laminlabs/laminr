@@ -27,6 +27,7 @@ For more information, please visit the [package website](https://laminr.lamin.ai
 
 - Refactored the internal class data structures for better modularity and extensibility (PR #8).
 - Added GitHub actions to the project (PR #11):
+
   - Standard R-CMD-check workflow.
   - Linting action.
   - Commands for roxygenizing (`/document`) and restyling the source code (`/style`).

@@ -1,7 +1,9 @@
 # {laminr}: An R interface to LaminDB
 
 <!-- badges: start -->
+
 [![R-CMD-check](https://github.com/laminlabs/laminr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/laminlabs/laminr/actions/workflows/R-CMD-check.yaml)
+
 <!-- badges: end -->
 
 **{laminr}** is an R package that provides an interface to [LaminDB](https://lamin.ai).
