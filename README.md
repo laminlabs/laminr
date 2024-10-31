@@ -1,136 +1,61 @@
-# LaminR: Work with LaminDB instances in R
+# {laminr}: An R interface to LaminDB
 
-
-<!-- 
-DO NOT edit the README.md directly.
-&#10;Instead, edit the README.qmd file and render it using `quarto render README.qmd`. 
--->
 <!-- badges: start -->
-
 [![R-CMD-check](https://github.com/laminlabs/laminr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/laminlabs/laminr/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-This package allows you to query and download data from LaminDB
-instances.
+**{laminr}** is an R package that provides an interface to [LaminDB](https://lamin.ai), a powerful open-source data framework designed specifically for biological research. With laminr, you can leverage LaminDB's powerful features to manage, query, and track your data and metadata with unparalleled efficiency and scalability, all within the familiar comfort of R.
 
-## Setup
+## Why use {laminr}?
 
-Install the development version from GitHub:
+LaminDB offers a unique approach to data management in bioinformatics, providing:
+
+* **Unified Data and Metadata Handling**: Organize your data and its associated metadata in a structured and accessible manner.
+* **Powerful Querying and Search**: Effortlessly filter and retrieve specific data and metadata using intuitive query functions.
+* **Data Lineage Tracking**: Maintain a comprehensive history of your data transformations, ensuring reproducibility and transparency.
+* **Ontology Integration**: Leverage public ontologies (e.g., for genes, proteins, cell types) for standardized metadata annotation.
+* **Data Validation and Standardization**: Ensure data quality and consistency with built-in validation and standardization tools.
+
+**{laminr}** brings all these benefits to your R workflow, allowing you to seamlessly integrate LaminDB into your existing analysis pipelines.
+
+## Installation
+
+Get started with **{laminr}** by installing the development version directly from GitHub:
 
 ``` r
 # install.packages("remotes")
 remotes::install_github("laminlabs/laminr")
 ```
 
-You will also need to install `lamindb`:
+To include all suggested dependencies for enhanced functionality, use:
+
+``` r
+remotes::install_github("laminlabs/laminr", dependencies = TRUE)
+```
+
+You will also need to install the `lamindb` Python package:
 
 ``` bash
 pip install lamindb[aws]
 ```
 
-## Connect to an instance
+## Getting started
 
-To connect to a LaminDB instance, you will first need to run
-`lamin login` OR `lamin load <instance>` in the terminal. This will
-create a directory in your home directory called `.lamin` with the
-necessary credentials.
+The best way to get started with **{laminr}** is to explore the package vignettes (available at [laminr.lamin.ai](https://laminr.lamin.ai)):
 
-``` bash
-lamin login
-lamin connect laminlabs/cellxgene
-```
+* **Getting Started**: Learn the basics and explore practical examples (`vignette("laminr", package = "laminr")`).
+* **Package Architecture**: Get a better understanding of how **{laminr}** works (`vignette("architecture", package = "laminr")`).
+* **Development Roadmap**: Explore current features and future development plans (`vignette("development", package = "laminr")`).
 
-Then, you can connect to the instance using the `laminr::connect()`
-function:
+For information on specific modules and functionalities, check out the following vignettes:
 
-``` r
-library(laminr)
+* **Core Module**: Learn about the core registries available in a LaminDB instance (`vignette("module_core", package = "laminr")`).
+* **Bionty Module**: Explore the bionty module for biology-related entities (`vignette("module_bionty", package = "laminr")`).
+    
+## Learn more
 
-db <- connect("laminlabs/cellxgene")
-db
-```
+For more information about LaminDB and its features, check out the following resources:
 
-    cellxgene
-      Core registries
-        $Run
-        $User
-        $Param
-        $ULabel
-        $Feature
-        $Storage
-        $Artifact
-        $Transform
-        $Collection
-        $FeatureSet
-        $ParamValue
-        $FeatureValue
-      Core link tables
-        runparamvalue
-        artifactulabel
-        collectionulabel
-        featuresetfeature
-        artifactfeatureset
-        artifactparamvalue
-        collectionartifact
-        artifactfeaturevalue
-      Additional modules
-        bionty
+* [LaminDB website](https://lamin.ai/)
 
-## Query the instance
-
-You can use the `db` object to query the instance:
-
-``` r
-artifact <- db$Artifact$get("KBW89Mf7IGcekja2hADu")
-```
-
-You can print the record:
-
-``` r
-artifact
-```
-
-    Artifact(uid='KBW89Mf7IGcekja2hADu', description='Myeloid compartment', key='cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad', storage_id=2, _accessor='AnnData', version='2024-07-01', id=3659, size=691757462, transform_id=22, is_latest=TRUE, type='dataset', n_observations=51552, created_by_id=1, _hash_type='md5-n', created_at='2024-07-12T12:34:10.345829+00:00', suffix='.h5ad', updated_at='2024-07-12T12:40:48.837026+00:00', _key_is_virtual=FALSE, visibility=1, run_id=27, hash='SZ5tB0T4YKfiUuUkAL09ZA')
-
-Or call the `$describe()` method to get a summary:
-
-``` r
-artifact$describe()
-```
-
-    Artifact(uid='KBW89Mf7IGcekja2hADu', description='Myeloid compartment', key='cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad', storage_id=2, _accessor='AnnData', version='2024-07-01', id=3659, size=691757462, transform_id=22, is_latest=TRUE, type='dataset', n_observations=51552, created_by_id=1, _hash_type='md5-n', created_at='2024-07-12T12:34:10.345829+00:00', suffix='.h5ad', updated_at='2024-07-12T12:40:48.837026+00:00', _key_is_virtual=FALSE, visibility=1, run_id=27, hash='SZ5tB0T4YKfiUuUkAL09ZA')
-      Provenance
-        $storage = 's3://cellxgene-data-public'
-        $transform = 'Census release 2024-07-01 (LTS)'
-        $run = '2024-07-16T12:49:41.81955+00:00'
-        $created_by = 'sunnyosun'
-
-## Access fields
-
-You can access its fields as follows:
-
-- `artifact$id`: 3659
-- `artifact$uid`: KBW89Mf7IGcekja2hADu
-- `artifact$key`:
-  cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad
-
-You can also fetch related fields:
-
-- `artifact$root`: s3://cellxgene-data-public
-- `artifact$created_by`: sunnyosun
-
-## Load the artifact
-
-You can directly load the artifact to access its data:
-
-``` r
-artifact$load()
-```
-
-    ℹ 's3://cellxgene-data-public/cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad' already exists at '/home/rcannood/.cache/lamindb/cellxgene-data-public/cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad'
-
-    AnnData object with n_obs × n_vars = 51552 × 36398
-        obs: 'donor_id', 'Predicted_labels_CellTypist', 'Majority_voting_CellTypist', 'Manually_curated_celltype', 'assay_ontology_term_id', 'cell_type_ontology_term_id', 'development_stage_ontology_term_id', 'disease_ontology_term_id', 'self_reported_ethnicity_ontology_term_id', 'is_primary_data', 'organism_ontology_term_id', 'sex_ontology_term_id', 'tissue_ontology_term_id', 'suspension_type', 'tissue_type', 'cell_type', 'assay', 'disease', 'organism', 'sex', 'tissue', 'self_reported_ethnicity', 'development_stage', 'observation_joinid'
-        var: 'gene_symbols', 'feature_is_filtered', 'feature_name', 'feature_reference', 'feature_biotype', 'feature_length'
-        uns: 'cell_type_ontology_term_id_colors', 'citation', 'default_embedding', 'schema_reference', 'schema_version', 'sex_ontology_term_id_colors', 'title'
-        obsm: 'X_umap'
+* [LaminDB documentation](https://docs.lamin.ai/)

@@ -10,13 +10,86 @@ knitr:
     comment: "#>"
 ---
 
-This package is designed to interact with LaminDB instances.
+This vignette provides a high-level overview of the core architectural components in **LaminDB**. Understanding these concepts will help you navigate the system and effectively manage your data and metadata.
 
-## Basic structure
+## Core concepts
 
-When connecting to a LaminDB instance, laminr will interact with the LaminDB instance API to retrieve the schema of the data structures in that instance. This schema is used to instantiate Modules containing Registries, which in turn contain Fields. A registry can be used to retrieve Records.
+**LaminDB** is built around a few key ideas:
 
-### Class diagram
+### Instance
+
+A LaminDB **instance** is a self-contained environment for storing and managing data and metadata. You can think of it like a database or a project directory. Each instance has its own:
+
+* **Schema:** Defines the structure of the metadata.
+* **Storage:** Where the actual data files are stored (locally, on S3, etc.).
+* **Database:** Stores the metadata records in registries.
+
+For more information about instances, see `?connect()` and `?Instance`.
+
+### Module
+
+A **module** in LaminDB is a collection of related registries that provide functionality in a specific domain. For example:
+
+* **core:** Provides essential registries for general data management (Artifacts, Collections, Transforms, etc.). This module is included in every LaminDB instance.
+* **bionty:** Offers registries for managing biological entities (genes, proteins, cell types) and links them to public ontologies.
+* **wetlab:** Includes registries for managing experimental metadata (samples, treatments, etc.).
+* **And many more...**
+
+Modules help organize the system and make it easier to find the specific registries you need.
+
+For more information about modules, see `?Module`. The core module is documented in the `module_core` vignette: `vignette("module_core", package = "laminr")`.
+
+### Registry
+
+A **registry** is a centralized collection of related records. It's like a table in a database, where each row represents a specific entity. Examples of registries include:
+
+  * **Artifacts**: Datasets, models, or other data entities.
+  * **Collections**: Groupings of related artifacts.
+  * **Transforms**: Data processing operations.
+  * **Features**: Variables or measurements within datasets.
+  * **Labels**: Annotations or classifications applied to data.
+
+Each registry has a defined structure with specific fields that hold relevant information.
+
+For more information about registries, see `?Registry`. The core registries are documented in the `module_core` vignette: `vignette("module_core", package = "laminr")`.
+
+### Field
+
+A **field** is a single piece of information within a registry. It's analogous to a column in a database table. For example, the Artifact registry might have fields like:
+
+* `key`: Storage key, the relative path within the storage location.
+* `storage`: Storage location, e.g. an S3 or GCP bucket or a local directory.
+* `description`: A description of the artifact.
+* `created_by`: The user who created the artifact.
+
+Fields define the type of data that can be stored in a registry and provide a way to organize and query the metadata.
+
+For more information about fields, see `?Field`. The fields of core registries are documented in the `module_core` vignette: `vignette("module_core", package = "laminr")`.
+
+
+### Record
+
+A **record** is a single entry within a registry. It's like a row in a database table. A record combines multiple fields to represent a specific entity. For example, a record in the Artifact registry might represent a single dataset with its key, storage location, description, creator, and other relevant information.
+
+### Putting it together
+
+In essence, you have **instances** that contain **modules**. Each module contains **registries**, which in turn hold **records**. Each record is composed of multiple **fields**. This hierarchical structure allows for flexible and organized management of data and metadata within LaminDB.
+
+
+## Class structure
+
+The `laminr` package provides a set of classes that mirror the core concepts of LaminDB. These classes allow you to interact with instances, modules, registries, fields, and records in a programmatic way.
+
+The package provides two sets of classes: the base classes and the sugar syntax classes.
+
+### Base classes
+
+These classes provide the core functionality for interacting with LaminDB instances, modules, registries, fields, and records. These are the classes that are documented via
+`?Instance`, `?Module`, `?Registry`, `?Field`, and `?Record`. 
+
+The class diagram below illustrates the relationships between these classes.
+
+However, they are not intended to be used directly in most cases. Instead, the sugar syntax classes provide a more user-friendly interface for working with LaminDB data.
 
 ```{mermaid}
 classDiagram
@@ -29,11 +102,23 @@ classDiagram
     Module --> Registry
     Registry --> Field
     Registry --> Record
+    Field --> RelatedRecords
+    Record --> RelatedRecords
+    UserSettings --> InstanceSettings
+    InstanceSettings --> Instance
+    InstanceAPI --> Module
+    Instance --> Registry
+    InstanceAPI --> Registry
+    Instance --> Record
+    InstanceAPI --> Record
+    Instance --> RelatedRecords
+    InstanceAPI --> RelatedRecords
+    
+    %% Use #emsp; to create indents in the rendered diagram when necessary
     
     class laminr{
-        +connect(String slug): Instance
+        +connect(String slug): RichInstance
     }
-
     class UserSettings{
         +initialize(...): UserSettings
         +email: String
@@ -43,7 +128,6 @@ classDiagram
         +handle: String
         +name: String
     }
-
     class InstanceSettings{
         +initialize(...): InstanceSettings
         +owner: String
@@ -53,7 +137,10 @@ classDiagram
         +api_url: String
     }
     class Instance{
-        +initialize(InstanceSettings Instance_settings, API api, Map<String, any> schema): Instance
+        +initialize(
+          #emsp;InstanceSettings Instance_settings, API api,
+          #emsp;Map<String, any> schema
+        ): Instance
         +get_modules(): Module[]
         +get_module(String module_name): Module
         +get_module_names(): String[]
@@ -64,14 +151,20 @@ classDiagram
         +get_record(...): Map<String, Any>
     }
     class Module{
-        +initialize(Instance Instance, API api, String module_name, Map<String, any> module_schema): Module
+        +initialize(
+          #emsp;Instance Instance, API api, String module_name,
+          #emsp;Map<String, any> module_schema
+        ): Module
         +name: String
         +get_registries(): Registry[]
         +get_registry(String registry_name): Registry
         +get_registry_names(): String[]
     }
     class Registry{
-        +initialize(Instance Instance, Module module, API api, String registry_name, Map<String, Any> registry_schema): Registry
+        +initialize(
+          #emsp;Instance Instance, Module module, API api,
+          #emsp;String registry_name, Map<String, Any> registry_schema
+        ): Registry
         +name: String
         +class_name: String
         +is_link_table: Bool
@@ -80,9 +173,14 @@ classDiagram
         +get_field_names(): String[]
         +get(String id_or_uid, Bool include_foreign_keys, List~String~ select, Bool verbose): RichRecord
         +get_registry_class(): RichRecordClass
+        +df(Integer limit, Bool verbose): DataFrame
     }
     class Field{
-        +initialize(...): Field
+        +initialize(
+          #emsp;String type, String through, String field_name, String registry_name,
+          #emsp;String column_name, String module_name, Bool is_link_table, String relation_type,
+          #emsp;String related_field_name, String related_registry_name, String related_module_name
+        ): Field
         +type: String
         +through: Map
         +field_name: String
@@ -99,14 +197,23 @@ classDiagram
         +initialize(Instance Instance, Registry registry, API api, Map<String, Any> data): Record
         +get_value(String field_name): Any
     }
+    class RelatedRecords{
+        +initialize(
+          #emsp;Instance instance, Registry registry, Field field,
+          #emsp;String related_to, API api
+        ): RelatedRecords
+        +df(): DataFrame
+        +field: Field
+    }
 %% # nolint end
 ```
 
-## Sugar syntax
 
-The `laminr` package adds some sugar syntax to the `Instance`, `Module`, and `Record` classes. This allows to directly access an instance's and module's registries and a record's fields.
+### Sugar syntax classes
 
-For instance, instead of writing:
+The sugar syntax classes provide a more user-friendly way to interact with LaminDB data. These classes are designed to make it easier to access and manipulate instances, modules, registries, fields, and records.
+
+For example, to get an artifact with a specific ID using **only** base classes, you might write:
 
 ```r
 db <- connect("laminlabs/cellxgene")
@@ -116,44 +223,62 @@ artifact <- db$get_module("core")$get_registry("artifact")$get("KBW89Mf7IGcekja2
 artifact$get_value("id")
 ```
 
-Using the sugar syntax, you can write:
+With the sugar syntax classes, you can achieve the same result more concisely:
 
 ```r
 db <- connect("laminlabs/cellxgene")
 
-artifact <- db$core$artifact$get("KBW89Mf7IGcekja2hADu")
+artifact <- db$Artifact$get("KBW89Mf7IGcekja2hADu")
 
 artifact$id
 ```
 
-This sugar syntax is achieved by creating RichInstance and RichRecord classes that inherit from Instance and Record, respectively.
+This sugar syntax is achieved by creating RichInstance and RichRecord classes that inherit from Instance and Record, respectively. These classes provide additional methods and properties to simplify working with LaminDB data.
 
 ### Class diagram
+
+The class diagram below illustrates the relationships between the sugar syntax classes in the `laminr` package. These classes provide a more user-friendly interface for interacting with LaminDB data.
 
 ```{mermaid}
 classDiagram
 %% # nolint start
-    laminr --> RichInstance
+    %% --- Copied from base diagram --------------------------------------------
     laminr --> UserSettings
     laminr --> InstanceSettings
-    RichInstance --|> Instance
     Instance --> InstanceAPI
     Instance --> Module
-    Core --|> Module
-    Bionty --|> Module
     Module --> Registry
     Registry --> Field
-    Registry --> RichRecord
-    Artifact --|> Record
-    RichInstance --> Core
-    RichInstance --> Bionty
-    Core --> Artifact
-    RichRecord --|> Record
+    Field --> RelatedRecords
+    Record --> RelatedRecords
+    UserSettings --> InstanceSettings
+    InstanceSettings --> Instance
+    InstanceAPI --> Module
+    Instance --> Registry
+    InstanceAPI --> Registry
+    Instance --> Record
+    InstanceAPI --> Record
+    Instance --> RelatedRecords
+    InstanceAPI --> RelatedRecords
+    %% -------------------------------------------------------------------------
     
+    %% --- New links for Rich classes ------------------------------------------
+    RichInstance --|> Instance
+    laminr --> RichInstance
+    Core --|> Module
+    RichInstance --> Core
+    Bionty --|> Module
+    RichInstance --> Bionty
+    Registry --> RichRecord
+    RichRecord --|> Record
+    Registry --> Artifact
+    Artifact --|> Record
+    %% -------------------------------------------------------------------------
+    
+    %% --- Copied from base diagram --------------------------------------------
     class laminr{
         +connect(String slug): RichInstance
     }
-
     class UserSettings{
         +initialize(...): UserSettings
         +email: String
@@ -163,7 +288,6 @@ classDiagram
         +handle: String
         +name: String
     }
-
     class InstanceSettings{
         +initialize(...): InstanceSettings
         +owner: String
@@ -173,7 +297,10 @@ classDiagram
         +api_url: String
     }
     class Instance{
-        +initialize(InstanceSettings Instance_settings, API api, Map<String, any> schema): Instance
+        +initialize(
+          #emsp;InstanceSettings Instance_settings, API api,
+          #emsp;Map<String, any> schema
+        ): Instance
         +get_modules(): Module[]
         +get_module(String module_name): Module
         +get_module_names(): String[]
@@ -183,35 +310,21 @@ classDiagram
         +get_schema(): Map<String, Any>
         +get_record(...): Map<String, Any>
     }
-    class RichInstance{
-        +initialize(InstanceSettings Instance_settings, API api, Map<String, any> schema): RichInstance
-        +Registry Artifact
-        +Registry Collection
-        +...registry accessors...
-        +Registry User
-        +Bionty bionty
-    }
-    class Core{
-        +Registry Artifact
-        +Registry Collection
-        +...registry accessors...
-        +Registry User
-    }
-    class Bionty{
-        +Registry CellLine
-        +Registry CellMarker
-        +...registry accessors...
-        +Registry Tissue
-    }
     class Module{
-        +initialize(Instance Instance, API api, String module_name, Map<String, any> module_schema): Module
+        +initialize(
+          #emsp;Instance Instance, API api, String module_name,
+          #emsp;Map<String, any> module_schema
+        ): Module
         +name: String
         +get_registries(): Registry[]
         +get_registry(String registry_name): Registry
         +get_registry_names(): String[]
     }
     class Registry{
-        +initialize(Instance Instance, Module module, API api, String registry_name, Map<String, Any> registry_schema): Registry
+        +initialize(
+          #emsp;Instance Instance, Module module, API api,
+          #emsp;String registry_name, Map<String, Any> registry_schema
+        ): Registry
         +name: String
         +class_name: String
         +is_link_table: Bool
@@ -220,14 +333,14 @@ classDiagram
         +get_field_names(): String[]
         +get(String id_or_uid, Bool include_foreign_keys, List~String~ select, Bool verbose): RichRecord
         +get_registry_class(): RichRecordClass
-    }
-    class Artifact{
-        +initialize(...): Artifact
-        +cache(): String
-        +load(): Any
+        +df(Integer limit, Bool verbose): DataFrame
     }
     class Field{
-        +initialize(...): Field
+        +initialize(
+          #emsp;String type, String through, String field_name, String registry_name,
+          #emsp;String column_name, String module_name, Bool is_link_table, String relation_type,
+          #emsp;String related_field_name, String related_registry_name, String related_module_name
+        ): Field
         +type: String
         +through: Map
         +field_name: String
@@ -240,12 +353,57 @@ classDiagram
         +related_registry_name: String
         +related_module_name: String
     }
-    class RichRecord{
-        +...field value accessors...
-    }
     class Record{
         +initialize(Instance Instance, Registry registry, API api, Map<String, Any> data): Record
         +get_value(String field_name): Any
     }
+    class RelatedRecords{
+        +initialize(
+          #emsp;Instance instance, Registry registry, Field field,
+          #emsp;String related_to, API api
+        ): RelatedRecords
+        +df(): DataFrame
+    }
+    %% -------------------------------------------------------------------------
+    
+    %% --- New Rich classes ----------------------------------------------------
+    class RichInstance{
+        +initialize(
+          #emsp;InstanceSettings Instance_settings, API api,
+          #emsp;Map<String, any> schema
+        ): RichInstance
+        +Registry Artifact
+        +Registry Collection
+        +...registry accessors...
+        +Registry User
+        +Bionty bionty
+    }
+    style RichInstance fill:#ffe1c9
+    class Core{
+        +Registry Artifact
+        +Registry Collection
+        +...registry accessors...
+        +Registry User
+    }
+    style Core fill:#ffe1c9
+    class Bionty{
+        +Registry CellLine
+        +Registry CellMarker
+        +...registry accessors...
+        +Registry Tissue
+    }
+    style Bionty fill:#ffe1c9
+    class RichRecord{
+        +...field value accessors...
+    }
+    style RichRecord fill:#ffe1c9
+    class Artifact{
+        +...field value accessors...
+        +cache(): String
+        +load(): AnnData | DataFrame | ...
+        +describe(): NULL
+    }
+    style Artifact fill:#ffe1c9
+    %% -------------------------------------------------------------------------
 %% # nolint end
 ```

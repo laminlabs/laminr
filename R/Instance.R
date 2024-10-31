@@ -175,19 +175,10 @@ Instance <- R6::R6Class( # nolint object_name_linter
         }
       )
 
-      link_lines <- purrr::map_chr(
-        names(registries)[is_link_table],
-        function(.registry) {
-          cli::col_br_blue(paste0("    ", .registry))
-        }
-      )
-
       lines <- c(
         cli::style_bold(cli::col_br_green(private$.settings$name)),
         cli::style_italic(cli::col_br_magenta("  Core registries")),
-        standard_lines,
-        cli::style_italic(cli::col_br_magenta("  Core link tables")),
-        link_lines
+        standard_lines
       )
 
       module_names <- self$get_module_names()
@@ -229,11 +220,6 @@ Instance <- R6::R6Class( # nolint object_name_linter
             ),
             collapse = ", "
           ),
-          "]"
-        ),
-        "CoreLinkTables" = paste0(
-          "[",
-          paste(names(registries[is_link_table]), collapse = ", "),
           "]"
         )
       )

@@ -1,26 +1,18 @@
 Package: laminr
 Title: 'LaminDB' Interface in R
 Version: 0.1.0
-Authors@R:
-    c(person("Robrecht", "Cannoodt",
-        role = c("aut", "cre"),
-        email = "robrecht@data-intuitive.com",
-        comment = c(ORCID = "0000-0003-3641-729X", github = "rcannood")
-    ),
-    person(
-        "Luke", "Zappia",
-        role = "aut",
-        email = "luke@data-intuitive.com",
-        comment = c(ORCID = "0000-0001-7744-8565", github = "lazappi")
-    ),
-    person("Data Intuitive", email = "info@data-intuitive.com", role = c("aut")),
-    person("Lamin Labs", email = "open-source@lamin.ai", role = c("aut", "cph")))
-Description: Interact with 'LaminDB' from R. 'LaminDB' is an open-source data framework for biology.
-    This package allows you to query and download data from 'LaminDB' instances.
+Authors@R:c(
+    person("Robrecht", "Cannoodt", , "robrecht@data-intuitive.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0003-3641-729X", github = "rcannood")),
+    person("Luke", "Zappia", , "luke@data-intuitive.com", role = "aut",
+           comment = c(ORCID = "0000-0001-7744-8565", github = "lazappi")),
+    person("Data Intuitive", , , "info@data-intuitive.com", role = "aut"),
+    person("Lamin Labs", , , "open-source@lamin.ai", role = c("aut", "cph"))
+  )
+Description: Interact with 'LaminDB' from R. 'LaminDB' is an open-source
+    data framework for biology. This package allows you to query and
+    download data from 'LaminDB' instances.
 License: Apache License (>= 2)
-Encoding: UTF-8
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
 URL: https://laminr.lamin.ai, https://github.com/laminlabs/laminr
 BugReports: https://github.com/laminlabs/laminr/issues
 Depends:
@@ -30,12 +22,17 @@ Imports:
     httr,
     jsonlite,
     purrr,
-    R6
+    R6,
+    rlang
 Suggests:
     anndata,
     quarto,
     s3 (>= 1.1.0),
     testthat (>= 3.0.0),
     withr
-VignetteBuilder: quarto
+VignetteBuilder: 
+    quarto
 Config/testthat/edition: 3
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2

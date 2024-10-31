@@ -22,6 +22,5 @@ test_that("Connecting to lamindata works", {
   # access a related field which is empty for this record
   expect_null(artifact$type) # one to one
 
-  expect_type(artifact$wells, "list") # one-to-many
-  expect_length(artifact$wells, 0)
+  expect_s3_class(artifact$wells, "RelatedRecords") # one-to-many
 })

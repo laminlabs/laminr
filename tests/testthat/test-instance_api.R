@@ -103,3 +103,18 @@ test_that("get_record fails gracefully", {
   )
   # nolint end: commented_code
 })
+
+test_that("get_records works", {
+  local_setup_lamindata_instance()
+
+  instance_file <- .settings_store__instance_settings_file("laminlabs", "lamindata")
+  instance_settings <- .settings_load__load_instance_settings()
+
+  api <- InstanceAPI$new(instance_settings)
+
+  records <- api$get_records("core", "storage")
+
+  expect_type(records, "list")
+  expect_type(records[[1]], "list")
+  expect_true(all(c("description", "created_at", "id", "uid") %in% names(records[[1]])))
+})

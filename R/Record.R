@@ -148,36 +148,13 @@ Record <- R6::R6Class( # nolint object_name_linter
     .api = NULL,
     .data = NULL,
     get_value = function(key) {
+      # Return the value if it is in the data
       if (key %in% names(private$.data)) {
-        private$.data[[key]]
-      } else if (key %in% private$.registry$get_field_names()) {
-        field <- private$.registry$get_field(key)
+        return(private$.data[[key]])
+      }
 
-        # refetch the record to get the related data
-        related_data <- private$.api$get_record(
-          module_name = field$module_name,
-          registry_name = field$registry_name,
-          id_or_uid = private$.data[["uid"]],
-          select = key
-        )[[key]]
-
-        # return NULL if the related data is NULL
-        if (is.null(related_data)) {
-          return(NULL)
-        }
-
-        # if the related data is not NULL, create a record class for it
-        related_module <- private$.instance$get_module(field$related_module_name)
-        related_registry <- related_module$get_registry(field$related_registry_name)
-        related_registry_class <- related_registry$get_record_class()
-
-        # if the relation type is one-to-many or many-to-many, iterate over the list
-        if (field$relation_type %in% c("one-to-one", "many-to-one")) {
-          related_registry_class$new(related_data)
-        } else {
-          map(related_data, ~ related_registry_class$new(.x))
-        }
-      } else {
+      # If the key is not in the data, check if it is a field in the registry
+      if (!key %in% private$.registry$get_field_names()) {
         cli_abort(
           paste0(
             "Field '", key, "' not found in registry '",
@@ -185,6 +162,43 @@ Record <- R6::R6Class( # nolint object_name_linter
           )
         )
       }
+
+      # Get the field from the registry
+      field <- private$.registry$get_field(key)
+
+      # For *-to-many relationships, return a RelatedRecords object
+      if (field$relation_type %in% c("one-to-many", "many-to-many")) {
+        records_list <- RelatedRecords$new(
+          instance = private$.instance,
+          registry = private$.registry,
+          field = field,
+          related_to = self$uid,
+          api = private$.api
+        )
+
+        return(records_list)
+      }
+
+      # refetch the record to get the related data
+      related_data <- private$.api$get_record(
+        module_name = field$module_name,
+        registry_name = field$registry_name,
+        id_or_uid = private$.data[["uid"]],
+        select = key
+      )[[key]]
+
+      # return NULL if the related data is NULL
+      if (is.null(related_data)) {
+        return(NULL)
+      }
+
+      # if the related data is not NULL, create a record class for it
+      related_module <- private$.instance$get_module(field$related_module_name)
+      related_registry <- related_module$get_registry(field$related_registry_name)
+      related_registry_class <- related_registry$get_record_class()
+
+      # Return the related record class
+      related_registry_class$new(related_data)
     }
   )
 )

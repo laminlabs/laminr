@@ -113,19 +113,10 @@ Module <- R6::R6Class( # nolint object_name_linter
         }
       )
 
-      link_lines <- purrr::map_chr(
-        names(registries)[is_link_table],
-        function(.registry) {
-          cli::col_br_blue(paste0("    ", .registry))
-        }
-      )
-
       lines <- c(
         cli::style_bold(cli::col_br_green(private$.module_name)),
         cli::style_italic(cli::col_br_magenta("  Registries")),
-        standard_lines,
-        cli::style_italic(cli::col_br_magenta("  Link tables")),
-        link_lines
+        standard_lines
       )
 
       if (isFALSE(style)) {
@@ -157,11 +148,6 @@ Module <- R6::R6Class( # nolint object_name_linter
               ),
               collapse = ", "
             ),
-            "]"
-          ),
-          "LinkTables" = paste0(
-            "[",
-            paste(names(registries[is_link_table]), collapse = ", "),
             "]"
           )
         ),

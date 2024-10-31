@@ -70,6 +70,74 @@ Registry <- R6::R6Class( # nolint object_name_linter
       private$.record_class$new(data = data)
     },
     #' @description
+    #' Get a data frame summarising records in the registry
+    #'
+    #' @param limit Maximum number of records to return
+    #' @param verbose Boolean, whether to print progress messages
+    #'
+    #' @return A data.frame containing the available records
+    df = function(limit = 100, verbose = FALSE) {
+      # The API is limited to 200 records at a time so we need multiple requests
+      n_requests <- ceiling(limit / 200)
+      if ((verbose && n_requests > 1) || n_requests >= 10) {
+        caution <- ifelse(n_requests >= 10, "CAUTION: ", "")
+        cli::cli_alert_warning(
+          "{caution}Retrieving {limit} records will require up to {n_requests} API requests"
+        )
+      }
+
+      data_list <- list()
+      attr(data_list, "finished") <- FALSE
+      data_list <- purrr::reduce(
+        cli::cli_progress_along(seq_len(n_requests), name = "Sending requests"),
+        \(.data_list, .n) {
+          # Hacky way of avoiding unneeded requests until there is an easy way
+          # to get the total number of records
+          if (isTRUE(attr(.data_list, "finished"))) {
+            return(.data_list)
+          }
+
+          offset <- (.n - 1) * 200
+          # Reduce limit for final request to get the correct total
+          current_limit <- ifelse(.n == n_requests, limit %% 200, 200)
+          if (verbose) {
+            cli::cli_alert_info(
+              "Requesting records {offset} to {offset + current_limit}..."
+            )
+          }
+          current_data <- private$.api$get_records(
+            module_name = private$.module$name,
+            registry_name = private$.registry_name,
+            limit = current_limit,
+            offset = offset,
+            verbose = verbose
+          )
+
+          .data_list <- c(.data_list, current_data)
+          # If not the final request and less than 200 records returned then
+          # there are no more records and we can skip remaining requests
+          if ((.n != n_requests) && length(.data_list) < 200) {
+            cli::cli_alert_info(paste(
+              "Found all records. Stopping early with {length(.data_list)}",
+              "record{?s} after {(.n)} request{?s}."
+            ))
+            attr(.data_list, "finished") <- TRUE
+          }
+
+          return(.data_list)
+        },
+        .init = data_list
+      )
+
+      data_list |>
+        # Replace NULL with NA so columns aren't lost
+        purrr::modify_depth(2, \(x) ifelse(is.null(x), NA, x)) |>
+        # Convert each entry to a data.frame
+        purrr::map(as.data.frame) |>
+        # Bind entries as rows
+        purrr::list_rbind()
+    },
+    #' @description
     #' Get the fields in the registry.
     #'
     #' @return A list of [Field] objects.
