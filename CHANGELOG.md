@@ -51,6 +51,8 @@ For more information, please visit the [package website](https://laminr.lamin.ai
 
 * Improve checking for suggested packages and provide installation instructions if missing (PR #56)
 
+* Adjust colours in print output (PR #69)
+
 ## TESTING
 
 * Add a simple unit test which queries laminlabs/lamindata (PR #27).
