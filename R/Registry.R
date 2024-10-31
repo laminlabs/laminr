@@ -178,9 +178,9 @@ Registry <- R6::R6Class( # nolint object_name_linter
     print = function(style = TRUE) {
       fields <- self$get_fields()
       # Remove hidden fields
-      fields <- fields[grep("^_", names(fields), value = TRUE, invert = TRUE)]
+      fields <- fields[!grepl("^_", names(fields))]
       # Remove link fields
-      fields <- fields[grep("^links_", names(fields), value = TRUE, invert = TRUE)]
+      fields <- fields[!grepl("^links_", names(fields))]
 
       relational_fields <- purrr::map(fields, "relation_type") |>
         unlist() |>
@@ -189,29 +189,45 @@ Registry <- R6::R6Class( # nolint object_name_linter
       simple_lines <- purrr::map_chr(
         setdiff(names(fields), relational_fields),
         function(.field) {
-          paste0(
-            cli::col_blue(paste0("    ", .field)), ": ",
-            cli::col_grey(fields[[.field]]$type)
-          )
+          paste0("    ", .field, ": ", fields[[.field]]$type)
         }
       )
 
-      relational_lines <- purrr::map_chr(relational_fields, function(.field) {
-        field_object <- fields[[.field]]
-        paste0(
-          cli::col_blue(paste0("    ", .field)), ": ",
-          cli::col_grey(paste0(
-            field_object$related_registry_name,
-            " (", field_object$relation_type, ")"
-          ))
-        )
-      })
+
+      relational_field_modules <- purrr::map_chr(relational_fields, function(.field) {
+        fields[[.field]][["related_module_name"]]
+      }) |>
+        setNames(relational_fields)
+      related_modules <- c("core", setdiff(sort(unique(relational_field_modules)), "core"))
+
+      relational_lines <- purrr::map(related_modules, function(.module) {
+        if (.module == "core") {
+          module_heading <- "Relational fields"
+        } else {
+          module_heading <- paste(tools::toTitleCase(.module), "fields")
+        }
+        module_heading <- cli::style_italic(cli::col_br_magenta(paste0("  ", module_heading)))
+        module_fields <- relational_fields[relational_field_modules == .module]
+
+        related_module <- private$.instance$get_module(.module)
+        module_lines <- purrr::map_chr(module_fields, function(.field) {
+          field_object <- fields[[.field]]
+          module_string <- ifelse(.module == "core", "", paste0(.module, "$"))
+          related_registry <- related_module$get_registry(field_object$related_registry_name)
+          paste0(
+            "    ", .field, ": ", module_string, related_registry$class_name,
+            cli::col_grey(paste0(" (", field_object$relation_type, ")"))
+          )
+        })
+
+        c(module_heading, module_lines)
+      }) |>
+        unlist()
 
       lines <- c(
         cli::style_bold(cli::col_green(private$.class_name)),
         cli::style_italic(cli::col_br_magenta("  Simple fields")),
         simple_lines,
-        cli::style_italic(cli::col_br_magenta("  Relational fields")),
         relational_lines
       )
 
