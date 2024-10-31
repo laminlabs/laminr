@@ -51,11 +51,15 @@ For more information, please visit the [package website](https://laminr.lamin.ai
 
 * Improve checking for suggested packages and provide installation instructions if missing (PR #56)
 
+* Add the status code to API error messages (PR #70)
+
 ## TESTING
 
 * Add a simple unit test which queries laminlabs/lamindata (PR #27).
 
 * Added unit test for the InstanceAPI class (PR #30).
+
+* Add a regular expression to the API test for missing records (PR #70)
 
 ## DOCUMENTATION
 
