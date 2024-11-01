@@ -217,43 +217,44 @@ registry, print the registry object:</p>
 <code class="sourceCode R"><span><span class="va">db</span><span class="op">$</span><span class="va">Artifact</span></span>
 <span><span class="co">#&gt; <span style="color: #55FF55; font-weight: bold;">Artifact</span></span></span>
 <span><span class="co">#&gt; <span style="color: #FF55FF; font-style: italic;">  Simple fields</span></span></span>
-<span><span class="co">#&gt;     id: <span style="color: #555555;">AutoField</span></span></span>
-<span><span class="co">#&gt;     key: <span style="color: #555555;">CharField</span></span></span>
-<span><span class="co">#&gt;     uid: <span style="color: #555555;">CharField</span></span></span>
-<span><span class="co">#&gt;     hash: <span style="color: #555555;">CharField</span></span></span>
-<span><span class="co">#&gt;     size: <span style="color: #555555;">BigIntegerField</span></span></span>
-<span><span class="co">#&gt;     type: <span style="color: #555555;">CharField</span></span></span>
-<span><span class="co">#&gt;     suffix: <span style="color: #555555;">CharField</span></span></span>
-<span><span class="co">#&gt;     version: <span style="color: #555555;">CharField</span></span></span>
-<span><span class="co">#&gt;     is_latest: <span style="color: #555555;">BooleanField</span></span></span>
-<span><span class="co">#&gt;     n_objects: <span style="color: #555555;">BigIntegerField</span></span></span>
-<span><span class="co">#&gt;     created_at: <span style="color: #555555;">DateTimeField</span></span></span>
-<span><span class="co">#&gt;     updated_at: <span style="color: #555555;">DateTimeField</span></span></span>
-<span><span class="co">#&gt;     visibility: <span style="color: #555555;">SmallIntegerField</span></span></span>
-<span><span class="co">#&gt;     description: <span style="color: #555555;">CharField</span></span></span>
-<span><span class="co">#&gt;     n_observations: <span style="color: #555555;">BigIntegerField</span></span></span>
+<span><span class="co">#&gt;     id: AutoField</span></span>
+<span><span class="co">#&gt;     key: CharField</span></span>
+<span><span class="co">#&gt;     uid: CharField</span></span>
+<span><span class="co">#&gt;     hash: CharField</span></span>
+<span><span class="co">#&gt;     size: BigIntegerField</span></span>
+<span><span class="co">#&gt;     type: CharField</span></span>
+<span><span class="co">#&gt;     suffix: CharField</span></span>
+<span><span class="co">#&gt;     version: CharField</span></span>
+<span><span class="co">#&gt;     is_latest: BooleanField</span></span>
+<span><span class="co">#&gt;     n_objects: BigIntegerField</span></span>
+<span><span class="co">#&gt;     created_at: DateTimeField</span></span>
+<span><span class="co">#&gt;     updated_at: DateTimeField</span></span>
+<span><span class="co">#&gt;     visibility: SmallIntegerField</span></span>
+<span><span class="co">#&gt;     description: CharField</span></span>
+<span><span class="co">#&gt;     n_observations: BigIntegerField</span></span>
 <span><span class="co">#&gt; <span style="color: #FF55FF; font-style: italic;">  Relational fields</span></span></span>
-<span><span class="co">#&gt;     run: <span style="color: #555555;">run (many-to-one)</span></span></span>
-<span><span class="co">#&gt;     genes: <span style="color: #555555;">gene (many-to-many)</span></span></span>
-<span><span class="co">#&gt;     storage: <span style="color: #555555;">storage (many-to-one)</span></span></span>
-<span><span class="co">#&gt;     tissues: <span style="color: #555555;">tissue (many-to-many)</span></span></span>
-<span><span class="co">#&gt;     ulabels: <span style="color: #555555;">ulabel (many-to-many)</span></span></span>
-<span><span class="co">#&gt;     diseases: <span style="color: #555555;">disease (many-to-many)</span></span></span>
-<span><span class="co">#&gt;     pathways: <span style="color: #555555;">pathway (many-to-many)</span></span></span>
-<span><span class="co">#&gt;     proteins: <span style="color: #555555;">protein (many-to-many)</span></span></span>
-<span><span class="co">#&gt;     organisms: <span style="color: #555555;">organism (many-to-many)</span></span></span>
-<span><span class="co">#&gt;     transform: <span style="color: #555555;">transform (many-to-one)</span></span></span>
-<span><span class="co">#&gt;     cell_lines: <span style="color: #555555;">cellline (many-to-many)</span></span></span>
-<span><span class="co">#&gt;     cell_types: <span style="color: #555555;">celltype (many-to-many)</span></span></span>
-<span><span class="co">#&gt;     created_by: <span style="color: #555555;">user (many-to-one)</span></span></span>
-<span><span class="co">#&gt;     phenotypes: <span style="color: #555555;">phenotype (many-to-many)</span></span></span>
-<span><span class="co">#&gt;     collections: <span style="color: #555555;">collection (many-to-many)</span></span></span>
-<span><span class="co">#&gt;     ethnicities: <span style="color: #555555;">ethnicity (many-to-many)</span></span></span>
-<span><span class="co">#&gt;     cell_markers: <span style="color: #555555;">cellmarker (many-to-many)</span></span></span>
-<span><span class="co">#&gt;     feature_sets: <span style="color: #555555;">featureset (many-to-many)</span></span></span>
-<span><span class="co">#&gt;     input_of_runs: <span style="color: #555555;">run (many-to-many)</span></span></span>
-<span><span class="co">#&gt;     developmental_stages: <span style="color: #555555;">developmentalstage (many-to-many)</span></span></span>
-<span><span class="co">#&gt;     experimental_factors: <span style="color: #555555;">experimentalfactor (many-to-many)</span></span></span></code></pre></div>
+<span><span class="co">#&gt;     run: Run<span style="color: #555555;"> (many-to-one)</span></span></span>
+<span><span class="co">#&gt;     storage: Storage<span style="color: #555555;"> (many-to-one)</span></span></span>
+<span><span class="co">#&gt;     ulabels: ULabel<span style="color: #555555;"> (many-to-many)</span></span></span>
+<span><span class="co">#&gt;     transform: Transform<span style="color: #555555;"> (many-to-one)</span></span></span>
+<span><span class="co">#&gt;     created_by: User<span style="color: #555555;"> (many-to-one)</span></span></span>
+<span><span class="co">#&gt;     collections: Collection<span style="color: #555555;"> (many-to-many)</span></span></span>
+<span><span class="co">#&gt;     feature_sets: FeatureSet<span style="color: #555555;"> (many-to-many)</span></span></span>
+<span><span class="co">#&gt;     input_of_runs: Run<span style="color: #555555;"> (many-to-many)</span></span></span>
+<span><span class="co">#&gt; <span style="color: #FF55FF; font-style: italic;">  Bionty fields</span></span></span>
+<span><span class="co">#&gt;     genes: bionty$Gene<span style="color: #555555;"> (many-to-many)</span></span></span>
+<span><span class="co">#&gt;     tissues: bionty$Tissue<span style="color: #555555;"> (many-to-many)</span></span></span>
+<span><span class="co">#&gt;     diseases: bionty$Disease<span style="color: #555555;"> (many-to-many)</span></span></span>
+<span><span class="co">#&gt;     pathways: bionty$Pathway<span style="color: #555555;"> (many-to-many)</span></span></span>
+<span><span class="co">#&gt;     proteins: bionty$Protein<span style="color: #555555;"> (many-to-many)</span></span></span>
+<span><span class="co">#&gt;     organisms: bionty$Organism<span style="color: #555555;"> (many-to-many)</span></span></span>
+<span><span class="co">#&gt;     cell_lines: bionty$CellLine<span style="color: #555555;"> (many-to-many)</span></span></span>
+<span><span class="co">#&gt;     cell_types: bionty$CellType<span style="color: #555555;"> (many-to-many)</span></span></span>
+<span><span class="co">#&gt;     phenotypes: bionty$Phenotype<span style="color: #555555;"> (many-to-many)</span></span></span>
+<span><span class="co">#&gt;     ethnicities: bionty$Ethnicity<span style="color: #555555;"> (many-to-many)</span></span></span>
+<span><span class="co">#&gt;     cell_markers: bionty$CellMarker<span style="color: #555555;"> (many-to-many)</span></span></span>
+<span><span class="co">#&gt;     developmental_stages: bionty$DevelopmentalStage<span style="color: #555555;"> (many-to-many)</span></span></span>
+<span><span class="co">#&gt;     experimental_factors: bionty$ExperimentalFactor<span style="color: #555555;"> (many-to-many)</span></span></span></code></pre></div>
 <p>You can also get a data frame summarising the records associated with
 a registry.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
