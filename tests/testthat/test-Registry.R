@@ -17,15 +17,38 @@ test_that("to_string works", {
   db <- connect("laminlabs/lamindata")
 
   str <- db$bionty$Phenotype$to_string()
-  # example:
-  # nolint start line_length_linter
-  # Phenotype(SimpleFields=[id, uid, abbr, name, synonyms, created_at, updated_at, description, ontology_id], RelationalFields=[run, artifacts, created_by], BiontyFields=[source, parents, children])
-  # nolint end line_length_linter
 
   expect_type(str, "character")
 
-  expect_match(str, "Phenotype\\([^\\)]+\\)")
-  expect_match(str, "SimpleFields=\\[id, uid,[^\\]*\\]")
-  expect_match(str, "RelationalFields=\\[[^\\]*\\]")
-  expect_match(str, "BiontyFields=\\[[^\\]*\\]")
+  regex <- paste0(
+    "Phenotype\\(",
+    "SimpleFields=\\[id, uid,[^\\]*\\], ",
+    "RelationalFields=\\[[^\\]*\\], ",
+    "BiontyFields=\\[[^\\]*\\]",
+    "\\)"
+  )
+
+  expect_match(str, regex)
+})
+
+test_that("print works", {
+  local_setup_lamindata_instance()
+
+  db <- connect("laminlabs/lamindata")
+
+  regex <- paste0(
+    "Phenotype\n",
+    "  Simple fields\n",
+    "    id: AutoField\n",
+    "    uid: CharField\n",
+    ".*",
+    "  Relational fields\n",
+    "    run: Run \\(many-to-one\\)\n",
+    ".*",
+    "  Bionty fields\n",
+    "    source: bionty\\$Source \\(many-to-one\\)\n",
+    ".*"
+  )
+
+  expect_output(db$bionty$Phenotype$print(style = FALSE), regex)
 })
