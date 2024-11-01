@@ -3,12 +3,11 @@ Title: 'LaminDB' Interface in R
 Version: 0.1.0
 Authors@R: c(
     person("Robrecht", "Cannoodt", , "robrecht@data-intuitive.com", role = c("aut", "cre"),
-           comment = c(ORCID = "0000-0003-3641-729X", github = "rcannood")),
+           comment = c(github = "rcannood", ORCID = "0000-0003-3641-729X")),
     person("Luke", "Zappia", , "luke@data-intuitive.com", role = "aut",
-           comment = c(ORCID = "0000-0001-7744-8565", github = "lazappi")),
+           comment = c(github = "lazappi", ORCID = "0000-0001-7744-8565")),
     person("Data Intuitive", , , "info@data-intuitive.com", role = "aut"),
-    person("Lamin Labs", , , "open-source@lamin.ai", role = c("aut", "cph"))
-  )
+    person("Lamin Labs", , , "open-source@lamin.ai", role = c("aut", "cph")))
 Description: Interact with 'LaminDB' from R. 'LaminDB' is an open-source
     data framework for biology. This package allows you to query and
     download data from 'LaminDB' instances.

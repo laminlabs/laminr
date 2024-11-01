@@ -13,3 +13,4 @@
 ^vignettes/\.quarto$
 ^doc$
 ^Meta$
+^\.pre-commit-config\.yaml$
