@@ -165,10 +165,10 @@ Instance <- R6::R6Class( # nolint object_name_linter
     print = function(style = TRUE) {
       registries <- self$get_module("core")$get_registries()
 
-      is_link_table <- purrr::map(registries, "is_link_table") |>
+      is_link_table <- map(registries, "is_link_table") |>
         unlist()
 
-      standard_lines <- purrr::map_chr(
+      standard_lines <- map_chr(
         names(registries)[!is_link_table],
         function(.registry) {
           cli::col_blue(paste0("    $", registries[[.registry]]$class_name))
@@ -196,7 +196,7 @@ Instance <- R6::R6Class( # nolint object_name_linter
         lines <- cli::ansi_strip(lines)
       }
 
-      purrr::walk(lines, cli::cat_line)
+      walk(lines, cli::cat_line)
     },
     #' @description
     #' Create a string representation of an `Instance`
@@ -207,7 +207,7 @@ Instance <- R6::R6Class( # nolint object_name_linter
     to_string = function(style = FALSE) {
       registries <- self$get_module("core")$get_registries()
 
-      is_link_table <- purrr::map(registries, "is_link_table") |>
+      is_link_table <- map(registries, "is_link_table") |>
         unlist()
 
       mapping <- list(
@@ -216,7 +216,7 @@ Instance <- R6::R6Class( # nolint object_name_linter
           paste(
             paste0(
               "$",
-              purrr::map_chr(registries[!is_link_table], "class_name")
+              map_chr(registries[!is_link_table], "class_name")
             ),
             collapse = ", "
           ),

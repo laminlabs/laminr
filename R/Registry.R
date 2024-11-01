@@ -76,6 +76,7 @@ Registry <- R6::R6Class( # nolint object_name_linter
     #' @param verbose Boolean, whether to print progress messages
     #'
     #' @return A data.frame containing the available records
+    #' @importFrom purrr reduce modify_depth
     df = function(limit = 100, verbose = FALSE) {
       # The API is limited to 200 records at a time so we need multiple requests
       n_requests <- ceiling(limit / 200)
@@ -88,7 +89,7 @@ Registry <- R6::R6Class( # nolint object_name_linter
 
       data_list <- list()
       attr(data_list, "finished") <- FALSE
-      data_list <- purrr::reduce(
+      data_list <- reduce(
         cli::cli_progress_along(seq_len(n_requests), name = "Sending requests"),
         \(.data_list, .n) {
           # Hacky way of avoiding unneeded requests until there is an easy way
@@ -131,11 +132,11 @@ Registry <- R6::R6Class( # nolint object_name_linter
 
       data_list |>
         # Replace NULL with NA so columns aren't lost
-        purrr::modify_depth(2, \(x) ifelse(is.null(x), NA, x)) |>
+        modify_depth(2, \(x) ifelse(is.null(x), NA, x)) |>
         # Convert each entry to a data.frame
-        purrr::map(as.data.frame) |>
+        map(as.data.frame) |>
         # Bind entries as rows
-        purrr::list_rbind()
+        list_rbind()
     },
     #' @description
     #' Get the fields in the registry.

@@ -64,7 +64,7 @@ ArtifactRecord <- R6::R6Class( # nolint object_name_linter
 
       output_strings <- character()
 
-      provenance_strings <- purrr::map_chr(
+      provenance_strings <- map_chr(
         names(provenance_fields),
         function(.field) {
           field_name <- try(self[[.field]][[provenance_fields[.field]]])
@@ -83,7 +83,7 @@ ArtifactRecord <- R6::R6Class( # nolint object_name_linter
           )
         }
       ) |>
-        purrr::discard(is.na)
+        discard(is.na)
 
       if (length(provenance_strings) > 0) {
         output_strings <- c(
