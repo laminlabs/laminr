@@ -67,6 +67,7 @@ RelatedRecords <- R6::R6Class( # nolint object_name_linter
     .api = NULL,
     .field = NULL,
     .related_to = NULL,
+    #' @importFrom purrr modify_depth list_cbind list_rbind
     get_records = function(as_df = FALSE) {
       field <- private$.field
 
@@ -103,13 +104,13 @@ RelatedRecords <- R6::R6Class( # nolint object_name_linter
 
         values <- related_data |>
           # Replace NULL with NA so columns aren't lost
-          purrr::modify_depth(2, \(x) ifelse(is.null(x), NA, x)) |>
+          modify_depth(2, \(x) ifelse(is.null(x), NA, x)) |>
           # Convert each entry to a data.frame
-          purrr::map(as.data.frame) |>
+          map(as.data.frame) |>
           # Bind entries as rows
-          purrr::list_rbind()
+          list_rbind()
 
-        purrr::map(related_fields, function(.field) {
+        map(related_fields, function(.field) {
           if (.field %in% colnames(values)) {
             return(values[, .field, drop = FALSE])
           } else {
@@ -118,7 +119,7 @@ RelatedRecords <- R6::R6Class( # nolint object_name_linter
             return(column)
           }
         }) |>
-          purrr::list_cbind()
+          list_cbind()
       } else {
         # Get record class for records in the list
         related_module <- private$.instance$get_module(field$related_module_name)

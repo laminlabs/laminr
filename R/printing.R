@@ -16,7 +16,7 @@ make_key_value_strings <- function(mapping, names = NULL, quote_strings = TRUE) 
     names <- names(mapping)
   }
 
-  purrr::map_chr(names, function(.name) {
+  map_chr(names, function(.name) {
     value <- mapping[[.name]]
 
     if (is.null(value)) {
@@ -36,7 +36,7 @@ make_key_value_strings <- function(mapping, names = NULL, quote_strings = TRUE) 
 
     paste0(.name, "=", value)
   }) |>
-    purrr::discard(is.na)
+    discard(is.na)
 }
 
 #' Make a string representation of a class

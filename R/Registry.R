@@ -76,6 +76,7 @@ Registry <- R6::R6Class( # nolint object_name_linter
     #' @param verbose Boolean, whether to print progress messages
     #'
     #' @return A data.frame containing the available records
+    #' @importFrom purrr reduce modify_depth
     df = function(limit = 100, verbose = FALSE) {
       # The API is limited to 200 records at a time so we need multiple requests
       n_requests <- ceiling(limit / 200)
@@ -88,7 +89,7 @@ Registry <- R6::R6Class( # nolint object_name_linter
 
       data_list <- list()
       attr(data_list, "finished") <- FALSE
-      data_list <- purrr::reduce(
+      data_list <- reduce(
         cli::cli_progress_along(seq_len(n_requests), name = "Sending requests"),
         \(.data_list, .n) {
           # Hacky way of avoiding unneeded requests until there is an easy way
@@ -131,11 +132,11 @@ Registry <- R6::R6Class( # nolint object_name_linter
 
       data_list |>
         # Replace NULL with NA so columns aren't lost
-        purrr::modify_depth(2, \(x) ifelse(is.null(x), NA, x)) |>
+        modify_depth(2, \(x) ifelse(is.null(x), NA, x)) |>
         # Convert each entry to a data.frame
-        purrr::map(as.data.frame) |>
+        map(as.data.frame) |>
         # Bind entries as rows
-        purrr::list_rbind()
+        list_rbind()
     },
     #' @description
     #' Get the fields in the registry.
@@ -176,42 +177,68 @@ Registry <- R6::R6Class( # nolint object_name_linter
     #'
     #' @return A character vector
     print = function(style = TRUE) {
-      fields <- self$get_fields()
-      # Remove hidden fields
-      fields <- fields[grep("^_", names(fields), value = TRUE, invert = TRUE)]
-      # Remove link fields
-      fields <- fields[grep("^links_", names(fields), value = TRUE, invert = TRUE)]
+      # Get fields
+      fields <- self$get_fields() |>
+        # Remove hidden fields
+        discard(~ grepl("^_", .x$field_name)) |>
+        # Remove link fields
+        discard(~ grepl("^links_", .x$field_name))
 
-      relational_fields <- purrr::map(fields, "relation_type") |>
-        unlist() |>
-        names()
+      # Split fields into simple and relational
+      simple_fields <- fields |>
+        keep(~ is.null(.x$relation_type))
+      relational_fields <- fields |>
+        discard(~ is.null(.x$relation_type))
 
-      simple_lines <- purrr::map_chr(
-        setdiff(names(fields), relational_fields),
-        function(.field) {
-          paste0(
-            paste0("    ", .field), ": ",
-            cli::col_grey(fields[[.field]]$type)
+      # Create lines for simple fields
+      simple_lines <-
+        if (length(simple_fields) > 0) {
+          c(
+            cli::style_italic(cli::col_br_magenta("  Simple fields")),
+            map_chr(simple_fields, ~ paste0("    ", .x$field_name, ": ", .x$type))
           )
+        } else {
+          character(0)
         }
-      )
 
-      relational_lines <- purrr::map_chr(relational_fields, function(.field) {
-        field_object <- fields[[.field]]
-        paste0(
-          paste0("    ", .field), ": ",
-          cli::col_grey(paste0(
-            field_object$related_registry_name,
-            " (", field_object$relation_type, ")"
-          ))
+      # Check which modules need to be displayed, make sure "core" is always first
+      relational_field_modules <- map_chr(relational_fields, "related_module_name")
+      related_modules <- unique(relational_field_modules)
+      related_modules <- related_modules[order(related_modules != "core", related_modules)]
+
+      # Create lines for relational fields
+      relational_lines <- map(related_modules, function(related_module_name) {
+        # get heading for module
+        module_heading <-
+          if (related_module_name == "core") {
+            "Relational fields"
+          } else {
+            paste(tools::toTitleCase(related_module_name), "fields")
+          }
+
+        # iterate over fields
+        module_fields <- relational_fields[relational_field_modules == related_module_name]
+        related_module <- private$.instance$get_module(related_module_name)
+        module_lines <- map_chr(module_fields, function(field) {
+          module_prefix <- ifelse(related_module_name == "core", "", paste0(related_module_name, "$"))
+          related_registry <- related_module$get_registry(field$related_registry_name)
+          paste0(
+            "    ", field$field_name, ": ", module_prefix, related_registry$class_name,
+            cli::col_grey(paste0(" (", field$relation_type, ")"))
+          )
+        })
+
+        # return lines
+        c(
+          cli::style_italic(cli::col_br_magenta(paste0("  ", module_heading))),
+          module_lines
         )
-      })
+      }) |>
+        list_c()
 
       lines <- c(
         cli::style_bold(cli::col_br_green(private$.class_name)),
-        cli::style_italic(cli::col_br_magenta("  Simple fields")),
         simple_lines,
-        cli::style_italic(cli::col_br_magenta("  Relational fields")),
         relational_lines
       )
 
@@ -219,7 +246,7 @@ Registry <- R6::R6Class( # nolint object_name_linter
         lines <- cli::ansi_strip(lines)
       }
 
-      purrr::walk(lines, cli::cat_line)
+      walk(lines, cli::cat_line)
     },
     #' @description
     #' Create a string representation of a `Registry`
@@ -228,30 +255,59 @@ Registry <- R6::R6Class( # nolint object_name_linter
     #'
     #' @return A `cli::cli_ansi_string` if `style = TRUE` or a character vector
     to_string = function(style = FALSE) {
-      fields <- self$get_fields()
-      # Remove hidden fields
-      fields <- fields[grep("^_", names(fields), value = TRUE, invert = TRUE)]
-      # Remove link fields
-      fields <- fields[grep("^links_", names(fields), value = TRUE, invert = TRUE)]
+      # Get fields
+      fields <- self$get_fields() |>
+        # Remove hidden fields
+        discard(~ grepl("^_", .x$field_name)) |>
+        # Remove link fields
+        discard(~ grepl("^links_", .x$field_name))
 
-      relational_fields <- purrr::map(fields, "relation_type") |>
-        unlist() |>
-        names()
+      # Split fields into simple and relational
+      simple_fields <- fields |>
+        keep(~ is.null(.x$relation_type))
+      relational_fields <- fields |>
+        discard(~ is.null(.x$relation_type))
 
-      field_strings <- make_key_value_strings(
+      # Create strings for simple fields
+      simple_strings <- make_key_value_strings(
         list(
           "SimpleFields" = paste0(
             "[",
-            paste(setdiff(names(fields), relational_fields), collapse = ", "),
-            "]"
-          ),
-          "RelationalFields" = paste0(
-            "[",
-            paste(relational_fields, collapse = ", "),
+            paste(map_chr(simple_fields, "field_name"), collapse = ", "),
             "]"
           )
         ),
         quote_strings = FALSE
+      )
+
+      # Check which modules need to be displayed, make sure "core" is always first
+      relational_field_modules <- map_chr(relational_fields, "related_module_name")
+      related_modules <- unique(relational_field_modules)
+      related_modules <- related_modules[order(related_modules != "core", related_modules)]
+
+      # Create strings for relational fields
+      relational_strings <- map_chr(related_modules, function(related_module_name) {
+        # get heading for module
+        module_heading <-
+          if (related_module_name == "core") {
+            "RelationalFields"
+          } else {
+            paste0(tools::toTitleCase(related_module_name), "Fields")
+          }
+
+        # iterate over fields
+        module_fields <- relational_fields[relational_field_modules == related_module_name]
+
+        list(
+          paste0("[", paste(map_chr(module_fields, "field_name"), collapse = ", "), "]")
+        ) |>
+          setNames(module_heading) |>
+          make_key_value_strings(quote_strings = FALSE)
+      })
+
+      field_strings <- c(
+        simple_strings,
+        relational_strings
       )
 
       make_class_string(private$.class_name, field_strings, style = style)
