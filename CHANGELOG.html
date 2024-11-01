@@ -58,12 +58,12 @@
 </ul><p>For more information, please visit the <a href="https://laminr.lamin.ai">package website</a>.</p>
 <div class="section level2">
 <h2 id="new-functionality">NEW FUNCTIONALITY<a class="anchor" aria-label="anchor" href="#new-functionality"></a></h2>
-<ul><li><p>Query instance settings from Lamin Hub (PR #8).</p></li>
-<li><p>Read user settings from env file created by lamin Python package (PR #2, PR #8).</p></li>
-<li><p>Add <code>to_string()</code> and <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> methods to the <code>Record</code> class and (incomplete) <code>describe()</code> method to the <code>Artifact()</code> class (PR #22).</p></li>
-<li><p>Add <code>to_string()</code> and <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> methods to remaining classes (PR #31)</p></li>
-<li><p>Add <code>InstanceAPI$get_records()</code> and <code>Registry$df()</code> methods (PR #54)</p></li>
-<li><p>Add a <code>RelatedRecords</code> class and <code>RelatedRecords$df()</code> method (PR #59)</p></li>
+<ul><li>Query instance settings from Lamin Hub (PR #8).</li>
+<li>Read user settings from env file created by lamin Python package (PR #2, PR #8).</li>
+<li>Add <code>to_string()</code> and <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> methods to the <code>Record</code> class and (incomplete) <code>describe()</code> method to the <code>Artifact()</code> class (PR #22).</li>
+<li>Add <code>to_string()</code> and <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> methods to remaining classes (PR #31)</li>
+<li>Add <code>InstanceAPI$get_records()</code> and <code>Registry$df()</code> methods (PR #54)</li>
+<li>Add a <code>RelatedRecords</code> class and <code>RelatedRecords$df()</code> method (PR #59)</li>
 </ul></div>
 <div class="section level2">
 <h2 id="major-changes">MAJOR CHANGES<a class="anchor" aria-label="anchor" href="#major-changes"></a></h2>
@@ -93,29 +93,29 @@
 </ul></div>
 <div class="section level2">
 <h2 id="documentation">DOCUMENTATION<a class="anchor" aria-label="anchor" href="#documentation"></a></h2>
-<ul><li><p>Update <code>README</code> with new set up instructions and simplify (PR #14).</p></li>
-<li><p>Add a <code>pkgdown</code> website to the project (PR #13).</p></li>
-<li><p>Further simplify the <code>README</code>, and move the detailed usage description to a separate vignette (PR #13).</p></li>
-<li><p>Generate vignettes using Quarto (PR #13).</p></li>
-<li><p>Add vignette to showcase laminr usage (PR #18).</p></li>
-<li><p>Replace all mentions of <code>lamin load</code> with <code>lamin connect</code> (PR #29).</p></li>
-<li><p>Improve the <code>README</code> (PR #29).</p></li>
-<li><p>Set Python requirements to <code>lamindb[aws]</code> for now (PR #33). Will be changed to <code>lamin_cli</code> once <a href="https://github.com/laminlabs/lamin-cli/issues/90" class="external-link">laminlabs/lamin-cli#90</a> is solved.</p></li>
-<li><p>Improve documentation for installing suggested dependencies and what they are required for (PR #56).</p></li>
-<li><p>Update the README to give a better overview of the package (PR #67).</p></li>
-<li><p>Rename the <code>usage</code> vignette to <code>laminr</code> and added an overview of the core concepts of LaminDB (PR #67).</p></li>
-<li><p>Update the <code>architecture</code> vignette to relate the class structure of the package to the core concepts (PR #67).</p></li>
-<li><p>Add a <code>development</code> vignette to document the list of current, planned and unplanned functionality (PR #67).</p></li>
-<li><p>Add vignettes to document registries in the core, bionty, and wetlab modules (PR #67).</p></li>
+<ul><li>Update <code>README</code> with new set up instructions and simplify (PR #14).</li>
+<li>Add a <code>pkgdown</code> website to the project (PR #13).</li>
+<li>Further simplify the <code>README</code>, and move the detailed usage description to a separate vignette (PR #13).</li>
+<li>Generate vignettes using Quarto (PR #13).</li>
+<li>Add vignette to showcase laminr usage (PR #18).</li>
+<li>Replace all mentions of <code>lamin load</code> with <code>lamin connect</code> (PR #29).</li>
+<li>Improve the <code>README</code> (PR #29).</li>
+<li>Set Python requirements to <code>lamindb[aws]</code> for now (PR #33). Will be changed to <code>lamin_cli</code> once <a href="https://github.com/laminlabs/lamin-cli/issues/90" class="external-link">laminlabs/lamin-cli#90</a> is solved.</li>
+<li>Improve documentation for installing suggested dependencies and what they are required for (PR #56).</li>
+<li>Update the README to give a better overview of the package (PR #67).</li>
+<li>Rename the <code>usage</code> vignette to <code>laminr</code> and added an overview of the core concepts of LaminDB (PR #67).</li>
+<li>Update the <code>architecture</code> vignette to relate the class structure of the package to the core concepts (PR #67).</li>
+<li>Add a <code>development</code> vignette to document the list of current, planned and unplanned functionality (PR #67).</li>
+<li>Add vignettes to document registries in the core, bionty, and wetlab modules (PR #67).</li>
 </ul></div>
 <div class="section level2">
 <h2 id="bug-fixes">BUG FIXES<a class="anchor" aria-label="anchor" href="#bug-fixes"></a></h2>
-<ul><li><p>Fixed the parsing of the env files in <code>~/.lamin</code> due to changes in the lamindb-setup Python package (PR #12).</p></li>
-<li><p>Return <code>NULL</code> when a record’s related field is empty (PR #28).</p></li>
-<li><p>Add alternative error message when no message is returned from the API (PR #30).</p></li>
-<li><p>Handle when error detail returned by the API is a list (PR #59)</p></li>
-<li><p>Manually install OpenBLAS on macOS (PR #62).</p></li>
-<li><p>Switch to Python 3.12 for being able to install scipy on macOS (PR #66).</p></li>
+<ul><li>Fixed the parsing of the env files in <code>~/.lamin</code> due to changes in the lamindb-setup Python package (PR #12).</li>
+<li>Return <code>NULL</code> when a record’s related field is empty (PR #28).</li>
+<li>Add alternative error message when no message is returned from the API (PR #30).</li>
+<li>Handle when error detail returned by the API is a list (PR #59)</li>
+<li>Manually install OpenBLAS on macOS (PR #62).</li>
+<li>Switch to Python 3.12 for being able to install scipy on macOS (PR #66).</li>
 </ul></div>
 </div>
 <div class="section level1">

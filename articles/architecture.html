@@ -97,7 +97,7 @@
 <p>A <strong>module</strong> in LaminDB is a collection of related registries that provide functionality in a specific domain. For example:</p>
 <ul>
 <li>
-<strong>core:</strong> Provides essential registries for general data management (Artifacts, Collections, Transforms, etc.). This module is included in every LaminDB instance.</li>
+<strong>core:</strong> Provides registries for general data management (Artifacts, Collections, Transforms, etc.). This module is included by default in every LaminDB instance.</li>
 <li>
 <strong>bionty:</strong> Offers registries for managing biological entities (genes, proteins, cell types) and links them to public ontologies.</li>
 <li>
@@ -143,7 +143,7 @@
 <p>A <strong>record</strong> is a single entry within a registry. It’s like a row in a database table. A record combines multiple fields to represent a specific entity. For example, a record in the Artifact registry might represent a single dataset with its key, storage location, description, creator, and other relevant information.</p>
 </section><section class="level3"><h3 id="putting-it-together">Putting it together<a class="anchor" aria-label="anchor" href="#putting-it-together"></a>
 </h3>
-<p>In essence, you have <strong>instances</strong> that contain <strong>modules</strong>. Each module contains <strong>registries</strong>, which in turn hold <strong>records</strong>. Each record is composed of multiple <strong>fields</strong>. This hierarchical structure allows for flexible and organized management of data and metadata within LaminDB.</p>
+<p>In essence, you have <strong>instances</strong> that contain <strong>modules</strong>. Each module contains <strong>registries</strong>, which in turn hold <strong>records</strong>. Every record is composed of multiple <strong>fields</strong>. This hierarchical structure allows for flexible and organized management of data and metadata within LaminDB.</p>
 </section></section><section class="level2"><h2 id="class-structure">Class structure<a class="anchor" aria-label="anchor" href="#class-structure"></a>
 </h2>
 <p>The <code>laminr</code> package provides a set of classes that mirror the core concepts of LaminDB. These classes allow you to interact with instances, modules, registries, fields, and records in a programmatic way.</p>

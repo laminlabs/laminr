@@ -64,24 +64,28 @@
 </h1></div>
 <!-- badges: start -->
 
-<p><strong>{laminr}</strong> is an R package that provides an interface to <a href="https://lamin.ai" class="external-link">LaminDB</a>, a powerful open-source data framework designed specifically for biological research. With laminr, you can leverage LaminDB’s powerful features to manage, query, and track your data and metadata with unparalleled efficiency and scalability, all within the familiar comfort of R.</p>
+<!-- badges: end -->
+<p><strong>{laminr}</strong> is an R package that provides an interface to <a href="https://lamin.ai" class="external-link">LaminDB</a>.</p>
+<blockquote>
+<p>[!WARNING]<br>
+This package is currently in <strong>early access</strong> and is under active development. Features, APIs, and functionality are subject to change.</p>
+</blockquote>
 <div class="section level2">
-<h2 id="why-use-laminr">Why use {laminr}?<a class="anchor" aria-label="anchor" href="#why-use-laminr"></a>
+<h2 id="what-is-lamindb">What is LaminDB<a class="anchor" aria-label="anchor" href="#what-is-lamindb"></a>
 </h2>
-<p>LaminDB offers a unique approach to data management in bioinformatics, providing:</p>
+<p>If you are new to LaminDB, it’s helpful to start with <a href="https://lamin.ai/blog/problems" class="external-link">Lamin’s problem statement</a>. LaminDB is an open-source data framework for biology, built as a Python API that structures data and metadata, tracks analysis lineage, and enables reproducible, scalable research. With tools for curating data against public ontologies and flexible dataset querying, LaminDB is designed to address core data challenges in the field. Please refer to <a href="https://docs.lamin.ai/introduction" class="external-link">LaminDB’s introduction</a> for a more detailed introduction. LaminDB is accompanied by LaminHub which is a data collaboration hub built on LaminDB similar to how Github is built on git.</p>
+</div>
+<div class="section level2">
+<h2 id="features-of-laminr">Features of <strong>{laminr}</strong>
+<a class="anchor" aria-label="anchor" href="#features-of-laminr"></a>
+</h2>
 <ul>
-<li>
-<strong>Unified Data and Metadata Handling</strong>: Organize your data and its associated metadata in a structured and accessible manner.</li>
-<li>
-<strong>Powerful Querying and Search</strong>: Effortlessly filter and retrieve specific data and metadata using intuitive query functions.</li>
-<li>
-<strong>Data Lineage Tracking</strong>: Maintain a comprehensive history of your data transformations, ensuring reproducibility and transparency.</li>
-<li>
-<strong>Ontology Integration</strong>: Leverage public ontologies (e.g., for genes, proteins, cell types) for standardized metadata annotation.</li>
-<li>
-<strong>Data Validation and Standardization</strong>: Ensure data quality and consistency with built-in validation and standardization tools.</li>
+<li>Connect to a LaminDB instance and list all records in a registry.</li>
+<li>Fetch records by ID or UID.</li>
+<li>Cache S3 artifacts locally.</li>
+<li>Load AnnData artifacts natively in R.</li>
 </ul>
-<p><strong>{laminr}</strong> brings all these benefits to your R workflow, allowing you to seamlessly integrate LaminDB into your existing analysis pipelines.</p>
+<p>See the development roadmap for more details (<code><a href="articles/development.html">vignette("development", package = "laminr")</a></code>).</p>
 </div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -93,7 +97,12 @@
 <p>To include all suggested dependencies for enhanced functionality, use:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"laminlabs/laminr"</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p>You will also need to install the <code>lamindb</code> Python package:</p>
+<p>This further installs:</p>
+<ul>
+<li>anndata: For native AnnData support in R</li>
+<li>S3: To fetch datasets from AWS S3</li>
+</ul>
+<p>For now, you will also need to install the <code>lamindb</code> Python package:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="ex">pip</span> install lamindb<span class="pp">[</span><span class="ss">aws</span><span class="pp">]</span></span></code></pre></div>
 </div>
 <div class="section level2">
@@ -105,8 +114,6 @@
 <strong>Getting Started</strong>: Learn the basics and explore practical examples (<code><a href="articles/laminr.html">vignette("laminr", package = "laminr")</a></code>).</li>
 <li>
 <strong>Package Architecture</strong>: Get a better understanding of how <strong>{laminr}</strong> works (<code><a href="articles/architecture.html">vignette("architecture", package = "laminr")</a></code>).</li>
-<li>
-<strong>Development Roadmap</strong>: Explore current features and future development plans (<code><a href="articles/development.html">vignette("development", package = "laminr")</a></code>).</li>
 </ul>
 <p>For information on specific modules and functionalities, check out the following vignettes:</p>
 <ul>
@@ -121,8 +128,8 @@
 </h2>
 <p>For more information about LaminDB and its features, check out the following resources:</p>
 <ul>
-<li><p><a href="https://lamin.ai/" class="external-link">LaminDB website</a></p></li>
-<li><p><a href="https://docs.lamin.ai/" class="external-link">LaminDB documentation</a></p></li>
+<li><a href="https://lamin.ai/" class="external-link">LaminDB website</a></li>
+<li><a href="https://docs.lamin.ai/" class="external-link">LaminDB documentation</a></li>
 </ul>
 </div>
 </div>
