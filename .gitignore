@@ -1,1 +1,12 @@
+.Rproj.user
+.Rhistory
+.Rdata
+.httr-oauth
+.quarto
+*.Rproj
+
+experiments
+docs
+/doc/
+/Meta/
 *.html
