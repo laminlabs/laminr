@@ -109,13 +109,13 @@ Module <- R6::R6Class( # nolint object_name_linter
       standard_lines <- purrr::map_chr(
         names(registries)[!is_link_table],
         function(.registry) {
-          cli::col_blue(paste0("    $", registries[[.registry]]$class_name))
+          paste0("    $", registries[[.registry]]$class_name)
         }
       )
 
       lines <- c(
-        cli::style_bold(cli::col_green(private$.module_name)),
-        cli::style_italic(cli::col_magenta("  Registries")),
+        cli::style_bold(cli::col_br_green(private$.module_name)),
+        cli::style_italic(cli::col_br_magenta("  Registries")),
         standard_lines
       )
 
