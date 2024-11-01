@@ -41,19 +41,15 @@ For more information, please visit the [package website](https://laminr.lamin.ai
 - Add progress bars to `Artifact$cache()` (PR #58)
 - Remove link tables from object print output (PR #55)
 - Improve checking for suggested packages and provide installation instructions if missing (PR #56)
-
-* Add the status code to API error messages (PR #70)
-
-* Adjust colours in print output (PR #69)
-
-* Modify `Registry` print output to separate relational fields by module (PR #71)
+- Add the status code to API error messages (PR #70)
+- Adjust colours in print output (PR #69)
+- Modify `Registry` print output to separate relational fields by module (PR #71)
 
 ## TESTING
 
 - Add a simple unit test which queries laminlabs/lamindata (PR #27).
 - Added unit test for the InstanceAPI class (PR #30).
-
-* Add a regular expression to the API test for missing records (PR #70)
+- Add a regular expression to the API test for missing records (PR #70)
 
 ## DOCUMENTATION
 
