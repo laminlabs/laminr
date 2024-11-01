@@ -14,11 +14,13 @@ knitr::opts_chunk$set(
 )
 ```
 
-This vignette provides a practical introduction to using the **{laminr}** package to interact with LaminDB. We'll start with a brief overview of key concepts and then walk through the basic steps to connect to a LaminDB instance and work with its core components.
+This vignette provides a practical introduction to using the **{laminr}** package to interact with LaminDB.
+We'll start with a brief overview of key concepts and then walk through the basic steps to connect to a LaminDB instance and work with its core components.
 
 ## Key Concepts in LaminDB
 
-Before diving into the practical usage of **{laminr}**, it's helpful to understand some core concepts in LaminDB. For a more detailed explanation, refer to the Architecture vignette (`vignette("architecture", package = "laminr")`).
+Before diving into the practical usage of **{laminr}**, it's helpful to understand some core concepts in LaminDB.
+For a more detailed explanation, refer to the Architecture vignette (`vignette("architecture", package = "laminr")`).
 
 * **Instance**: A LaminDB instance is a self-contained environment for storing and managing data and metadata. Think of it like a database or a project directory. Each instance has its own schema, storage location, and metadata database.
 * **Module**: A module is a collection of related registries that provide specific functionality. For example, the core module contains essential registries for general data management, while the bionty module provides registries for biological entities like genes and proteins.
@@ -62,9 +64,8 @@ Now, let's set up your environment to use **{laminr}**.
   remotes::install_github("laminlabs/laminr", dependencies = TRUE)
   ```
 
-  This includes packages like **{anndata}** for working
-  with AnnData objects and **{s3}** for interacting with S3
-  storage.
+  This includes packages like **{anndata}** for working with
+  AnnData objects and **{s3}** for interacting with S3 storage.
 
 ## Connecting to LaminDB from R
 

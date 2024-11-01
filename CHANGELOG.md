@@ -4,108 +4,79 @@ First CRAN release of the LaminDB API client for R. This release focuses on conn
 
 Features:
 
-* Connect to a LaminDB instance
-* Auto-generate modules and classes from the instance schema
-* Fetch a record
-* Fetch a record's related data
-* Fetch record summary table
-* Cache S3 artifact
-* Load AnnData artifact
+- Connect to a LaminDB instance
+- Auto-generate modules and classes from the instance schema
+- Fetch a record
+- Fetch a record's related data
+- Fetch record summary table
+- Cache S3 artifact
+- Load AnnData artifact
 
 For more information, please visit the [package website](https://laminr.lamin.ai).
 
 ## NEW FUNCTIONALITY
 
-* Query instance settings from Lamin Hub (PR #8).
-
-* Read user settings from env file created by lamin Python package (PR #2, PR #8).
-
-* Add `to_string()` and `print()` methods to the `Record` class and (incomplete) `describe()` method to the `Artifact()` class (PR #22).
-
-* Add `to_string()` and `print()` methods to remaining classes (PR #31)
-
-* Add `InstanceAPI$get_records()` and `Registry$df()` methods (PR #54)
-
-* Add a `RelatedRecords` class and `RelatedRecords$df()` method (PR #59)
+- Query instance settings from Lamin Hub (PR #8).
+- Read user settings from env file created by lamin Python package (PR #2, PR #8).
+- Add `to_string()` and `print()` methods to the `Record` class and (incomplete) `describe()` method to the `Artifact()` class (PR #22).
+- Add `to_string()` and `print()` methods to remaining classes (PR #31)
+- Add `InstanceAPI$get_records()` and `Registry$df()` methods (PR #54)
+- Add a `RelatedRecords` class and `RelatedRecords$df()` method (PR #59)
 
 ## MAJOR CHANGES
 
-* Refactored the internal class data structures for better modularity and extensibility (PR #8).
+- Refactored the internal class data structures for better modularity and extensibility (PR #8).
+- Added GitHub actions to the project (PR #11):
 
-* Added GitHub actions to the project (PR #11):
   - Standard R-CMD-check workflow.
   - Linting action.
   - Commands for roxygenizing (`/document`) and restyling the source code (`/style`).
 
-* Allow unauthenticated users to connect to an instance if they ran `lamin connect <instance>` beforehand (PR #19).
+- Allow unauthenticated users to connect to an instance if they ran `lamin connect <instance>` beforehand (PR #19).
 
 ## MINOR CHANGES
 
-* Do not complain when foreign keys are not found in a record, but also do not complain when they are (PR #13).
-
-* Define a current user and current instance with lamin-cli prior to testing and generating documentation in the CI (PR #23).
-
-* Add progress bars to `Artifact$cache()` (PR #58)
-
-* Remove link tables from object print output (PR #55)
-
-* Improve checking for suggested packages and provide installation instructions if missing (PR #56)
+- Do not complain when foreign keys are not found in a record, but also do not complain when they are (PR #13).
+- Define a current user and current instance with lamin-cli prior to testing and generating documentation in the CI (PR #23).
+- Add progress bars to `Artifact$cache()` (PR #58)
+- Remove link tables from object print output (PR #55)
+- Improve checking for suggested packages and provide installation instructions if missing (PR #56)
 
 * Add the status code to API error messages (PR #70)
 
 ## TESTING
 
-* Add a simple unit test which queries laminlabs/lamindata (PR #27).
-
-* Added unit test for the InstanceAPI class (PR #30).
+- Add a simple unit test which queries laminlabs/lamindata (PR #27).
+- Added unit test for the InstanceAPI class (PR #30).
 
 * Add a regular expression to the API test for missing records (PR #70)
 
 ## DOCUMENTATION
 
-* Update `README` with new set up instructions and simplify (PR #14).
-
-* Add a `pkgdown` website to the project (PR #13).
-
-* Further simplify the `README`, and move the detailed usage description to a separate vignette (PR #13).
-
-* Generate vignettes using Quarto (PR #13).
-
-* Add vignette to showcase laminr usage (PR #18).
-
-* Replace all mentions of `lamin load` with `lamin connect` (PR #29).
-
-* Improve the `README` (PR #29).
-
-* Set Python requirements to `lamindb[aws]` for now (PR #33). Will be changed to `lamin_cli` once 
+- Update `README` with new set up instructions and simplify (PR #14).
+- Add a `pkgdown` website to the project (PR #13).
+- Further simplify the `README`, and move the detailed usage description to a separate vignette (PR #13).
+- Generate vignettes using Quarto (PR #13).
+- Add vignette to showcase laminr usage (PR #18).
+- Replace all mentions of `lamin load` with `lamin connect` (PR #29).
+- Improve the `README` (PR #29).
+- Set Python requirements to `lamindb[aws]` for now (PR #33). Will be changed to `lamin_cli` once
   [laminlabs/lamin-cli#90](https://github.com/laminlabs/lamin-cli/issues/90) is solved.
-  
-* Improve documentation for installing suggested dependencies and what they are required for (PR #56).
-
-* Update the README to give a better overview of the package (PR #67).
-
-* Rename the `usage` vignette to `laminr` and added an overview of the core concepts of LaminDB (PR #67).
-
-* Update the `architecture` vignette to relate the class structure of the package to the core concepts (PR #67).
-
-* Add a `development` vignette to document the list of current, planned and unplanned functionality (PR #67).
-
-* Add vignettes to document registries in the core, bionty, and wetlab modules (PR #67).
+- Improve documentation for installing suggested dependencies and what they are required for (PR #56).
+- Update the README to give a better overview of the package (PR #67).
+- Rename the `usage` vignette to `laminr` and added an overview of the core concepts of LaminDB (PR #67).
+- Update the `architecture` vignette to relate the class structure of the package to the core concepts (PR #67).
+- Add a `development` vignette to document the list of current, planned and unplanned functionality (PR #67).
+- Add vignettes to document registries in the core, bionty, and wetlab modules (PR #67).
 
 ## BUG FIXES
 
-* Fixed the parsing of the env files in `~/.lamin` due to changes in the lamindb-setup Python package (PR #12).
-
-* Return `NULL` when a record's related field is empty (PR #28).
-
-* Add alternative error message when no message is returned from the API (PR #30).
-
-* Handle when error detail returned by the API is a list (PR #59)
-
-* Manually install OpenBLAS on macOS (PR #62).
-
-* Switch to Python 3.12 for being able to install scipy on macOS (PR #66).
-
+- Fixed the parsing of the env files in `~/.lamin` due to changes in the lamindb-setup Python package (PR #12).
+- Return `NULL` when a record's related field is empty (PR #28).
+- Add alternative error message when no message is returned from the API (PR #30).
+- Handle when error detail returned by the API is a list (PR #59)
+- Manually install OpenBLAS on macOS (PR #62).
+- Switch to Python 3.12 for being able to install scipy on macOS (PR #66).
 
 # laminr v0.0.1
 
@@ -113,11 +84,11 @@ Initial POC implementation of the LaminDB API client for R.
 
 Functionality:
 
-* Connect to a LaminDB instance
-* Fetch instance schema
-* Auto-generate classes from schema
-* See available modules and classes
-* Get a record
-* Get a record's related data
-* Cache S3 artifact
-* Load AnnData artifact
+- Connect to a LaminDB instance
+- Fetch instance schema
+- Auto-generate classes from schema
+- See available modules and classes
+- Get a record
+- Get a record's related data
+- Cache S3 artifact
+- Load AnnData artifact

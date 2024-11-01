@@ -1,5 +1,3 @@
-# Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
-# Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
 on:
   push:
     branches: [main]
@@ -23,7 +21,12 @@ jobs:
           # note: we use python 3.12 on mac os x so we can install scipy 1.13 from a wheel
           - { os: macos-latest, r: "release", python: "3.12" }
           - { os: windows-latest, r: "release", python: "3.x" }
-          - { os: ubuntu-latest, r: "devel", http-user-agent: "release", python: "3.x" }
+          - {
+              os: ubuntu-latest,
+              r: "devel",
+              http-user-agent: "release",
+              python: "3.x",
+            }
           - { os: ubuntu-latest, r: "release", python: "3.x" }
           - { os: ubuntu-latest, r: "oldrel-1", python: "3.9" }
 
