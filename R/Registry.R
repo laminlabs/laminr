@@ -176,56 +176,67 @@ Registry <- R6::R6Class( # nolint object_name_linter
     #'
     #' @return A character vector
     print = function(style = TRUE) {
-      fields <- self$get_fields()
-      # Remove hidden fields
-      fields <- fields[!grepl("^_", names(fields))]
-      # Remove link fields
-      fields <- fields[!grepl("^links_", names(fields))]
+      # Get fields
+      fields <- self$get_fields() |>
+        # Remove hidden fields
+        discard(~ grepl("^_", .x$field_name)) |>
+        # Remove link fields
+        discard(~ grepl("^links_", .x$field_name))
 
-      relational_fields <- purrr::map(fields, "relation_type") |>
-        unlist() |>
-        names()
+      # Split fields into simple and relational
+      simple_fields <- fields |>
+        keep(~ is.null(.x$relation_type))
+      relational_fields <- fields |>
+        discard(~ is.null(.x$relation_type))
 
-      simple_lines <- purrr::map_chr(
-        setdiff(names(fields), relational_fields),
-        function(.field) {
-          paste0("    ", .field, ": ", fields[[.field]]$type)
-        }
-      )
-
-      relational_field_modules <- purrr::map_chr(relational_fields, function(.field) {
-        fields[[.field]][["related_module_name"]]
-      }) |>
-        setNames(relational_fields)
-      related_modules <- c("core", setdiff(sort(unique(relational_field_modules)), "core"))
-
-      relational_lines <- purrr::map(related_modules, function(.module) {
-        if (.module == "core") {
-          module_heading <- "Relational fields"
+      # Create lines for simple fields
+      simple_lines <-
+        if (length(simple_fields) > 0) {
+          c(
+            cli::style_italic(cli::col_br_magenta("  Simple fields")),
+            map_chr(simple_fields, ~ paste0("    ", .x$field_name, ": ", .x$type))
+          )
         } else {
-          module_heading <- paste(tools::toTitleCase(.module), "fields")
+          character(0)
         }
-        module_heading <- cli::style_italic(cli::col_br_magenta(paste0("  ", module_heading)))
-        module_fields <- relational_fields[relational_field_modules == .module]
 
-        related_module <- private$.instance$get_module(.module)
-        module_lines <- purrr::map_chr(module_fields, function(.field) {
-          field_object <- fields[[.field]]
-          module_string <- ifelse(.module == "core", "", paste0(.module, "$"))
-          related_registry <- related_module$get_registry(field_object$related_registry_name)
+      # Check which modules need to be displayed, make sure "core" is always first
+      relational_field_modules <- map_chr(relational_fields, "related_module_name")
+      related_modules <- unique(relational_field_modules)
+      related_modules <- related_modules[order(related_modules != "core", related_modules)]
+
+      # Create lines for relational fields
+      relational_lines <- map(related_modules, function(related_module_name) {
+        # get heading for module
+        module_heading <-
+          if (related_module_name == "core") {
+            "Relational fields"
+          } else {
+            paste(tools::toTitleCase(related_module_name), "fields")
+          }
+
+        # iterate over fields
+        module_fields <- relational_fields[relational_field_modules == related_module_name]
+        related_module <- private$.instance$get_module(related_module_name)
+        module_lines <- map_chr(module_fields, function(field) {
+          module_prefix <- ifelse(related_module_name == "core", "", paste0(related_module_name, "$"))
+          related_registry <- related_module$get_registry(field$related_registry_name)
           paste0(
-            "    ", .field, ": ", module_string, related_registry$class_name,
-            cli::col_grey(paste0(" (", field_object$relation_type, ")"))
+            "    ", field$field_name, ": ", module_prefix, related_registry$class_name,
+            cli::col_grey(paste0(" (", field$relation_type, ")"))
           )
         })
 
-        c(module_heading, module_lines)
+        # return lines
+        c(
+          cli::style_italic(cli::col_br_magenta(paste0("  ", module_heading))),
+          module_lines
+        )
       }) |>
-        unlist()
+        list_c()
 
       lines <- c(
         cli::style_bold(cli::col_green(private$.class_name)),
-        cli::style_italic(cli::col_br_magenta("  Simple fields")),
         simple_lines,
         relational_lines
       )
@@ -234,7 +245,7 @@ Registry <- R6::R6Class( # nolint object_name_linter
         lines <- cli::ansi_strip(lines)
       }
 
-      purrr::walk(lines, cli::cat_line)
+      walk(lines, cli::cat_line)
     },
     #' @description
     #' Create a string representation of a `Registry`
@@ -243,48 +254,58 @@ Registry <- R6::R6Class( # nolint object_name_linter
     #'
     #' @return A `cli::cli_ansi_string` if `style = TRUE` or a character vector
     to_string = function(style = FALSE) {
-      fields <- self$get_fields()
-      # Remove hidden fields
-      fields <- fields[grep("^_", names(fields), value = TRUE, invert = TRUE)]
-      # Remove link fields
-      fields <- fields[grep("^links_", names(fields), value = TRUE, invert = TRUE)]
+      # Get fields
+      fields <- self$get_fields() |>
+        # Remove hidden fields
+        discard(~ grepl("^_", .x$field_name)) |>
+        # Remove link fields
+        discard(~ grepl("^links_", .x$field_name))
 
-      relational_fields <- purrr::map(fields, "relation_type") |>
-        unlist() |>
-        names()
+      # Split fields into simple and relational
+      simple_fields <- fields |>
+        keep(~ is.null(.x$relation_type))
+      relational_fields <- fields |>
+        discard(~ is.null(.x$relation_type))
 
-      relational_field_modules <- purrr::map_chr(relational_fields, function(.field) {
-        fields[[.field]][["related_module_name"]]
-      }) |>
-        setNames(relational_fields)
-      related_modules <- c("core", setdiff(sort(unique(relational_field_modules)), "core"))
+      # Create strings for simple fields
+      simple_strings <- make_key_value_strings(
+        list(
+          "SimpleFields" = paste0(
+            "[",
+            paste(map_chr(simple_fields, "field_name"), collapse = ", "),
+            "]"
+          )
+        ),
+        quote_strings = FALSE
+      )
 
-      relational_strings <- purrr::map_chr(related_modules, function(.module) {
-        if (.module == "core") {
-          module_heading <- "RelationalFields"
-        } else {
-          module_heading <- paste0(tools::toTitleCase(.module), "Fields")
-        }
-        module_fields <- relational_fields[relational_field_modules == .module]
+      # Check which modules need to be displayed, make sure "core" is always first
+      relational_field_modules <- map_chr(relational_fields, "related_module_name")
+      related_modules <- unique(relational_field_modules)
+      related_modules <- related_modules[order(related_modules != "core", related_modules)]
+
+      # Create strings for relational fields
+      relational_strings <- map_chr(related_modules, function(related_module_name) {
+        # get heading for module
+        module_heading <-
+          if (related_module_name == "core") {
+            "RelationalFields"
+          } else {
+            paste0(tools::toTitleCase(related_module_name), "Fields")
+          }
+
+        # iterate over fields
+        module_fields <- relational_fields[relational_field_modules == related_module_name]
 
         list(
-          paste0("[", paste(module_fields, collapse = ", "), "]")
+          paste0("[", paste(map_chr(module_fields, "field_name"), collapse = ", "), "]")
         ) |>
           setNames(module_heading) |>
           make_key_value_strings(quote_strings = FALSE)
       })
 
       field_strings <- c(
-        make_key_value_strings(
-          list(
-            "SimpleFields" = paste0(
-              "[",
-              paste(setdiff(names(fields), relational_fields), collapse = ", "),
-              "]"
-            )
-          ),
-          quote_strings = FALSE
-        ),
+        simple_strings,
         relational_strings
       )
 
