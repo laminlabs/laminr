@@ -166,43 +166,43 @@ LaminDB instance. You can explore the available registries (like
 etc.) by simply printing the <code>db</code> object:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">db</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00; font-weight: bold;">cellxgene</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BB00BB; font-style: italic;">  Core registries</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    $Run</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    $User</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    $Param</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    $ULabel</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    $Feature</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    $Storage</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    $Artifact</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    $Transform</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    $Collection</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    $FeatureSet</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    $ParamValue</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    $FeatureValue</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BB00BB; font-style: italic;">  Additional modules</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    bionty</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #55FF55; font-weight: bold;">cellxgene</span></span></span>
+<span><span class="co">#&gt; <span style="color: #FF55FF; font-style: italic;">  Core registries</span></span></span>
+<span><span class="co">#&gt;     $Run</span></span>
+<span><span class="co">#&gt;     $User</span></span>
+<span><span class="co">#&gt;     $Param</span></span>
+<span><span class="co">#&gt;     $ULabel</span></span>
+<span><span class="co">#&gt;     $Feature</span></span>
+<span><span class="co">#&gt;     $Storage</span></span>
+<span><span class="co">#&gt;     $Artifact</span></span>
+<span><span class="co">#&gt;     $Transform</span></span>
+<span><span class="co">#&gt;     $Collection</span></span>
+<span><span class="co">#&gt;     $FeatureSet</span></span>
+<span><span class="co">#&gt;     $ParamValue</span></span>
+<span><span class="co">#&gt;     $FeatureValue</span></span>
+<span><span class="co">#&gt; <span style="color: #FF55FF; font-style: italic;">  Additional modules</span></span></span>
+<span><span class="co">#&gt;     bionty</span></span></code></pre></div>
 <p>These registries correspond to <a href="https://docs.lamin.ai/lamindb" class="external-link">Python classes in LaminDB</a>.</p>
 <p>To access registries within specific modules, use the $ operator. For
 example, to access the bionty module:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">db</span><span class="op">$</span><span class="va">bionty</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00; font-weight: bold;">bionty</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BB00BB; font-style: italic;">  Registries</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    $Gene</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    $Source</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    $Tissue</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    $Disease</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    $Pathway</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    $Protein</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    $CellLine</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    $CellType</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    $Organism</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    $Ethnicity</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    $Phenotype</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    $CellMarker</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    $DevelopmentalStage</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    $ExperimentalFactor</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #55FF55; font-weight: bold;">bionty</span></span></span>
+<span><span class="co">#&gt; <span style="color: #FF55FF; font-style: italic;">  Registries</span></span></span>
+<span><span class="co">#&gt;     $Gene</span></span>
+<span><span class="co">#&gt;     $Source</span></span>
+<span><span class="co">#&gt;     $Tissue</span></span>
+<span><span class="co">#&gt;     $Disease</span></span>
+<span><span class="co">#&gt;     $Pathway</span></span>
+<span><span class="co">#&gt;     $Protein</span></span>
+<span><span class="co">#&gt;     $CellLine</span></span>
+<span><span class="co">#&gt;     $CellType</span></span>
+<span><span class="co">#&gt;     $Organism</span></span>
+<span><span class="co">#&gt;     $Ethnicity</span></span>
+<span><span class="co">#&gt;     $Phenotype</span></span>
+<span><span class="co">#&gt;     $CellMarker</span></span>
+<span><span class="co">#&gt;     $DevelopmentalStage</span></span>
+<span><span class="co">#&gt;     $ExperimentalFactor</span></span></code></pre></div>
 <p>The <code>bionty</code> and other registries also have corresponding
 <a href="https://docs.lamin.ai/bionty" class="external-link">Python classes</a>.</p>
 </div>
@@ -215,45 +215,45 @@ registry stores datasets, models, and other data entities.</p>
 registry, print the registry object:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">db</span><span class="op">$</span><span class="va">Artifact</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00; font-weight: bold;">Artifact</span></span></span>
+<span><span class="co">#&gt; <span style="color: #55FF55; font-weight: bold;">Artifact</span></span></span>
 <span><span class="co">#&gt; <span style="color: #FF55FF; font-style: italic;">  Simple fields</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    id</span>: <span style="color: #555555;">AutoField</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    key</span>: <span style="color: #555555;">CharField</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    uid</span>: <span style="color: #555555;">CharField</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    hash</span>: <span style="color: #555555;">CharField</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    size</span>: <span style="color: #555555;">BigIntegerField</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    type</span>: <span style="color: #555555;">CharField</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    suffix</span>: <span style="color: #555555;">CharField</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    version</span>: <span style="color: #555555;">CharField</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    is_latest</span>: <span style="color: #555555;">BooleanField</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    n_objects</span>: <span style="color: #555555;">BigIntegerField</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    created_at</span>: <span style="color: #555555;">DateTimeField</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    updated_at</span>: <span style="color: #555555;">DateTimeField</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    visibility</span>: <span style="color: #555555;">SmallIntegerField</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    description</span>: <span style="color: #555555;">CharField</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    n_observations</span>: <span style="color: #555555;">BigIntegerField</span></span></span>
+<span><span class="co">#&gt;     id: <span style="color: #555555;">AutoField</span></span></span>
+<span><span class="co">#&gt;     key: <span style="color: #555555;">CharField</span></span></span>
+<span><span class="co">#&gt;     uid: <span style="color: #555555;">CharField</span></span></span>
+<span><span class="co">#&gt;     hash: <span style="color: #555555;">CharField</span></span></span>
+<span><span class="co">#&gt;     size: <span style="color: #555555;">BigIntegerField</span></span></span>
+<span><span class="co">#&gt;     type: <span style="color: #555555;">CharField</span></span></span>
+<span><span class="co">#&gt;     suffix: <span style="color: #555555;">CharField</span></span></span>
+<span><span class="co">#&gt;     version: <span style="color: #555555;">CharField</span></span></span>
+<span><span class="co">#&gt;     is_latest: <span style="color: #555555;">BooleanField</span></span></span>
+<span><span class="co">#&gt;     n_objects: <span style="color: #555555;">BigIntegerField</span></span></span>
+<span><span class="co">#&gt;     created_at: <span style="color: #555555;">DateTimeField</span></span></span>
+<span><span class="co">#&gt;     updated_at: <span style="color: #555555;">DateTimeField</span></span></span>
+<span><span class="co">#&gt;     visibility: <span style="color: #555555;">SmallIntegerField</span></span></span>
+<span><span class="co">#&gt;     description: <span style="color: #555555;">CharField</span></span></span>
+<span><span class="co">#&gt;     n_observations: <span style="color: #555555;">BigIntegerField</span></span></span>
 <span><span class="co">#&gt; <span style="color: #FF55FF; font-style: italic;">  Relational fields</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    run</span>: <span style="color: #555555;">run (many-to-one)</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    genes</span>: <span style="color: #555555;">gene (many-to-many)</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    storage</span>: <span style="color: #555555;">storage (many-to-one)</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    tissues</span>: <span style="color: #555555;">tissue (many-to-many)</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    ulabels</span>: <span style="color: #555555;">ulabel (many-to-many)</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    diseases</span>: <span style="color: #555555;">disease (many-to-many)</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    pathways</span>: <span style="color: #555555;">pathway (many-to-many)</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    proteins</span>: <span style="color: #555555;">protein (many-to-many)</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    organisms</span>: <span style="color: #555555;">organism (many-to-many)</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    transform</span>: <span style="color: #555555;">transform (many-to-one)</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    cell_lines</span>: <span style="color: #555555;">cellline (many-to-many)</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    cell_types</span>: <span style="color: #555555;">celltype (many-to-many)</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    created_by</span>: <span style="color: #555555;">user (many-to-one)</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    phenotypes</span>: <span style="color: #555555;">phenotype (many-to-many)</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    collections</span>: <span style="color: #555555;">collection (many-to-many)</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    ethnicities</span>: <span style="color: #555555;">ethnicity (many-to-many)</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    cell_markers</span>: <span style="color: #555555;">cellmarker (many-to-many)</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    feature_sets</span>: <span style="color: #555555;">featureset (many-to-many)</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    input_of_runs</span>: <span style="color: #555555;">run (many-to-many)</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    developmental_stages</span>: <span style="color: #555555;">developmentalstage (many-to-many)</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    experimental_factors</span>: <span style="color: #555555;">experimentalfactor (many-to-many)</span></span></span></code></pre></div>
+<span><span class="co">#&gt;     run: <span style="color: #555555;">run (many-to-one)</span></span></span>
+<span><span class="co">#&gt;     genes: <span style="color: #555555;">gene (many-to-many)</span></span></span>
+<span><span class="co">#&gt;     storage: <span style="color: #555555;">storage (many-to-one)</span></span></span>
+<span><span class="co">#&gt;     tissues: <span style="color: #555555;">tissue (many-to-many)</span></span></span>
+<span><span class="co">#&gt;     ulabels: <span style="color: #555555;">ulabel (many-to-many)</span></span></span>
+<span><span class="co">#&gt;     diseases: <span style="color: #555555;">disease (many-to-many)</span></span></span>
+<span><span class="co">#&gt;     pathways: <span style="color: #555555;">pathway (many-to-many)</span></span></span>
+<span><span class="co">#&gt;     proteins: <span style="color: #555555;">protein (many-to-many)</span></span></span>
+<span><span class="co">#&gt;     organisms: <span style="color: #555555;">organism (many-to-many)</span></span></span>
+<span><span class="co">#&gt;     transform: <span style="color: #555555;">transform (many-to-one)</span></span></span>
+<span><span class="co">#&gt;     cell_lines: <span style="color: #555555;">cellline (many-to-many)</span></span></span>
+<span><span class="co">#&gt;     cell_types: <span style="color: #555555;">celltype (many-to-many)</span></span></span>
+<span><span class="co">#&gt;     created_by: <span style="color: #555555;">user (many-to-one)</span></span></span>
+<span><span class="co">#&gt;     phenotypes: <span style="color: #555555;">phenotype (many-to-many)</span></span></span>
+<span><span class="co">#&gt;     collections: <span style="color: #555555;">collection (many-to-many)</span></span></span>
+<span><span class="co">#&gt;     ethnicities: <span style="color: #555555;">ethnicity (many-to-many)</span></span></span>
+<span><span class="co">#&gt;     cell_markers: <span style="color: #555555;">cellmarker (many-to-many)</span></span></span>
+<span><span class="co">#&gt;     feature_sets: <span style="color: #555555;">featureset (many-to-many)</span></span></span>
+<span><span class="co">#&gt;     input_of_runs: <span style="color: #555555;">run (many-to-many)</span></span></span>
+<span><span class="co">#&gt;     developmental_stages: <span style="color: #555555;">developmentalstage (many-to-many)</span></span></span>
+<span><span class="co">#&gt;     experimental_factors: <span style="color: #555555;">experimentalfactor (many-to-many)</span></span></span></code></pre></div>
 <p>You can also get a data frame summarising the records associated with
 a registry.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
@@ -306,16 +306,16 @@ For instance, to get the artifact with UID <a href="https://lamin.ai/laminlabs/c
 cell data. You can view its metadata:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">artifact</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00; font-weight: bold;">Artifact</span>(<span style="color: #0000BB;">uid</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">'KBW89Mf7IGcekja2hADu'</span>, <span style="color: #0000BB;">description</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">'Myeloid compartment'</span>, <span style="color: #0000BB;">key</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">'cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad'</span>, <span style="color: #0000BB;">hash</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">'SZ5tB0T4YKfiUuUkAL09ZA'</span>, <span style="color: #0000BB;">storage_id</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">2</span>, <span style="color: #0000BB;">_accessor</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">'AnnData'</span>, <span style="color: #0000BB;">transform_id</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">22</span>, <span style="color: #0000BB;">version</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">'2024-07-01'</span>, <span style="color: #0000BB;">n_observations</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">51552</span>, <span style="color: #0000BB;">id</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">3659</span>, <span style="color: #0000BB;">created_by_id</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">1</span>, <span style="color: #0000BB;">run_id</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">27</span>, <span style="color: #0000BB;">size</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">691757462</span>, <span style="color: #0000BB;">_hash_type</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">'md5-n'</span>, <span style="color: #0000BB;">_key_is_virtual</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">FALSE</span>, <span style="color: #0000BB;">is_latest</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">TRUE</span>, <span style="color: #0000BB;">created_at</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">'2024-07-12T12:34:10.345829+00:00'</span>, <span style="color: #0000BB;">updated_at</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">'2024-07-12T12:40:48.837026+00:00'</span>, <span style="color: #0000BB;">type</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">'dataset'</span>, <span style="color: #0000BB;">visibility</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">1</span>, <span style="color: #0000BB;">suffix</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">'.h5ad'</span>)</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #55FF55; font-weight: bold;">Artifact</span>(uid='KBW89Mf7IGcekja2hADu', description='Myeloid compartment', key='cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad', hash='SZ5tB0T4YKfiUuUkAL09ZA', storage_id=2, _accessor='AnnData', transform_id=22, version='2024-07-01', n_observations=51552, id=3659, created_by_id=1, run_id=27, size=691757462, _hash_type='md5-n', _key_is_virtual=FALSE, is_latest=TRUE, created_at='2024-07-12T12:34:10.345829+00:00', updated_at='2024-07-12T12:40:48.837026+00:00', type='dataset', visibility=1, suffix='.h5ad')</span></span></code></pre></div>
 <p>For artifact records, you can get more detailed information:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">artifact</span><span class="op">$</span><span class="fu">describe</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00; font-weight: bold;">Artifact</span>(<span style="color: #0000BB;">uid</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">'KBW89Mf7IGcekja2hADu'</span>, <span style="color: #0000BB;">description</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">'Myeloid compartment'</span>, <span style="color: #0000BB;">key</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">'cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad'</span>, <span style="color: #0000BB;">hash</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">'SZ5tB0T4YKfiUuUkAL09ZA'</span>, <span style="color: #0000BB;">storage_id</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">2</span>, <span style="color: #0000BB;">_accessor</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">'AnnData'</span>, <span style="color: #0000BB;">transform_id</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">22</span>, <span style="color: #0000BB;">version</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">'2024-07-01'</span>, <span style="color: #0000BB;">n_observations</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">51552</span>, <span style="color: #0000BB;">id</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">3659</span>, <span style="color: #0000BB;">created_by_id</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">1</span>, <span style="color: #0000BB;">run_id</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">27</span>, <span style="color: #0000BB;">size</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">691757462</span>, <span style="color: #0000BB;">_hash_type</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">'md5-n'</span>, <span style="color: #0000BB;">_key_is_virtual</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">FALSE</span>, <span style="color: #0000BB;">is_latest</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">TRUE</span>, <span style="color: #0000BB;">created_at</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">'2024-07-12T12:34:10.345829+00:00'</span>, <span style="color: #0000BB;">updated_at</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">'2024-07-12T12:40:48.837026+00:00'</span>, <span style="color: #0000BB;">type</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">'dataset'</span>, <span style="color: #0000BB;">visibility</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">1</span>, <span style="color: #0000BB;">suffix</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">'.h5ad'</span>)</span></span>
+<span><span class="co">#&gt; <span style="color: #55FF55; font-weight: bold;">Artifact</span>(uid='KBW89Mf7IGcekja2hADu', description='Myeloid compartment', key='cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad', hash='SZ5tB0T4YKfiUuUkAL09ZA', storage_id=2, _accessor='AnnData', transform_id=22, version='2024-07-01', n_observations=51552, id=3659, created_by_id=1, run_id=27, size=691757462, _hash_type='md5-n', _key_is_virtual=FALSE, is_latest=TRUE, created_at='2024-07-12T12:34:10.345829+00:00', updated_at='2024-07-12T12:40:48.837026+00:00', type='dataset', visibility=1, suffix='.h5ad')</span></span>
 <span><span class="co">#&gt; <span style="color: #FF55FF; font-style: italic;">  Provenance</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    $storage</span><span style="color: #5555FF;"> = </span><span style="color: #BBBB00;">'s3://cellxgene-data-public'</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    $transform</span><span style="color: #5555FF;"> = </span><span style="color: #BBBB00;">'Census release 2024-07-01 (LTS)'</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    $run</span><span style="color: #5555FF;"> = </span><span style="color: #BBBB00;">'2024-07-16T12:49:41.81955+00:00'</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">    $created_by</span><span style="color: #5555FF;"> = </span><span style="color: #BBBB00;">'sunnyosun'</span></span></span></code></pre></div>
+<span><span class="co">#&gt;     $storage = 's3://cellxgene-data-public'</span></span>
+<span><span class="co">#&gt;     $transform = 'Census release 2024-07-01 (LTS)'</span></span>
+<span><span class="co">#&gt;     $run = '2024-07-16T12:49:41.81955+00:00'</span></span>
+<span><span class="co">#&gt;     $created_by = 'sunnyosun'</span></span></code></pre></div>
 <p>Access specific fields of the record using the <code>$</code>
 operator:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
@@ -328,9 +328,9 @@ operator:</p>
 <p>Some fields of a record contain links to related information.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">artifact</span><span class="op">$</span><span class="va">storage</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00; font-weight: bold;">Storage</span>(<span style="color: #0000BB;">uid</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">'oIYGbD74'</span>, <span style="color: #0000BB;">root</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">'s3://cellxgene-data-public'</span>, <span style="color: #0000BB;">created_at</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">'2023-09-19T13:17:56.273068+00:00'</span>, <span style="color: #0000BB;">updated_at</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">'2023-10-16T15:04:08.998203+00:00'</span>, <span style="color: #0000BB;">id</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">2</span>, <span style="color: #0000BB;">created_by_id</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">1</span>, <span style="color: #0000BB;">region</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">'us-west-2'</span>, <span style="color: #0000BB;">type</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">'s3'</span>)</span></span>
+<span><span class="co">#&gt; <span style="color: #55FF55; font-weight: bold;">Storage</span>(uid='oIYGbD74', root='s3://cellxgene-data-public', created_at='2023-09-19T13:17:56.273068+00:00', updated_at='2023-10-16T15:04:08.998203+00:00', id=2, created_by_id=1, region='us-west-2', type='s3')</span></span>
 <span><span class="va">artifact</span><span class="op">$</span><span class="va">developmental_stages</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00; font-weight: bold;">RelatedRecords</span>(<span style="color: #0000BB;">field_name</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">'developmental_stages'</span>, <span style="color: #0000BB;">relation_type</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">'many-to-many'</span>, <span style="color: #0000BB;">related_to</span><span style="color: #5555FF;">=</span><span style="color: #BBBB00;">'KBW89Mf7IGcekja2hADu'</span>)</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #55FF55; font-weight: bold;">RelatedRecords</span>(field_name='developmental_stages', relation_type='many-to-many', related_to='KBW89Mf7IGcekja2hADu')</span></span></code></pre></div>
 <p>When those that are one-to-many or many-to-many relationship, a
 summary of the related information can be retrieved as a data frame.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
