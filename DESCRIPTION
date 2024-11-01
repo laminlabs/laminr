@@ -1,7 +1,7 @@
 Package: laminr
 Title: 'LaminDB' Interface in R
 Version: 0.1.0
-Authors@R:c(
+Authors@R: c(
     person("Robrecht", "Cannoodt", , "robrecht@data-intuitive.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-3641-729X", github = "rcannood")),
     person("Luke", "Zappia", , "luke@data-intuitive.com", role = "aut",
