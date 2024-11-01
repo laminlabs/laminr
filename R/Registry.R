@@ -237,7 +237,7 @@ Registry <- R6::R6Class( # nolint object_name_linter
         list_c()
 
       lines <- c(
-        cli::style_bold(cli::col_green(private$.class_name)),
+        cli::style_bold(cli::col_br_green(private$.class_name)),
         simple_lines,
         relational_lines
       )

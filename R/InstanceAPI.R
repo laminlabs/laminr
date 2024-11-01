@@ -231,7 +231,7 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
           detail <- content
         }
         cli_abort(c(
-          "Failed to {request_type} from instance",
+          "Failed to {request_type} from instance with status code {response$status_code}",
           "i" = "Details: {detail}"
         ))
       }

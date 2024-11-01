@@ -91,12 +91,13 @@ test_that("get_record fails gracefully", {
 
   api <- InstanceAPI$new(instance_settings)
 
+  expect_error(
+    api$get_record("core", "artifact", "foobar"),
+    regexp = "404: Record not found"
+  )
+
   # nolint start: commented_code
   # TODO: improve error messages for these cases
-  expect_error(
-    api$get_record("core", "artifact", "foobar") # ,
-    # regexp = "Error getting record: list index out of range"
-  )
   expect_error(
     api$get_record("core", "artifact", "mePviem4DGM4SFzvLXf3", select = "foo"),
     # regexp = "Error getting record: invalid select field: foo"

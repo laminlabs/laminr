@@ -10,7 +10,8 @@ knitr:
     comment: "#>"
 ---
 
-This vignette provides a high-level overview of the core architectural components in **LaminDB**. Understanding these concepts will help you navigate the system and effectively manage your data and metadata.
+This vignette provides a high-level overview of the core architectural components in **LaminDB**.
+Understanding these concepts will help you navigate the system and effectively manage your data and metadata.
 
 ## Core concepts
 
@@ -18,7 +19,9 @@ This vignette provides a high-level overview of the core architectural component
 
 ### Instance
 
-A LaminDB **instance** is a self-contained environment for storing and managing data and metadata. You can think of it like a database or a project directory. Each instance has its own:
+A LaminDB **instance** is a self-contained environment for storing and managing data and metadata.
+You can think of it like a database or a project directory.
+Each instance has its own:
 
 * **Schema:** Defines the structure of the metadata.
 * **Storage:** Where the actual data files are stored (locally, on S3, etc.).
@@ -30,18 +33,20 @@ For more information about instances, see `?connect()` and `?Instance`.
 
 A **module** in LaminDB is a collection of related registries that provide functionality in a specific domain. For example:
 
-* **core:** Provides essential registries for general data management (Artifacts, Collections, Transforms, etc.). This module is included in every LaminDB instance.
+* **core:** Provides registries for general data management (Artifacts, Collections, Transforms, etc.). This module is included by default in every LaminDB instance.
 * **bionty:** Offers registries for managing biological entities (genes, proteins, cell types) and links them to public ontologies.
 * **wetlab:** Includes registries for managing experimental metadata (samples, treatments, etc.).
 * **And many more...**
 
 Modules help organize the system and make it easier to find the specific registries you need.
 
-For more information about modules, see `?Module`. The core module is documented in the `module_core` vignette: `vignette("module_core", package = "laminr")`.
+For more information about modules, see `?Module`.
+The core module is documented in the `module_core` vignette: `vignette("module_core", package = "laminr")`.
 
 ### Registry
 
-A **registry** is a centralized collection of related records. It's like a table in a database, where each row represents a specific entity. Examples of registries include:
+A **registry** is a centralized collection of related records.
+It's like a table in a database, where each row represents a specific entity. Examples of registries include:
 
   * **Artifacts**: Datasets, models, or other data entities.
   * **Collections**: Groupings of related artifacts.
@@ -51,11 +56,14 @@ A **registry** is a centralized collection of related records. It's like a table
 
 Each registry has a defined structure with specific fields that hold relevant information.
 
-For more information about registries, see `?Registry`. The core registries are documented in the `module_core` vignette: `vignette("module_core", package = "laminr")`.
+For more information about registries, see `?Registry`.
+The core registries are documented in the `module_core` vignette: `vignette("module_core", package = "laminr")`.
 
 ### Field
 
-A **field** is a single piece of information within a registry. It's analogous to a column in a database table. For example, the Artifact registry might have fields like:
+A **field** is a single piece of information within a registry.
+It's analogous to a column in a database table.
+For example, the Artifact registry might have fields like:
 
 * `key`: Storage key, the relative path within the storage location.
 * `storage`: Storage location, e.g. an S3 or GCP bucket or a local directory.
@@ -64,32 +72,39 @@ A **field** is a single piece of information within a registry. It's analogous t
 
 Fields define the type of data that can be stored in a registry and provide a way to organize and query the metadata.
 
-For more information about fields, see `?Field`. The fields of core registries are documented in the `module_core` vignette: `vignette("module_core", package = "laminr")`.
+For more information about fields, see `?Field`.
+The fields of core registries are documented in the `module_core` vignette: `vignette("module_core", package = "laminr")`.
 
 
 ### Record
 
-A **record** is a single entry within a registry. It's like a row in a database table. A record combines multiple fields to represent a specific entity. For example, a record in the Artifact registry might represent a single dataset with its key, storage location, description, creator, and other relevant information.
+A **record** is a single entry within a registry.
+It's like a row in a database table. A record combines multiple fields to represent a specific entity.
+For example, a record in the Artifact registry might represent a single dataset with its key, storage location, description, creator, and other relevant information.
 
 ### Putting it together
 
-In essence, you have **instances** that contain **modules**. Each module contains **registries**, which in turn hold **records**. Each record is composed of multiple **fields**. This hierarchical structure allows for flexible and organized management of data and metadata within LaminDB.
+In essence, you have **instances** that contain **modules**.
+Each module contains **registries**, which in turn hold **records**.
+Every record is composed of multiple **fields**. This hierarchical structure allows for flexible and organized management of data and metadata within LaminDB.
 
 
 ## Class structure
 
-The `laminr` package provides a set of classes that mirror the core concepts of LaminDB. These classes allow you to interact with instances, modules, registries, fields, and records in a programmatic way.
+The `laminr` package provides a set of classes that mirror the core concepts of LaminDB.
+These classes allow you to interact with instances, modules, registries, fields, and records in a programmatic way.
 
 The package provides two sets of classes: the base classes and the sugar syntax classes.
 
 ### Base classes
 
-These classes provide the core functionality for interacting with LaminDB instances, modules, registries, fields, and records. These are the classes that are documented via
-`?Instance`, `?Module`, `?Registry`, `?Field`, and `?Record`. 
+These classes provide the core functionality for interacting with LaminDB instances, modules, registries, fields, and records.
+These are the classes that are documented via `?Instance`, `?Module`, `?Registry`, `?Field`, and `?Record`. 
 
 The class diagram below illustrates the relationships between these classes.
 
-However, they are not intended to be used directly in most cases. Instead, the sugar syntax classes provide a more user-friendly interface for working with LaminDB data.
+However, they are not intended to be used directly in most cases.
+Instead, the sugar syntax classes provide a more user-friendly interface for working with LaminDB data.
 
 ```{mermaid}
 classDiagram
@@ -208,10 +223,10 @@ classDiagram
 %% # nolint end
 ```
 
-
 ### Sugar syntax classes
 
-The sugar syntax classes provide a more user-friendly way to interact with LaminDB data. These classes are designed to make it easier to access and manipulate instances, modules, registries, fields, and records.
+The sugar syntax classes provide a more user-friendly way to interact with LaminDB data.
+These classes are designed to make it easier to access and manipulate instances, modules, registries, fields, and records.
 
 For example, to get an artifact with a specific ID using **only** base classes, you might write:
 
