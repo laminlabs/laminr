@@ -1,3 +1,9 @@
+# laminr v0.2.0
+
+## DOCUMENTATION
+
+* Updated installation instructions after **{laminr}** was released on CRAN (PR #74).
+
 # laminr v0.1.0
 
 First CRAN release of the LaminDB API client for R. This release focuses on connecting to a LaminDB instance, fetching an individual record from the instance, and fetching related data for that record.
