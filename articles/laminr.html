@@ -66,7 +66,7 @@
       <h1>Getting Started</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/laminlabs/laminr/blob/v0.1.0/vignettes/laminr.Rmd" class="external-link"><code>vignettes/laminr.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/laminlabs/laminr/blob/main/vignettes/laminr.Rmd" class="external-link"><code>vignettes/laminr.Rmd</code></a></small>
       <div class="d-none name"><code>laminr.Rmd</code></div>
     </div>
 
@@ -136,16 +136,12 @@ creation date.</li>
 <li>Install the <strong>{laminr}</strong> package.</li>
 </ol>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Install the remotes package if needed</span></span>
-<span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu">requireMethods</span><span class="op">(</span><span class="st">"remotes"</span>, quiety <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"laminlabs/laminr"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"laminr"</span><span class="op">)</span></span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
 <li>(Optional) Install suggested dependencies.</li>
 </ol>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"laminlabs/laminr"</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"laminr"</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>This includes packages like <strong>{anndata}</strong> for working
 with AnnData objects and <strong>{s3}</strong> for interacting with S3
 storage.</p>
