@@ -138,6 +138,32 @@ Registry <- R6::R6Class( # nolint object_name_linter
         # Bind entries as rows
         list_rbind()
     },
+    from_df = function(data_frame, key = NULL, description = NULL, run = NULL) {
+      if (private$.registry_name != "artifact") {
+        cli::cli_abort(
+          "Creating records from data frames is only supported for the Artifact registry"
+        )
+      }
+
+      check_requires("Creating records from data frames", "reticulate")
+
+      py_lamin <- reticulate::import("lamindb")
+
+      instance_settings <- private$.instance$get_settings()
+      system2("lamin", "lamin settings set auto-connect false")
+      py_lamin$connect(
+        paste0(instance_settings$owner, "/", instance_settings$name)
+      )
+
+      py_record <- py_lamin$Artifact$from_df(
+        data_frame, key = key, description = description, run = run
+      )
+
+      record_df <- reticulate::py_to_r(py_record$df())
+
+      record_class <- self$get_record_class()
+      record_class$new(as.list(record_df))
+    },
     #' @description
     #' Get the fields in the registry.
     #'
