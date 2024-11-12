@@ -25,17 +25,57 @@ We will go through the steps of finding and downloading a dataset using **{lamin
 Before we go begin, please take some time to check out the Getting Started vignette (`vignette("laminr", package = "laminr")`).
 In particular, make sure you have run the commands in the "Initial Setup" section.
 
+Once that is done, we can load the **{laminr}** library.
+
+```{r library}
+library(laminr)
+```
+
 # Connect to a LaminDB instance
 
-- Connect to CELLxGENE instance
-- Show instance object
+We will start by connecting to the CELLxGENE instance.
+This gives us an object we can use to interact with the database.
+
+```{r connect}
+cellxgene <- connect("laminlabs/cellxgene")
+
+cellxgene
+```
 
 # Downloading a dataset
 
-- Show Artifact registry
-- Go to CELLxGENE Lamin website
-- Find a dataset, get the ID
-- Cache and load the object locally
+In Lamin, artifacts are objects that contain information (single-cell data, images, data frames etc.) as well as associated metadata.
+You can see what artifacts are available using the database object.
+
+```{r list-artifacts}
+cellxgene$Artifact$df(limit = 5)
+```
+
+This is useful, but it's not the nicest or easiest way to find a particular dataset.
+Instead, we will use the Lamin Hub website to find the data we want to load.
+
+1. Open a browser and go to https://lamin.ai/laminlabs/cellxgene
+2. On the top toolbar, click the "Artifacts" tab
+3. Use the search field and the filters to find a dataset you are interested in.
+  - We use the "Suffix" filter to find `.h5ad` files and search for "renal cell carcinoma"
+4. Select the entry for the dataset you want to load to open a page with more details
+5. Click the copy button at the top right, this copies a command including the ID for the artifact
+
+Once we have the artifact ID, we can load information about the artifact, similar to what we see on the website.
+Notice that we use a slightly different command to what we copied from the website.
+
+```{r get-artifact}
+artifact <- cellxgene$Artifact$get("7dVluLROpalzEh8mNyxk")
+artifact
+```
+
+So far we have only retrieved the metadata about this object.
+To download the data itself we need to run another command.
+
+```{r load-artifact}
+adata <- artifact$load()
+adata
+```
 
 # Convert to Seurat
 
