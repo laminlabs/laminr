@@ -9,21 +9,16 @@ ArtifactRecord <- R6::R6Class( # nolint object_name_linter
   inherit = Record,
   public = list(
     #' @description
-    #' Load the artifact into memory. This currently only supports AnnData
-    #' artifacts.
+    #' Load the artifact into memory.
     #'
     #' @return The artifact
     load = function() {
-      artifact_accessor <- private$get_value("_accessor")
-
       file_path <- self$cache()
 
-      if (artifact_accessor == "AnnData") {
-        check_requires("Loading AnnData objects", "anndata")
-        anndata::read_h5ad(file_path)
-      } else {
-        cli_abort(paste0("Unsupported accessor: ", artifact_accessor))
-      }
+      suffix <- private$get_value("suffix")
+      file_loader <- get_file_loader(suffix)
+
+      file_loader(file_path)
     },
     #' @description
     #' Cache the artifact to the local filesystem. This currently only supports
