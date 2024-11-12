@@ -51,17 +51,13 @@ Now, let's set up your environment to use **{laminr}**.
 1. Install the **{laminr}** package.
 
   ```r
-  # Install the remotes package if needed
-  if (!requireMethods("remotes", quiety = TRUE)) {
-    install.packages("remotes")
-  }
-  remotes::install_github("laminlabs/laminr")
+  install.packages("laminr")
   ```
 
 2. (Optional) Install suggested dependencies.
 
   ```r
-  remotes::install_github("laminlabs/laminr", dependencies = TRUE)
+  install.packages("laminr", dependencies = TRUE)
   ```
 
   This includes packages like **{anndata}** for working with

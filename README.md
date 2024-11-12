@@ -31,17 +31,16 @@ See the development roadmap for more details (`vignette("development", package =
 
 ## Installation
 
-Get started with **{laminr}** by installing the development version directly from GitHub:
+Get started with **{laminr}** by installing the package from CRAN:
 
 ```r
-# install.packages("remotes")
-remotes::install_github("laminlabs/laminr")
+install.packages("laminr")
 ```
 
 To include all suggested dependencies for enhanced functionality, use:
 
 ```r
-remotes::install_github("laminlabs/laminr", dependencies = TRUE)
+install.packages("laminr", dependencies = TRUE)
 ```
 
 This further installs:
