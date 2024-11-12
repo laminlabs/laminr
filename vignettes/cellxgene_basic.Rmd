@@ -15,16 +15,16 @@ knitr::opts_chunk$set(
 ```
 
 # Introduction
-
-- CELLxGENE
-- What's in this tutorial?
-  - Connect to CELLxGENE
-  - Download a dataset
-  - Convert to Seurat
-  - Perform simple analysis
-  - Save and upload results
-  - Save and upload report (?)
   
+This vignette demonstrates a basic LaminDB workflow using the public CELLxGENE instance.
+[CZ CELLxGENE Discover](https://cellxgene.cziscience.com/) is a standardised collection of scRNA-seq datasets and LaminDB makes it easy to query and access data in this repository.
+We will go through the steps of finding and downloading a dataset using **{laminr}**, performing some simple analysis using **{Seurat}** and saving the results in a LaminDB database.
+
+# Before we start
+
+Before we go begin, please take some time to check out the Getting Started vignette (`vignette("laminr", package = "laminr")`).
+In particular, make sure you have run the commands in the "Initial Setup" section.
+
 # Connect to a LaminDB instance
 
 - Connect to CELLxGENE instance
