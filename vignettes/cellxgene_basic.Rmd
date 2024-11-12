@@ -1,0 +1,53 @@
+---
+title: "Basic CELLxGENE workflow"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Wetlab Module}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Introduction
+
+- CELLxGENE
+- What's in this tutorial?
+  - Connect to CELLxGENE
+  - Download a dataset
+  - Convert to Seurat
+  - Perform simple analysis
+  - Save and upload results
+  - Save and upload report (?)
+  
+# Connect to a LaminDB instance
+
+- Connect to CELLxGENE instance
+- Show instance object
+
+# Downloading a dataset
+
+- Show Artifact registry
+- Go to CELLxGENE Lamin website
+- Find a dataset, get the ID
+- Cache and load the object locally
+
+# Convert to Seurat
+
+- CELLxGENE stores AnnData, we want Seurat
+- Do the conversion
+
+# Analysis
+
+- Follow the Seurat tutorial to calculate marker genes
+- Save results as a text file
+
+# Add results
+
+- Add the results as an artifact
+- Render and add report (?)
