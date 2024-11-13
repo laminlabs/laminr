@@ -38,13 +38,12 @@ This gives us an object we can use to interact with the database.
 
 ```{r connect}
 cellxgene <- connect("laminlabs/cellxgene")
-
 cellxgene
 ```
 
 # Downloading a dataset
 
-In Lamin, artifacts are objects that contain information (single-cell data, images, data frames etc.) as well as associated metadata.
+In Lamin, artifacts are objects that[;] contain information (single-cell data, images, data frames etc.) as well as associated metadata.
 You can see what artifacts are available using the database object.
 
 ```{r list-artifacts}
@@ -77,15 +76,40 @@ adata <- artifact$load()
 adata
 ```
 
+This dataset has been stored as an [`AnnData`](https://anndata.readthedocs.io) object.
+In the next sections we will convert it to a [`Seurat`](https://satijalab.org/seurat/) object and perform some simple analysis.
+
 # Convert to Seurat
 
-- CELLxGENE stores AnnData, we want Seurat
-- Do the conversion
+There are various approaches for converting between different single-cell objects, some of which are described in the [Interoperability chapter](https://www.sc-best-practices.org/introduction/interoperability.html) of the Single-cell Best Practices book.
+
+Because we already have the data loaded in memory, the simplest option is to extract the information we need and create a new `Seurat` object.
+
+```{r create-seurat}
+seurat <- SeuratObject::CreateSeuratObject(
+  counts = Matrix::t(adata$X),
+  meta.data = adata$obs, 
+)
+seurat
+```
 
 # Analysis
 
-- Follow the Seurat tutorial to calculate marker genes
-- Save results as a text file
+We could perform any normal analysis using **{Seurat}** but as an example we will calculate marker genes for each of the annotated cell types.
+To make things a bit quicker we only test the first 1000 genes but if you have a few minutes you can get results for all features.
+
+```{r markers}
+# Set cell identities to the provided cell type annotation
+SeuratObject::Idents(seurat) <- "Cell_Type"
+# Normalise the data
+seurat <- Seurat::NormalizeData(seurat)
+# Test for marker genes
+markers <- Seurat::FindAllMarkers(
+  seurat, features = SeuratObject::Features(seurat)[1:1000]
+)
+# The output is a data.frame
+head(markers)
+```
 
 # Add results
 
