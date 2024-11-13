@@ -120,12 +120,28 @@ Record <- R6::R6Class( # nolint object_name_linter
         "key"
       )
 
-      record_fields <- private$.api$get_record(
-        module_name = private$.registry$module$name,
-        registry_name = private$.registry$name,
-        id_or_uid = private$.data[["uid"]],
-        include_foreign_keys = TRUE
-      )
+      expected_fields <- private$.registry$get_fields() |>
+        discard(~ is.null(.x$column_name)) |>
+        map_chr("column_name")
+
+      record_fields <- map(names(expected_fields), function(.field) {
+        value <- tryCatch(
+          self[[.field]],
+          error = function(err) {
+            if (!grepl("status code 404", conditionMessage(err))) {
+              cli::abort(conditionMessage(err))
+            }
+            NULL
+          }
+        )
+
+        if (inherits(value, "Record")) {
+          value <- value$id
+        }
+
+        value
+      }) |>
+        setNames(expected_fields)
 
       # Get the important fields that are in the record
       important_fields <- intersect(important_fields, names(record_fields))
