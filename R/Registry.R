@@ -138,7 +138,7 @@ Registry <- R6::R6Class( # nolint object_name_linter
         # Bind entries as rows
         list_rbind()
     },
-    from_df = function(data_frame, key = NULL, description = NULL, run = NULL) {
+    from_df = function(dataframe, key = NULL, description = NULL, run = NULL) {
       if (private$.registry_name != "artifact") {
         cli::cli_abort(
           "Creating records from data frames is only supported for the Artifact registry"
@@ -150,19 +150,16 @@ Registry <- R6::R6Class( # nolint object_name_linter
       py_lamin <- reticulate::import("lamindb")
 
       instance_settings <- private$.instance$get_settings()
-      system2("lamin", "lamin settings set auto-connect false")
+      system2("lamin", "settings set auto-connect false")
       py_lamin$connect(
         paste0(instance_settings$owner, "/", instance_settings$name)
       )
 
       py_record <- py_lamin$Artifact$from_df(
-        data_frame, key = key, description = description, run = run
+        dataframe, key = key, description = description, run = run
       )
 
-      record_df <- reticulate::py_to_r(py_record$df())
-
-      record_class <- self$get_record_class()
-      record_class$new(as.list(record_df))
+      create_record_from_python(py_record, private$.instance)
     },
     #' @description
     #' Get the fields in the registry.
@@ -372,3 +369,40 @@ Registry <- R6::R6Class( # nolint object_name_linter
     }
   )
 )
+
+create_record_from_python <- function(py_record, instance) {
+
+  py_classes <- class(py_record)
+
+  # Skip related fields for now
+  if ("django.db.models.manager.Manager" %in% py_classes) {
+    return(NULL)
+  }
+
+  class_split <- strsplit(py_classes[1], "\\.")[[1]]
+  module_name <- class_split[1]
+  if (module_name == "lnschema_core") {
+    module_name <- "core"
+  }
+  registry_name <- tolower(class_split[3])
+
+  registry <- instance$get_module(module_name)$get_registry(registry_name)
+  fields <- registry$get_field_names()
+
+  record_list <- map(fields, function(.field) {
+    value <- tryCatch(
+      py_record[[.field]],
+      error = function(err) {
+        NULL
+      }
+    )
+    if (inherits(value, "lnschema_core.models.Record")) {
+      value <- create_record_from_python(value, instance)
+    }
+    value
+  }) |>
+    setNames(fields)
+
+  record_class <- registry$get_record_class()
+  suppressWarnings(record_class$new(record_list))
+}
