@@ -11,7 +11,8 @@ get_file_loader <- function(suffix) {
     ".h5ad" = load_h5ad,
     ".csv" = load_csv,
     ".tsv" = load_tsv,
-    cli::cli_abort("Loading files with suffix {suffix} is not supported")
+    ".parquet" = load_parquet,
+    cli::cli_abort("Loading files with suffix {.val suffix} is not supported")
   )
 }
 
@@ -45,4 +46,16 @@ load_csv <- function(file) {
 #' @noRd
 load_tsv <- function(file) {
   read.delim(file)
+}
+
+#' Load a Parquet file
+#'
+#' @param file Path to the file to load
+#'
+#' @return A `data.frame`
+#' @noRd
+load_parquet <- function(file) {
+  check_requires("Reading Parquet files", "nanoparquet")
+
+  nanoparquet::read_parquet(file)
 }
