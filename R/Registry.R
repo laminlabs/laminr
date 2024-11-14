@@ -146,21 +146,20 @@ Registry <- R6::R6Class( # nolint object_name_linter
         ))
       }
 
+      if (is.null(private$.instance$py_lamin)) {
+        cli::cli_abort(c(
+          "Creating records requires the Python lamindb package",
+          "i" = "Check the output of {.code connect()} for warnings"
+        ))
+      }
+
       if (private$.registry_name != "artifact") {
         cli::cli_abort(
           "Creating records from data frames is only supported for the Artifact registry"
         )
       }
 
-      check_requires("Creating records from data frames", "reticulate")
-
-      py_lamin <- reticulate::import("lamindb")
-
-      instance_settings <- private$.instance$get_settings()
-      system2("lamin", "settings set auto-connect false")
-      py_lamin$connect(
-        paste0(instance_settings$owner, "/", instance_settings$name)
-      )
+      py_lamin <- private$.instance$py_lamin
 
       py_record <- py_lamin$Artifact$from_df(
         dataframe, key = key, description = description, run = run

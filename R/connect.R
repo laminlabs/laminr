@@ -99,9 +99,29 @@ connect <- function(slug = NULL) {
     is_default <- TRUE
   }
 
+  py_lamin <- NULL
+  if (isTRUE(is_default)) {
+    check_requires("Connecting to Python", "reticulate", type = "warning")
+
+    py_lamin <- tryCatch(
+      reticulate::import("lamindb"),
+      error = function(err) {
+        cli::cli_warn(c(
+          paste(
+            "Failed to connect to the Python {.pkg lamindb} package,",
+            "you will only be able to read from the database"
+          ),
+          "i" = "See {.run reticulate::py_config()} for more information"
+        ))
+        NULL
+      }
+    )
+  }
+
   create_instance(
     instance_settings = instance_settings,
-    is_default = is_default
+    is_default = is_default,
+    py_lamin = py_lamin
   )
 }
 

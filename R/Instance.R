@@ -1,4 +1,4 @@
-create_instance <- function(instance_settings, is_default) {
+create_instance <- function(instance_settings, is_default = FALSE, py_lamin = NULL) {
   super <- NULL # satisfy linter
 
   api <- InstanceAPI$new(instance_settings = instance_settings)
@@ -46,12 +46,13 @@ create_instance <- function(instance_settings, is_default) {
     cloneable = FALSE,
     inherit = Instance,
     public = list(
-      initialize = function(settings, api, schema, is_default) {
+      initialize = function(settings, api, schema, is_default, py_lamin) {
         super$initialize(
           settings = settings,
           api = api,
           schema = schema,
-          is_default = is_default
+          is_default = is_default,
+          py_lamin = py_lamin
         )
       }
     ),
@@ -63,7 +64,8 @@ create_instance <- function(instance_settings, is_default) {
     settings = instance_settings,
     api = api,
     schema = schema,
-    is_default = is_default
+    is_default = is_default,
+    py_lamin = py_lamin
   )
 }
 
@@ -110,10 +112,11 @@ Instance <- R6::R6Class( # nolint object_name_linter
     #' @param api The API for the instance
     #' @param schema The schema for the instance
     #' @param is_default Logical, whether this is the default instance
-    initialize = function(settings, api, schema, is_default) {
+    initialize = function(settings, api, schema, is_default, py_lamin) {
       private$.settings <- settings
       private$.api <- api
       private$.is_default <- is_default
+      private$.py_lamin <- py_lamin
 
       # create module classes from the schema
       private$.module_classes <- map(
@@ -259,12 +262,18 @@ Instance <- R6::R6Class( # nolint object_name_linter
     #' Whether this is the default instance.
     is_default = function() {
       private$.is_default
+    },
+    #' @field type (`python.builtin.module`)\cr
+    #' Python lamindb module.
+    py_lamin = function() {
+      private$.py_lamin
     }
   ),
   private = list(
     .settings = NULL,
     .api = NULL,
     .module_classes = NULL,
-    .is_default = NULL
+    .is_default = NULL,
+    .py_lamin = NULL
   )
 )
