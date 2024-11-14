@@ -422,22 +422,38 @@ create_temporary_record_class <- function(record_class) {
         super$initialize(data)
       },
       save = function() {
+        if (isTRUE(private$.saved)) {
+          cli::cli_abort("This record has already been saved to the database")
+        }
+
         private$.py_record$save()
-        private$.registry$get(self$uid)
+
+        # Replace temporary data with data saved to the database
+        private$.data <- private$.api$get_record(
+          module_name = private$.registry$module$name,
+          registry_name = private$.registry$name,
+          id_or_uid = self$uid
+        )
+
+        private$.saved <- TRUE
       },
       #' @description
       #' Print a `TemporaryRecord`
       #'
       #' @param style Logical, whether the output is styled using ANSI codes
       print = function(style = TRUE) {
-        cat("!!! TEMPORARY RECORD !!!")
-        cat("\n\n")
+        if (isFALSE(private$.saved)) {
+          cat("!!! TEMPORARY RECORD !!!")
+          cat("\n\n")
+        }
+
         super$print()
       }
     ),
     private = list(
       .record_class = NULL,
-      .py_record = NULL
+      .py_record = NULL,
+      .saved = FALSE
     )
   )
 }
