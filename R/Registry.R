@@ -138,6 +138,21 @@ Registry <- R6::R6Class( # nolint object_name_linter
         # Bind entries as rows
         list_rbind()
     },
+    #' @description
+    #' Create a record from a data frame
+    #'
+    #' @param dataframe The `data.frame` to create a record from
+    #' @param key A relative path within the default storage
+    #' @param description A string describing the record
+    #' @param run A `Run` object that creates the record
+    #'
+    #' @details
+    #' Creating records is only possible for the default instance, requires the
+    #' Python `lamindb` module and is only implemented for the core `Artifact`
+    #' registry.
+    #'
+    #' @return A `TemporaryRecord` object containing the new record. This is not
+    #' saved to the database until `temp_record$save()` is called.
     from_df = function(dataframe, key = NULL, description = NULL, run = NULL) {
       if (isFALSE(private$.instance$is_default)) {
         cli::cli_abort(c(
@@ -330,7 +345,7 @@ Registry <- R6::R6Class( # nolint object_name_linter
         list(
           paste0("[", paste(map_chr(module_fields, "field_name"), collapse = ", "), "]")
         ) |>
-          setNames(module_heading) |>
+          set_names(module_heading) |>
           make_key_value_strings(quote_strings = FALSE)
       })
 
@@ -376,6 +391,23 @@ Registry <- R6::R6Class( # nolint object_name_linter
   )
 )
 
+#' Create record from Python
+#'
+#' @param py_record A Python record object
+#' @param instance `Instance` object to create the record for
+#'
+#' @details
+#' The new record is created by:
+#'
+#' 1. Getting the module and registry from the Python class
+#' 2. Getting the fields for this registry
+#' 3. Iteratively getting the data for each field. Values that are records are
+#'    converted by calling this function.
+#' 4. Get the matching temporary record class
+#' 5. Return the temporary record
+#'
+#' @return The created `TemporaryRecord` object
+#' @noRd
 create_record_from_python <- function(py_record, instance) {
 
   py_classes <- class(py_record)
@@ -407,59 +439,11 @@ create_record_from_python <- function(py_record, instance) {
     }
     value
   }) |>
-    setNames(fields)
+    set_names(fields)
 
   record_class <- registry$get_record_class()
   temp_record_class <- create_temporary_record_class(record_class)
 
+  # Suppress warnings because we deliberately add unexpected data fields
   suppressWarnings(temp_record_class$new(record_class, py_record, record_list))
-}
-
-create_temporary_record_class <- function(record_class) {
-  R6::R6Class(
-    paste0("Temporary", record_class$classname),
-    cloneable = FALSE,
-    inherit = record_class,
-    public = list(
-      initialize = function(record_class, py_record, data) {
-        private$.record_class <- record_class
-        private$.py_record <- py_record
-
-        super$initialize(data)
-      },
-      save = function() {
-        if (isTRUE(private$.saved)) {
-          cli::cli_abort("This record has already been saved to the database")
-        }
-
-        private$.py_record$save()
-
-        # Replace temporary data with data saved to the database
-        private$.data <- private$.api$get_record(
-          module_name = private$.registry$module$name,
-          registry_name = private$.registry$name,
-          id_or_uid = self$uid
-        )
-
-        private$.saved <- TRUE
-      },
-      #' @description
-      #' Print a `TemporaryRecord`
-      #'
-      #' @param style Logical, whether the output is styled using ANSI codes
-      print = function(style = TRUE) {
-        if (isFALSE(private$.saved)) {
-          cat("!!! TEMPORARY RECORD !!!")
-          cat("\n\n")
-        }
-
-        super$print()
-      }
-    ),
-    private = list(
-      .record_class = NULL,
-      .py_record = NULL,
-      .saved = FALSE
-    )
-  )
 }

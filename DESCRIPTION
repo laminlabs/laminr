@@ -27,6 +27,7 @@ Suggests:
     anndata,
     nanoparquet,
     quarto,
+    reticulate,
     s3 (>= 1.1.0),
     testthat (>= 3.0.0),
     withr

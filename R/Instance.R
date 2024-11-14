@@ -112,6 +112,7 @@ Instance <- R6::R6Class( # nolint object_name_linter
     #' @param api The API for the instance
     #' @param schema The schema for the instance
     #' @param is_default Logical, whether this is the default instance
+    #' @param py_lamin A Python `lamindb` module object
     initialize = function(settings, api, schema, is_default, py_lamin) {
       private$.settings <- settings
       private$.api <- api
@@ -258,12 +259,12 @@ Instance <- R6::R6Class( # nolint object_name_linter
     }
   ),
   active = list(
-    #' @field type (`logical(1)`)\cr
+    #' @field is_default (`logical(1)`)\cr
     #' Whether this is the default instance.
     is_default = function() {
       private$.is_default
     },
-    #' @field type (`python.builtin.module`)\cr
+    #' @field py_lamin (`python.builtin.module`)\cr
     #' Python lamindb module.
     py_lamin = function() {
       private$.py_lamin

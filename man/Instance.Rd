@@ -33,6 +33,17 @@ artifact$id
 artifact$load()
 }
 }
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{is_default}}{(\code{logical(1)})\cr
+Whether this is the default instance.}
+
+\item{\code{py_lamin}}{(\code{python.builtin.module})\cr
+Python lamindb module.}
+}
+\if{html}{\out{</div>}}
+}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
@@ -53,7 +64,7 @@ artifact$load()
 Creates an instance of this R6 class. This class should not be instantiated directly,
 but rather by connecting to a LaminDB instance using the \code{\link[=connect]{connect()}} function.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Instance$new(settings, api, schema)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Instance$new(settings, api, schema, is_default, py_lamin)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -64,6 +75,10 @@ but rather by connecting to a LaminDB instance using the \code{\link[=connect]{c
 \item{\code{api}}{The API for the instance}
 
 \item{\code{schema}}{The schema for the instance}
+
+\item{\code{is_default}}{Logical, whether this is the default instance}
+
+\item{\code{py_lamin}}{A Python \code{lamindb} module object}
 }
 \if{html}{\out{</div>}}
 }

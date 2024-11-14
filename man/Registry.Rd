@@ -29,6 +29,7 @@ Whether the registry is a link table.}
 \item \href{#method-Registry-new}{\code{Registry$new()}}
 \item \href{#method-Registry-get}{\code{Registry$get()}}
 \item \href{#method-Registry-df}{\code{Registry$df()}}
+\item \href{#method-Registry-from_df}{\code{Registry$from_df()}}
 \item \href{#method-Registry-get_fields}{\code{Registry$get_fields()}}
 \item \href{#method-Registry-get_field}{\code{Registry$get_field()}}
 \item \href{#method-Registry-get_field_names}{\code{Registry$get_field_names()}}
@@ -107,6 +108,39 @@ Get a data frame summarising records in the registry
 }
 \subsection{Returns}{
 A data.frame containing the available records
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Registry-from_df"></a>}}
+\if{latex}{\out{\hypertarget{method-Registry-from_df}{}}}
+\subsection{Method \code{from_df()}}{
+Create a record from a data frame
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Registry$from_df(dataframe, key = NULL, description = NULL, run = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{dataframe}}{The \code{data.frame} to create a record from}
+
+\item{\code{key}}{A relative path within the default storage}
+
+\item{\code{description}}{A string describing the record}
+
+\item{\code{run}}{A \code{Run} object that creates the record}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Creating records is only possible for the default instance, requires the
+Python \code{lamindb} module and is only implemented for the core \code{Artifact}
+registry.
+}
+
+\subsection{Returns}{
+A \code{TemporaryRecord} object containing the new record. This is not
+saved to the database until \code{temp_record$save()} is called.
 }
 }
 \if{html}{\out{<hr>}}
