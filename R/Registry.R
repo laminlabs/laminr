@@ -220,7 +220,7 @@ Registry <- R6::R6Class( # nolint object_name_linter
     #'
     #' Note: This method is intended for internal use only and may be removed in the future.
     #'
-    #' @return A [TemporaryRecord] class.
+    #' @return A `TemporaryRecord` class.
     get_temporary_record_class = function() {
       if (is.null(private$.temporary_record_class)) {
         private$.temporary_record_class <- create_temporary_record_class(
