@@ -33,6 +33,7 @@ load_h5ad <- function(file) {
 #' @param file Path to the file to load
 #'
 #' @return A `data.frame`
+#' @importFrom utils read.csv
 #' @noRd
 load_csv <- function(file) {
   read.csv(file)
@@ -43,6 +44,7 @@ load_csv <- function(file) {
 #' @param file Path to the file to load
 #'
 #' @return A `data.frame`
+#' @importFrom utils read.delim
 #' @noRd
 load_tsv <- function(file) {
   read.delim(file)
