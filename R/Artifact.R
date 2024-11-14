@@ -11,14 +11,15 @@ ArtifactRecord <- R6::R6Class( # nolint object_name_linter
     #' @description
     #' Load the artifact into memory.
     #'
+    #' @param ... Additional arguments to pass to the loader
+    #'
     #' @return The artifact
-    load = function() {
+    load = function(...) {
       file_path <- self$cache()
 
       suffix <- private$get_value("suffix")
-      file_loader <- get_file_loader(suffix)
 
-      file_loader(file_path)
+      load_file(file_path, suffix, ...)
     },
     #' @description
     #' Cache the artifact to the local filesystem. This currently only supports

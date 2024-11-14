@@ -25,11 +25,16 @@ Imports:
     rlang
 Suggests:
     anndata,
+    knitr,
     nanoparquet,
     quarto,
+    readr,
+    reticulate,
+    rsvg,
     s3 (>= 1.1.0),
     testthat (>= 3.0.0),
-    withr
+    withr,
+    yaml
 VignetteBuilder: 
     quarto
 Config/testthat/edition: 3
