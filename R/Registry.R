@@ -215,6 +215,21 @@ Registry <- R6::R6Class( # nolint object_name_linter
       private$.record_class
     },
     #' @description
+    #' Get the temporary record class for the registry.
+    #'
+    #' Note: This method is intended for internal use only and may be removed in the future.
+    #'
+    #' @return A [TemporaryRecord] class.
+    get_temporary_record_class = function() {
+      if (is.null(private$.temporary_record_class)) {
+        private$.temporary_record_class <- create_temporary_record_class(
+          private$.record_class
+        )
+      }
+
+      private$.temporary_record_class
+    },
+    #' @description
     #' Print a `Registry`
     #'
     #' @param style Logical, whether the output is styled using ANSI codes
@@ -365,7 +380,8 @@ Registry <- R6::R6Class( # nolint object_name_linter
     .class_name = NULL,
     .is_link_table = NULL,
     .fields = NULL,
-    .record_class = NULL
+    .record_class = NULL,
+    .temporary_record_class = NULL
   ),
   active = list(
     #' @field module ([Module])\cr
@@ -441,9 +457,8 @@ create_record_from_python <- function(py_record, instance) {
   }) |>
     set_names(fields)
 
-  record_class <- registry$get_record_class()
-  temp_record_class <- create_temporary_record_class(record_class)
+  temp_record_class <- registry$get_temporary_record_class()
 
   # Suppress warnings because we deliberately add unexpected data fields
-  suppressWarnings(temp_record_class$new(record_class, py_record, record_list))
+  suppressWarnings(temp_record_class$new(py_record, record_list))
 }

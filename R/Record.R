@@ -73,7 +73,7 @@ create_temporary_record_class <- function(record_class) {
     cloneable = FALSE,
     inherit = record_class,
     public = list(
-      initialize = function(record_class, py_record, data) {
+      initialize = function(py_record, data) {
         private$.record_class <- record_class
         private$.py_record <- py_record
 
@@ -99,8 +99,8 @@ create_temporary_record_class <- function(record_class) {
         if (isFALSE(private$.saved)) {
           cli::cat_line(paste(
             cli::bg_red(cli::col_black("TEMPORARY")),
-            cli::cli_fmt(cli::cli_text(
-              "This record has not been saved to the database. ",
+            cli::format_message(paste(
+              "This record has not been saved to the database.",
               "Save it using {.code <object>$save()}."
             ))
           ))
@@ -201,7 +201,7 @@ Record <- R6::R6Class( # nolint object_name_linter
           self[[.field]],
           error = function(err) {
             if (!grepl("status code 404", conditionMessage(err))) {
-              cli::abort(conditionMessage(err))
+              cli::cli_abort(conditionMessage(err))
             }
             NULL
           }
