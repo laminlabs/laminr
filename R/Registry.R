@@ -139,6 +139,13 @@ Registry <- R6::R6Class( # nolint object_name_linter
         list_rbind()
     },
     from_df = function(dataframe, key = NULL, description = NULL, run = NULL) {
+      if (isFALSE(private$.instance$is_default)) {
+        cli::cli_abort(c(
+          "Only the default instance can create records",
+          "i" = "Use {.code connect(slug = NULL)} to connect to the default instance"
+        ))
+      }
+
       if (private$.registry_name != "artifact") {
         cli::cli_abort(
           "Creating records from data frames is only supported for the Artifact registry"

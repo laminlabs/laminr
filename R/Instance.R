@@ -1,4 +1,4 @@
-create_instance <- function(instance_settings) {
+create_instance <- function(instance_settings, is_default) {
   super <- NULL # satisfy linter
 
   api <- InstanceAPI$new(instance_settings = instance_settings)
@@ -46,11 +46,12 @@ create_instance <- function(instance_settings) {
     cloneable = FALSE,
     inherit = Instance,
     public = list(
-      initialize = function(settings, api, schema) {
+      initialize = function(settings, api, schema, is_default) {
         super$initialize(
           settings = settings,
           api = api,
-          schema = schema
+          schema = schema,
+          is_default = is_default
         )
       }
     ),
@@ -58,7 +59,12 @@ create_instance <- function(instance_settings) {
   )
 
   # create the instance
-  RichInstance$new(settings = instance_settings, api = api, schema = schema)
+  RichInstance$new(
+    settings = instance_settings,
+    api = api,
+    schema = schema,
+    is_default = is_default
+  )
 }
 
 #' @title Instance
@@ -103,9 +109,11 @@ Instance <- R6::R6Class( # nolint object_name_linter
     #' @param settings The settings for the instance
     #' @param api The API for the instance
     #' @param schema The schema for the instance
-    initialize = function(settings, api, schema) {
+    #' @param is_default Logical, whether this is the default instance
+    initialize = function(settings, api, schema, is_default) {
       private$.settings <- settings
       private$.api <- api
+      private$.is_default <- is_default
 
       # create module classes from the schema
       private$.module_classes <- map(
@@ -246,9 +254,17 @@ Instance <- R6::R6Class( # nolint object_name_linter
       )
     }
   ),
+  active = list(
+    #' @field type (`logical(1)`)\cr
+    #' Whether this is the default instance.
+    is_default = function() {
+      private$.is_default
+    }
+  ),
   private = list(
     .settings = NULL,
     .api = NULL,
-    .module_classes = NULL
+    .module_classes = NULL,
+    .is_default = NULL
   )
 )
