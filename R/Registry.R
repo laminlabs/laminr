@@ -177,7 +177,8 @@ Registry <- R6::R6Class( # nolint object_name_linter
       py_lamin <- private$.instance$py_lamin
 
       py_record <- py_lamin$Artifact$from_df(
-        dataframe, key = key, description = description, run = run
+        dataframe,
+        key = key, description = description, run = run
       )
 
       create_record_from_python(py_record, private$.instance)
@@ -425,7 +426,6 @@ Registry <- R6::R6Class( # nolint object_name_linter
 #' @return The created `TemporaryRecord` object
 #' @noRd
 create_record_from_python <- function(py_record, instance) {
-
   py_classes <- class(py_record)
 
   # Skip related fields for now

@@ -34,6 +34,7 @@ Whether the registry is a link table.}
 \item \href{#method-Registry-get_field}{\code{Registry$get_field()}}
 \item \href{#method-Registry-get_field_names}{\code{Registry$get_field_names()}}
 \item \href{#method-Registry-get_record_class}{\code{Registry$get_record_class()}}
+\item \href{#method-Registry-get_temporary_record_class}{\code{Registry$get_temporary_record_class()}}
 \item \href{#method-Registry-print}{\code{Registry$print()}}
 \item \href{#method-Registry-to_string}{\code{Registry$to_string()}}
 }
@@ -202,6 +203,21 @@ Note: This method is intended for internal use only and may be removed in the fu
 
 \subsection{Returns}{
 A \link{Record} class.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Registry-get_temporary_record_class"></a>}}
+\if{latex}{\out{\hypertarget{method-Registry-get_temporary_record_class}{}}}
+\subsection{Method \code{get_temporary_record_class()}}{
+Get the temporary record class for the registry.
+
+Note: This method is intended for internal use only and may be removed in the future.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Registry$get_temporary_record_class()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A \link{TemporaryRecord} class.
 }
 }
 \if{html}{\out{<hr>}}

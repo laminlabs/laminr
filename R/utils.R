@@ -16,7 +16,7 @@ check_requires <- function(what, requires, type = c("error", "warning")) {
 
   is_available <- map_lgl(requires, requireNamespace, quietly = TRUE)
 
-  msg_fun <- switch (type,
+  msg_fun <- switch(type,
     error = cli::cli_abort,
     warning = cli::cli_warn
   )

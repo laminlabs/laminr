@@ -83,7 +83,8 @@ connect <- function(slug = NULL) {
   is_default <- FALSE
   if (is.null(slug)) {
     instance_slug <- paste0(
-      instance_settings$owner, "/", name = instance_settings$name
+      instance_settings$owner, "/",
+      name = instance_settings$name
     )
     current_default <- getOption("LAMINR_DEFAULT_INSTANCE")
     if (!is.null(current_default)) {
