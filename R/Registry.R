@@ -404,5 +404,40 @@ create_record_from_python <- function(py_record, instance) {
     setNames(fields)
 
   record_class <- registry$get_record_class()
-  suppressWarnings(record_class$new(record_list))
+  temp_record_class <- create_temporary_record_class(record_class)
+
+  suppressWarnings(temp_record_class$new(record_class, py_record, record_list))
+}
+
+create_temporary_record_class <- function(record_class) {
+  R6::R6Class(
+    paste0("Temporary", record_class$classname),
+    cloneable = FALSE,
+    inherit = record_class,
+    public = list(
+      initialize = function(record_class, py_record, data) {
+        private$.record_class <- record_class
+        private$.py_record <- py_record
+
+        super$initialize(data)
+      },
+      save = function() {
+        private$.py_record$save()
+        private$.registry$get(self$uid)
+      },
+      #' @description
+      #' Print a `TemporaryRecord`
+      #'
+      #' @param style Logical, whether the output is styled using ANSI codes
+      print = function(style = TRUE) {
+        cat("!!! TEMPORARY RECORD !!!")
+        cat("\n\n")
+        super$print()
+      }
+    ),
+    private = list(
+      .record_class = NULL,
+      .py_record = NULL
+    )
+  )
 }
