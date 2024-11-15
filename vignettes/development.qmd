@@ -45,7 +45,8 @@ This document outlines the features of the **{laminr}** package and the roadmap 
 ### Manage data & metadata
 
 * [ ] **Create artifacts**: Create new artifacts from various data sources (e.g., files, data frames, in-memory objects).
-* [ ] **Save artifacts**: Save artifacts to LaminDB with appropriate metadata.
+  - [x] `$from_df()`: Create an artifact from a data frame.
+* [x] **Save artifacts**: Save artifacts to LaminDB with appropriate metadata.
 * [ ] **Load artifacts**: Load artifacts from LaminDB into R:
   - [ ] `fcs`: Load flow cytometry data.
   - [ ] `tsv`: Load tabular data.
@@ -59,6 +60,7 @@ This document outlines the features of the **{laminr}** package and the roadmap 
   - [x] `s3`: Interact with S3 storage.
   - [ ] `gcp`: Interact with Google Cloud Storage.
 * [ ] **Version artifacts**: Create new versions of artifacts.
+* [x] **Delete artifacts**: Delete an existing artifact.
 * [ ] **Manage artifact metadata**: Add, update, and delete artifact metadata.
 * [ ] **Work with collections**: Create, manage, and query collections of artifacts.
 
@@ -97,7 +99,7 @@ This document outlines the features of the **{laminr}** package and the roadmap 
 
 ### Transfer data
 
-* [ ] **Upload data**: Upload data files to LaminDB storage.
+* [x] **Upload data**: Upload data files to LaminDB storage.
 * [x] **Download data**: Download data files from LaminDB storage.
 * [ ] **(Advanced) Support zero-copy data transfer**: Implement efficient data transfer mechanisms.
 
@@ -116,7 +118,7 @@ A first version of the package that allows users to:
 ### Version 0.2.0
 
 * Expand query functionality with comparators, relationships, and pagination.
-* Implement basic data and metadata management features (create, save, load artifacts).
+* Implement basic data and metadata management features (create, save, load and delete artifacts).
 * Expand support for different data formats and storage backends.
 
 ### Version 0.3.0
