@@ -30,3 +30,18 @@ check_requires <- function(what, requires) {
 
   invisible(TRUE)
 }
+
+#' Check if we are in a knitr notebook
+#'
+#' @return `TRUE` if we are in a knitr notebook, `FALSE` otherwise
+#'
+#' @noRd
+is_knitr_notebook <- function() {
+  # if knitr is not available, assume that we are not in a notebook
+  if (!requireNamespace("knitr", quietly = TRUE)) {
+    return(FALSE)
+  }
+
+  # check if we are in a notebook
+  !is.null(knitr::opts_knit$get("out.format"))
+}
