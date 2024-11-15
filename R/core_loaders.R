@@ -19,7 +19,7 @@ load_csv <- function(file, ...) {
 #' @noRd
 load_tsv <- function(file, ...) {
   check_requires("Reading TSV files", "readr")
-  readr::read_delim(file, ...)
+  readr::read_tsv(file, ...)
 }
 
 #' Load an `.h5ad` file to `AnnData`
