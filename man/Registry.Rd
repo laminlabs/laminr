@@ -217,7 +217,7 @@ Note: This method is intended for internal use only and may be removed in the fu
 }
 
 \subsection{Returns}{
-A \link{TemporaryRecord} class.
+A \code{TemporaryRecord} class.
 }
 }
 \if{html}{\out{<hr>}}
