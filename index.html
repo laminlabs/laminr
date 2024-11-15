@@ -81,7 +81,12 @@ This package is currently in <strong>early access</strong> and is under active d
 <ul>
 <li>Connect to a LaminDB instance and list all records in a registry.</li>
 <li>Fetch records by ID or UID.</li>
-<li>Cache S3 artifacts locally.</li>
+<li>Cache artifacts locally.
+<ul>
+<li>Currently supported storage backends: <code>s3</code>.</li>
+<li>Planned: <code>gcs</code>.</li>
+</ul>
+</li>
 <li>Load artifacts into memory.
 <ul>
 <li>Currently supported file formats: <code>.csv</code>, <code>.h5ad</code>, <code>.html</code>, <code>.jpg</code>, <code>.json</code>, <code>.parquet</code>, <code>.png</code>, <code>.rds</code>, <code>.svg</code>, <code>.tsv</code>, <code>.yaml</code>.<br>
@@ -180,6 +185,7 @@ This package is currently in <strong>early access</strong> and is under active d
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
+<li><a href="https://CRAN.R-project.org/package=laminr" class="external-link"><img src="https://www.r-pkg.org/badges/version/laminr" alt="CRAN status"></a></li>
 <li><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
 <li><a href="https://github.com/laminlabs/laminr/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/laminlabs/laminr/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
 </ul>
