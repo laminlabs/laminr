@@ -25,7 +25,9 @@ LaminDB is accompanied by LaminHub which is a data collaboration hub built on La
 - Connect to a LaminDB instance and list all records in a registry.
 - Fetch records by ID or UID.
 - Cache S3 artifacts locally.
-- Load AnnData artifacts natively in R.
+- Load artifacts into memory.
+  - Currently supported file formats: `.csv`, `.h5ad`, `.html`, `.jpg`, `.json`, `.parquet`, `.png`, `.rds`, `.svg`, `.tsv`, `.yaml`.  
+  - Planned: `.fcs`, `.h5mu`, `.zarr`.
 
 See the development roadmap for more details (`vignette("development", package = "laminr")`).
 
