@@ -123,7 +123,7 @@ load_json <- function(file, ...) {
 #' Display an `.svg`, `.jpg`, `.png` or `.gif` in the viewer
 #'
 #' @param file Path to the file to load
-#' @param ... Additional arguments to pass to [...]
+#' @param ... Additional arguments to pass to ...
 #'
 #' @return NULL
 #' @noRd
