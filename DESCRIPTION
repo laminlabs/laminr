@@ -22,7 +22,8 @@ Imports:
     jsonlite,
     purrr,
     R6,
-    rlang
+    rlang,
+    tibble
 Suggests:
     anndata,
     knitr,

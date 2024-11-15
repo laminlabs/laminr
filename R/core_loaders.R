@@ -96,12 +96,17 @@ load_h5mu <- function(file, ...) {
 #' @return NULL if interactive mode is enabled, the path to the file otherwise
 #' @noRd
 load_html <- function(file, ...) {
-  if (interactive()) {
-    check_requires("Opening HTML files", "utils")
-    utils::browseURL(file, ...)
+  if (is_knitr_notebook()) {
+    lines <- readLines(file)
+    return(knitr::raw_html(paste(lines, collapse = "\n")))
   }
 
-  file
+  if (interactive()) {
+    check_requires("Opening HTML files", "utils")
+    return(utils::browseURL(file, ...))
+  }
+
+  return(file)
 }
 
 #' Load a JSON file
@@ -125,22 +130,21 @@ load_json <- function(file, ...) {
 #' @noRd
 load_image <- function(file, ...) {
   # if part of a knitr document, include the SVG
-  if (requireNamespace("knitr", quietly = TRUE)) {
+  if (is_knitr_notebook()) {
     ext <- tools::file_ext(file)
 
     if (knitr::is_latex_output() && ext == "svg") {
       check_requires("Displaying SVG images in LaTeX", "rsvg")
       pdf_file <- tempfile(fileext = ".pdf")
-      rsvg::rsvg_pdf(file, pdf_file, ...)
+      return(rsvg::rsvg_pdf(file, pdf_file, ...))
     }
-    if (knitr::is_html_output() || ext != "svg") {
-      knitr::include_graphics(file, ...)
-    }
+
+    return(knitr::include_graphics(file, ...))
   }
 
   if (interactive()) {
     check_requires("Displaying images", "utils")
-    utils::browseURL(file, ...)
+    return(utils::browseURL(file, ...))
   }
 
   file
@@ -200,7 +204,7 @@ file_loaders <- list(
 #' @importFrom tools file_ext
 load_file <- function(file, suffix = NULL, ...) {
   if (is.null(suffix)) {
-    suffix <- tools::file_ext(file)
+    suffix <- paste0(".", tools::file_ext(file))
   }
 
   file_loader <- file_loaders[[suffix]]
