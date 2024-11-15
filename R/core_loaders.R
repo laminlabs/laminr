@@ -102,7 +102,6 @@ load_html <- function(file, ...) {
   }
 
   if (interactive()) {
-    check_requires("Opening HTML files", "utils")
     return(utils::browseURL(file, ...))
   }
 
@@ -116,8 +115,8 @@ load_html <- function(file, ...) {
 #'
 #' @return A list
 #' @noRd
+#' @importFrom jsonlite fromJSON
 load_json <- function(file, ...) {
-  check_requires("Reading JSON files", "jsonlite")
   jsonlite::fromJSON(file, ...)
 }
 
