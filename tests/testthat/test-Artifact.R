@@ -2,7 +2,7 @@ skip_if_offline()
 
 test_that("creating an artifact from a data frame works", {
   skip_if_not_installed("reticulate")
-  skip_if_not(reticulate::py_available("lamindb"))
+  skip_if_not(reticulate::py_module_available("lamindb"))
 
   local_setup_lamindata_instance()
 
