@@ -1,7 +1,7 @@
 # {laminr}: An R interface to LaminDB
 
 <!-- badges: start -->
-
+[![CRAN status](https://www.r-pkg.org/badges/version/laminr)](https://CRAN.R-project.org/package=laminr)
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![R-CMD-check](https://github.com/laminlabs/laminr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/laminlabs/laminr/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
@@ -24,8 +24,12 @@ LaminDB is accompanied by LaminHub which is a data collaboration hub built on La
 
 - Connect to a LaminDB instance and list all records in a registry.
 - Fetch records by ID or UID.
-- Cache S3 artifacts locally.
-- Load AnnData artifacts natively in R.
+- Cache artifacts locally.
+  - Currently supported storage backends: `s3`.
+  - Planned: `gcs`.
+- Load artifacts into memory.
+  - Currently supported file formats: `.csv`, `.h5ad`, `.html`, `.jpg`, `.json`, `.parquet`, `.png`, `.rds`, `.svg`, `.tsv`, `.yaml`.  
+  - Planned: `.fcs`, `.h5mu`, `.zarr`.
 
 See the development roadmap for more details (`vignette("development", package = "laminr")`).
 

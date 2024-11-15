@@ -1,5 +1,11 @@
 # laminr v0.2.0
 
+## NEW FUNCTIONALITY
+
+* Add support for more loaders (PR #81).  
+  Currently supported: `.csv`, `.h5ad`, `.html`, `.jpg`, `.json`, `.parquet`, `.png`, `.rds`, `.svg`, `.tsv`, `.yaml`.  
+  Planned: `.fcs`, `.h5mu`, `.zarr`.
+
 ## DOCUMENTATION
 
 * Updated installation instructions after **{laminr}** was released on CRAN (PR #74).

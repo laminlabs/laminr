@@ -48,14 +48,20 @@ This document outlines the features of the **{laminr}** package and the roadmap 
   - [x] `$from_df()`: Create an artifact from a data frame.
 * [x] **Save artifacts**: Save artifacts to LaminDB with appropriate metadata.
 * [ ] **Load artifacts**: Load artifacts from LaminDB into R:
+  - [x] `csv`: Load a data frame from a CSV file.
   - [ ] `fcs`: Load flow cytometry data.
-  - [ ] `tsv`: Load tabular data.
-  - [x] `h5ad`: Load an HDF5-backed AnnData object.
-  - [ ] `h5mu`: Load an HDF5-backed MuData object.
-  - [ ] `html`: Load HTML content.
-  - [ ] `json`: Load JSON data.
-  - [ ] `image`: Load image data.
-  - [ ] `svg`: Load SVG data.
+  - [x] `h5ad`: Load an AnnData from an HDF5 file.
+  - [ ] `h5mu`: Load a MuData from an HDF5 file.
+  - [x] `html`: Load content from an HTML file.
+  - [x] `jpg`: Load an image from JPG.
+  - [x] `json`: Load data from a JSON file.
+  - [x] `parquet`: Load a data frame from a Parquet file.
+  - [x] `png`: Load an image from PNG.
+  - [x] `rds`: Load an R object from an RDS file.
+  - [x] `svg`: Load an image from SVG.
+  - [x] `tsv`: Load a data frame from a TSV file.
+  - [x] `yaml`: Load data from a YAML file.
+  - [ ] `zarr`: Load an AnnData from a Zarr store.
 * [ ] **Cache artifacts**: Cache artifacts locally for faster access:
   - [x] `s3`: Interact with S3 storage.
   - [ ] `gcp`: Interact with Google Cloud Storage.

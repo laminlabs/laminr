@@ -10,3 +10,6 @@ docs
 /doc/
 /Meta/
 *.html
+
+CRAN-SUBMISSION
+cran-comments.md
