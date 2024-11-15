@@ -77,3 +77,14 @@
 .settings_load__setup_user_from_store <- function(store) { # nolint object_length_linter
   UserSettings$new(store)
 }
+
+.get_user_settings <- function() {
+  user_settings <- getOption("LAMINR_USER_SETTINGS")
+
+  if (is.null(user_settings)) {
+    user_settings <- .settings_load__load_or_create_user_settings()
+    options("LAMINR_USER_SETTINGS" = user_settings)
+  }
+
+  user_settings
+}

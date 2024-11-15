@@ -20,6 +20,8 @@
 #' instance
 #' }
 connect <- function(slug = NULL) {
+  user_settings <- .get_user_settings()
+
   instance_file <-
     if (is.null(slug)) {
       # if the slug is null, see if we can load the default instance
@@ -144,7 +146,7 @@ connect <- function(slug = NULL) {
     owner <- split[[1]]
     name <- split[[2]]
   } else {
-    user_settings <- .settings_load__load_or_create_user_settings()
+    user_settings <- .get_user_settings()
 
     owner <- user_settings$handle
     name <- identifier
