@@ -8,7 +8,7 @@ test_that("load_file with a .csv works", {
   readr::write_csv(df, file)
 
   # load the CSV file
-  loaded_df <- suppressMessages(load_file(file))
+  loaded_df <- load_file(file, show_col_types = FALSE)
 
   # ignore class differences
   class(loaded_df) <- class(df)
@@ -27,7 +27,7 @@ test_that("load_file with a .tsv works", {
   readr::write_tsv(df, file)
 
   # load the TSV file
-  loaded_df <- suppressMessages(load_file(file))
+  loaded_df <- load_file(file, show_col_types = FALSE)
 
   # ignore class differences
   class(loaded_df) <- class(df)
