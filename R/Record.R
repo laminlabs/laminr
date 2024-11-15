@@ -170,6 +170,22 @@ Record <- R6::R6Class( # nolint object_name_linter
       }
     },
     #' @description
+    #' Delete a `Record`
+    #'
+    #' @param verbose Whether to print details of the API call
+    #'
+    #' @return `TRUE` invisibly if the deletion is successful
+    delete = function(verbose = FALSE) {
+      response <- private$.api$delete_record(
+        module_name = private$.registry$module$name,
+        registry_name = private$.registry$name,
+        id_or_uid = self$uid,
+        verbose = verbose
+      )
+
+      invisible(TRUE)
+    },
+    #' @description
     #' Print a `Record`
     #'
     #' @param style Logical, whether the output is styled using ANSI codes
