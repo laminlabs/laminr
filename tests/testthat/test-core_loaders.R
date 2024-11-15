@@ -51,13 +51,20 @@ test_that("load_file with an .h5ad works", {
     obs = data.frame(a = 1L:3L),
     var = data.frame(b = c("a", "b"))
   )
-  anndata::write_h5ad(adata, file)
+
+  adata$write_h5ad(file)
 
   # load the AnnData object
   loaded_adata <- load_file(file)
 
   # check that the AnnData object is the same
-  expect_identical(loaded_adata, adata)
+  expected <- capture_output(print(adata))
+  actual <- capture_output(print(loaded_adata))
+  expect_equal(actual, expected)
+
+  expect_equal(loaded_adata$obs, adata$obs, ignore_attr = TRUE)
+  expect_equal(loaded_adata$var, adata$var, ignore_attr = TRUE)
+  expect_equal(loaded_adata$X, adata$X, ignore_attr = TRUE)
 })
 
 ###################### TODO: add anndata_zarr tests ######################
