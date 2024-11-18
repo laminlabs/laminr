@@ -154,27 +154,15 @@ Registry <- R6::R6Class( # nolint object_name_linter
     #' @return A `TemporaryRecord` object containing the new record. This is not
     #' saved to the database until `temp_record$save()` is called.
     from_df = function(dataframe, key = NULL, description = NULL, run = NULL) {
-      if (isFALSE(private$.instance$is_default)) {
-        cli::cli_abort(c(
-          "Only the default instance can create records",
-          "i" = "Use {.code connect(slug = NULL)} to connect to the default instance"
-        ))
-      }
-
-      if (is.null(private$.instance$get_py_lamin())) {
-        cli::cli_abort(c(
-          "Creating records requires the Python lamindb package",
-          "i" = "Check the output of {.code connect()} for warnings"
-        ))
-      }
-
       if (private$.registry_name != "artifact") {
         cli::cli_abort(
           "Creating records from data frames is only supported for the Artifact registry"
         )
       }
 
-      py_lamin <- private$.instance$get_py_lamin()
+      py_lamin <- private$.instance$get_py_lamin(
+        check = TRUE, what = "Creating records"
+      )
 
       py_record <- py_lamin$Artifact$from_df(
         dataframe,

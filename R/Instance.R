@@ -191,8 +191,26 @@ Instance <- R6::R6Class( # nolint object_name_linter
     },
     #' @description Get the Python lamindb module
     #'
+    #' @param check Logical, whether to perform checks
+    #' @param what What the python module is being requested for, used in check
+    #'   messages
+    #'
     #' @return Python lamindb module.
-    get_py_lamin = function() {
+    get_py_lamin = function(check = FALSE, what = "This functionality") {
+      if (check && isFALSE(self$is_default)) {
+        cli::cli_abort(c(
+          "{what} can only be performed by the default instance",
+          "i" = "Use {.code connect(slug = NULL)} to connect to the default instance"
+        ))
+      }
+
+      if (check && is.null(self$get_py_lamin())) {
+        cli::cli_abort(c(
+          "{what} requires the Python lamindb package",
+          "i" = "Check the output of {.code connect()} for warnings"
+        ))
+      }
+
       private$.py_lamin
     },
     #' @description Start a run with tracked data lineage
@@ -204,22 +222,9 @@ Instance <- R6::R6Class( # nolint object_name_linter
     #' @param path Path to the R script or document to track
     #' @param transform UID specifying the data transformation
     track = function(path, transform = NULL) {
-      if (isFALSE(self$is_default)) {
-        cli::cli_abort(c(
-          "Only the default instance can create records",
-          "i" = "Use {.code connect(slug = NULL)} to connect to the default instance"
-        ))
-      }
-
-      if (is.null(self$get_py_lamin())) {
-        cli::cli_abort(c(
-          "Tracking requires the Python lamindb package",
-          "i" = "Check the output of {.code connect()} for warnings"
-        ))
-      }
+      py_lamin <- self$get_py_lamin(check = TRUE, what = "Tracking")
 
       if (is.null(transform)) {
-        py_lamin <- self$get_py_lamin()
         transform <- tryCatch(
           py_lamin$track(path=path),
           error = function(err) {
@@ -248,6 +253,11 @@ Instance <- R6::R6Class( # nolint object_name_linter
 
         py_lamin$track(transform=transform, path=path)
       }
+    },
+    #' @description Finish a tracked run
+    finish = function() {
+      py_lamin <- self$get_py_lamin(check = TRUE, what = "Tracking")
+      py_lamin$finish()
     },
     #' @description
     #' Print an `Instance`
