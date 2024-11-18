@@ -195,6 +195,60 @@ Instance <- R6::R6Class( # nolint object_name_linter
     get_py_lamin = function() {
       private$.py_lamin
     },
+    #' @description Start a run with tracked data lineage
+    #'
+    #' @details
+    #' Calling `track()` with `transform = NULL` with return a UID, providing
+    #' that UID with the same path with start a run
+    #'
+    #' @param path Path to the R script or document to track
+    #' @param transform UID specifying the data transformation
+    track = function(path, transform = NULL) {
+      if (isFALSE(self$is_default)) {
+        cli::cli_abort(c(
+          "Only the default instance can create records",
+          "i" = "Use {.code connect(slug = NULL)} to connect to the default instance"
+        ))
+      }
+
+      if (is.null(self$get_py_lamin())) {
+        cli::cli_abort(c(
+          "Tracking requires the Python lamindb package",
+          "i" = "Check the output of {.code connect()} for warnings"
+        ))
+      }
+
+      if (is.null(transform)) {
+        py_lamin <- self$get_py_lamin()
+        transform <- tryCatch(
+          py_lamin$track(path=path),
+          error = function(err) {
+            py_err <- reticulate::py_last_error()
+            if (py_err$type != "MissingContextUID") {
+              cli::cli_abort(c(
+                "Python error {.val {py_err$type}}",
+                "i" = "Run {.run reticulate::py_last_error()} for details"
+              ))
+            }
+
+            uid <- gsub('.*\\("(.*?)"\\).*', '\\1', py_err$value)
+            print(uid)
+            cli::cli_inform(paste(
+              "Got UID {.val {uid}} for path {.file {path}}.",
+              "Run this function with {.code transform = \"{uid}\"} to track this path."
+            ))
+          }
+        )
+      } else {
+        if (is.character(transform) && nchar(transform) != 16) {
+          cli::cli_abort(
+            "The transform UID must be exactly 16 characters, got {nchar(transform)}"
+          )
+        }
+
+        py_lamin$track(transform=transform, path=path)
+      }
+    },
     #' @description
     #' Print an `Instance`
     #'
