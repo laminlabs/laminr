@@ -204,6 +204,12 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
                              verbose = FALSE) {
 
       user_settings <- .get_user_settings()
+      if (is.null(user_settings$access_token)) {
+        cli::cli_abort(c(
+          "There is no access token for the current user",
+          "i" = "Run {.code lamin login} and reconnect to the database in a new R session"
+        ))
+      }
 
       url <- paste0(
         private$.instance_settings$api_url,
