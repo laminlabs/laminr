@@ -2,13 +2,27 @@
 
 ## NEW FUNCTIONALITY
 
-* Add support for more loaders (PR #81).  
+- Add support for more loaders (PR #81).  
   Currently supported: `.csv`, `.h5ad`, `.html`, `.jpg`, `.json`, `.parquet`, `.png`, `.rds`, `.svg`, `.tsv`, `.yaml`.  
-  Planned: `.fcs`, `.h5mu`, `.zarr`.
+- Add a `from_df()` method to the `Registry` class to create new artifacts from data frames (PR #78)
+- Create `TemporaryRecord` classes for new artifacts before they have been saved to the database (PR #78)
+- Add a `delete()` method to the `Record` class (PR #78)
+
+## MAJOR CHANGES
+
+- Running `connect(slug = NULL)` now connects to the default instance that is allowed to create records.
+  The default instance must be changed using the Lamin CLI. (PR #78)
+- User setting are stored in a global option the first time `connect()` is run (PR #78)
+
+## TESTING
+
+- Add a test for creating artifacts from data frames (PR #78).
 
 ## DOCUMENTATION
 
-* Updated installation instructions after **{laminr}** was released on CRAN (PR #74).
+- Updated installation instructions after **{laminr}** was released on CRAN (PR #74).
+- Updated the architecture vignette to include new methods and the new `TemporaryRecord` class (PR #78)
+- Updated the development vignette with new functionality (PR #78)
 
 # laminr v0.1.0
 
