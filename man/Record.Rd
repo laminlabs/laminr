@@ -10,6 +10,7 @@ A record from a registry.
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-Record-new}{\code{Record$new()}}
+\item \href{#method-Record-delete}{\code{Record$delete()}}
 \item \href{#method-Record-print}{\code{Record$print()}}
 \item \href{#method-Record-to_string}{\code{Record$to_string()}}
 }
@@ -36,6 +37,26 @@ but rather by connecting to a LaminDB instance using the \code{\link[=connect]{c
 \item{\code{data}}{The data for the record.}
 }
 \if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Record-delete"></a>}}
+\if{latex}{\out{\hypertarget{method-Record-delete}{}}}
+\subsection{Method \code{delete()}}{
+Delete a \code{Record}
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Record$delete(verbose = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{verbose}}{Whether to print details of the API call}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{TRUE} invisibly if the deletion is successful
 }
 }
 \if{html}{\out{<hr>}}

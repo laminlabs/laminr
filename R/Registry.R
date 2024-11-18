@@ -139,6 +139,51 @@ Registry <- R6::R6Class( # nolint object_name_linter
         list_rbind()
     },
     #' @description
+    #' Create a record from a data frame
+    #'
+    #' @param dataframe The `data.frame` to create a record from
+    #' @param key A relative path within the default storage
+    #' @param description A string describing the record
+    #' @param run A `Run` object that creates the record
+    #'
+    #' @details
+    #' Creating records is only possible for the default instance, requires the
+    #' Python `lamindb` module and is only implemented for the core `Artifact`
+    #' registry.
+    #'
+    #' @return A `TemporaryRecord` object containing the new record. This is not
+    #' saved to the database until `temp_record$save()` is called.
+    from_df = function(dataframe, key = NULL, description = NULL, run = NULL) {
+      if (isFALSE(private$.instance$is_default)) {
+        cli::cli_abort(c(
+          "Only the default instance can create records",
+          "i" = "Use {.code connect(slug = NULL)} to connect to the default instance"
+        ))
+      }
+
+      if (is.null(private$.instance$get_py_lamin())) {
+        cli::cli_abort(c(
+          "Creating records requires the Python lamindb package",
+          "i" = "Check the output of {.code connect()} for warnings"
+        ))
+      }
+
+      if (private$.registry_name != "artifact") {
+        cli::cli_abort(
+          "Creating records from data frames is only supported for the Artifact registry"
+        )
+      }
+
+      py_lamin <- private$.instance$get_py_lamin()
+
+      py_record <- py_lamin$Artifact$from_df(
+        dataframe,
+        key = key, description = description, run = run
+      )
+
+      create_record_from_python(py_record, private$.instance)
+    },
+    #' @description
     #' Get the fields in the registry.
     #'
     #' @return A list of [Field] objects.
@@ -169,6 +214,21 @@ Registry <- R6::R6Class( # nolint object_name_linter
     #' @return A [Record] class.
     get_record_class = function() {
       private$.record_class
+    },
+    #' @description
+    #' Get the temporary record class for the registry.
+    #'
+    #' Note: This method is intended for internal use only and may be removed in the future.
+    #'
+    #' @return A `TemporaryRecord` class.
+    get_temporary_record_class = function() {
+      if (is.null(private$.temporary_record_class)) {
+        private$.temporary_record_class <- create_temporary_record_class(
+          private$.record_class
+        )
+      }
+
+      private$.temporary_record_class
     },
     #' @description
     #' Print a `Registry`
@@ -301,7 +361,7 @@ Registry <- R6::R6Class( # nolint object_name_linter
         list(
           paste0("[", paste(map_chr(module_fields, "field_name"), collapse = ", "), "]")
         ) |>
-          setNames(module_heading) |>
+          set_names(module_heading) |>
           make_key_value_strings(quote_strings = FALSE)
       })
 
@@ -321,7 +381,8 @@ Registry <- R6::R6Class( # nolint object_name_linter
     .class_name = NULL,
     .is_link_table = NULL,
     .fields = NULL,
-    .record_class = NULL
+    .record_class = NULL,
+    .temporary_record_class = NULL
   ),
   active = list(
     #' @field module ([Module])\cr
@@ -346,3 +407,58 @@ Registry <- R6::R6Class( # nolint object_name_linter
     }
   )
 )
+
+#' Create record from Python
+#'
+#' @param py_record A Python record object
+#' @param instance `Instance` object to create the record for
+#'
+#' @details
+#' The new record is created by:
+#'
+#' 1. Getting the module and registry from the Python class
+#' 2. Getting the fields for this registry
+#' 3. Iteratively getting the data for each field. Values that are records are
+#'    converted by calling this function.
+#' 4. Get the matching temporary record class
+#' 5. Return the temporary record
+#'
+#' @return The created `TemporaryRecord` object
+#' @noRd
+create_record_from_python <- function(py_record, instance) {
+  py_classes <- class(py_record)
+
+  # Skip related fields for now
+  if ("django.db.models.manager.Manager" %in% py_classes) {
+    return(NULL)
+  }
+
+  class_split <- strsplit(py_classes[1], "\\.")[[1]]
+  module_name <- class_split[1]
+  if (module_name == "lnschema_core") {
+    module_name <- "core"
+  }
+  registry_name <- tolower(class_split[3])
+
+  registry <- instance$get_module(module_name)$get_registry(registry_name)
+  fields <- registry$get_field_names()
+
+  record_list <- map(fields, function(.field) {
+    value <- tryCatch(
+      py_record[[.field]],
+      error = function(err) {
+        NULL
+      }
+    )
+    if (inherits(value, "lnschema_core.models.Record")) {
+      value <- create_record_from_python(value, instance)
+    }
+    value
+  }) |>
+    set_names(fields)
+
+  temp_record_class <- registry$get_temporary_record_class()
+
+  # Suppress warnings because we deliberately add unexpected data fields
+  suppressWarnings(temp_record_class$new(py_record, record_list))
+}

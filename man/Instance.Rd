@@ -33,6 +33,14 @@ artifact$id
 artifact$load()
 }
 }
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{is_default}}{(\code{logical(1)})\cr
+Whether this is the default instance.}
+}
+\if{html}{\out{</div>}}
+}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
@@ -42,6 +50,7 @@ artifact$load()
 \item \href{#method-Instance-get_module_names}{\code{Instance$get_module_names()}}
 \item \href{#method-Instance-get_settings}{\code{Instance$get_settings()}}
 \item \href{#method-Instance-get_api}{\code{Instance$get_api()}}
+\item \href{#method-Instance-get_py_lamin}{\code{Instance$get_py_lamin()}}
 \item \href{#method-Instance-print}{\code{Instance$print()}}
 \item \href{#method-Instance-to_string}{\code{Instance$to_string()}}
 }
@@ -53,7 +62,7 @@ artifact$load()
 Creates an instance of this R6 class. This class should not be instantiated directly,
 but rather by connecting to a LaminDB instance using the \code{\link[=connect]{connect()}} function.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Instance$new(settings, api, schema)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Instance$new(settings, api, schema, is_default, py_lamin)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -64,6 +73,10 @@ but rather by connecting to a LaminDB instance using the \code{\link[=connect]{c
 \item{\code{api}}{The API for the instance}
 
 \item{\code{schema}}{The schema for the instance}
+
+\item{\code{is_default}}{Logical, whether this is the default instance}
+
+\item{\code{py_lamin}}{A Python \code{lamindb} module object}
 }
 \if{html}{\out{</div>}}
 }
@@ -142,6 +155,19 @@ Note: This method is intended for internal use only and may be removed in the fu
 
 \subsection{Returns}{
 The API for the instance.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Instance-get_py_lamin"></a>}}
+\if{latex}{\out{\hypertarget{method-Instance-get_py_lamin}{}}}
+\subsection{Method \code{get_py_lamin()}}{
+Get the Python lamindb module
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Instance$get_py_lamin()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+Python lamindb module.
 }
 }
 \if{html}{\out{<hr>}}

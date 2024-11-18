@@ -39,6 +39,7 @@ test_that("load_file with a .tsv works", {
 test_that("load_file with an .h5ad works", {
   skip_if_not_installed("anndata")
   skip_if_not_installed("reticulate")
+  skip_if_not(reticulate::py_module_available("anndata"))
 
   file <- withr::local_file(tempfile(fileext = ".h5ad"))
 

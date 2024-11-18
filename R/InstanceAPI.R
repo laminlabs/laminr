@@ -197,6 +197,49 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
       private$process_response(response, "get record")
     },
     #' @description
+    #' Delete a record from the instance.
+    delete_record = function(module_name,
+                             registry_name,
+                             id_or_uid,
+                             verbose = FALSE) {
+      user_settings <- .get_user_settings()
+      if (is.null(user_settings$access_token)) {
+        cli::cli_abort(c(
+          "There is no access token for the current user",
+          "i" = "Run {.code lamin login} and reconnect to the database in a new R session"
+        ))
+      }
+
+      url <- paste0(
+        private$.instance_settings$api_url,
+        "/instances/",
+        private$.instance_settings$id,
+        "/modules/",
+        module_name,
+        "/",
+        registry_name,
+        "/",
+        id_or_uid,
+        "?schema_id=",
+        private$.instance_settings$schema_id
+      )
+
+      if (verbose) {
+        cli_inform("URL: {url}")
+      }
+
+      response <- httr::DELETE(
+        url,
+        httr::add_headers(
+          accept = "application/json",
+          `Content-Type` = "application/json",
+          Authorization = paste("Bearer", user_settings$access_token)
+        )
+      )
+
+      private$process_response(response, "delete record")
+    },
+    #' @description
     #' Print an `API`
     #'
     #' @param style Logical, whether the output is styled using ANSI codes
