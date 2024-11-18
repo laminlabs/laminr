@@ -189,6 +189,12 @@ Instance <- R6::R6Class( # nolint object_name_linter
     get_api = function() {
       private$.api
     },
+    #' @description Get the Python lamindb module
+    #'
+    #' @return Python lamindb module.
+    get_py_lamin = function() {
+      private$.py_lamin
+    }
     #' @description
     #' Print an `Instance`
     #'
@@ -282,11 +288,6 @@ Instance <- R6::R6Class( # nolint object_name_linter
     #' Whether this is the default instance.
     is_default = function() {
       private$.is_default
-    },
-    #' @field py_lamin (`python.builtin.module`)\cr
-    #' Python lamindb module.
-    py_lamin = function() {
-      private$.py_lamin
     }
   ),
   private = list(

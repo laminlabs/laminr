@@ -161,7 +161,7 @@ Registry <- R6::R6Class( # nolint object_name_linter
         ))
       }
 
-      if (is.null(private$.instance$py_lamin)) {
+      if (is.null(private$.instance$get_py_lamin())) {
         cli::cli_abort(c(
           "Creating records requires the Python lamindb package",
           "i" = "Check the output of {.code connect()} for warnings"
@@ -174,7 +174,7 @@ Registry <- R6::R6Class( # nolint object_name_linter
         )
       }
 
-      py_lamin <- private$.instance$py_lamin
+      py_lamin <- private$.instance$get_py_lamin()
 
       py_record <- py_lamin$Artifact$from_df(
         dataframe,
