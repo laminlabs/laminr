@@ -14,7 +14,8 @@ test_that("creating an artifact from a data frame works", {
   )
 
   new_artifact <- db$Artifact$from_df(
-    dataframe, description = dataframe$Description
+    dataframe,
+    description = dataframe$Description
   )
 
   expect_s3_class(new_artifact, "TemporaryArtifact")

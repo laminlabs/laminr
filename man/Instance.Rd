@@ -38,9 +38,6 @@ artifact$load()
 \describe{
 \item{\code{is_default}}{(\code{logical(1)})\cr
 Whether this is the default instance.}
-
-\item{\code{py_lamin}}{(\code{python.builtin.module})\cr
-Python lamindb module.}
 }
 \if{html}{\out{</div>}}
 }
@@ -53,6 +50,7 @@ Python lamindb module.}
 \item \href{#method-Instance-get_module_names}{\code{Instance$get_module_names()}}
 \item \href{#method-Instance-get_settings}{\code{Instance$get_settings()}}
 \item \href{#method-Instance-get_api}{\code{Instance$get_api()}}
+\item \href{#method-Instance-get_py_lamin}{\code{Instance$get_py_lamin()}}
 \item \href{#method-Instance-print}{\code{Instance$print()}}
 \item \href{#method-Instance-to_string}{\code{Instance$to_string()}}
 }
@@ -157,6 +155,19 @@ Note: This method is intended for internal use only and may be removed in the fu
 
 \subsection{Returns}{
 The API for the instance.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Instance-get_py_lamin"></a>}}
+\if{latex}{\out{\hypertarget{method-Instance-get_py_lamin}{}}}
+\subsection{Method \code{get_py_lamin()}}{
+Get the Python lamindb module
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Instance$get_py_lamin()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+Python lamindb module.
 }
 }
 \if{html}{\out{<hr>}}

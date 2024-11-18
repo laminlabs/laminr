@@ -202,7 +202,6 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
                              registry_name,
                              id_or_uid,
                              verbose = FALSE) {
-
       user_settings <- .get_user_settings()
       if (is.null(user_settings$access_token)) {
         cli::cli_abort(c(

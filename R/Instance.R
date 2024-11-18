@@ -194,7 +194,7 @@ Instance <- R6::R6Class( # nolint object_name_linter
     #' @return Python lamindb module.
     get_py_lamin = function() {
       private$.py_lamin
-    }
+    },
     #' @description
     #' Print an `Instance`
     #'

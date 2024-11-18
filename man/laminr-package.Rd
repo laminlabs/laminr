@@ -4,9 +4,9 @@
 \name{laminr-package}
 \alias{laminr}
 \alias{laminr-package}
-\title{laminr: 'LaminDB' Interface in R}
+\title{laminr: Interface for 'LaminDB'}
 \description{
-Interact with 'LaminDB' from R. 'LaminDB' is an open-source data framework for biology. This package allows you to query and download data from 'LaminDB' instances.
+Interact with 'LaminDB'. 'LaminDB' is an open-source data framework for biology. This package allows you to query and download data from 'LaminDB' instances.
 }
 \seealso{
 Useful links:
