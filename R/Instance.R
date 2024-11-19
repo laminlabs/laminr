@@ -195,6 +195,18 @@ Instance <- R6::R6Class( # nolint object_name_linter
     get_py_lamin = function() {
       private$.py_lamin
     },
+    #' @description Bulk save records to registries and storage
+    #'
+    #' @param records List of `TemporaryRecord` objects to save
+    #'
+    #' @details
+    #' **NOTE:** This method behaves differently to the Python equivalent
+    #' (`lamindb.save()`). It is the same as calling `record$save()` for each
+    #' item in `records` which **does not** have the same speed advantages and
+    #' **does** create related records. This may change in the future.
+    save = function(records) {
+      purrr::walk(records, ~ .x$save())
+    },
     #' @description
     #' Print an `Instance`
     #'

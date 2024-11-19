@@ -51,6 +51,7 @@ Whether this is the default instance.}
 \item \href{#method-Instance-get_settings}{\code{Instance$get_settings()}}
 \item \href{#method-Instance-get_api}{\code{Instance$get_api()}}
 \item \href{#method-Instance-get_py_lamin}{\code{Instance$get_py_lamin()}}
+\item \href{#method-Instance-save}{\code{Instance$save()}}
 \item \href{#method-Instance-print}{\code{Instance$print()}}
 \item \href{#method-Instance-to_string}{\code{Instance$to_string()}}
 }
@@ -169,6 +170,30 @@ Get the Python lamindb module
 \subsection{Returns}{
 Python lamindb module.
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Instance-save"></a>}}
+\if{latex}{\out{\hypertarget{method-Instance-save}{}}}
+\subsection{Method \code{save()}}{
+Bulk save records to registries and storage
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Instance$save(records)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{records}}{List of \code{TemporaryRecord} objects to save}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+\strong{NOTE:} This method behaves differently to the Python equivalent
+(\code{lamindb.save()}). It is the same as calling \code{record$save()} for each
+item in \code{records} which \strong{does not} have the same speed advantages and
+\strong{does} create related records. This may change in the future.
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Instance-print"></a>}}
