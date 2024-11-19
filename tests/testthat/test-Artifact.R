@@ -30,8 +30,7 @@ test_that("creating an artifact from a file works", {
   db <- connect()
 
   temp_file <- withr::local_tempfile(
-    pattern = "laminr-test-", fileext = ".file", lines = "Test file 1",
-    tmpdir = temp_dir
+    pattern = "laminr-test-", fileext = ".file", lines = "Test file 1"
   )
 
   new_record <- db$Artifact$from_file(temp_file)
