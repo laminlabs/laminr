@@ -32,7 +32,7 @@ test_that("creating an artifact from a file works", {
     pattern = "laminr-test-", fileext = ".file", lines = "Test file"
   )
 
-  new_record <- db$Artifact$from_file(
+  new_artifact <- db$Artifact$from_file(
     temp_file, description = "laminr test file"
   )
 
