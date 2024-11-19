@@ -8,6 +8,8 @@
 - Create `TemporaryRecord` classes for new artifacts before they have been saved to the database (PR #78)
 - Add a `delete()` method to the `Record` class (PR #78)
 - Add `track()` and `finish()` methods to the `Instance` class (PR #83)
+- Add a `from_path()` method to the `Registry` class to create new artifacts from paths (PR #85)
+- Add a `from_anndata()` method to the `Registry` class to create new artifacts from `AnnData` objects (PR #85)
 
 ## MAJOR CHANGES
 
@@ -18,12 +20,13 @@
 ## TESTING
 
 - Add a test for creating artifacts from data frames (PR #78).
+- Add tests for creating artifacts from paths and `AnnData` objects (PR #85)
 
 ## DOCUMENTATION
 
 - Updated installation instructions after **{laminr}** was released on CRAN (PR #74).
-- Updated the architecture vignette to include new methods and the new `TemporaryRecord` class (PR #78)
-- Updated the development vignette with new functionality (PR #78)
+- Updated the architecture vignette to include new methods and the new `TemporaryRecord` class (PR #78, PR #83, PR #85)
+- Updated the development vignette with new functionality (PR #78, PR #83, PR #85)
 
 # laminr v0.1.0
 

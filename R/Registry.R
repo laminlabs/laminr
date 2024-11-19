@@ -156,7 +156,7 @@ Registry <- R6::R6Class( # nolint object_name_linter
     from_df = function(dataframe, key = NULL, description = NULL, run = NULL) {
       if (private$.registry_name != "artifact") {
         cli::cli_abort(
-          "Creating records from data frames is only supported for the Artifact registry"
+          "Creating records is only supported for the Artifact registry"
         )
       }
 
@@ -166,6 +166,102 @@ Registry <- R6::R6Class( # nolint object_name_linter
 
       py_record <- py_lamin$Artifact$from_df(
         dataframe,
+        key = key, description = description, run = run
+      )
+
+      create_record_from_python(py_record, private$.instance)
+    },
+    #' @description
+    #' Create a record from a path
+    #'
+    #' @param path Path to create a record from
+    #' @param key A relative path within the default storage
+    #' @param description A string describing the record
+    #' @param run A `Run` object that creates the record
+    #'
+    #' @details
+    #' Creating records is only possible for the default instance, requires the
+    #' Python `lamindb` module and is only implemented for the core `Artifact`
+    #' registry.
+    #'
+    #' @return A `TemporaryRecord` object containing the new record. This is not
+    #' saved to the database until `temp_record$save()` is called.
+    from_path = function(path, key = NULL, description = NULL, run = NULL) {
+      if (isFALSE(private$.instance$is_default)) {
+        cli::cli_abort(c(
+          "Only the default instance can create records",
+          "i" = "Use {.code connect(slug = NULL)} to connect to the default instance"
+        ))
+      }
+
+      if (is.null(private$.instance$get_py_lamin())) {
+        cli::cli_abort(c(
+          "Creating records requires the Python lamindb package",
+          "i" = "Check the output of {.code connect()} for warnings"
+        ))
+      }
+
+      if (private$.registry_name != "artifact") {
+        cli::cli_abort(
+          "Creating records is only supported for the Artifact registry"
+        )
+      }
+
+      if (!file.exists(path)) {
+        cli::cli_abort(
+          "Path {.path {path}} does not exist"
+        )
+      }
+
+      py_lamin <- private$.instance$get_py_lamin()
+
+      py_record <- py_lamin$Artifact(
+        path,
+        key = key, description = description, run = run
+      )
+
+      create_record_from_python(py_record, private$.instance)
+    },
+    #' @description
+    #' Create a record from an `AnnData`
+    #'
+    #' @param adata The [anndata::AnnData] object to create a record from
+    #' @param key A relative path within the default storage
+    #' @param description A string describing the record
+    #' @param run A `Run` object that creates the record
+    #'
+    #' @details
+    #' Creating records is only possible for the default instance, requires the
+    #' Python `lamindb` module and is only implemented for the core `Artifact`
+    #' registry.
+    #'
+    #' @return A `TemporaryRecord` object containing the new record. This is not
+    #' saved to the database until `temp_record$save()` is called.
+    from_anndata = function(adata, key = NULL, description = NULL, run = NULL) {
+      if (isFALSE(private$.instance$is_default)) {
+        cli::cli_abort(c(
+          "Only the default instance can create records",
+          "i" = "Use {.code connect(slug = NULL)} to connect to the default instance"
+        ))
+      }
+
+      if (is.null(private$.instance$get_py_lamin())) {
+        cli::cli_abort(c(
+          "Creating records requires the Python lamindb package",
+          "i" = "Check the output of {.code connect()} for warnings"
+        ))
+      }
+
+      if (private$.registry_name != "artifact") {
+        cli::cli_abort(
+          "Creating records is only supported for the Artifact registry"
+        )
+      }
+
+      py_lamin <- private$.instance$get_py_lamin()
+
+      py_record <- py_lamin$Artifact$from_anndata(
+        adata,
         key = key, description = description, run = run
       )
 

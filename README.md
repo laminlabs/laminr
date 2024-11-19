@@ -30,7 +30,7 @@ LaminDB is accompanied by LaminHub which is a data collaboration hub built on La
 - Load artifacts into memory.
   - Currently supported file formats: `.csv`, `.h5ad`, `.html`, `.jpg`, `.json`, `.parquet`, `.png`, `.rds`, `.svg`, `.tsv`, `.yaml`.  
   - Planned: `.fcs`, `.h5mu`, `.zarr`.
-- Create records from data frames.
+- Create records from data frames, paths and `AnnData` objects.
 - Delete records.
 - Track code in R scripts and notebooks.
 
