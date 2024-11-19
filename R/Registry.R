@@ -184,6 +184,57 @@ Registry <- R6::R6Class( # nolint object_name_linter
       create_record_from_python(py_record, private$.instance)
     },
     #' @description
+    #' Create a record from a file
+    #'
+    #' @param path Path to the file to create a record from
+    #' @param key A relative path within the default storage
+    #' @param description A string describing the record
+    #' @param run A `Run` object that creates the record
+    #'
+    #' @details
+    #' Creating records is only possible for the default instance, requires the
+    #' Python `lamindb` module and is only implemented for the core `Artifact`
+    #' registry.
+    #'
+    #' @return A `TemporaryRecord` object containing the new record. This is not
+    #' saved to the database until `temp_record$save()` is called.
+    from_file = function(path, key = NULL, description = NULL, run = NULL) {
+      if (isFALSE(private$.instance$is_default)) {
+        cli::cli_abort(c(
+          "Only the default instance can create records",
+          "i" = "Use {.code connect(slug = NULL)} to connect to the default instance"
+        ))
+      }
+
+      if (is.null(private$.instance$get_py_lamin())) {
+        cli::cli_abort(c(
+          "Creating records requires the Python lamindb package",
+          "i" = "Check the output of {.code connect()} for warnings"
+        ))
+      }
+
+      if (private$.registry_name != "artifact") {
+        cli::cli_abort(
+          "Creating records from data frames is only supported for the Artifact registry"
+        )
+      }
+
+      if (!utils::file_test("-f", path)) {
+        cli::cli_abort(
+          "File {.path {path}} does not exist"
+        )
+      }
+
+      py_lamin <- private$.instance$get_py_lamin()
+
+      py_record <- py_lamin$Artifact(
+        path,
+        key = key, description = description, run = run
+      )
+
+      create_record_from_python(py_record, private$.instance)
+    },
+    #' @description
     #' Create a list of records from a directory
     #'
     #' @param path Path to the directory to create records from
