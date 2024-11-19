@@ -46,6 +46,8 @@ This document outlines the features of the **{laminr}** package and the roadmap 
 
 * [ ] **Create artifacts**: Create new artifacts from various data sources (e.g., files, data frames, in-memory objects).
   - [x] `$from_df()`: Create an artifact from a data frame.
+  - [x] `$from_path()`: Create an artifact from a path.
+  - [x] `$from_anndata()`: Create an artifact from an `AnnData`.
 * [x] **Save artifacts**: Save artifacts to LaminDB with appropriate metadata.
 * [ ] **Load artifacts**: Load artifacts from LaminDB into R:
   - [x] `csv`: Load a data frame from a CSV file.
