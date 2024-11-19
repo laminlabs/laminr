@@ -21,6 +21,24 @@ test_that("creating an artifact from a data frame works", {
   expect_s3_class(new_artifact, "TemporaryArtifact")
 })
 
+test_that("creating an artifacts from a file works", {
+  skip_if_not_installed("reticulate")
+  skip_if_not(reticulate::py_module_available("lamindb"))
+
+  local_setup_lamindata_instance()
+
+  db <- connect()
+
+  temp_file <- withr::local_tempfile(
+    pattern = "laminr-test-", fileext = ".file", lines = "Test file 1",
+    tmpdir = temp_dir
+  )
+
+  new_record <- db$Artifact$from_file(temp_file)
+
+  expect_s3_class(new_artifact, "TemporaryArtifact")
+})
+
 test_that("creating artifacts from a directory works", {
   skip_if_not_installed("reticulate")
   skip_if_not(reticulate::py_module_available("lamindb"))
