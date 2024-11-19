@@ -72,10 +72,11 @@ This document outlines the features of the **{laminr}** package and the roadmap 
 
 ### Track notebooks & scripts
 
-* [ ] **Track code execution**: Automatically track the execution of R scripts and notebooks.
+* [x] **Track code execution**: Automatically track the execution of R scripts and notebooks.
 * [ ] **Capture run context**: Record information about the execution environment (e.g., package versions, parameters).
-* [ ] **Link code to artifacts**: Associate code execution with generated artifacts.
+* [x] **Link code to artifacts**: Associate code execution with generated artifacts.
 * [ ] **Visualize data lineage**: Create visualizations of data lineage and dependencies.
+* [x] **Finalize tracking**: End and save a run.
 
 ### Curate datasets
 
@@ -126,10 +127,11 @@ A first version of the package that allows users to:
 * Expand query functionality with comparators, relationships, and pagination.
 * Implement basic data and metadata management features (create, save, load and delete artifacts).
 * Expand support for different data formats and storage backends.
+* Implement code tracking.
 
 ### Version 0.3.0
 
-* Implement code tracking and data lineage visualization.
+* Implement data lineage visualization.
 * Introduce data curation features (validation, standardization, annotation).
 * Enhance support for bionty registries and ontology interactions.
 
