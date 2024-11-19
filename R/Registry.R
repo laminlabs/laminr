@@ -219,9 +219,9 @@ Registry <- R6::R6Class( # nolint object_name_linter
         )
       }
 
-      if (!utils::file_test("-f", path)) {
+      if (!file.exists(path)) {
         cli::cli_abort(
-          "File {.path {path}} does not exist"
+          "Path {.path {path}} does not exist"
         )
       }
 
