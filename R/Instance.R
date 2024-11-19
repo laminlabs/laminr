@@ -226,7 +226,7 @@ Instance <- R6::R6Class( # nolint object_name_linter
 
       if (is.null(transform)) {
         transform <- tryCatch(
-          py_lamin$track(path=path),
+          py_lamin$track(path = path),
           error = function(err) {
             py_err <- reticulate::py_last_error()
             if (py_err$type != "MissingContextUID") {
@@ -236,8 +236,7 @@ Instance <- R6::R6Class( # nolint object_name_linter
               ))
             }
 
-            uid <- gsub('.*\\("(.*?)"\\).*', '\\1', py_err$value)
-            print(uid)
+            uid <- gsub(".*\\(\"(.*?)\"\\).*", "\\1", py_err$value)
             cli::cli_inform(paste(
               "Got UID {.val {uid}} for path {.file {path}}.",
               "Run this function with {.code transform = \"{uid}\"} to track this path."
@@ -251,7 +250,7 @@ Instance <- R6::R6Class( # nolint object_name_linter
           )
         }
 
-        py_lamin$track(transform=transform, path=path)
+        py_lamin$track(transform = transform, path = path)
       }
     },
     #' @description Finish a tracked run
