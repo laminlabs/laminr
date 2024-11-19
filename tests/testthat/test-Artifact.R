@@ -14,8 +14,7 @@ test_that("creating an artifact from a data frame works", {
   )
 
   new_artifact <- db$Artifact$from_df(
-    dataframe,
-    description = dataframe$Description
+    dataframe, description = dataframe$Description
   )
 
   expect_s3_class(new_artifact, "TemporaryArtifact")
@@ -30,10 +29,12 @@ test_that("creating an artifact from a file works", {
   db <- connect()
 
   temp_file <- withr::local_tempfile(
-    pattern = "laminr-test-", fileext = ".file", lines = "Test file 1"
+    pattern = "laminr-test-", fileext = ".file", lines = "Test file"
   )
 
-  new_record <- db$Artifact$from_file(temp_file)
+  new_record <- db$Artifact$from_file(
+    temp_file, description = "laminr test file"
+  )
 
   expect_s3_class(new_artifact, "TemporaryArtifact")
 })
@@ -80,8 +81,7 @@ test_that("creating an artifact from an AnnData works", {
   )
 
   new_artifact <- db$Artifact$from_df(
-    adata,
-    description = adata$uns$Description
+    adata, description = adata$uns$Description
   )
 
   expect_s3_class(new_artifact, "TemporaryArtifact")
