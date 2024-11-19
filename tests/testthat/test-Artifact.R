@@ -20,7 +20,7 @@ test_that("creating an artifact from a data frame works", {
   expect_s3_class(new_artifact, "TemporaryArtifact")
 })
 
-test_that("creating an artifact from a file works", {
+test_that("creating an artifact from a path works", {
   skip_if_not_installed("reticulate")
   skip_if_not(reticulate::py_module_available("lamindb"))
 
@@ -32,7 +32,7 @@ test_that("creating an artifact from a file works", {
     pattern = "laminr-test-", fileext = ".file", lines = "Test file"
   )
 
-  new_artifact <- db$Artifact$from_file(
+  new_artifact <- db$Artifact$from_path(
     temp_file, description = "laminr test file"
   )
 
