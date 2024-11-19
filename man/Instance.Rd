@@ -51,6 +51,8 @@ Whether this is the default instance.}
 \item \href{#method-Instance-get_settings}{\code{Instance$get_settings()}}
 \item \href{#method-Instance-get_api}{\code{Instance$get_api()}}
 \item \href{#method-Instance-get_py_lamin}{\code{Instance$get_py_lamin()}}
+\item \href{#method-Instance-track}{\code{Instance$track()}}
+\item \href{#method-Instance-finish}{\code{Instance$finish()}}
 \item \href{#method-Instance-print}{\code{Instance$print()}}
 \item \href{#method-Instance-to_string}{\code{Instance$to_string()}}
 }
@@ -163,12 +165,56 @@ The API for the instance.
 \subsection{Method \code{get_py_lamin()}}{
 Get the Python lamindb module
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Instance$get_py_lamin()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Instance$get_py_lamin(check = FALSE, what = "This functionality")}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{check}}{Logical, whether to perform checks}
+
+\item{\code{what}}{What the python module is being requested for, used in check
+messages}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 Python lamindb module.
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Instance-track"></a>}}
+\if{latex}{\out{\hypertarget{method-Instance-track}{}}}
+\subsection{Method \code{track()}}{
+Start a run with tracked data lineage
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Instance$track(path, transform = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{path}}{Path to the R script or document to track}
+
+\item{\code{transform}}{UID specifying the data transformation}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Calling \code{track()} with \code{transform = NULL} with return a UID, providing
+that UID with the same path with start a run
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Instance-finish"></a>}}
+\if{latex}{\out{\hypertarget{method-Instance-finish}{}}}
+\subsection{Method \code{finish()}}{
+Finish a tracked run
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Instance$finish()}\if{html}{\out{</div>}}
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Instance-print"></a>}}

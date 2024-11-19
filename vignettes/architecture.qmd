@@ -127,7 +127,9 @@ classDiagram
     Instance --> RelatedRecords
     InstanceAPI --> RelatedRecords
     
-    %% Use #emsp; to create indents in the rendered diagram when necessary
+    %% Methods must be on one line to be shown in the right diagram section
+    %% Use \n for newlines and #emsp; to create indents in the rendered
+    %% diagram when necessary
     
     class laminr{
         +connect(String slug): RichInstance
@@ -150,13 +152,16 @@ classDiagram
         +api_url: String
     }
     class Instance{
-        +initialize(
-          #emsp;InstanceSettings Instance_settings, API api,
-          #emsp;Map<String, any> schema
-        ): Instance
+        +initialize(\n#emsp;InstanceSettings Instance_settings, API api, \n#emsp;Map<String, any> schema\n): Instance
         +get_modules(): Module[]
         +get_module(String module_name): Module
         +get_module_names(): String[]
+        +get_api(): InstanceAPI
+        +get_settings(): InstanceSettings
+        +get_py_lamin(Boolean check, String what): PythonModule
+        +track(String path, String transform): NULL
+        +finish(): NULL
+        +is_default: Boolean
     }
     class InstanceAPI{
         +initialize(InstanceSettings Instance_settings)
@@ -166,38 +171,28 @@ classDiagram
         +delete_record(...): NULL
     }
     class Module{
-        +initialize(
-          #emsp;Instance Instance, API api, String module_name,
-          #emsp;Map<String, any> module_schema
-        ): Module
+        +initialize(\n#emsp;Instance Instance, API api, String module_name,\n#emsp;Map<String, any> module_schema\n): Module
         +name: String
         +get_registries(): Registry[]
         +get_registry(String registry_name): Registry
         +get_registry_names(): String[]
     }
     class Registry{
-        +initialize(
-          #emsp;Instance Instance, Module module, API api,
-          #emsp;String registry_name, Map<String, Any> registry_schema
-        ): Registry
+        +initialize(\n#emsp;Instance Instance, Module module, API api,\n#emsp;String registry_name, Map<String, Any> registry_schema\n): Registry
         +name: String
         +class_name: String
         +is_link_table: Bool
         +get_fields(): Field[]
         +get_field(String field_name): Field
         +get_field_names(): String[]
-        +get(String id_or_uid, Bool include_foreign_keys, List~String~ select, Bool verbose): RichRecord
+        +get(\n#emsp;String id_or_uid, Bool include_foreign_keys,\n#emsp;List~String~ select, Bool verbose\n): RichRecord
         +get_record_class(): RichRecordClass
         +get_temporary_record_class(): TemporaryRecordClass
         +df(Integer limit, Bool verbose): DataFrame
-        +from_df(DataFrame dataframe, String key, String description, String run)): TemporaryRecord
+        +from_df(\n#emsp;DataFrame dataframe, String key,\n#emsp;String description, String run\n): TemporaryRecord
     }
     class Field{
-        +initialize(
-          #emsp;String type, String through, String field_name, String registry_name,
-          #emsp;String column_name, String module_name, Bool is_link_table, String relation_type,
-          #emsp;String related_field_name, String related_registry_name, String related_module_name
-        ): Field
+        +initialize(\n#emsp;String type, String through, String field_name,\n#emsp;String registry_name, String column_name, String module_name,\n#emsp;Bool is_link_table, String relation_type, String related_field_name,\n#emsp;String related_registry_name, String related_module_name\n): Field
         +type: String
         +through: Map
         +field_name: String
@@ -211,15 +206,12 @@ classDiagram
         +related_module_name: String
     }
     class Record{
-        +initialize(Instance Instance, Registry registry, API api, Map<String, Any> data): Record
+        +initialize(\n#emsp;Instance Instance, Registry registry,\n#emsp;API api, Map<String, Any> data\n): Record
         +get_value(String field_name): Any
         +delete(): NULL
     }
     class RelatedRecords{
-        +initialize(
-          #emsp;Instance instance, Registry registry, Field field,
-          #emsp;String related_to, API api
-        ): RelatedRecords
+        +initialize(\n#emsp;Instance instance, Registry registry, Field field,\n#emsp;String related_to, API api\n): RelatedRecords
         +df(): DataFrame
         +field: Field
     }
@@ -317,13 +309,16 @@ classDiagram
         +api_url: String
     }
     class Instance{
-        +initialize(
-          #emsp;InstanceSettings Instance_settings, API api,
-          #emsp;Map<String, any> schema
-        ): Instance
+        +initialize(\n#emsp;InstanceSettings Instance_settings, API api, \n#emsp;Map<String, any> schema\n): Instance
         +get_modules(): Module[]
         +get_module(String module_name): Module
         +get_module_names(): String[]
+        +get_api(): InstanceAPI
+        +get_settings(): InstanceSettings
+        +get_py_lamin(Boolean check, String what): PythonModule
+        +track(String path, String transform): NULL
+        +finish(): NULL
+        +is_default: Boolean
     }
     class InstanceAPI{
         +initialize(InstanceSettings Instance_settings)
@@ -333,38 +328,28 @@ classDiagram
         +delete_record(...): NULL
     }
     class Module{
-        +initialize(
-          #emsp;Instance Instance, API api, String module_name,
-          #emsp;Map<String, any> module_schema
-        ): Module
+        +initialize(\n#emsp;Instance Instance, API api, String module_name,\n#emsp;Map<String, any> module_schema\n): Module
         +name: String
         +get_registries(): Registry[]
         +get_registry(String registry_name): Registry
         +get_registry_names(): String[]
     }
     class Registry{
-        +initialize(
-          #emsp;Instance Instance, Module module, API api,
-          #emsp;String registry_name, Map<String, Any> registry_schema
-        ): Registry
+        +initialize(\n#emsp;Instance Instance, Module module, API api,\n#emsp;String registry_name, Map<String, Any> registry_schema\n): Registry
         +name: String
         +class_name: String
         +is_link_table: Bool
         +get_fields(): Field[]
         +get_field(String field_name): Field
         +get_field_names(): String[]
-        +get(String id_or_uid, Bool include_foreign_keys, List~String~ select, Bool verbose): RichRecord
+        +get(\n#emsp;String id_or_uid, Bool include_foreign_keys,\n#emsp;List~String~ select, Bool verbose\n): RichRecord
         +get_record_class(): RichRecordClass
         +get_temporary_record_class(): TemporaryRecordClass
         +df(Integer limit, Bool verbose): DataFrame
-        +from_df(DataFrame dataframe, String key, String description, String run)): TemporaryRecord
+        +from_df(\n#emsp;DataFrame dataframe, String key,\n#emsp;String description, String run\n): TemporaryRecord
     }
     class Field{
-        +initialize(
-          #emsp;String type, String through, String field_name, String registry_name,
-          #emsp;String column_name, String module_name, Bool is_link_table, String relation_type,
-          #emsp;String related_field_name, String related_registry_name, String related_module_name
-        ): Field
+        +initialize(\n#emsp;String type, String through, String field_name,\n#emsp;String registry_name, String column_name, String module_name,\n#emsp;Bool is_link_table, String relation_type, String related_field_name,\n#emsp;String related_registry_name, String related_module_name\n): Field
         +type: String
         +through: Map
         +field_name: String
@@ -378,15 +363,12 @@ classDiagram
         +related_module_name: String
     }
     class Record{
-        +initialize(Instance Instance, Registry registry, API api, Map<String, Any> data): Record
+        +initialize(\n#emsp;Instance Instance, Registry registry,\n#emsp;API api, Map<String, Any> data\n): Record
         +get_value(String field_name): Any
         +delete(): NULL
     }
     class RelatedRecords{
-        +initialize(
-          #emsp;Instance instance, Registry registry, Field field,
-          #emsp;String related_to, API api
-        ): RelatedRecords
+        +initialize(\n#emsp;Instance instance, Registry registry, Field field,\n#emsp;String related_to, API api\n): RelatedRecords
         +df(): DataFrame
         +field: Field
     }

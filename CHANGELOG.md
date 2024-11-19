@@ -7,6 +7,7 @@
 - Add a `from_df()` method to the `Registry` class to create new artifacts from data frames (PR #78)
 - Create `TemporaryRecord` classes for new artifacts before they have been saved to the database (PR #78)
 - Add a `delete()` method to the `Record` class (PR #78)
+- Add `track()` and `finish()` methods to the `Instance` class (PR #83)
 
 ## MAJOR CHANGES
 

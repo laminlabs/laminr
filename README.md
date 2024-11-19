@@ -32,6 +32,7 @@ LaminDB is accompanied by LaminHub which is a data collaboration hub built on La
   - Planned: `.fcs`, `.h5mu`, `.zarr`.
 - Create records from data frames.
 - Delete records.
+- Track code in R scripts and notebooks.
 
 See the development roadmap for more details (`vignette("development", package = "laminr")`).
 

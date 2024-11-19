@@ -191,9 +191,72 @@ Instance <- R6::R6Class( # nolint object_name_linter
     },
     #' @description Get the Python lamindb module
     #'
+    #' @param check Logical, whether to perform checks
+    #' @param what What the python module is being requested for, used in check
+    #'   messages
+    #'
     #' @return Python lamindb module.
-    get_py_lamin = function() {
+    get_py_lamin = function(check = FALSE, what = "This functionality") {
+      if (check && isFALSE(self$is_default)) {
+        cli::cli_abort(c(
+          "{what} can only be performed by the default instance",
+          "i" = "Use {.code connect(slug = NULL)} to connect to the default instance"
+        ))
+      }
+
+      if (check && is.null(self$get_py_lamin())) {
+        cli::cli_abort(c(
+          "{what} requires the Python lamindb package",
+          "i" = "Check the output of {.code connect()} for warnings"
+        ))
+      }
+
       private$.py_lamin
+    },
+    #' @description Start a run with tracked data lineage
+    #'
+    #' @details
+    #' Calling `track()` with `transform = NULL` with return a UID, providing
+    #' that UID with the same path with start a run
+    #'
+    #' @param path Path to the R script or document to track
+    #' @param transform UID specifying the data transformation
+    track = function(path, transform = NULL) {
+      py_lamin <- self$get_py_lamin(check = TRUE, what = "Tracking")
+
+      if (is.null(transform)) {
+        transform <- tryCatch(
+          py_lamin$track(path = path),
+          error = function(err) {
+            py_err <- reticulate::py_last_error()
+            if (py_err$type != "MissingContextUID") {
+              cli::cli_abort(c(
+                "Python error {.val {py_err$type}}",
+                "i" = "Run {.run reticulate::py_last_error()} for details"
+              ))
+            }
+
+            uid <- gsub(".*\\(\"(.*?)\"\\).*", "\\1", py_err$value)
+            cli::cli_inform(paste(
+              "Got UID {.val {uid}} for path {.file {path}}.",
+              "Run this function with {.code transform = \"{uid}\"} to track this path."
+            ))
+          }
+        )
+      } else {
+        if (is.character(transform) && nchar(transform) != 16) {
+          cli::cli_abort(
+            "The transform UID must be exactly 16 characters, got {nchar(transform)}"
+          )
+        }
+
+        py_lamin$track(transform = transform, path = path)
+      }
+    },
+    #' @description Finish a tracked run
+    finish = function() {
+      py_lamin <- self$get_py_lamin(check = TRUE, what = "Tracking")
+      py_lamin$finish()
     },
     #' @description
     #' Print an `Instance`
