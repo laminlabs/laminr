@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
   
 This vignette demonstrates a basic LaminDB workflow using the public CELLxGENE instance.
 [CZ CELLxGENE Discover](https://cellxgene.cziscience.com/) is a standardised collection of scRNA-seq datasets and LaminDB makes it easy to query and access data in this repository.
-We will go through the steps of finding and downloading a dataset using **{laminr}**, performing some simple analysis using **{Seurat}** and saving the results in a LaminDB database.
+We will go through the steps of finding and downloading a dataset using **{laminr}**, performing some simple analysis using **{Seurat}** and saving the results your own LaminDB database.
 
 # Before we start
 
@@ -31,20 +31,47 @@ Once that is done, we can load the **{laminr}** library.
 library(laminr)
 ```
 
-# Connect to a LaminDB instance
+# Connecting to LaminDB
 
-We will start by connecting to the CELLxGENE instance.
+The first thing we need to do is connect to the LaminDB database.
+For this tutorial, we will connect a default instance (where we will store results) and the CELLxGENE instance that we will search for datasets.
+
+## Connect to the default instance
+
+We will start by connecting to your default LaminDB instance.
+You can set set the default instance using the `lamin` CLI on the command line:
+
+```shell
+lamin connect <owner>/<name>
+```
+
+Once a default instance has been set, we can connect to it with **{laminr}**:
+
+```{r connect-default}
+db <- connect()
+db
+```
+
 This gives us an object we can use to interact with the database.
 
-```{r connect}
+**Note** that only the default instance can create new records.
+This tutorial assumes you have access to an instance where you have permission to add data.
+
+## Connect to the CELLxGENE instance
+
+We can connect to other instances by providing a slug to the `connect()` function.
+Instances connected to in this way can be used to query data but cannot make any changes.
+Let's connect to the CELLxGENE instance:
+
+```{r connect-cellxgene}
 cellxgene <- connect("laminlabs/cellxgene")
 cellxgene
 ```
 
 # Downloading a dataset
 
-In Lamin, artifacts are objects that[;] contain information (single-cell data, images, data frames etc.) as well as associated metadata.
-You can see what artifacts are available using the database object.
+In Lamin, artifacts are objects that contain information (single-cell data, images, data frames etc.) as well as associated metadata.
+You can see what artifacts are available using the database instance object.
 
 ```{r list-artifacts}
 cellxgene$Artifact$df(limit = 5)
