@@ -85,6 +85,8 @@ Whether this is the default instance.</p></dd>
 <li><p><a href="#method-Instance-get_settings"><code>Instance$get_settings()</code></a></p></li>
 <li><p><a href="#method-Instance-get_api"><code>Instance$get_api()</code></a></p></li>
 <li><p><a href="#method-Instance-get_py_lamin"><code>Instance$get_py_lamin()</code></a></p></li>
+<li><p><a href="#method-Instance-track"><code>Instance$track()</code></a></p></li>
+<li><p><a href="#method-Instance-finish"><code>Instance$finish()</code></a></p></li>
 <li><p><a href="#method-Instance-print"><code>Instance$print()</code></a></p></li>
 <li><p><a href="#method-Instance-to_string"><code>Instance$to_string()</code></a></p></li>
 </ul></div><p></p><hr><a id="method-Instance-new"></a><div class="section">
@@ -194,23 +196,70 @@ but rather by connecting to a LaminDB instance using the <code><a href="connect.
 <h3 id="method-get-py-lamin-">Method <code>get_py_lamin()</code><a class="anchor" aria-label="anchor" href="#method-get-py-lamin-"></a></h3>
 <p>Get the Python lamindb module</p><div class="section">
 <h4 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Instance</span><span class="op">$</span><span class="fu">get_py_lamin</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Instance</span><span class="op">$</span><span class="fu">get_py_lamin</span><span class="op">(</span>check <span class="op">=</span> <span class="cn">FALSE</span>, what <span class="op">=</span> <span class="st">"This functionality"</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
+<div class="section">
+<h4 id="arguments-2">Arguments<a class="anchor" aria-label="anchor" href="#arguments-2"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>check</code></dt>
+<dd><p>Logical, whether to perform checks</p></dd>
+
+
+<dt><code>what</code></dt>
+<dd><p>What the python module is being requested for, used in check
+messages</p></dd>
+
+
+</dl><p></p></div>
+</div>
 <div class="section">
 <h4 id="returns-5">Returns<a class="anchor" aria-label="anchor" href="#returns-5"></a></h4>
 <p>Python lamindb module.</p>
 </div>
 
+</div><p></p><hr><a id="method-Instance-track"></a><div class="section">
+<h3 id="method-track-">Method <code>track()</code><a class="anchor" aria-label="anchor" href="#method-track-"></a></h3>
+<p>Start a run with tracked data lineage</p><div class="section">
+<h4 id="usage-7">Usage<a class="anchor" aria-label="anchor" href="#usage-7"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Instance</span><span class="op">$</span><span class="fu">track</span><span class="op">(</span><span class="va">path</span>, transform <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="arguments-3">Arguments<a class="anchor" aria-label="anchor" href="#arguments-3"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>path</code></dt>
+<dd><p>Path to the R script or document to track</p></dd>
+
+
+<dt><code>transform</code></dt>
+<dd><p>UID specifying the data transformation</p></dd>
+
+
+</dl><p></p></div>
+</div>
+<div class="section">
+<h4 id="details-1">Details<a class="anchor" aria-label="anchor" href="#details-1"></a></h4>
+<p>Calling <code>track()</code> with <code>transform = NULL</code> with return a UID, providing
+that UID with the same path with start a run</p>
+</div>
+
+
+</div><p></p><hr><a id="method-Instance-finish"></a><div class="section">
+<h3 id="method-finish-">Method <code>finish()</code><a class="anchor" aria-label="anchor" href="#method-finish-"></a></h3>
+<p>Finish a tracked run</p><div class="section">
+<h4 id="usage-8">Usage<a class="anchor" aria-label="anchor" href="#usage-8"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Instance</span><span class="op">$</span><span class="fu">finish</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+
 </div><p></p><hr><a id="method-Instance-print"></a><div class="section">
 <h3 id="method-print-">Method <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code><a class="anchor" aria-label="anchor" href="#method-print-"></a></h3>
 <p>Print an <code>Instance</code></p><div class="section">
-<h4 id="usage-7">Usage<a class="anchor" aria-label="anchor" href="#usage-7"></a></h4>
+<h4 id="usage-9">Usage<a class="anchor" aria-label="anchor" href="#usage-9"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Instance</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span>style <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-2">Arguments<a class="anchor" aria-label="anchor" href="#arguments-2"></a></h4>
+<h4 id="arguments-4">Arguments<a class="anchor" aria-label="anchor" href="#arguments-4"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>style</code></dt>
 <dd><p>Logical, whether the output is styled using ANSI codes</p></dd>
 
@@ -221,12 +270,12 @@ but rather by connecting to a LaminDB instance using the <code><a href="connect.
 </div><p></p><hr><a id="method-Instance-to_string"></a><div class="section">
 <h3 id="method-to-string-">Method <code>to_string()</code><a class="anchor" aria-label="anchor" href="#method-to-string-"></a></h3>
 <p>Create a string representation of an <code>Instance</code></p><div class="section">
-<h4 id="usage-8">Usage<a class="anchor" aria-label="anchor" href="#usage-8"></a></h4>
+<h4 id="usage-10">Usage<a class="anchor" aria-label="anchor" href="#usage-10"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Instance</span><span class="op">$</span><span class="fu">to_string</span><span class="op">(</span>style <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-3">Arguments<a class="anchor" aria-label="anchor" href="#arguments-3"></a></h4>
+<h4 id="arguments-5">Arguments<a class="anchor" aria-label="anchor" href="#arguments-5"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>style</code></dt>
 <dd><p>Logical, whether the output is styled using ANSI codes</p></dd>
 
