@@ -83,6 +83,8 @@ Whether the registry is a link table.</p></dd>
 <li><p><a href="#method-Registry-get"><code>Registry$get()</code></a></p></li>
 <li><p><a href="#method-Registry-df"><code>Registry$df()</code></a></p></li>
 <li><p><a href="#method-Registry-from_df"><code>Registry$from_df()</code></a></p></li>
+<li><p><a href="#method-Registry-from_path"><code>Registry$from_path()</code></a></p></li>
+<li><p><a href="#method-Registry-from_anndata"><code>Registry$from_anndata()</code></a></p></li>
 <li><p><a href="#method-Registry-get_fields"><code>Registry$get_fields()</code></a></p></li>
 <li><p><a href="#method-Registry-get_field"><code>Registry$get_field()</code></a></p></li>
 <li><p><a href="#method-Registry-get_field_names"><code>Registry$get_field_names()</code></a></p></li>
@@ -215,27 +217,107 @@ registry.</p>
 saved to the database until <code>temp_record$save()</code> is called.</p>
 </div>
 
-</div><p></p><hr><a id="method-Registry-get_fields"></a><div class="section">
-<h3 id="method-get-fields-">Method <code>get_fields()</code><a class="anchor" aria-label="anchor" href="#method-get-fields-"></a></h3>
-<p>Get the fields in the registry.</p><div class="section">
+</div><p></p><hr><a id="method-Registry-from_path"></a><div class="section">
+<h3 id="method-from-path-">Method <code>from_path()</code><a class="anchor" aria-label="anchor" href="#method-from-path-"></a></h3>
+<p>Create a record from a path</p><div class="section">
 <h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Registry</span><span class="op">$</span><span class="fu">get_fields</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Registry</span><span class="op">$</span><span class="fu">from_path</span><span class="op">(</span><span class="va">path</span>, key <span class="op">=</span> <span class="cn">NULL</span>, description <span class="op">=</span> <span class="cn">NULL</span>, run <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="arguments-4">Arguments<a class="anchor" aria-label="anchor" href="#arguments-4"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>path</code></dt>
+<dd><p>Path to create a record from</p></dd>
+
+
+<dt><code>key</code></dt>
+<dd><p>A relative path within the default storage</p></dd>
+
+
+<dt><code>description</code></dt>
+<dd><p>A string describing the record</p></dd>
+
+
+<dt><code>run</code></dt>
+<dd><p>A <code>Run</code> object that creates the record</p></dd>
+
+
+</dl><p></p></div>
+</div>
+<div class="section">
+<h4 id="details-1">Details<a class="anchor" aria-label="anchor" href="#details-1"></a></h4>
+<p>Creating records is only possible for the default instance, requires the
+Python <code>lamindb</code> module and is only implemented for the core <code>Artifact</code>
+registry.</p>
 </div>
 
 <div class="section">
 <h4 id="returns-3">Returns<a class="anchor" aria-label="anchor" href="#returns-3"></a></h4>
+<p>A <code>TemporaryRecord</code> object containing the new record. This is not
+saved to the database until <code>temp_record$save()</code> is called.</p>
+</div>
+
+</div><p></p><hr><a id="method-Registry-from_anndata"></a><div class="section">
+<h3 id="method-from-anndata-">Method <code>from_anndata()</code><a class="anchor" aria-label="anchor" href="#method-from-anndata-"></a></h3>
+<p>Create a record from an <code>AnnData</code></p><div class="section">
+<h4 id="usage-5">Usage<a class="anchor" aria-label="anchor" href="#usage-5"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Registry</span><span class="op">$</span><span class="fu">from_anndata</span><span class="op">(</span><span class="va">adata</span>, key <span class="op">=</span> <span class="cn">NULL</span>, description <span class="op">=</span> <span class="cn">NULL</span>, run <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="arguments-5">Arguments<a class="anchor" aria-label="anchor" href="#arguments-5"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>adata</code></dt>
+<dd><p>The <a href="https://anndata.dynverse.org/reference/AnnData.html" class="external-link">anndata::AnnData</a> object to create a record from</p></dd>
+
+
+<dt><code>key</code></dt>
+<dd><p>A relative path within the default storage</p></dd>
+
+
+<dt><code>description</code></dt>
+<dd><p>A string describing the record</p></dd>
+
+
+<dt><code>run</code></dt>
+<dd><p>A <code>Run</code> object that creates the record</p></dd>
+
+
+</dl><p></p></div>
+</div>
+<div class="section">
+<h4 id="details-2">Details<a class="anchor" aria-label="anchor" href="#details-2"></a></h4>
+<p>Creating records is only possible for the default instance, requires the
+Python <code>lamindb</code> module and is only implemented for the core <code>Artifact</code>
+registry.</p>
+</div>
+
+<div class="section">
+<h4 id="returns-4">Returns<a class="anchor" aria-label="anchor" href="#returns-4"></a></h4>
+<p>A <code>TemporaryRecord</code> object containing the new record. This is not
+saved to the database until <code>temp_record$save()</code> is called.</p>
+</div>
+
+</div><p></p><hr><a id="method-Registry-get_fields"></a><div class="section">
+<h3 id="method-get-fields-">Method <code>get_fields()</code><a class="anchor" aria-label="anchor" href="#method-get-fields-"></a></h3>
+<p>Get the fields in the registry.</p><div class="section">
+<h4 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Registry</span><span class="op">$</span><span class="fu">get_fields</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="returns-5">Returns<a class="anchor" aria-label="anchor" href="#returns-5"></a></h4>
 <p>A list of <a href="Field.html">Field</a> objects.</p>
 </div>
 
 </div><p></p><hr><a id="method-Registry-get_field"></a><div class="section">
 <h3 id="method-get-field-">Method <code>get_field()</code><a class="anchor" aria-label="anchor" href="#method-get-field-"></a></h3>
 <p>Get a field by name.</p><div class="section">
-<h4 id="usage-5">Usage<a class="anchor" aria-label="anchor" href="#usage-5"></a></h4>
+<h4 id="usage-7">Usage<a class="anchor" aria-label="anchor" href="#usage-7"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Registry</span><span class="op">$</span><span class="fu">get_field</span><span class="op">(</span><span class="va">field_name</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-4">Arguments<a class="anchor" aria-label="anchor" href="#arguments-4"></a></h4>
+<h4 id="arguments-6">Arguments<a class="anchor" aria-label="anchor" href="#arguments-6"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>field_name</code></dt>
 <dd><p>The name of the field.</p></dd>
 
@@ -243,19 +325,19 @@ saved to the database until <code>temp_record$save()</code> is called.</p>
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-4">Returns<a class="anchor" aria-label="anchor" href="#returns-4"></a></h4>
+<h4 id="returns-6">Returns<a class="anchor" aria-label="anchor" href="#returns-6"></a></h4>
 <p>A <a href="Field.html">Field</a> object.</p>
 </div>
 
 </div><p></p><hr><a id="method-Registry-get_field_names"></a><div class="section">
 <h3 id="method-get-field-names-">Method <code>get_field_names()</code><a class="anchor" aria-label="anchor" href="#method-get-field-names-"></a></h3>
 <p>Get the field names in the registry.</p><div class="section">
-<h4 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h4>
+<h4 id="usage-8">Usage<a class="anchor" aria-label="anchor" href="#usage-8"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Registry</span><span class="op">$</span><span class="fu">get_field_names</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-5">Returns<a class="anchor" aria-label="anchor" href="#returns-5"></a></h4>
+<h4 id="returns-7">Returns<a class="anchor" aria-label="anchor" href="#returns-7"></a></h4>
 <p>A character vector of field names.</p>
 </div>
 
@@ -263,12 +345,12 @@ saved to the database until <code>temp_record$save()</code> is called.</p>
 <h3 id="method-get-record-class-">Method <code>get_record_class()</code><a class="anchor" aria-label="anchor" href="#method-get-record-class-"></a></h3>
 <p>Get the record class for the registry.</p>
 <p>Note: This method is intended for internal use only and may be removed in the future.</p><div class="section">
-<h4 id="usage-7">Usage<a class="anchor" aria-label="anchor" href="#usage-7"></a></h4>
+<h4 id="usage-9">Usage<a class="anchor" aria-label="anchor" href="#usage-9"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Registry</span><span class="op">$</span><span class="fu">get_record_class</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-6">Returns<a class="anchor" aria-label="anchor" href="#returns-6"></a></h4>
+<h4 id="returns-8">Returns<a class="anchor" aria-label="anchor" href="#returns-8"></a></h4>
 <p>A <a href="Record.html">Record</a> class.</p>
 </div>
 
@@ -276,24 +358,24 @@ saved to the database until <code>temp_record$save()</code> is called.</p>
 <h3 id="method-get-temporary-record-class-">Method <code>get_temporary_record_class()</code><a class="anchor" aria-label="anchor" href="#method-get-temporary-record-class-"></a></h3>
 <p>Get the temporary record class for the registry.</p>
 <p>Note: This method is intended for internal use only and may be removed in the future.</p><div class="section">
-<h4 id="usage-8">Usage<a class="anchor" aria-label="anchor" href="#usage-8"></a></h4>
+<h4 id="usage-10">Usage<a class="anchor" aria-label="anchor" href="#usage-10"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Registry</span><span class="op">$</span><span class="fu">get_temporary_record_class</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-7">Returns<a class="anchor" aria-label="anchor" href="#returns-7"></a></h4>
+<h4 id="returns-9">Returns<a class="anchor" aria-label="anchor" href="#returns-9"></a></h4>
 <p>A <code>TemporaryRecord</code> class.</p>
 </div>
 
 </div><p></p><hr><a id="method-Registry-print"></a><div class="section">
 <h3 id="method-print-">Method <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code><a class="anchor" aria-label="anchor" href="#method-print-"></a></h3>
 <p>Print a <code>Registry</code></p><div class="section">
-<h4 id="usage-9">Usage<a class="anchor" aria-label="anchor" href="#usage-9"></a></h4>
+<h4 id="usage-11">Usage<a class="anchor" aria-label="anchor" href="#usage-11"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Registry</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span>style <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-5">Arguments<a class="anchor" aria-label="anchor" href="#arguments-5"></a></h4>
+<h4 id="arguments-7">Arguments<a class="anchor" aria-label="anchor" href="#arguments-7"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>style</code></dt>
 <dd><p>Logical, whether the output is styled using ANSI codes</p></dd>
 
@@ -301,19 +383,19 @@ saved to the database until <code>temp_record$save()</code> is called.</p>
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-8">Returns<a class="anchor" aria-label="anchor" href="#returns-8"></a></h4>
+<h4 id="returns-10">Returns<a class="anchor" aria-label="anchor" href="#returns-10"></a></h4>
 <p>A character vector</p>
 </div>
 
 </div><p></p><hr><a id="method-Registry-to_string"></a><div class="section">
 <h3 id="method-to-string-">Method <code>to_string()</code><a class="anchor" aria-label="anchor" href="#method-to-string-"></a></h3>
 <p>Create a string representation of a <code>Registry</code></p><div class="section">
-<h4 id="usage-10">Usage<a class="anchor" aria-label="anchor" href="#usage-10"></a></h4>
+<h4 id="usage-12">Usage<a class="anchor" aria-label="anchor" href="#usage-12"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Registry</span><span class="op">$</span><span class="fu">to_string</span><span class="op">(</span>style <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-6">Arguments<a class="anchor" aria-label="anchor" href="#arguments-6"></a></h4>
+<h4 id="arguments-8">Arguments<a class="anchor" aria-label="anchor" href="#arguments-8"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>style</code></dt>
 <dd><p>Logical, whether the output is styled using ANSI codes</p></dd>
 
@@ -321,7 +403,7 @@ saved to the database until <code>temp_record$save()</code> is called.</p>
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-9">Returns<a class="anchor" aria-label="anchor" href="#returns-9"></a></h4>
+<h4 id="returns-11">Returns<a class="anchor" aria-label="anchor" href="#returns-11"></a></h4>
 <p>A <code>cli::cli_ansi_string</code> if <code>style = TRUE</code> or a character vector</p>
 </div>
 
