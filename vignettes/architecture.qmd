@@ -190,6 +190,8 @@ classDiagram
         +get_temporary_record_class(): TemporaryRecordClass
         +df(Integer limit, Bool verbose): DataFrame
         +from_df(\n#emsp;DataFrame dataframe, String key,\n#emsp;String description, String run\n): TemporaryRecord
+        +from_path(\n#emsp;Path path, String key, String description, String run\n): TemporaryRecord
+        +from_anndata(\n#emsp;AnnData adata, String key, String description, String run\n): TemporaryRecord
     }
     class Field{
         +initialize(\n#emsp;String type, String through, String field_name,\n#emsp;String registry_name, String column_name, String module_name,\n#emsp;Bool is_link_table, String relation_type, String related_field_name,\n#emsp;String related_registry_name, String related_module_name\n): Field
@@ -347,6 +349,8 @@ classDiagram
         +get_temporary_record_class(): TemporaryRecordClass
         +df(Integer limit, Bool verbose): DataFrame
         +from_df(\n#emsp;DataFrame dataframe, String key,\n#emsp;String description, String run\n): TemporaryRecord
+        +from_path(\n#emsp;Path path, String key, String description, String run\n): TemporaryRecord
+        +from_anndata(\n#emsp;AnnData adata, String key, String description, String run\n): TemporaryRecord
     }
     class Field{
         +initialize(\n#emsp;String type, String through, String field_name,\n#emsp;String registry_name, String column_name, String module_name,\n#emsp;Bool is_link_table, String relation_type, String related_field_name,\n#emsp;String related_registry_name, String related_module_name\n): Field
