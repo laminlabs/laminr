@@ -1,0 +1,201 @@
+---
+title: "Example Workflow: CELLxGENE"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Example Workflow: CELLxGENE}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+# whether or not this code will be used to
+# actually upload results to the LaminDB instance
+# -> testuser1 is a test account that cannot upload results
+submit_eval <- laminr:::.get_user_settings()$handle != "testuser1"
+```
+
+# Introduction
+  
+This vignette demonstrates a basic workflow for accessing and analysing single-cell RNA-seq data from the CELLxGENE repository using **{laminr}**.
+[CZ CELLxGENE Discover](https://cellxgene.cziscience.com/) is a standardised collection of scRNA-seq datasets and LaminDB makes it easy to query and access data in this repository.
+We will go through the steps of finding and downloading a dataset using **{laminr}**, performing some simple analysis using **{Seurat}** and saving the results your own LaminDB database.
+
+# Before we start
+
+Before we go begin, please take some time to check out the Getting Started vignette (`vignette("laminr", package = "laminr")`).
+In particular, make sure you have run the commands in the "Initial Setup" section.
+
+Once that is done, we can load the **{laminr}** library.
+
+```{r library}
+library(laminr)
+```
+
+# Connecting to LaminDB
+
+The first thing we need to do is connect to the LaminDB database.
+For this tutorial, we will connect a default instance (where we will store results) and the CELLxGENE instance that we will search for datasets.
+
+## Connect to the default instance
+
+We will start by connecting to your default LaminDB instance.
+You can set set the default instance using the `lamin` CLI on the command line:
+
+```shell
+lamin connect <owner>/<name>
+```
+
+Once a default instance has been set, we can connect to it with **{laminr}**:
+
+```{r connect-default}
+db <- connect()
+db
+```
+
+This gives us an object we can use to interact with the database.
+
+**Note** that only the default instance can create new records.
+This tutorial assumes you have access to an instance where you have permission to add data.
+
+## Track data provenance
+
+Before we start, we will track the code that is run in this notebook.
+
+```{r track, eval = submit_eval}
+db$track("I8BlHXFXqZOG0000", path = "example_workflow.Rmd")
+```
+
+Tip: The ID should be obtained by running `db$track(path = "example_workflow.Rmd")` and copying the ID from the output.
+
+## Connect to the CELLxGENE instance
+
+We can connect to other instances by providing a slug to the `connect()` function.
+Instances connected to in this way can be used to query data but cannot make any changes.
+Let's connect to the CELLxGENE instance:
+
+```{r connect-cellxgene}
+cellxgene <- connect("laminlabs/cellxgene")
+cellxgene
+```
+
+# Downloading a dataset
+
+In Lamin, artifacts are objects that contain information (single-cell data, images, data frames etc.) as well as associated metadata.
+You can see what artifacts are available using the database instance object.
+
+```{r list-artifacts}
+cellxgene$Artifact$df(limit = 5)
+```
+
+This is useful, but it's not the nicest or easiest way to find a particular dataset.
+Instead, we will use the Lamin Hub website to find the data we want to load.
+
+1. Open a browser and go to https://lamin.ai/laminlabs/cellxgene
+2. On the top toolbar, click the "Artifacts" tab
+3. Use the search field and the filters to find a dataset you are interested in.
+  - We use the "Suffix" filter to find `.h5ad` files and search for "renal cell carcinoma"
+4. Select the entry for the dataset you want to load to open a page with more details
+5. Click the copy button at the top right, this copies a command including the ID for the artifact
+
+Once we have the artifact ID, we can load information about the artifact, similar to what we see on the website.
+Notice that we use a slightly different command to what we copied from the website.
+
+```{r get-artifact}
+artifact <- cellxgene$Artifact$get("7dVluLROpalzEh8mNyxk")
+artifact
+```
+
+So far we have only retrieved the metadata about this object.
+To download the data itself we need to run another command.
+
+```{r load-artifact}
+adata <- artifact$load()
+adata
+```
+
+This dataset has been stored as an [`AnnData`](https://anndata.readthedocs.io) object.
+In the next sections we will convert it to a [`Seurat`](https://satijalab.org/seurat/) object and perform some simple analysis.
+
+# Convert to Seurat
+
+There are various approaches for converting between different single-cell objects, some of which are described in the [Interoperability chapter](https://www.sc-best-practices.org/introduction/interoperability.html) of the Single-cell Best Practices book.
+
+Because we already have the data loaded in memory, the simplest option is to extract the information we need and create a new `Seurat` object.
+
+```{r create-seurat}
+seurat <- SeuratObject::CreateSeuratObject(
+  counts = Matrix::t(adata$X),
+  meta.data = adata$obs,
+)
+seurat
+```
+
+# Analysis
+
+We could perform any normal analysis using **{Seurat}** but as an example we will calculate marker genes for each of the annotated cell types.
+To make things a bit quicker we only test the first 1000 genes but if you have a few minutes you can get results for all features.
+
+```{r markers}
+# Set cell identities to the provided cell type annotation
+SeuratObject::Idents(seurat) <- "Cell_Type"
+# Normalise the data
+seurat <- Seurat::NormalizeData(seurat)
+# Test for marker genes
+markers <- Seurat::FindAllMarkers(
+  seurat,
+  features = SeuratObject::Features(seurat)[1:1000]
+)
+# The output is a data.frame
+head(markers)
+```
+
+# Store the results in LaminDB
+
+Now that we have our results, we can save them to the LaminDB instance.
+
+```{r save-results, eval = submit_eval}
+seu_path <- tempfile(fileext = ".rds")
+saveRDS(seurat, seu_path)
+
+db$Artifact$from_df(
+  markers,
+  description = "Marker genes for renal cell carcinoma dataset"
+)$save()
+
+db$Artifact$from_path(
+  seu_path,
+  description = "Seurat object for renal cell carcinoma dataset"
+)$save()
+```
+
+# Close the connection
+
+Finally, we can close the connection to the database.
+
+```{r close, eval = submit_eval}
+db$finish()
+```
+
+# Render and upload the notebook
+
+You can render this notebook to HTML:
+
+- In RStudio, click the "Knit" button
+- From the command line, run:  
+  ```bash
+  Rscript -e 'rmarkdown::render("example_workflow.Rmd")'
+  ```
+- Or use the `rmarkdown` package in R:  
+  ```r
+  rmarkdown::render("example_workflow.Rmd")
+  ```
+
+And then save it to your LaminDB instance using the `lamin` CLI:
+
+```bash
+lamin save example_workflow.Rmd
+```
