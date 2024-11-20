@@ -12,6 +12,10 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+# whether or not this code will be used to 
+# actually upload results to the LaminDB instance
+# -> testuser1 is a test account that cannot upload results
+submit_eval <- laminr:::.get_user_settings()$handle != "testuser1"
 ```
 
 # Introduction
@@ -61,7 +65,7 @@ This tutorial assumes you have access to an instance where you have permission t
 
 Before we start, we will track the code that is run in this notebook.
 
-```{r}
+```{r track, eval = submit_eval}
 db$track("I8BlHXFXqZOG0000", path = "example_workflow.Rmd")
 ```
 
@@ -153,7 +157,7 @@ head(markers)
 
 Now that we have our results, we can save them to the LaminDB instance.
 
-```{r}
+```{r save-results, eval = submit_eval}
 seu_path <- tempfile(fileext = ".rds")
 saveRDS(seurat, seu_path)
 
@@ -172,7 +176,7 @@ db$Artifact$from_path(
 
 Finally, we can close the connection to the database.
 
-```{r}
+```{r close, eval = submit_eval}
 db$finish()
 ```
 
