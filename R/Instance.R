@@ -235,7 +235,7 @@ Instance <- R6::R6Class( # nolint object_name_linter
             py_err <- reticulate::py_last_error()
             if (py_err$type != "MissingContextUID") {
               cli::cli_abort(c(
-                "Python error {.val {py_err$type}}",
+                "Python {py_err$message}",
                 "i" = "Run {.run reticulate::py_last_error()} for details"
               ))
             }
