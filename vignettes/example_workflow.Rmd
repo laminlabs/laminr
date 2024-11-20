@@ -12,7 +12,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-# whether or not this code will be used to 
+# whether or not this code will be used to
 # actually upload results to the LaminDB instance
 # -> testuser1 is a test account that cannot upload results
 submit_eval <- laminr:::.get_user_settings()$handle != "testuser1"
