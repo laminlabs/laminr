@@ -1,0 +1,4 @@
+Name: Save active file
+Description: Save the current notebook or script to LaminDB
+Binding: save_active_file
+Interactive: true
