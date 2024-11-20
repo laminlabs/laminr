@@ -57,6 +57,16 @@ This gives us an object we can use to interact with the database.
 **Note** that only the default instance can create new records.
 This tutorial assumes you have access to an instance where you have permission to add data.
 
+## Track data provenance
+
+Before we start, we will track the code that is run in this notebook.
+
+```{r}
+db$track("4p2CNy60f3CR0002", path = "cellxgene_basic.Rmd")
+```
+
+Tip: The ID should be obtained by running `db$track(path = "cellxgene_basic.Rmd")` and copying the ID from the output.
+
 ## Connect to the CELLxGENE instance
 
 We can connect to other instances by providing a slug to the `connect()` function.
@@ -138,7 +148,49 @@ markers <- Seurat::FindAllMarkers(
 head(markers)
 ```
 
-# Add results
+# Store the results in LaminDB
 
-- Add the results as an artifact
-- Render and add report (?)
+Now that we have our results, we can save them to the LaminDB instance.
+
+```{r}
+seu_path <- tempfile(fileext = ".rds")
+saveRDS(seurat, seu_path)
+
+db$Artifact$from_df(
+  markers,
+  description = "Marker genes for renal cell carcinoma dataset"
+)$save()
+
+db$Artifact$from_path(
+  seu_path,
+  description = "Seurat object for renal cell carcinoma dataset"
+)$save()
+```
+
+# Close the connection
+
+Finally, we can close the connection to the database.
+
+```{r}
+db$finish()
+```
+
+# Render and upload the notebook
+
+You can render this notebook to HTML:
+
+- In RStudio, click the "Knit" button
+- From the command line, run:  
+  ```bash
+  Rscript -e 'rmarkdown::render("cellxgene_basic.Rmd")'
+  ```
+- Or use the `rmarkdown` package in R:  
+  ```r
+  rmarkdown::render("cellxgene_basic.Rmd")
+  ```
+
+And then save it to your LaminDB instance using the `lamin` CLI:
+
+```bash
+lamin save cellxgene_basic.Rmd
+```
