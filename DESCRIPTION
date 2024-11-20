@@ -3,9 +3,9 @@ Title: Interface for 'LaminDB'
 Version: 0.2.0
 Authors@R: c(
     person("Robrecht", "Cannoodt", email = "robrecht@data-intuitive.com", role = c("aut", "cre"),
-           comment = c(github = "rcannood", ORCID = "0000-0003-3641-729X")),
+           comment = c(ORCID = "0000-0003-3641-729X")),
     person("Luke", "Zappia", email = "luke@data-intuitive.com", role = "aut",
-           comment = c(github = "lazappi", ORCID = "0000-0001-7744-8565")),
+           comment = c(ORCID = "0000-0001-7744-8565")),
     person("Data Intuitive", email = "info@data-intuitive.com", role = "aut"),
     person("Lamin Labs", email = "open-source@lamin.ai", role = c("aut", "cph")))
 Description: Interact with 'LaminDB'. 'LaminDB' is an open-source data

@@ -18,11 +18,11 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Robrecht Cannoodt \email{robrecht@data-intuitive.com} (\href{https://orcid.org/0000-0003-3641-729X}{ORCID}) (rcannood)
+\strong{Maintainer}: Robrecht Cannoodt \email{robrecht@data-intuitive.com} (\href{https://orcid.org/0000-0003-3641-729X}{ORCID})
 
 Authors:
 \itemize{
-  \item Luke Zappia \email{luke@data-intuitive.com} (\href{https://orcid.org/0000-0001-7744-8565}{ORCID}) (lazappi)
+  \item Luke Zappia \email{luke@data-intuitive.com} (\href{https://orcid.org/0000-0001-7744-8565}{ORCID})
   \item Data Intuitive \email{info@data-intuitive.com}
   \item Lamin Labs \email{open-source@lamin.ai} [copyright holder]
 }
