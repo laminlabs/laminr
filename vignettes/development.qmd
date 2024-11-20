@@ -45,29 +45,40 @@ This document outlines the features of the **{laminr}** package and the roadmap 
 ### Manage data & metadata
 
 * [ ] **Create artifacts**: Create new artifacts from various data sources (e.g., files, data frames, in-memory objects).
-* [ ] **Save artifacts**: Save artifacts to LaminDB with appropriate metadata.
+  - [x] `$from_df()`: Create an artifact from a data frame.
+  - [x] `$from_path()`: Create an artifact from a path.
+  - [x] `$from_anndata()`: Create an artifact from an `AnnData`.
+* [x] **Save artifacts**: Save artifacts to LaminDB with appropriate metadata.
 * [ ] **Load artifacts**: Load artifacts from LaminDB into R:
+  - [x] `csv`: Load a data frame from a CSV file.
   - [ ] `fcs`: Load flow cytometry data.
-  - [ ] `tsv`: Load tabular data.
-  - [x] `h5ad`: Load an HDF5-backed AnnData object.
-  - [ ] `h5mu`: Load an HDF5-backed MuData object.
-  - [ ] `html`: Load HTML content.
-  - [ ] `json`: Load JSON data.
-  - [ ] `image`: Load image data.
-  - [ ] `svg`: Load SVG data.
+  - [x] `h5ad`: Load an AnnData from an HDF5 file.
+  - [ ] `h5mu`: Load a MuData from an HDF5 file.
+  - [x] `html`: Load content from an HTML file.
+  - [x] `jpg`: Load an image from JPG.
+  - [x] `json`: Load data from a JSON file.
+  - [x] `parquet`: Load a data frame from a Parquet file.
+  - [x] `png`: Load an image from PNG.
+  - [x] `rds`: Load an R object from an RDS file.
+  - [x] `svg`: Load an image from SVG.
+  - [x] `tsv`: Load a data frame from a TSV file.
+  - [x] `yaml`: Load data from a YAML file.
+  - [ ] `zarr`: Load an AnnData from a Zarr store.
 * [ ] **Cache artifacts**: Cache artifacts locally for faster access:
   - [x] `s3`: Interact with S3 storage.
   - [ ] `gcp`: Interact with Google Cloud Storage.
 * [ ] **Version artifacts**: Create new versions of artifacts.
+* [x] **Delete artifacts**: Delete an existing artifact.
 * [ ] **Manage artifact metadata**: Add, update, and delete artifact metadata.
 * [ ] **Work with collections**: Create, manage, and query collections of artifacts.
 
 ### Track notebooks & scripts
 
-* [ ] **Track code execution**: Automatically track the execution of R scripts and notebooks.
+* [x] **Track code execution**: Automatically track the execution of R scripts and notebooks.
 * [ ] **Capture run context**: Record information about the execution environment (e.g., package versions, parameters).
-* [ ] **Link code to artifacts**: Associate code execution with generated artifacts.
+* [x] **Link code to artifacts**: Associate code execution with generated artifacts.
 * [ ] **Visualize data lineage**: Create visualizations of data lineage and dependencies.
+* [x] **Finalize tracking**: End and save a run.
 
 ### Curate datasets
 
@@ -97,7 +108,7 @@ This document outlines the features of the **{laminr}** package and the roadmap 
 
 ### Transfer data
 
-* [ ] **Upload data**: Upload data files to LaminDB storage.
+* [x] **Upload data**: Upload data files to LaminDB storage.
 * [x] **Download data**: Download data files from LaminDB storage.
 * [ ] **(Advanced) Support zero-copy data transfer**: Implement efficient data transfer mechanisms.
 
@@ -116,12 +127,13 @@ A first version of the package that allows users to:
 ### Version 0.2.0
 
 * Expand query functionality with comparators, relationships, and pagination.
-* Implement basic data and metadata management features (create, save, load artifacts).
+* Implement basic data and metadata management features (create, save, load and delete artifacts).
 * Expand support for different data formats and storage backends.
+* Implement code tracking.
 
 ### Version 0.3.0
 
-* Implement code tracking and data lineage visualization.
+* Implement data lineage visualization.
 * Introduce data curation features (validation, standardization, annotation).
 * Enhance support for bionty registries and ontology interactions.
 

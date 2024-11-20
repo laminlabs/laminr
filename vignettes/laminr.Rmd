@@ -156,5 +156,5 @@ artifact$load() # Load the data into memory
 ```
 
 <div class="alert alert-warning" role="alert">
-  Currently, **{laminr}** primarily supports S3 storage and AnnData objects. Support for other storage backends and data formats will be added in the future. For more information related to planned features and the roadmap, please refer to the Development vignette (`vignette("development", package = "laminr")`).
+  Currently, **{laminr}** primarily supports S3 storage. Support for other storage backends will be added in the future. For more information related to planned features and the roadmap, please refer to the Development vignette (`vignette("development", package = "laminr")`).
 </div>

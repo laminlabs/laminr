@@ -20,6 +20,8 @@
 #' instance
 #' }
 connect <- function(slug = NULL) {
+  user_settings <- .get_user_settings()
+
   instance_file <-
     if (is.null(slug)) {
       # if the slug is null, see if we can load the default instance
@@ -80,7 +82,27 @@ connect <- function(slug = NULL) {
     }
   }
 
-  create_instance(instance_settings = instance_settings)
+  is_default <- FALSE
+  if (is.null(slug)) {
+    instance_slug <- paste0(
+      instance_settings$owner, "/",
+      name = instance_settings$name
+    )
+    current_default <- getOption("LAMINR_DEFAULT_INSTANCE")
+    if (!is.null(current_default)) {
+      if (!identical(instance_slug, current_default)) {
+        cli::cli_abort(c(
+          "There is already a default instance {.field {current_default}}",
+          "i" = "To connect to another instance provide a slug"
+        ))
+      }
+    } else {
+      options(LAMINR_DEFAULT_INSTANCE = instance_slug)
+    }
+    is_default <- TRUE
+  }
+
+  create_instance(instance_settings, is_default)
 }
 
 # nolint start: object_length_linter
@@ -101,7 +123,7 @@ connect <- function(slug = NULL) {
     owner <- split[[1]]
     name <- split[[2]]
   } else {
-    user_settings <- .settings_load__load_or_create_user_settings()
+    user_settings <- .get_user_settings()
 
     owner <- user_settings$handle
     name <- identifier
