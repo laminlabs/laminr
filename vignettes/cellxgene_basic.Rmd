@@ -62,7 +62,7 @@ This tutorial assumes you have access to an instance where you have permission t
 Before we start, we will track the code that is run in this notebook.
 
 ```{r}
-db$track("4p2CNy60f3CR0002", path = "cellxgene_basic.Rmd")
+db$track("4p2CNy60f3CR0003", path = "cellxgene_basic.Rmd")
 ```
 
 Tip: The ID should be obtained by running `db$track(path = "cellxgene_basic.Rmd")` and copying the ID from the output.
@@ -125,7 +125,7 @@ Because we already have the data loaded in memory, the simplest option is to ext
 ```{r create-seurat}
 seurat <- SeuratObject::CreateSeuratObject(
   counts = Matrix::t(adata$X),
-  meta.data = adata$obs, 
+  meta.data = adata$obs,
 )
 seurat
 ```
@@ -142,7 +142,8 @@ SeuratObject::Idents(seurat) <- "Cell_Type"
 seurat <- Seurat::NormalizeData(seurat)
 # Test for marker genes
 markers <- Seurat::FindAllMarkers(
-  seurat, features = SeuratObject::Features(seurat)[1:1000]
+  seurat,
+  features = SeuratObject::Features(seurat)[1:1000]
 )
 # The output is a data.frame
 head(markers)

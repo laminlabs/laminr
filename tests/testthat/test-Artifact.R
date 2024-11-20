@@ -14,7 +14,8 @@ test_that("creating an artifact from a data frame works", {
   )
 
   new_artifact <- db$Artifact$from_df(
-    dataframe, description = dataframe$Description
+    dataframe,
+    description = dataframe$Description
   )
 
   expect_s3_class(new_artifact, "TemporaryArtifact")
@@ -33,7 +34,8 @@ test_that("creating an artifact from a file works", {
   )
 
   new_artifact <- db$Artifact$from_path(
-    temp_file, description = "laminr test file"
+    temp_file,
+    description = "laminr test file"
   )
 
   expect_s3_class(new_artifact, "TemporaryArtifact")
@@ -54,7 +56,8 @@ test_that("creating an artifact from a directory works", {
   )
 
   new_artifact <- db$Artifact$from_path(
-    temp_dir, description = "laminr test directory"
+    temp_dir,
+    description = "laminr test directory"
   )
 
   expect_s3_class(new_artifact, "TemporaryArtifact")
@@ -76,7 +79,8 @@ test_that("creating an artifact from an AnnData works", {
   )
 
   new_artifact <- db$Artifact$from_df(
-    adata, description = adata$uns$Description
+    adata,
+    description = adata$uns$Description
   )
 
   expect_s3_class(new_artifact, "TemporaryArtifact")
