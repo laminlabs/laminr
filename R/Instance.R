@@ -219,10 +219,14 @@ Instance <- R6::R6Class( # nolint object_name_linter
     #' Calling `track()` with `transform = NULL` with return a UID, providing
     #' that UID with the same path with start a run
     #'
-    #' @param path Path to the R script or document to track
     #' @param transform UID specifying the data transformation
-    track = function(path, transform = NULL) {
+    #' @param path Path to the R script or document to track
+    track = function(transform = NULL, path = NULL) {
       py_lamin <- self$get_py_lamin(check = TRUE, what = "Tracking")
+
+      if (is.null(path)) {
+        cli::cli_abort("The {.arg path} argument must be provided")
+      }
 
       if (is.null(transform)) {
         transform <- tryCatch(
@@ -231,7 +235,7 @@ Instance <- R6::R6Class( # nolint object_name_linter
             py_err <- reticulate::py_last_error()
             if (py_err$type != "MissingContextUID") {
               cli::cli_abort(c(
-                "Python error {.val {py_err$type}}",
+                "Python {py_err$message}",
                 "i" = "Run {.run reticulate::py_last_error()} for details"
               ))
             }
