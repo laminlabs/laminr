@@ -10,6 +10,7 @@
 - Add `track()` and `finish()` methods to the `Instance` class (PR #83)
 - Add a `from_path()` method to the `Registry` class to create new artifacts from paths (PR #85)
 - Add a `from_anndata()` method to the `Registry` class to create new artifacts from `AnnData` objects (PR #85)
+- Add RStudio add-in for saving a notebook (PR #90).
 
 ## MAJOR CHANGES
 

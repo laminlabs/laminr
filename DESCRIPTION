@@ -31,6 +31,7 @@ Suggests:
     quarto,
     readr,
     reticulate,
+    rstudioapi,
     rsvg,
     s3 (>= 1.1.0),
     Seurat,
