@@ -188,15 +188,15 @@ Python lamindb module.
 \subsection{Method \code{track()}}{
 Start a run with tracked data lineage
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Instance$track(path, transform = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Instance$track(transform = NULL, path = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{path}}{Path to the R script or document to track}
-
 \item{\code{transform}}{UID specifying the data transformation}
+
+\item{\code{path}}{Path to the R script or document to track}
 }
 \if{html}{\out{</div>}}
 }
