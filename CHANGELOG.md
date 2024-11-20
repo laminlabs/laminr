@@ -1,5 +1,7 @@
 # laminr v0.2.0
 
+This release adds support for creating new artifacts in a LaminDB instance.
+
 ## NEW FUNCTIONALITY
 
 - Add support for more loaders (PR #81).  
