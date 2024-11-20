@@ -1,6 +1,6 @@
 Package: laminr
 Title: Interface for 'LaminDB'
-Version: 0.1.0
+Version: 0.2.0
 Authors@R: c(
     person("Robrecht", "Cannoodt", email = "robrecht@data-intuitive.com", role = c("aut", "cre"),
            comment = c(github = "rcannood", ORCID = "0000-0003-3641-729X")),
