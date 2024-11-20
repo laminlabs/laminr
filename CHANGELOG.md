@@ -17,6 +17,10 @@
   The default instance must be changed using the Lamin CLI. (PR #78)
 - User setting are stored in a global option the first time `connect()` is run (PR #78)
 
+## MINOR CHANGES
+
+- Adjusted argument order in `Instance$track()` and improved Python error handling (PR #89)
+
 ## TESTING
 
 - Add a test for creating artifacts from data frames (PR #78).
