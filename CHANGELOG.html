@@ -64,6 +64,10 @@ Currently supported: <code>.csv</code>, <code>.h5ad</code>, <code>.html</code>, 
 <li>User setting are stored in a global option the first time <code><a href="reference/connect.html">connect()</a></code> is run (PR #78)</li>
 </ul></div>
 <div class="section level2">
+<h2 id="minor-changes">MINOR CHANGES<a class="anchor" aria-label="anchor" href="#minor-changes"></a></h2>
+<ul><li>Adjusted argument order in <code>Instance$track()</code> and improved Python error handling (PR #89)</li>
+</ul></div>
+<div class="section level2">
 <h2 id="testing">TESTING<a class="anchor" aria-label="anchor" href="#testing"></a></h2>
 <ul><li>Add a test for creating artifacts from data frames (PR #78).</li>
 <li>Add tests for creating artifacts from paths and <code>AnnData</code> objects (PR #85)</li>
@@ -108,7 +112,7 @@ Currently supported: <code>.csv</code>, <code>.h5ad</code>, <code>.html</code>, 
 <li><p>Allow unauthenticated users to connect to an instance if they ran <code>lamin connect &lt;instance&gt;</code> beforehand (PR #19).</p></li>
 </ul></div>
 <div class="section level2">
-<h2 id="minor-changes">MINOR CHANGES<a class="anchor" aria-label="anchor" href="#minor-changes"></a></h2>
+<h2 id="minor-changes-1">MINOR CHANGES<a class="anchor" aria-label="anchor" href="#minor-changes-1"></a></h2>
 <ul><li>Do not complain when foreign keys are not found in a record, but also do not complain when they are (PR #13).</li>
 <li>Define a current user and current instance with lamin-cli prior to testing and generating documentation in the CI (PR #23).</li>
 <li>Add progress bars to <code>Artifact$cache()</code> (PR #58)</li>
