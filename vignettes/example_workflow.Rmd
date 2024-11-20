@@ -1,8 +1,8 @@
 ---
-title: "Basic CELLxGENE workflow"
+title: "Example Workflow: CELLxGENE"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Wetlab Module}
+  %\VignetteIndexEntry{Example Workflow: CELLxGENE}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 ---
@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 # Introduction
   
-This vignette demonstrates a basic LaminDB workflow using the public CELLxGENE instance.
+This vignette demonstrates a basic workflow for accessing and analysing single-cell RNA-seq data from the CELLxGENE repository using **{laminr}**.
 [CZ CELLxGENE Discover](https://cellxgene.cziscience.com/) is a standardised collection of scRNA-seq datasets and LaminDB makes it easy to query and access data in this repository.
 We will go through the steps of finding and downloading a dataset using **{laminr}**, performing some simple analysis using **{Seurat}** and saving the results your own LaminDB database.
 
@@ -62,10 +62,10 @@ This tutorial assumes you have access to an instance where you have permission t
 Before we start, we will track the code that is run in this notebook.
 
 ```{r}
-db$track("4p2CNy60f3CR0003", path = "cellxgene_basic.Rmd")
+db$track("I8BlHXFXqZOG0000", path = "example_workflow.Rmd")
 ```
 
-Tip: The ID should be obtained by running `db$track(path = "cellxgene_basic.Rmd")` and copying the ID from the output.
+Tip: The ID should be obtained by running `db$track(path = "example_workflow.Rmd")` and copying the ID from the output.
 
 ## Connect to the CELLxGENE instance
 
@@ -183,15 +183,15 @@ You can render this notebook to HTML:
 - In RStudio, click the "Knit" button
 - From the command line, run:  
   ```bash
-  Rscript -e 'rmarkdown::render("cellxgene_basic.Rmd")'
+  Rscript -e 'rmarkdown::render("example_workflow.Rmd")'
   ```
 - Or use the `rmarkdown` package in R:  
   ```r
-  rmarkdown::render("cellxgene_basic.Rmd")
+  rmarkdown::render("example_workflow.Rmd")
   ```
 
 And then save it to your LaminDB instance using the `lamin` CLI:
 
 ```bash
-lamin save cellxgene_basic.Rmd
+lamin save example_workflow.Rmd
 ```
