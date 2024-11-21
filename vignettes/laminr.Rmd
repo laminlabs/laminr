@@ -131,7 +131,7 @@ You can see that this artifact contains an [`AnnData`](https://anndata.readthedo
 # Work with the data
 
 Once you have loaded a dataset you can perform any analysis with it as you would normally.
-Here, marker genes are exemplarily calculated for each of the provided cell type labels using [**{Seurat}**](https://satijalab.org/seurat/).
+Here, marker genes are calculated for each of the provided cell type labels using [**{Seurat}**](https://satijalab.org/seurat/).
 
 ```{r create-seurat}
 # Create a Seurat object
