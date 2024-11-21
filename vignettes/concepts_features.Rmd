@@ -1,5 +1,5 @@
 ---
-title: "Getting Started"
+title: "Concepts and features"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Getting Started}
@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-This vignette provides a practical introduction to using the **{laminr}** package to interact with LaminDB.
+This vignette provides a more detailed introduction to the concepts and features of **{laminr}**.
 We'll start with a brief overview of key concepts and then walk through the basic steps to connect to a LaminDB instance and work with its core components.
 
 ## Key Concepts in LaminDB
