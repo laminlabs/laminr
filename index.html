@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Interface for LaminDB • laminr</title>
+<title>Client for LaminDB • laminr</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Interface for LaminDB">
+<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Client for LaminDB">
 <meta name="description" content="Interact with LaminDB. LaminDB is an open-source data framework for biology. This package allows you to query and download data from LaminDB instances.">
 <meta property="og:description" content="Interact with LaminDB. LaminDB is an open-source data framework for biology. This package allows you to query and download data from LaminDB instances.">
 </head>
@@ -37,7 +37,7 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><h6 class="dropdown-header" data-toc-skip>Introduction</h6></li>
-    <li><a class="dropdown-item" href="articles/example_workflow.html">Example Workflow</a></li>
+    <li><a class="dropdown-item" href="articles/concepts_features.html">Concepts and features</a></li>
     <li><a class="dropdown-item" href="articles/architecture.html">Package Architecture</a></li>
     <li><a class="dropdown-item" href="articles/development.html">Development Roadmap</a></li>
     <li><hr class="dropdown-divider"></li>
@@ -61,7 +61,7 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="laminr-an-r-interface-to-lamindb">{laminr}: An R interface to LaminDB<a class="anchor" aria-label="anchor" href="#laminr-an-r-interface-to-lamindb"></a>
+<div class="page-header"><h1 id="laminr-an-r-client-for-lamindb">{laminr}: An R client for LaminDB<a class="anchor" aria-label="anchor" href="#laminr-an-r-client-for-lamindb"></a>
 </h1></div>
 <!-- badges: start -->
 
@@ -107,16 +107,31 @@ This package is currently in <strong>early access</strong> and is under active d
 <p>Get started with <strong>{laminr}</strong> by installing the package from CRAN:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"laminr"</span><span class="op">)</span></span></code></pre></div>
-<p>To include all suggested dependencies for enhanced functionality, use:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<p>You will also need to install the <code>lamindb</code> Python package:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="ex">pip</span> install lamindb<span class="pp">[</span><span class="ss">aws</span><span class="pp">]</span></span></code></pre></div>
+<div class="section level3">
+<h3 id="additional-packages">Additional packages<a class="anchor" aria-label="anchor" href="#additional-packages"></a>
+</h3>
+<p>Some functionality requires additional packages. To install all of these use:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"laminr"</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p>This further installs:</p>
+<p>This will also install these package for the following tasks:</p>
 <ul>
-<li>anndata: For native AnnData support in R</li>
-<li>S3: To fetch datasets from AWS S3</li>
+<li>
+<strong>{anndata}</strong> - Native <code>AnnData</code> support in R</li>
+<li>
+<strong>{nanoparquet}</strong> - Reading <code>.parquet</code> files</li>
+<li>
+<strong>{readr}</strong> - Reading CSV/TSV files</li>
+<li>
+<strong>{reticulate}</strong> - Functionality that requires the Python <code>lamindb</code> package</li>
+<li>
+<strong>{rsvg}</strong> - Reading SVG files</li>
+<li>
+<strong>{s3}</strong> - Fetching datasets from AWS S3</li>
 </ul>
-<p>For now, you will also need to install the <code>lamindb</code> Python package:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="ex">pip</span> install lamindb<span class="pp">[</span><span class="ss">aws</span><span class="pp">]</span></span></code></pre></div>
+<p>If you choose not to install all packages now you will be prompted to do so whenever one is required.</p>
+</div>
 </div>
 <div class="section level2">
 <h2 id="getting-started">Getting started<a class="anchor" aria-label="anchor" href="#getting-started"></a>

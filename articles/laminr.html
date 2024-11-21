@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Getting Started • laminr</title>
+<title>Getting started • laminr</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Getting Started">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Getting started">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -35,7 +35,7 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><h6 class="dropdown-header" data-toc-skip>Introduction</h6></li>
-    <li><a class="dropdown-item" href="../articles/example_workflow.html">Example Workflow</a></li>
+    <li><a class="dropdown-item" href="../articles/concepts_features.html">Concepts and features</a></li>
     <li><a class="dropdown-item" href="../articles/architecture.html">Package Architecture</a></li>
     <li><a class="dropdown-item" href="../articles/development.html">Development Roadmap</a></li>
     <li><hr class="dropdown-divider"></li>
@@ -64,105 +64,59 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>Getting Started</h1>
+      <h1>Getting started</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/laminlabs/laminr/blob/v0.2.0/vignettes/laminr.Rmd" class="external-link"><code>vignettes/laminr.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/laminlabs/laminr/blob/main/vignettes/laminr.Rmd" class="external-link"><code>vignettes/laminr.Rmd</code></a></small>
       <div class="d-none name"><code>laminr.Rmd</code></div>
     </div>
 
     
     
-<p>This vignette provides a practical introduction to using the
-<strong>{laminr}</strong> package to interact with LaminDB. We’ll start
-with a brief overview of key concepts and then walk through the basic
-steps to connect to a LaminDB instance and work with its core
-components.</p>
 <div class="section level2">
-<h2 id="key-concepts-in-lamindb">Key Concepts in LaminDB<a class="anchor" aria-label="anchor" href="#key-concepts-in-lamindb"></a>
+<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>Before diving into the practical usage of <strong>{laminr}</strong>,
-it’s helpful to understand some core concepts in LaminDB. For a more
-detailed explanation, refer to the Architecture vignette
-(<code><a href="../articles/architecture.html">vignette("architecture", package = "laminr")</a></code>).</p>
-<ul>
-<li>
-<strong>Instance</strong>: A LaminDB instance is a self-contained
-environment for storing and managing data and metadata. Think of it like
-a database or a project directory. Each instance has its own schema,
-storage location, and metadata database.</li>
-<li>
-<strong>Module</strong>: A module is a collection of related
-registries that provide specific functionality. For example, the core
-module contains essential registries for general data management, while
-the bionty module provides registries for biological entities like genes
-and proteins.</li>
-<li>
-<strong>Registry</strong>: A registry is a centralized collection of
-related records, similar to a table in a database. Each registry holds a
-specific type of metadata, such as information about artifacts,
-transforms, or features.</li>
-<li>
-<strong>Record</strong>: A record is a single entry within a
-registry, analogous to a row in a database table. Each record represents
-a specific entity and combines multiple fields of information.</li>
-<li>
-<strong>Field</strong>: A field is a single piece of information
-within a record, like a column in a database table. For example, an
-artifact record might have fields for its name, description, and
-creation date.</li>
-</ul>
+<p>This vignettes provides a quick introduction to the
+<strong>{laminr}</strong> workflow. For more details about how
+<strong>{laminr}</strong> works see
+<code><a href="../articles/concepts_features.html">vignette("concepts_features", package = "laminr")</a></code>.</p>
 </div>
 <div class="section level2">
-<h2 id="initial-setup">Initial setup<a class="anchor" aria-label="anchor" href="#initial-setup"></a>
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>Now, let’s set up your environment to use
-<strong>{laminr}</strong>.</p>
-<div class="section level3">
-<h3 id="python-setup">Python setup<a class="anchor" aria-label="anchor" href="#python-setup"></a>
-</h3>
-<ol style="list-style-type: decimal">
-<li>Install the <code>lamindb</code> Python package.</li>
-</ol>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="ex">pip</span> install lamindb<span class="pp">[</span><span class="ss">aws</span><span class="pp">]</span></span></code></pre></div>
-<ol start="2" style="list-style-type: decimal">
-<li>Connect to a LaminDB instance:</li>
-</ol>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="ex">lamin</span> connect laminlabs/cellxgene</span></code></pre></div>
-</div>
-<div class="section level3">
-<h3 id="r-setup">R setup<a class="anchor" aria-label="anchor" href="#r-setup"></a>
-</h3>
-<ol style="list-style-type: decimal">
-<li>Install the <strong>{laminr}</strong> package.</li>
-</ol>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<p>Install <strong>{laminr}</strong> from CRAN using:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"laminr"</span><span class="op">)</span></span></code></pre></div>
-<ol start="2" style="list-style-type: decimal">
-<li>(Optional) Install suggested dependencies.</li>
-</ol>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<p>You will also need to install the <code>lamindb</code> Python
+package:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="ex">pip</span> install lamindb<span class="pp">[</span><span class="ss">aws</span><span class="pp">]</span></span></code></pre></div>
+<p>Some functionality requires additional packages. You will be prompted
+to install them as needed or you can install them all now with:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"laminr"</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p>This includes packages like <strong>{anndata}</strong> for working
-with AnnData objects and <strong>{s3}</strong> for interacting with S3
-storage.</p>
-</div>
+<p>See the “Initial setup” section of
+<code><a href="../articles/concepts_features.html">vignette("concepts_features", package = "laminr")</a></code> for more
+details.</p>
 </div>
 <div class="section level2">
-<h2 id="connecting-to-lamindb-from-r">Connecting to LaminDB from R<a class="anchor" aria-label="anchor" href="#connecting-to-lamindb-from-r"></a>
+<h2 id="connecting-to-lamindb">Connecting to LaminDB<a class="anchor" aria-label="anchor" href="#connecting-to-lamindb"></a>
 </h2>
-<p>Connect to the <code>laminlabs/cellxgene</code> instance from your R
-session:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://laminr.lamin.ai">laminr</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">db</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/connect.html">connect</a></span><span class="op">(</span><span class="st">"laminlabs/cellxgene"</span><span class="op">)</span></span></code></pre></div>
-<p>The <code>db</code> object now represents your connection to the
-LaminDB instance. You can explore the available registries (like
-<code>Artifact</code>, <code>Collection</code>, <code>Feature</code>,
-etc.) by simply printing the <code>db</code> object:</p>
+<p>Load <strong>{laminr}</strong> to get started.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://laminr.lamin.ai">laminr</a></span><span class="op">)</span></span></code></pre></div>
+<div class="section level3">
+<h3 id="connect-to-the-default-instance">Connect to the default instance<a class="anchor" aria-label="anchor" href="#connect-to-the-default-instance"></a>
+</h3>
+<p>The default LaminDB instance is set using the <code>lamin</code> CLI
+on the command line:</p>
+<pre class="shell"><code>lamin connect &lt;owner&gt;/&lt;name&gt;</code></pre>
+<p>Once a default instance has been set, connect to it with
+<strong>{laminr}</strong>:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">db</span></span>
+<code class="sourceCode R"><span><span class="va">db</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/connect.html">connect</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #FFFF55;">!</span> schema module 'bionty' is not installed → no access to its labels &amp; registries (resolve via `pip install bionty`)</span></span>
+<span><span class="co">#&gt; <span style="color: #55FF55;">→</span> connected lamindb: laminlabs/cellxgene</span></span>
+<span><span class="va">db</span></span>
 <span><span class="co">#&gt; <span style="color: #55FF55; font-weight: bold;">cellxgene</span></span></span>
 <span><span class="co">#&gt; <span style="color: #FF55FF; font-style: italic;">  Core registries</span></span></span>
 <span><span class="co">#&gt;     $Run</span></span>
@@ -179,194 +133,395 @@ etc.) by simply printing the <code>db</code> object:</p>
 <span><span class="co">#&gt;     $FeatureValue</span></span>
 <span><span class="co">#&gt; <span style="color: #FF55FF; font-style: italic;">  Additional modules</span></span></span>
 <span><span class="co">#&gt;     bionty</span></span></code></pre></div>
-<p>These registries correspond to <a href="https://docs.lamin.ai/lamindb" class="external-link">Python classes in LaminDB</a>.</p>
-<p>To access registries within specific modules, use the $ operator. For
-example, to access the bionty module:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">db</span><span class="op">$</span><span class="va">bionty</span></span>
-<span><span class="co">#&gt; <span style="color: #55FF55; font-weight: bold;">bionty</span></span></span>
-<span><span class="co">#&gt; <span style="color: #FF55FF; font-style: italic;">  Registries</span></span></span>
-<span><span class="co">#&gt;     $Gene</span></span>
-<span><span class="co">#&gt;     $Source</span></span>
-<span><span class="co">#&gt;     $Tissue</span></span>
-<span><span class="co">#&gt;     $Disease</span></span>
-<span><span class="co">#&gt;     $Pathway</span></span>
-<span><span class="co">#&gt;     $Protein</span></span>
-<span><span class="co">#&gt;     $CellLine</span></span>
-<span><span class="co">#&gt;     $CellType</span></span>
-<span><span class="co">#&gt;     $Organism</span></span>
-<span><span class="co">#&gt;     $Ethnicity</span></span>
-<span><span class="co">#&gt;     $Phenotype</span></span>
-<span><span class="co">#&gt;     $CellMarker</span></span>
-<span><span class="co">#&gt;     $DevelopmentalStage</span></span>
-<span><span class="co">#&gt;     $ExperimentalFactor</span></span></code></pre></div>
-<p>The <code>bionty</code> and other registries also have corresponding
-<a href="https://docs.lamin.ai/bionty" class="external-link">Python classes</a>.</p>
-</div>
-<div class="section level2">
-<h2 id="working-with-registries">Working with registries<a class="anchor" aria-label="anchor" href="#working-with-registries"></a>
-</h2>
-<p>Let’s use the <code>Artifact</code> registry as an example. This
-registry stores datasets, models, and other data entities.</p>
-<p>To see the available functions for the <code>Artifact</code>
-registry, print the registry object:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">db</span><span class="op">$</span><span class="va">Artifact</span></span>
-<span><span class="co">#&gt; <span style="color: #55FF55; font-weight: bold;">Artifact</span></span></span>
-<span><span class="co">#&gt; <span style="color: #FF55FF; font-style: italic;">  Simple fields</span></span></span>
-<span><span class="co">#&gt;     id: AutoField</span></span>
-<span><span class="co">#&gt;     key: CharField</span></span>
-<span><span class="co">#&gt;     uid: CharField</span></span>
-<span><span class="co">#&gt;     hash: CharField</span></span>
-<span><span class="co">#&gt;     size: BigIntegerField</span></span>
-<span><span class="co">#&gt;     type: CharField</span></span>
-<span><span class="co">#&gt;     suffix: CharField</span></span>
-<span><span class="co">#&gt;     version: CharField</span></span>
-<span><span class="co">#&gt;     is_latest: BooleanField</span></span>
-<span><span class="co">#&gt;     n_objects: BigIntegerField</span></span>
-<span><span class="co">#&gt;     created_at: DateTimeField</span></span>
-<span><span class="co">#&gt;     updated_at: DateTimeField</span></span>
-<span><span class="co">#&gt;     visibility: SmallIntegerField</span></span>
-<span><span class="co">#&gt;     description: CharField</span></span>
-<span><span class="co">#&gt;     n_observations: BigIntegerField</span></span>
-<span><span class="co">#&gt; <span style="color: #FF55FF; font-style: italic;">  Relational fields</span></span></span>
-<span><span class="co">#&gt;     run: Run<span style="color: #555555;"> (many-to-one)</span></span></span>
-<span><span class="co">#&gt;     storage: Storage<span style="color: #555555;"> (many-to-one)</span></span></span>
-<span><span class="co">#&gt;     ulabels: ULabel<span style="color: #555555;"> (many-to-many)</span></span></span>
-<span><span class="co">#&gt;     transform: Transform<span style="color: #555555;"> (many-to-one)</span></span></span>
-<span><span class="co">#&gt;     created_by: User<span style="color: #555555;"> (many-to-one)</span></span></span>
-<span><span class="co">#&gt;     collections: Collection<span style="color: #555555;"> (many-to-many)</span></span></span>
-<span><span class="co">#&gt;     feature_sets: FeatureSet<span style="color: #555555;"> (many-to-many)</span></span></span>
-<span><span class="co">#&gt;     input_of_runs: Run<span style="color: #555555;"> (many-to-many)</span></span></span>
-<span><span class="co">#&gt; <span style="color: #FF55FF; font-style: italic;">  Bionty fields</span></span></span>
-<span><span class="co">#&gt;     genes: bionty$Gene<span style="color: #555555;"> (many-to-many)</span></span></span>
-<span><span class="co">#&gt;     tissues: bionty$Tissue<span style="color: #555555;"> (many-to-many)</span></span></span>
-<span><span class="co">#&gt;     diseases: bionty$Disease<span style="color: #555555;"> (many-to-many)</span></span></span>
-<span><span class="co">#&gt;     pathways: bionty$Pathway<span style="color: #555555;"> (many-to-many)</span></span></span>
-<span><span class="co">#&gt;     proteins: bionty$Protein<span style="color: #555555;"> (many-to-many)</span></span></span>
-<span><span class="co">#&gt;     organisms: bionty$Organism<span style="color: #555555;"> (many-to-many)</span></span></span>
-<span><span class="co">#&gt;     cell_lines: bionty$CellLine<span style="color: #555555;"> (many-to-many)</span></span></span>
-<span><span class="co">#&gt;     cell_types: bionty$CellType<span style="color: #555555;"> (many-to-many)</span></span></span>
-<span><span class="co">#&gt;     phenotypes: bionty$Phenotype<span style="color: #555555;"> (many-to-many)</span></span></span>
-<span><span class="co">#&gt;     ethnicities: bionty$Ethnicity<span style="color: #555555;"> (many-to-many)</span></span></span>
-<span><span class="co">#&gt;     cell_markers: bionty$CellMarker<span style="color: #555555;"> (many-to-many)</span></span></span>
-<span><span class="co">#&gt;     developmental_stages: bionty$DevelopmentalStage<span style="color: #555555;"> (many-to-many)</span></span></span>
-<span><span class="co">#&gt;     experimental_factors: bionty$ExperimentalFactor<span style="color: #555555;"> (many-to-many)</span></span></span></code></pre></div>
-<p>You can also get a data frame summarising the records associated with
-a registry.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">db</span><span class="op">$</span><span class="va">Artifact</span><span class="op">$</span><span class="fu">df</span><span class="op">(</span>limit <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
-<span><span class="co">#&gt;     id suffix X_accessor n_objects visibility</span></span>
-<span><span class="co">#&gt; 1 2846        tiledbsoma       290          1</span></span>
-<span><span class="co">#&gt; 2 3665        tiledbsoma       330          1</span></span>
-<span><span class="co">#&gt; 3 1270  .h5ad    AnnData        NA          1</span></span>
-<span><span class="co">#&gt; 4 2840 .ipynb       &lt;NA&gt;        NA          0</span></span>
-<span><span class="co">#&gt; 5 2842  .html       &lt;NA&gt;        NA          0</span></span>
-<span><span class="co">#&gt;                                                                      key</span></span>
-<span><span class="co">#&gt; 1                                            cell-census/2023-12-15/soma</span></span>
-<span><span class="co">#&gt; 2                                            cell-census/2024-07-01/soma</span></span>
-<span><span class="co">#&gt; 3 cell-census/2023-07-25/h5ads/7a0a8891-9a22-4549-a55b-c2aca23c3a2a.h5ad</span></span>
-<span><span class="co">#&gt; 4                                                                   &lt;NA&gt;</span></span>
-<span><span class="co">#&gt; 5                                                                   &lt;NA&gt;</span></span>
-<span><span class="co">#&gt;                    uid         size                   hash</span></span>
-<span><span class="co">#&gt; 1 FYMewVq5twKMDXVy0000 635848093433 Mfyw8VuqftX5REITfQH_yg</span></span>
-<span><span class="co">#&gt; 2 FYMewVq5twKMDXVy0001 870700998221 bzrXBPNvitSVKvb3GG38_w</span></span>
-<span><span class="co">#&gt; 3 tczTlSHFPOcAcBnfyxKA   1297573950 UlsVvBz9kMzn2r9RdoAAOg</span></span>
-<span><span class="co">#&gt; 4 JIIPyQX5l9qELPl42d75        36297 gNdUkonYgQJP_Mi3xLzt_g</span></span>
-<span><span class="co">#&gt; 5 Whyxwf3k2GjJwTPCl1FK       716529 BDGZac3qU3oLVFpO035Qhg</span></span>
-<span><span class="co">#&gt;                            description n_observations is_latest X_hash_type</span></span>
-<span><span class="co">#&gt; 1                    Census 2023-12-15       68683222     FALSE       md5-d</span></span>
-<span><span class="co">#&gt; 2                    Census 2024-07-01      115556140      TRUE       md5-d</span></span>
-<span><span class="co">#&gt; 3      Supercluster: Hippocampal CA1-3          74979     FALSE       md5-n</span></span>
-<span><span class="co">#&gt; 4 Source of transform G69jtgzKO0eJ6K79             NA     FALSE         md5</span></span>
-<span><span class="co">#&gt; 5   Report of run UAAiLAi0BrLvlKnsuvP3             NA     FALSE         md5</span></span>
-<span><span class="co">#&gt;      type                       created_at X_key_is_virtual</span></span>
-<span><span class="co">#&gt; 1 dataset 2024-07-12T12:12:16.091881+00:00            FALSE</span></span>
-<span><span class="co">#&gt; 2 dataset 2024-07-16T12:52:01.424629+00:00            FALSE</span></span>
-<span><span class="co">#&gt; 3    &lt;NA&gt; 2023-11-28T21:46:12.685907+00:00            FALSE</span></span>
-<span><span class="co">#&gt; 4    &lt;NA&gt; 2024-01-29T08:32:13.311741+00:00             TRUE</span></span>
-<span><span class="co">#&gt; 5    &lt;NA&gt; 2024-01-29T08:32:18.346499+00:00             TRUE</span></span>
-<span><span class="co">#&gt;                         updated_at    version</span></span>
-<span><span class="co">#&gt; 1 2024-09-17T13:00:13.714256+00:00 2023-12-15</span></span>
-<span><span class="co">#&gt; 2 2024-09-17T13:01:23.739635+00:00 2024-07-01</span></span>
-<span><span class="co">#&gt; 3 2024-01-24T07:10:21.725547+00:00 2023-07-25</span></span>
-<span><span class="co">#&gt; 4 2024-01-29T08:32:13.311792+00:00          0</span></span>
-<span><span class="co">#&gt; 5 2024-01-30T09:12:06.027928+00:00          1</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="working-with-records">Working with records<a class="anchor" aria-label="anchor" href="#working-with-records"></a>
-</h2>
-<p>You can fetch a specific record from a registry using its ID or UID.
-For instance, to get the artifact with UID <a href="https://lamin.ai/laminlabs/cellxgene/artifact/KBW89Mf7IGcekja2hADu" class="external-link">KBW89Mf7IGcekja2hADu</a>:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">artifact</span> <span class="op">&lt;-</span> <span class="va">db</span><span class="op">$</span><span class="va">Artifact</span><span class="op">$</span><span class="fu">get</span><span class="op">(</span><span class="st">"KBW89Mf7IGcekja2hADu"</span><span class="op">)</span></span></code></pre></div>
-<p>This artifact contains an <code>AnnData</code> object with myeloid
-cell data. You can view its metadata:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">artifact</span></span>
-<span><span class="co">#&gt; <span style="color: #55FF55; font-weight: bold;">Artifact</span>(uid='KBW89Mf7IGcekja2hADu', description='Myeloid compartment', key='cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad', id=3659, run_id=27, hash='SZ5tB0T4YKfiUuUkAL09ZA', size=691757462, type='dataset', suffix='.h5ad', storage_id=2, version='2024-07-01', _accessor='AnnData', is_latest=TRUE, transform_id=22, _hash_type='md5-n', created_at='2024-07-12T12:34:10.345829+00:00', created_by_id=1, updated_at='2024-07-12T12:40:48.837026+00:00', visibility=1, n_observations=51552, _key_is_virtual=FALSE)</span></span></code></pre></div>
-<p>For artifact records, you can get more detailed information:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">artifact</span><span class="op">$</span><span class="fu">describe</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #55FF55; font-weight: bold;">Artifact</span>(uid='KBW89Mf7IGcekja2hADu', description='Myeloid compartment', key='cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad', id=3659, run_id=27, hash='SZ5tB0T4YKfiUuUkAL09ZA', size=691757462, type='dataset', suffix='.h5ad', storage_id=2, version='2024-07-01', _accessor='AnnData', is_latest=TRUE, transform_id=22, _hash_type='md5-n', created_at='2024-07-12T12:34:10.345829+00:00', created_by_id=1, updated_at='2024-07-12T12:40:48.837026+00:00', visibility=1, n_observations=51552, _key_is_virtual=FALSE)</span></span>
-<span><span class="co">#&gt; <span style="color: #FF55FF; font-style: italic;">  Provenance</span></span></span>
-<span><span class="co">#&gt;     $storage = 's3://cellxgene-data-public'</span></span>
-<span><span class="co">#&gt;     $transform = 'Census release 2024-07-01 (LTS)'</span></span>
-<span><span class="co">#&gt;     $run = '2024-07-16T12:49:41.81955+00:00'</span></span>
-<span><span class="co">#&gt;     $created_by = 'sunnyosun'</span></span></code></pre></div>
-<p>Access specific fields of the record using the <code>$</code>
-operator:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">artifact</span><span class="op">$</span><span class="va">id</span></span>
-<span><span class="co">#&gt; [1] 3659</span></span>
-<span><span class="va">artifact</span><span class="op">$</span><span class="va">uid</span></span>
-<span><span class="co">#&gt; [1] "KBW89Mf7IGcekja2hADu"</span></span>
-<span><span class="va">artifact</span><span class="op">$</span><span class="va">key</span></span>
-<span><span class="co">#&gt; [1] "cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad"</span></span></code></pre></div>
-<p>Some fields of a record contain links to related information.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">artifact</span><span class="op">$</span><span class="va">storage</span></span>
-<span><span class="co">#&gt; <span style="color: #55FF55; font-weight: bold;">Storage</span>(uid='oIYGbD74', root='s3://cellxgene-data-public', id=2, type='s3', region='us-west-2', created_at='2023-09-19T13:17:56.273068+00:00', created_by_id=1, updated_at='2023-10-16T15:04:08.998203+00:00')</span></span>
-<span><span class="va">artifact</span><span class="op">$</span><span class="va">developmental_stages</span></span>
-<span><span class="co">#&gt; <span style="color: #55FF55; font-weight: bold;">RelatedRecords</span>(field_name='developmental_stages', relation_type='many-to-many', related_to='KBW89Mf7IGcekja2hADu')</span></span></code></pre></div>
-<p>When those that are one-to-many or many-to-many relationship, a
-summary of the related information can be retrieved as a data frame.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">artifact</span><span class="op">$</span><span class="va">developmental_stages</span><span class="op">$</span><span class="fu">df</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt;    id      uid abbr                       name synonyms</span></span>
-<span><span class="co">#&gt; 1 422 1xebUrrX   NA   sixth decade human stage       NA</span></span>
-<span><span class="co">#&gt; 2 423 3yuYMeZt   NA seventh decade human stage       NA</span></span>
-<span><span class="co">#&gt; 3 424 2EztBuvx   NA  eighth decade human stage       NA</span></span>
-<span><span class="co">#&gt;                         created_at                       updated_at</span></span>
-<span><span class="co">#&gt; 1 2023-11-28T23:05:31.450102+00:00 2023-11-28T23:05:31.450106+00:00</span></span>
-<span><span class="co">#&gt; 2 2023-11-28T23:05:31.450123+00:00 2023-11-28T23:05:31.450127+00:00</span></span>
-<span><span class="co">#&gt; 3 2023-11-28T23:05:31.450144+00:00 2023-11-28T23:05:31.450149+00:00</span></span>
-<span><span class="co">#&gt;                                                                       description</span></span>
-<span><span class="co">#&gt; 1 Human Stage That Refers To An Individual Who Is Over 50 And Under 60 Years Old.</span></span>
-<span><span class="co">#&gt; 2 Human Stage That Refers To An Individual Who Is Over 60 And Under 70 Years Old.</span></span>
-<span><span class="co">#&gt; 3 Human Stage That Refers To An Individual Who Is Over 70 And Under 80 Years Old.</span></span>
-<span><span class="co">#&gt;      ontology_id</span></span>
-<span><span class="co">#&gt; 1 HsapDv:0000240</span></span>
-<span><span class="co">#&gt; 2 HsapDv:0000241</span></span>
-<span><span class="co">#&gt; 3 HsapDv:0000242</span></span></code></pre></div>
-<p>Finally, for artifact records only, you can download the associated
-data:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">artifact</span><span class="op">$</span><span class="fu">cache</span><span class="op">(</span><span class="op">)</span> <span class="co"># Cache the data locally</span></span>
-<span><span class="co">#&gt;   |                                                                              |                                                                      |   0%  |                                                                              |                                                                      |   1%  |                                                                              |=                                                                     |   1%  |                                                                              |=                                                                     |   2%  |                                                                              |==                                                                    |   2%  |                                                                              |==                                                                    |   3%  |                                                                              |==                                                                    |   4%  |                                                                              |===                                                                   |   4%  |                                                                              |===                                                                   |   5%  |                                                                              |====                                                                  |   5%  |                                                                              |====                                                                  |   6%  |                                                                              |=====                                                                 |   6%  |                                                                              |=====                                                                 |   7%  |                                                                              |=====                                                                 |   8%  |                                                                              |======                                                                |   8%  |                                                                              |======                                                                |   9%  |                                                                              |=======                                                               |   9%  |                                                                              |=======                                                               |  10%  |                                                                              |=======                                                               |  11%  |                                                                              |========                                                              |  11%  |                                                                              |========                                                              |  12%  |                                                                              |=========                                                             |  12%  |                                                                              |=========                                                             |  13%  |                                                                              |=========                                                             |  14%  |                                                                              |==========                                                            |  14%  |                                                                              |==========                                                            |  15%  |                                                                              |===========                                                           |  15%  |                                                                              |===========                                                           |  16%  |                                                                              |============                                                          |  16%  |                                                                              |============                                                          |  17%  |                                                                              |============                                                          |  18%  |                                                                              |=============                                                         |  18%  |                                                                              |=============                                                         |  19%  |                                                                              |==============                                                        |  19%  |                                                                              |==============                                                        |  20%  |                                                                              |==============                                                        |  21%  |                                                                              |===============                                                       |  21%  |                                                                              |===============                                                       |  22%  |                                                                              |================                                                      |  22%  |                                                                              |================                                                      |  23%  |                                                                              |================                                                      |  24%  |                                                                              |=================                                                     |  24%  |                                                                              |=================                                                     |  25%  |                                                                              |==================                                                    |  25%  |                                                                              |==================                                                    |  26%  |                                                                              |===================                                                   |  26%  |                                                                              |===================                                                   |  27%  |                                                                              |===================                                                   |  28%  |                                                                              |====================                                                  |  28%  |                                                                              |====================                                                  |  29%  |                                                                              |=====================                                                 |  29%  |                                                                              |=====================                                                 |  30%  |                                                                              |=====================                                                 |  31%  |                                                                              |======================                                                |  31%  |                                                                              |======================                                                |  32%  |                                                                              |=======================                                               |  32%  |                                                                              |=======================                                               |  33%  |                                                                              |=======================                                               |  34%  |                                                                              |========================                                              |  34%  |                                                                              |========================                                              |  35%  |                                                                              |=========================                                             |  35%  |                                                                              |=========================                                             |  36%  |                                                                              |==========================                                            |  36%  |                                                                              |==========================                                            |  37%  |                                                                              |==========================                                            |  38%  |                                                                              |===========================                                           |  38%  |                                                                              |===========================                                           |  39%  |                                                                              |============================                                          |  39%  |                                                                              |============================                                          |  40%  |                                                                              |============================                                          |  41%  |                                                                              |=============================                                         |  41%  |                                                                              |=============================                                         |  42%  |                                                                              |==============================                                        |  42%  |                                                                              |==============================                                        |  43%  |                                                                              |==============================                                        |  44%  |                                                                              |===============================                                       |  44%  |                                                                              |===============================                                       |  45%  |                                                                              |================================                                      |  45%  |                                                                              |================================                                      |  46%  |                                                                              |=================================                                     |  46%  |                                                                              |=================================                                     |  47%  |                                                                              |=================================                                     |  48%  |                                                                              |==================================                                    |  48%  |                                                                              |==================================                                    |  49%  |                                                                              |===================================                                   |  49%  |                                                                              |===================================                                   |  50%  |                                                                              |===================================                                   |  51%  |                                                                              |====================================                                  |  51%  |                                                                              |====================================                                  |  52%  |                                                                              |=====================================                                 |  52%  |                                                                              |=====================================                                 |  53%  |                                                                              |=====================================                                 |  54%  |                                                                              |======================================                                |  54%  |                                                                              |======================================                                |  55%  |                                                                              |=======================================                               |  55%  |                                                                              |=======================================                               |  56%  |                                                                              |========================================                              |  56%  |                                                                              |========================================                              |  57%  |                                                                              |========================================                              |  58%  |                                                                              |=========================================                             |  58%  |                                                                              |=========================================                             |  59%  |                                                                              |==========================================                            |  59%  |                                                                              |==========================================                            |  60%  |                                                                              |==========================================                            |  61%  |                                                                              |===========================================                           |  61%  |                                                                              |===========================================                           |  62%  |                                                                              |============================================                          |  62%  |                                                                              |============================================                          |  63%  |                                                                              |============================================                          |  64%  |                                                                              |=============================================                         |  64%  |                                                                              |=============================================                         |  65%  |                                                                              |==============================================                        |  65%  |                                                                              |==============================================                        |  66%  |                                                                              |===============================================                       |  66%  |                                                                              |===============================================                       |  67%  |                                                                              |===============================================                       |  68%  |                                                                              |================================================                      |  68%  |                                                                              |================================================                      |  69%  |                                                                              |=================================================                     |  69%  |                                                                              |=================================================                     |  70%  |                                                                              |=================================================                     |  71%  |                                                                              |==================================================                    |  71%  |                                                                              |==================================================                    |  72%  |                                                                              |===================================================                   |  72%  |                                                                              |===================================================                   |  73%  |                                                                              |===================================================                   |  74%  |                                                                              |====================================================                  |  74%  |                                                                              |====================================================                  |  75%  |                                                                              |=====================================================                 |  75%  |                                                                              |=====================================================                 |  76%  |                                                                              |======================================================                |  76%  |                                                                              |======================================================                |  77%  |                                                                              |======================================================                |  78%  |                                                                              |=======================================================               |  78%  |                                                                              |=======================================================               |  79%  |                                                                              |========================================================              |  79%  |                                                                              |========================================================              |  80%  |                                                                              |========================================================              |  81%  |                                                                              |=========================================================             |  81%  |                                                                              |=========================================================             |  82%  |                                                                              |==========================================================            |  82%  |                                                                              |==========================================================            |  83%  |                                                                              |==========================================================            |  84%  |                                                                              |===========================================================           |  84%  |                                                                              |===========================================================           |  85%  |                                                                              |============================================================          |  85%  |                                                                              |============================================================          |  86%  |                                                                              |=============================================================         |  86%  |                                                                              |=============================================================         |  87%  |                                                                              |=============================================================         |  88%  |                                                                              |==============================================================        |  88%  |                                                                              |==============================================================        |  89%  |                                                                              |===============================================================       |  89%  |                                                                              |===============================================================       |  90%  |                                                                              |===============================================================       |  91%  |                                                                              |================================================================      |  91%  |                                                                              |================================================================      |  92%  |                                                                              |=================================================================     |  92%  |                                                                              |=================================================================     |  93%  |                                                                              |=================================================================     |  94%  |                                                                              |==================================================================    |  94%  |                                                                              |==================================================================    |  95%  |                                                                              |===================================================================   |  95%  |                                                                              |===================================================================   |  96%  |                                                                              |====================================================================  |  96%  |                                                                              |====================================================================  |  97%  |                                                                              |====================================================================  |  98%  |                                                                              |===================================================================== |  98%  |                                                                              |===================================================================== |  99%  |                                                                              |======================================================================|  99%  |                                                                              |======================================================================| 100%</span></span>
-<span><span class="va">artifact</span><span class="op">$</span><span class="fu">load</span><span class="op">(</span><span class="op">)</span> <span class="co"># Load the data into memory</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #0000BB;">s3://cellxgene-data-public/cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad</span> already exists at <span style="color: #0000BB;">/home/runner/.cache/lamindb/cellxgene-data-public/cell-census/2024-07-01/h5ads/fe52003e-1460-4a65-a213-2bb1a508332f.h5ad</span></span></span>
-<span><span class="co">#&gt; AnnData object with n_obs × n_vars = 51552 × 36398</span></span>
-<span><span class="co">#&gt;     obs: 'donor_id', 'Predicted_labels_CellTypist', 'Majority_voting_CellTypist', 'Manually_curated_celltype', 'assay_ontology_term_id', 'cell_type_ontology_term_id', 'development_stage_ontology_term_id', 'disease_ontology_term_id', 'self_reported_ethnicity_ontology_term_id', 'is_primary_data', 'organism_ontology_term_id', 'sex_ontology_term_id', 'tissue_ontology_term_id', 'suspension_type', 'tissue_type', 'cell_type', 'assay', 'disease', 'organism', 'sex', 'tissue', 'self_reported_ethnicity', 'development_stage', 'observation_joinid'</span></span>
-<span><span class="co">#&gt;     var: 'gene_symbols', 'feature_is_filtered', 'feature_name', 'feature_reference', 'feature_biotype', 'feature_length'</span></span>
-<span><span class="co">#&gt;     uns: 'cell_type_ontology_term_id_colors', 'citation', 'default_embedding', 'schema_reference', 'schema_version', 'sex_ontology_term_id_colors', 'title'</span></span>
-<span><span class="co">#&gt;     obsm: 'X_umap'</span></span></code></pre></div>
 <div class="alert alert-warning" role="alert">
-<p>Currently, <strong>{laminr}</strong> primarily supports S3 storage.
-Support for other storage backends will be added in the future. For more
-information related to planned features and the roadmap, please refer to
-the Development vignette
-(<code><a href="../articles/development.html">vignette("development", package = "laminr")</a></code>).</p>
+<p><strong>Note</strong></p>
+<p>Only the default instance can create new records. This tutorial
+assumes you have access to an instance where you have permission to add
+data.</p>
+</div>
+</div>
+<div class="section level3">
+<h3 id="connect-to-other-instances">Connect to other instances<a class="anchor" aria-label="anchor" href="#connect-to-other-instances"></a>
+</h3>
+<p>It is possible to connect to non-default instances by providing a
+slug to the <code><a href="../reference/connect.html">connect()</a></code> function. Instances connected to in
+this way can be used to query data but cannot make any changes. Connect
+to the public CELLxGENE instance:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">cellxgene</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/connect.html">connect</a></span><span class="op">(</span><span class="st">"laminlabs/cellxgene"</span><span class="op">)</span></span>
+<span><span class="va">cellxgene</span></span>
+<span><span class="co">#&gt; <span style="color: #55FF55; font-weight: bold;">cellxgene</span></span></span>
+<span><span class="co">#&gt; <span style="color: #FF55FF; font-style: italic;">  Core registries</span></span></span>
+<span><span class="co">#&gt;     $Run</span></span>
+<span><span class="co">#&gt;     $User</span></span>
+<span><span class="co">#&gt;     $Param</span></span>
+<span><span class="co">#&gt;     $ULabel</span></span>
+<span><span class="co">#&gt;     $Feature</span></span>
+<span><span class="co">#&gt;     $Storage</span></span>
+<span><span class="co">#&gt;     $Artifact</span></span>
+<span><span class="co">#&gt;     $Transform</span></span>
+<span><span class="co">#&gt;     $Collection</span></span>
+<span><span class="co">#&gt;     $FeatureSet</span></span>
+<span><span class="co">#&gt;     $ParamValue</span></span>
+<span><span class="co">#&gt;     $FeatureValue</span></span>
+<span><span class="co">#&gt; <span style="color: #FF55FF; font-style: italic;">  Additional modules</span></span></span>
+<span><span class="co">#&gt;     bionty</span></span></code></pre></div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="track-data-provenance">Track data provenance<a class="anchor" aria-label="anchor" href="#track-data-provenance"></a>
+</h2>
+<p>LaminDB can track which scripts or notebooks were used to create
+data. Starts the tracking process:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">db</span><span class="op">$</span><span class="fu">track</span><span class="op">(</span><span class="st">"I8BlHXFXqZOG0000"</span>, path <span class="op">=</span> <span class="st">"laminr.Rmd"</span><span class="op">)</span></span></code></pre></div>
+<div class="alert alert-info" role="alert">
+<p><strong>Tip</strong></p>
+<p>The ID should be obtained by running
+<code>db$track(path = "your_file.R")</code> and copying the ID from the
+output.</p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="download-a-dataset">Download a dataset<a class="anchor" aria-label="anchor" href="#download-a-dataset"></a>
+</h2>
+<p>Artifacts are objects that contain measurements as well as associated
+metadata.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">artifact</span> <span class="op">&lt;-</span> <span class="va">cellxgene</span><span class="op">$</span><span class="va">Artifact</span><span class="op">$</span><span class="fu">get</span><span class="op">(</span><span class="st">"7dVluLROpalzEh8mNyxk"</span><span class="op">)</span></span>
+<span><span class="va">artifact</span></span>
+<span><span class="co">#&gt; <span style="color: #55FF55; font-weight: bold;">Artifact</span>(uid='7dVluLROpalzEh8mNyxk', description='Renal cell carcinoma, pre aPD1, kidney Puck_200727_12', key='cell-census/2023-12-15/h5ads/02faf712-92d4-4589-bec7-13105059cf86.h5ad', id=1742, run_id=22, hash='YNYuokfAoDFxdaRILjmU9w', size=13997860, suffix='.h5ad', storage_id=2, version='2023-12-15', _accessor='AnnData', is_latest=TRUE, transform_id=16, _hash_type='md5-n', created_at='2024-01-11T09:13:23.143694+00:00', created_by_id=1, updated_at='2024-01-24T07:17:47.009288+00:00', visibility=1, n_observations=17612, _key_is_virtual=FALSE)</span></span></code></pre></div>
+<div class="alert alert-info" role="alert">
+<p><strong>Tip</strong></p>
+<p>You can view information about this dataset on Lamin Hub <a href="https://lamin.ai/laminlabs/cellxgene/artifact/7dVluLROpalzEh8mNyxk" class="external-link uri">https://lamin.ai/laminlabs/cellxgene/artifact/7dVluLROpalzEh8mNyxk</a>.
+It can also be used to search for other CELLxGENE datasets.</p>
+</div>
+<p>So far only retrieved the metadata of this artifact has been
+retrieved. To download the data itself, run:</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">adata</span> <span class="op">&lt;-</span> <span class="va">artifact</span><span class="op">$</span><span class="fu">load</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   |                                                                              |                                                                      |   0%  |                                                                              |                                                                      |   1%  |                                                                              |=                                                                     |   1%  |                                                                              |=                                                                     |   2%  |                                                                              |==                                                                    |   2%  |                                                                              |==                                                                    |   3%  |                                                                              |===                                                                   |   4%  |                                                                              |===                                                                   |   5%  |                                                                              |====                                                                  |   5%  |                                                                              |====                                                                  |   6%  |                                                                              |=====                                                                 |   6%  |                                                                              |=====                                                                 |   7%  |                                                                              |=====                                                                 |   8%  |                                                                              |======                                                                |   8%  |                                                                              |======                                                                |   9%  |                                                                              |=======                                                               |   9%  |                                                                              |=======                                                               |  10%  |                                                                              |=======                                                               |  11%  |                                                                              |========                                                              |  11%  |                                                                              |========                                                              |  12%  |                                                                              |=========                                                             |  12%  |                                                                              |=========                                                             |  13%  |                                                                              |=========                                                             |  14%  |                                                                              |==========                                                            |  14%  |                                                                              |==========                                                            |  15%  |                                                                              |===========                                                           |  15%  |                                                                              |===========                                                           |  16%  |                                                                              |============                                                          |  16%  |                                                                              |============                                                          |  17%  |                                                                              |============                                                          |  18%  |                                                                              |=============                                                         |  18%  |                                                                              |=============                                                         |  19%  |                                                                              |==============                                                        |  19%  |                                                                              |==============                                                        |  20%  |                                                                              |==============                                                        |  21%  |                                                                              |===============                                                       |  21%  |                                                                              |===============                                                       |  22%  |                                                                              |================                                                      |  22%  |                                                                              |================                                                      |  23%  |                                                                              |=================                                                     |  24%  |                                                                              |=================                                                     |  25%  |                                                                              |==================                                                    |  25%  |                                                                              |==================                                                    |  26%  |                                                                              |===================                                                   |  27%  |                                                                              |===================                                                   |  28%  |                                                                              |====================                                                  |  28%  |                                                                              |====================                                                  |  29%  |                                                                              |=====================                                                 |  29%  |                                                                              |=====================                                                 |  30%  |                                                                              |=====================                                                 |  31%  |                                                                              |======================                                                |  31%  |                                                                              |======================                                                |  32%  |                                                                              |=======================                                               |  32%  |                                                                              |=======================                                               |  33%  |                                                                              |=======================                                               |  34%  |                                                                              |========================                                              |  34%  |                                                                              |========================                                              |  35%  |                                                                              |=========================                                             |  35%  |                                                                              |=========================                                             |  36%  |                                                                              |==========================                                            |  36%  |                                                                              |==========================                                            |  37%  |                                                                              |==========================                                            |  38%  |                                                                              |===========================                                           |  38%  |                                                                              |===========================                                           |  39%  |                                                                              |============================                                          |  39%  |                                                                              |============================                                          |  40%  |                                                                              |============================                                          |  41%  |                                                                              |=============================                                         |  41%  |                                                                              |=============================                                         |  42%  |                                                                              |==============================                                        |  42%  |                                                                              |==============================                                        |  43%  |                                                                              |===============================                                       |  44%  |                                                                              |===============================                                       |  45%  |                                                                              |================================                                      |  45%  |                                                                              |================================                                      |  46%  |                                                                              |=================================                                     |  47%  |                                                                              |=================================                                     |  48%  |                                                                              |==================================                                    |  48%  |                                                                              |==================================                                    |  49%  |                                                                              |===================================                                   |  49%  |                                                                              |===================================                                   |  50%  |                                                                              |===================================                                   |  51%  |                                                                              |====================================                                  |  51%  |                                                                              |====================================                                  |  52%  |                                                                              |=====================================                                 |  52%  |                                                                              |=====================================                                 |  53%  |                                                                              |=====================================                                 |  54%  |                                                                              |======================================                                |  54%  |                                                                              |======================================                                |  55%  |                                                                              |=======================================                               |  55%  |                                                                              |=======================================                               |  56%  |                                                                              |========================================                              |  56%  |                                                                              |========================================                              |  57%  |                                                                              |========================================                              |  58%  |                                                                              |=========================================                             |  58%  |                                                                              |=========================================                             |  59%  |                                                                              |==========================================                            |  59%  |                                                                              |==========================================                            |  60%  |                                                                              |==========================================                            |  61%  |                                                                              |===========================================                           |  61%  |                                                                              |===========================================                           |  62%  |                                                                              |============================================                          |  62%  |                                                                              |============================================                          |  63%  |                                                                              |=============================================                         |  64%  |                                                                              |=============================================                         |  65%  |                                                                              |==============================================                        |  65%  |                                                                              |==============================================                        |  66%  |                                                                              |===============================================                       |  67%  |                                                                              |===============================================                       |  68%  |                                                                              |================================================                      |  68%  |                                                                              |================================================                      |  69%  |                                                                              |=================================================                     |  69%  |                                                                              |=================================================                     |  70%  |                                                                              |=================================================                     |  71%  |                                                                              |==================================================                    |  71%  |                                                                              |==================================================                    |  72%  |                                                                              |===================================================                   |  72%  |                                                                              |===================================================                   |  73%  |                                                                              |===================================================                   |  74%  |                                                                              |====================================================                  |  74%  |                                                                              |====================================================                  |  75%  |                                                                              |=====================================================                 |  75%  |                                                                              |=====================================================                 |  76%  |                                                                              |======================================================                |  76%  |                                                                              |======================================================                |  77%  |                                                                              |======================================================                |  78%  |                                                                              |=======================================================               |  78%  |                                                                              |=======================================================               |  79%  |                                                                              |========================================================              |  79%  |                                                                              |========================================================              |  80%  |                                                                              |========================================================              |  81%  |                                                                              |=========================================================             |  81%  |                                                                              |=========================================================             |  82%  |                                                                              |==========================================================            |  82%  |                                                                              |==========================================================            |  83%  |                                                                              |==========================================================            |  84%  |                                                                              |===========================================================           |  84%  |                                                                              |===========================================================           |  85%  |                                                                              |============================================================          |  85%  |                                                                              |============================================================          |  86%  |                                                                              |=============================================================         |  87%  |                                                                              |=============================================================         |  88%  |                                                                              |==============================================================        |  88%  |                                                                              |==============================================================        |  89%  |                                                                              |===============================================================       |  89%  |                                                                              |===============================================================       |  90%  |                                                                              |===============================================================       |  91%  |                                                                              |================================================================      |  91%  |                                                                              |================================================================      |  92%  |                                                                              |=================================================================     |  92%  |                                                                              |=================================================================     |  93%  |                                                                              |=================================================================     |  94%  |                                                                              |==================================================================    |  94%  |                                                                              |==================================================================    |  95%  |                                                                              |===================================================================   |  95%  |                                                                              |===================================================================   |  96%  |                                                                              |====================================================================  |  96%  |                                                                              |====================================================================  |  97%  |                                                                              |====================================================================  |  98%  |                                                                              |===================================================================== |  98%  |                                                                              |===================================================================== |  99%  |                                                                              |======================================================================|  99%  |                                                                              |======================================================================| 100%</span></span>
+<span><span class="va">adata</span></span>
+<span><span class="co">#&gt; AnnData object with n_obs × n_vars = 17612 × 23254</span></span>
+<span><span class="co">#&gt;     obs: 'n_genes', 'n_UMIs', 'log10_n_UMIs', 'log10_n_genes', 'Cell_Type', 'cell_type_ontology_term_id', 'organism_ontology_term_id', 'tissue_ontology_term_id', 'assay_ontology_term_id', 'disease_ontology_term_id', 'self_reported_ethnicity_ontology_term_id', 'development_stage_ontology_term_id', 'sex_ontology_term_id', 'donor_id', 'is_primary_data', 'suspension_type', 'cell_type', 'assay', 'disease', 'organism', 'sex', 'tissue', 'self_reported_ethnicity', 'development_stage'</span></span>
+<span><span class="co">#&gt;     var: 'gene', 'n_beads', 'n_UMIs', 'feature_is_filtered', 'feature_name', 'feature_reference', 'feature_biotype'</span></span>
+<span><span class="co">#&gt;     uns: 'Cell_Type_colors', 'schema_version', 'title'</span></span>
+<span><span class="co">#&gt;     obsm: 'X_spatial'</span></span></code></pre></div>
+<p>You can see that this artifact contains an <a href="https://anndata.readthedocs.io" class="external-link"><code>AnnData</code></a>
+object.</p>
+</div>
+<div class="section level2">
+<h2 id="work-with-the-data">Work with the data<a class="anchor" aria-label="anchor" href="#work-with-the-data"></a>
+</h2>
+<p>Once you have loaded a dataset you can perform any analysis with it
+as you would normally. Here, marker genes are calculated for each of the
+provided cell type labels using <a href="https://satijalab.org/seurat/" class="external-link"><strong>{Seurat}</strong></a>.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Create a Seurat object</span></span>
+<span><span class="va">seurat</span> <span class="op">&lt;-</span> <span class="fu">SeuratObject</span><span class="fu">::</span><span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/CreateSeuratObject.html" class="external-link">CreateSeuratObject</a></span><span class="op">(</span></span>
+<span>  counts <span class="op">=</span> <span class="fu">as</span><span class="op">(</span><span class="fu">Matrix</span><span class="fu">::</span><span class="fu">t</span><span class="op">(</span><span class="va">adata</span><span class="op">$</span><span class="va">X</span><span class="op">)</span>, <span class="st">"CsparseMatrix"</span><span class="op">)</span>,</span>
+<span>  meta.data <span class="op">=</span> <span class="va">adata</span><span class="op">$</span><span class="va">obs</span>,</span>
+<span><span class="op">)</span></span>
+<span><span class="co"># Set cell identities to the provided cell type annotation</span></span>
+<span><span class="fu">SeuratObject</span><span class="fu">::</span><span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/Idents.html" class="external-link">Idents</a></span><span class="op">(</span><span class="va">seurat</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"Cell_Type"</span></span>
+<span><span class="co"># Normalise the data</span></span>
+<span><span class="va">seurat</span> <span class="op">&lt;-</span> <span class="fu">Seurat</span><span class="fu">::</span><span class="fu"><a href="https://satijalab.org/seurat/reference/NormalizeData.html" class="external-link">NormalizeData</a></span><span class="op">(</span><span class="va">seurat</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Normalizing layer: counts</span></span>
+<span><span class="co"># Test for marker genes (the output is a data.frame)</span></span>
+<span><span class="va">markers</span> <span class="op">&lt;-</span> <span class="fu">Seurat</span><span class="fu">::</span><span class="fu"><a href="https://satijalab.org/seurat/reference/FindAllMarkers.html" class="external-link">FindAllMarkers</a></span><span class="op">(</span></span>
+<span>  <span class="va">seurat</span>,</span>
+<span>  features <span class="op">=</span> <span class="fu">SeuratObject</span><span class="fu">::</span><span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/Cells.html" class="external-link">Features</a></span><span class="op">(</span><span class="va">seurat</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span><span class="op">]</span> <span class="co"># Only test a few features for speed</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Calculating cluster Epithelial</span></span>
+<span><span class="co">#&gt; Calculating cluster Fibroblast</span></span>
+<span><span class="co">#&gt; For a (much!) faster implementation of the Wilcoxon Rank Sum Test,</span></span>
+<span><span class="co">#&gt; (default method for FindMarkers) please install the presto package</span></span>
+<span><span class="co">#&gt; --------------------------------------------</span></span>
+<span><span class="co">#&gt; install.packages('devtools')</span></span>
+<span><span class="co">#&gt; devtools::install_github('immunogenomics/presto')</span></span>
+<span><span class="co">#&gt; --------------------------------------------</span></span>
+<span><span class="co">#&gt; After installation of presto, Seurat will automatically use the more </span></span>
+<span><span class="co">#&gt; efficient implementation (no further action necessary).</span></span>
+<span><span class="co">#&gt; This message will be shown once per session</span></span>
+<span><span class="co">#&gt; Calculating cluster Myeloid</span></span>
+<span><span class="co">#&gt; Calculating cluster Tumor</span></span>
+<span><span class="co">#&gt; Warning: The following tests were not performed:</span></span>
+<span><span class="co">#&gt; Warning: When testing Epithelial versus all:</span></span>
+<span><span class="co">#&gt;  Cell group 1 has fewer than 3 cells</span></span>
+<span><span class="co"># Display the marker genes</span></span>
+<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">markers</span><span class="op">)</span></span></code></pre></div>
+<table class="table">
+<colgroup>
+<col width="20%">
+<col width="11%">
+<col width="12%">
+<col width="6%">
+<col width="6%">
+<col width="11%">
+<col width="12%">
+<col width="18%">
+</colgroup>
+<thead><tr class="header">
+<th align="left"></th>
+<th align="right">p_val</th>
+<th align="right">avg_log2FC</th>
+<th align="right">pct.1</th>
+<th align="right">pct.2</th>
+<th align="right">p_val_adj</th>
+<th align="left">cluster</th>
+<th align="left">gene</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">ENSG00000147113</td>
+<td align="right">0.0000001</td>
+<td align="right">1.8228103</td>
+<td align="right">0.019</td>
+<td align="right">0.005</td>
+<td align="right">0.0011654</td>
+<td align="left">Fibroblast</td>
+<td align="left">ENSG00000147113</td>
+</tr>
+<tr class="even">
+<td align="left">ENSG00000170004</td>
+<td align="right">0.0000002</td>
+<td align="right">2.5663044</td>
+<td align="right">0.021</td>
+<td align="right">0.006</td>
+<td align="right">0.0036485</td>
+<td align="left">Fibroblast</td>
+<td align="left">ENSG00000170004</td>
+</tr>
+<tr class="odd">
+<td align="left">ENSG00000196139</td>
+<td align="right">0.0000003</td>
+<td align="right">-0.8318130</td>
+<td align="right">0.053</td>
+<td align="right">0.110</td>
+<td align="right">0.0058749</td>
+<td align="left">Fibroblast</td>
+<td align="left">ENSG00000196139</td>
+</tr>
+<tr class="even">
+<td align="left">ENSG00000132170</td>
+<td align="right">0.0006719</td>
+<td align="right">1.7151510</td>
+<td align="right">0.020</td>
+<td align="right">0.009</td>
+<td align="right">1.0000000</td>
+<td align="left">Fibroblast</td>
+<td align="left">ENSG00000132170</td>
+</tr>
+<tr class="odd">
+<td align="left">ENSG00000205542</td>
+<td align="right">0.0007360</td>
+<td align="right">0.6442683</td>
+<td align="right">0.230</td>
+<td align="right">0.195</td>
+<td align="right">1.0000000</td>
+<td align="left">Fibroblast</td>
+<td align="left">ENSG00000205542</td>
+</tr>
+<tr class="even">
+<td align="left">ENSG00000163536</td>
+<td align="right">0.0025157</td>
+<td align="right">1.8914687</td>
+<td align="right">0.012</td>
+<td align="right">0.004</td>
+<td align="right">1.0000000</td>
+<td align="left">Fibroblast</td>
+<td align="left">ENSG00000163536</td>
+</tr>
+<tr class="odd">
+<td align="left">ENSG00000067064</td>
+<td align="right">0.0063090</td>
+<td align="right">1.2509162</td>
+<td align="right">0.014</td>
+<td align="right">0.006</td>
+<td align="right">1.0000000</td>
+<td align="left">Fibroblast</td>
+<td align="left">ENSG00000067064</td>
+</tr>
+<tr class="even">
+<td align="left">ENSG00000105855</td>
+<td align="right">0.0068491</td>
+<td align="right">-0.5412708</td>
+<td align="right">0.022</td>
+<td align="right">0.041</td>
+<td align="right">1.0000000</td>
+<td align="left">Fibroblast</td>
+<td align="left">ENSG00000105855</td>
+</tr>
+<tr class="odd">
+<td align="left">ENSG00000205542.1</td>
+<td align="right">0.0000002</td>
+<td align="right">1.3623005</td>
+<td align="right">0.310</td>
+<td align="right">0.195</td>
+<td align="right">0.0046479</td>
+<td align="left">Myeloid</td>
+<td align="left">ENSG00000205542</td>
+</tr>
+<tr class="even">
+<td align="left">ENSG00000196139.1</td>
+<td align="right">0.0015658</td>
+<td align="right">-0.5898982</td>
+<td align="right">0.040</td>
+<td align="right">0.108</td>
+<td align="right">1.0000000</td>
+<td align="left">Myeloid</td>
+<td align="left">ENSG00000196139</td>
+</tr>
+<tr class="odd">
+<td align="left">ENSG00000196139.2</td>
+<td align="right">0.0000000</td>
+<td align="right">0.7939631</td>
+<td align="right">0.111</td>
+<td align="right">0.050</td>
+<td align="right">0.0000224</td>
+<td align="left">Tumor</td>
+<td align="left">ENSG00000196139</td>
+</tr>
+<tr class="even">
+<td align="left">ENSG00000205542.2</td>
+<td align="right">0.0000001</td>
+<td align="right">-0.8585382</td>
+<td align="right">0.193</td>
+<td align="right">0.247</td>
+<td align="right">0.0013456</td>
+<td align="left">Tumor</td>
+<td align="left">ENSG00000205542</td>
+</tr>
+<tr class="odd">
+<td align="left">ENSG00000147113.1</td>
+<td align="right">0.0000018</td>
+<td align="right">-1.4976270</td>
+<td align="right">0.005</td>
+<td align="right">0.016</td>
+<td align="right">0.0415774</td>
+<td align="left">Tumor</td>
+<td align="left">ENSG00000147113</td>
+</tr>
+<tr class="even">
+<td align="left">ENSG00000170004.1</td>
+<td align="right">0.0000073</td>
+<td align="right">-2.2898276</td>
+<td align="right">0.006</td>
+<td align="right">0.018</td>
+<td align="right">0.1686987</td>
+<td align="left">Tumor</td>
+<td align="left">ENSG00000170004</td>
+</tr>
+<tr class="odd">
+<td align="left">ENSG00000105855.1</td>
+<td align="right">0.0003828</td>
+<td align="right">0.7197716</td>
+<td align="right">0.041</td>
+<td align="right">0.019</td>
+<td align="right">1.0000000</td>
+<td align="left">Tumor</td>
+<td align="left">ENSG00000105855</td>
+</tr>
+<tr class="even">
+<td align="left">ENSG00000053371</td>
+<td align="right">0.0038080</td>
+<td align="right">0.8347505</td>
+<td align="right">0.029</td>
+<td align="right">0.014</td>
+<td align="right">1.0000000</td>
+<td align="left">Tumor</td>
+<td align="left">ENSG00000053371</td>
+</tr>
+<tr class="odd">
+<td align="left">ENSG00000141385</td>
+<td align="right">0.0058269</td>
+<td align="right">1.0575502</td>
+<td align="right">0.019</td>
+<td align="right">0.007</td>
+<td align="right">1.0000000</td>
+<td align="left">Tumor</td>
+<td align="left">ENSG00000141385</td>
+</tr>
+<tr class="even">
+<td align="left">ENSG00000132170.1</td>
+<td align="right">0.0072852</td>
+<td align="right">-1.3878878</td>
+<td align="right">0.009</td>
+<td align="right">0.017</td>
+<td align="right">1.0000000</td>
+<td align="left">Tumor</td>
+<td align="left">ENSG00000132170</td>
+</tr>
+<tr class="odd">
+<td align="left">ENSG00000163536.1</td>
+<td align="right">0.0076905</td>
+<td align="right">-1.8629158</td>
+<td align="right">0.004</td>
+<td align="right">0.010</td>
+<td align="right">1.0000000</td>
+<td align="left">Tumor</td>
+<td align="left">ENSG00000163536</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Plot the marker genes</span></span>
+<span><span class="fu">Seurat</span><span class="fu">::</span><span class="fu"><a href="https://satijalab.org/seurat/reference/DotPlot.html" class="external-link">DotPlot</a></span><span class="op">(</span><span class="va">seurat</span>, features <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">markers</span><span class="op">$</span><span class="va">gene</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">90</span>, vjust <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Scaling data with a low number of groups may produce misleading</span></span>
+<span><span class="co">#&gt; results</span></span></code></pre></div>
+<p><img src="laminr_files/figure-html/create-seurat-1.png" width="700"></p>
+</div>
+<div class="section level2">
+<h2 id="save-the-results-to-your-instance">Save the results to your instance<a class="anchor" aria-label="anchor" href="#save-the-results-to-your-instance"></a>
+</h2>
+<p>Any results can be saved to the default LaminDB instance.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">seurat_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".rds"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">saveRDS</a></span><span class="op">(</span><span class="va">seurat</span>, <span class="va">seurat_path</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">db</span><span class="op">$</span><span class="va">Artifact</span><span class="op">$</span><span class="fu">from_df</span><span class="op">(</span></span>
+<span>  <span class="va">markers</span>,</span>
+<span>  description <span class="op">=</span> <span class="st">"Marker genes for renal cell carcinoma dataset"</span></span>
+<span><span class="op">)</span><span class="op">$</span><span class="fu">save</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">db</span><span class="op">$</span><span class="va">Artifact</span><span class="op">$</span><span class="fu">from_path</span><span class="op">(</span></span>
+<span>  <span class="va">seurat_path</span>,</span>
+<span>  description <span class="op">=</span> <span class="st">"Seurat object for renal cell carcinoma dataset"</span></span>
+<span><span class="op">)</span><span class="op">$</span><span class="fu">save</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="finish-tracking">Finish tracking<a class="anchor" aria-label="anchor" href="#finish-tracking"></a>
+</h2>
+<p>End the tracking run to generate a timestamp:</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">db</span><span class="op">$</span><span class="fu">finish</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="section level3">
+<h3 id="save-notebooks-and-code">Save notebooks and code<a class="anchor" aria-label="anchor" href="#save-notebooks-and-code"></a>
+</h3>
+<p>Save the tracked notebook to your instance:</p>
+<ol style="list-style-type: decimal">
+<li>Render the notebook to HTML (not needed for <code>.R</code>
+scripts)</li>
+</ol>
+<ul>
+<li><p>In RStudio, click the “Knit” button</p></li>
+<li>
+<p><strong>OR</strong> From the command line, run:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="ex">Rscript</span> <span class="at">-e</span> <span class="st">'rmarkdown::render("laminr.Rmd")'</span></span></code></pre></div>
+</li>
+<li>
+<p><strong>OR</strong> Use the <code>rmarkdown</code> package in
+R:</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">rmarkdown</span><span class="fu">::</span><span class="fu"><a href="https://pkgs.rstudio.com/rmarkdown/reference/render.html" class="external-link">render</a></span><span class="op">(</span><span class="st">"laminr.Rmd"</span><span class="op">)</span></span></code></pre></div>
+</li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li>Save it to your LaminDB instance using the <code>lamin</code>
+CLI:</li>
+</ol>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="ex">lamin</span> save laminr.Rmd</span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
