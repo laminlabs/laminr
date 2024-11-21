@@ -62,7 +62,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>Feature List and Roadmap</h1>
+      <h1></h1>
 
 
 
@@ -76,17 +76,17 @@
 
 
 
-    <p>This document outlines the features of the <strong>{laminr}</strong> package and the roadmap for future development.</p>
-<section class="level2"><h2 id="features">Features<a class="anchor" aria-label="anchor" href="#features"></a>
-</h2>
-<section class="level3"><h3 id="connect-to-an-instance">Connect to an instance<a class="anchor" aria-label="anchor" href="#connect-to-an-instance"></a>
+    <header id="title-block-header" class="quarto-title-block"><h1 class="title">Feature List and Roadmap</h1></header><p>This document outlines the features of the <strong>{laminr}</strong> package and the roadmap for future development.</p>
+<section class="section level3"><h3 id="features">Features<a class="anchor" aria-label="anchor" href="#features"></a>
 </h3>
+<section class="level3"><h4 id="connect-to-an-instance">Connect to an instance<a class="anchor" aria-label="anchor" href="#connect-to-an-instance"></a>
+</h4>
 <ul class="task-list">
 <li><label><input type="checkbox" checked>Connect to a LaminDB instance (<code><a href="../reference/connect.html">connect()</a></code>).</label></li>
 <li><label><input type="checkbox" checked>Handle authentication and authorization.</label></li>
 <li><label><input type="checkbox">Connect to a LaminDB instance without needing to install the <code>lamin_cli</code> Python package.</label></li>
-</ul></section><section class="level3"><h3 id="query-search">Query &amp; search<a class="anchor" aria-label="anchor" href="#query-search"></a>
-</h3>
+</ul></section><section class="level3"><h4 id="query-search">Query &amp; search<a class="anchor" aria-label="anchor" href="#query-search"></a>
+</h4>
 <ul class="task-list">
 <li><label><input type="checkbox" checked><strong>Query exactly one record</strong> (<code>Registry$get(...)</code>): Fetch a single record by ID.</label></li>
 <li>
@@ -115,8 +115,8 @@
 <li><label><input type="checkbox"><strong>Search for records</strong> (<code>Registry$search(...)</code>): Search for records based on a query string.</label></li>
 <li><label><input type="checkbox"><strong>Pagination</strong>: Support pagination for large query results.</label></li>
 <li><label><input type="checkbox"><strong>Field lookups</strong>: Provide convenient functions for looking up field values (e.g., <code>Artifact$lookup("description")</code>).</label></li>
-</ul></section><section class="level3"><h3 id="manage-data-metadata">Manage data &amp; metadata<a class="anchor" aria-label="anchor" href="#manage-data-metadata"></a>
-</h3>
+</ul></section><section class="level3"><h4 id="manage-data-metadata">Manage data &amp; metadata<a class="anchor" aria-label="anchor" href="#manage-data-metadata"></a>
+</h4>
 <ul class="task-list">
 <li>
 <label><input type="checkbox"><strong>Create artifacts</strong>: Create new artifacts from various data sources (e.g., files, data frames, in-memory objects).</label>
@@ -157,50 +157,50 @@
 <li><label><input type="checkbox" checked><strong>Delete artifacts</strong>: Delete an existing artifact.</label></li>
 <li><label><input type="checkbox"><strong>Manage artifact metadata</strong>: Add, update, and delete artifact metadata.</label></li>
 <li><label><input type="checkbox"><strong>Work with collections</strong>: Create, manage, and query collections of artifacts.</label></li>
-</ul></section><section class="level3"><h3 id="track-notebooks-scripts">Track notebooks &amp; scripts<a class="anchor" aria-label="anchor" href="#track-notebooks-scripts"></a>
-</h3>
+</ul></section><section class="level3"><h4 id="track-notebooks-scripts">Track notebooks &amp; scripts<a class="anchor" aria-label="anchor" href="#track-notebooks-scripts"></a>
+</h4>
 <ul class="task-list">
 <li><label><input type="checkbox" checked><strong>Track code execution</strong>: Automatically track the execution of R scripts and notebooks.</label></li>
 <li><label><input type="checkbox"><strong>Capture run context</strong>: Record information about the execution environment (e.g., package versions, parameters).</label></li>
 <li><label><input type="checkbox" checked><strong>Link code to artifacts</strong>: Associate code execution with generated artifacts.</label></li>
 <li><label><input type="checkbox"><strong>Visualize data lineage</strong>: Create visualizations of data lineage and dependencies.</label></li>
 <li><label><input type="checkbox" checked><strong>Finalize tracking</strong>: End and save a run.</label></li>
-</ul></section><section class="level3"><h3 id="curate-datasets">Curate datasets<a class="anchor" aria-label="anchor" href="#curate-datasets"></a>
-</h3>
+</ul></section><section class="level3"><h4 id="curate-datasets">Curate datasets<a class="anchor" aria-label="anchor" href="#curate-datasets"></a>
+</h4>
 <ul class="task-list">
 <li><label><input type="checkbox"><strong>Validate data</strong>: Validate data against predefined schemas or constraints.</label></li>
 <li><label><input type="checkbox"><strong>Standardize data</strong>: Apply standardization rules to ensure data consistency.</label></li>
 <li><label><input type="checkbox"><strong>Annotate data</strong>: Add annotations and labels to data.</label></li>
 <li><label><input type="checkbox"><strong>Use the Curator class</strong>: Implement the <code>Curator</code> class for a streamlined curation workflow.</label></li>
-</ul></section><section class="level3"><h3 id="access-public-ontologies">Access public ontologies<a class="anchor" aria-label="anchor" href="#access-public-ontologies"></a>
-</h3>
+</ul></section><section class="level3"><h4 id="access-public-ontologies">Access public ontologies<a class="anchor" aria-label="anchor" href="#access-public-ontologies"></a>
+</h4>
 <ul class="task-list">
 <li><label><input type="checkbox"><strong>Access ontology data</strong>: Fetch data from public ontologies (e.g., gene names, protein IDs).</label></li>
 <li><label><input type="checkbox"><strong>Search ontologies</strong>: Search for entities within ontologies.</label></li>
 <li><label><input type="checkbox"><strong>Use ontology terms in queries</strong>: Use ontology terms to filter and query data.</label></li>
 <li><label><input type="checkbox"><strong>Manage ontology versions</strong>: Access different versions of ontologies.</label></li>
-</ul></section><section class="level3"><h3 id="manage-biological-registries">Manage biological registries<a class="anchor" aria-label="anchor" href="#manage-biological-registries"></a>
-</h3>
+</ul></section><section class="level3"><h4 id="manage-biological-registries">Manage biological registries<a class="anchor" aria-label="anchor" href="#manage-biological-registries"></a>
+</h4>
 <ul class="task-list">
 <li><label><input type="checkbox"><strong>Create and manage records in bionty registries</strong>: Add, update, and delete records for genes, proteins, cell types, etc.</label></li>
 <li><label><input type="checkbox"><strong>Utilize hierarchical relationships</strong>: Navigate and query based on parent-child relationships in ontologies.</label></li>
 <li><label><input type="checkbox"><strong>Manage synonyms</strong>: Add and use synonyms for biological entities.</label></li>
-</ul></section><section class="level3"><h3 id="manage-schema-modules">Manage schema modules<a class="anchor" aria-label="anchor" href="#manage-schema-modules"></a>
-</h3>
+</ul></section><section class="level3"><h4 id="manage-schema-modules">Manage schema modules<a class="anchor" aria-label="anchor" href="#manage-schema-modules"></a>
+</h4>
 <ul class="task-list">
 <li><label><input type="checkbox" checked><strong>List available modules</strong>: Retrieve a list of available modules in an instance.</label></li>
 <li><label><input type="checkbox" checked><strong>Access module registries</strong>: Access registries within specific modules.</label></li>
 <li><label><input type="checkbox"><strong>(Advanced) Create custom modules</strong>: Define and register custom schema modules.</label></li>
-</ul></section><section class="level3"><h3 id="transfer-data">Transfer data<a class="anchor" aria-label="anchor" href="#transfer-data"></a>
-</h3>
+</ul></section><section class="level3"><h4 id="transfer-data">Transfer data<a class="anchor" aria-label="anchor" href="#transfer-data"></a>
+</h4>
 <ul class="task-list">
 <li><label><input type="checkbox" checked><strong>Upload data</strong>: Upload data files to LaminDB storage.</label></li>
 <li><label><input type="checkbox" checked><strong>Download data</strong>: Download data files from LaminDB storage.</label></li>
 <li><label><input type="checkbox"><strong>(Advanced) Support zero-copy data transfer</strong>: Implement efficient data transfer mechanisms.</label></li>
-</ul></section></section><section class="level2"><h2 id="roadmap">Roadmap<a class="anchor" aria-label="anchor" href="#roadmap"></a>
-</h2>
-<section class="level3"><h3 id="version-0-1-0">Version 0.1.0<a class="anchor" aria-label="anchor" href="#version-0-1-0"></a>
+</ul></section></section><section class="section level3"><h3 id="roadmap">Roadmap<a class="anchor" aria-label="anchor" href="#roadmap"></a>
 </h3>
+<section class="level3"><h4 id="version-0-1-0">Version 0.1.0<a class="anchor" aria-label="anchor" href="#version-0-1-0"></a>
+</h4>
 <p>A first version of the package that allows users to:</p>
 <ul>
 <li>Connect to a LaminDB instance.</li>
@@ -208,21 +208,21 @@
 <li>Fetch one record by ID or UID.</li>
 <li>Cache S3 artifacts locally.</li>
 <li>Load AnnData artifacts.</li>
-</ul></section><section class="level3"><h3 id="version-0-2-0">Version 0.2.0<a class="anchor" aria-label="anchor" href="#version-0-2-0"></a>
-</h3>
+</ul></section><section class="level3"><h4 id="version-0-2-0">Version 0.2.0<a class="anchor" aria-label="anchor" href="#version-0-2-0"></a>
+</h4>
 <ul>
 <li>Expand query functionality with comparators, relationships, and pagination.</li>
 <li>Implement basic data and metadata management features (create, save, load and delete artifacts).</li>
 <li>Expand support for different data formats and storage backends.</li>
 <li>Implement code tracking.</li>
-</ul></section><section class="level3"><h3 id="version-0-3-0">Version 0.3.0<a class="anchor" aria-label="anchor" href="#version-0-3-0"></a>
-</h3>
+</ul></section><section class="level3"><h4 id="version-0-3-0">Version 0.3.0<a class="anchor" aria-label="anchor" href="#version-0-3-0"></a>
+</h4>
 <ul>
 <li>Implement data lineage visualization.</li>
 <li>Introduce data curation features (validation, standardization, annotation).</li>
 <li>Enhance support for bionty registries and ontology interactions.</li>
-</ul></section><section class="level3"><h3 id="future-versions">Future versions<a class="anchor" aria-label="anchor" href="#future-versions"></a>
-</h3>
+</ul></section><section class="level3"><h4 id="future-versions">Future versions<a class="anchor" aria-label="anchor" href="#future-versions"></a>
+</h4>
 <ul>
 <li>Implement advanced features like custom module creation and zero-copy data transfer.</li>
 <li>Continuously improve performance, usability, and documentation.</li>
