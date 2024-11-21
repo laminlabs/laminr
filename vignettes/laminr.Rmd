@@ -69,8 +69,12 @@ db <- connect()
 db
 ```
 
-**Note:** Only the default instance can create new records.
+<div class="alert alert-warning" role="alert">
+**Note**
+
+Only the default instance can create new records.
 This tutorial assumes you have access to an instance where you have permission to add data.
+</div>
 
 ## Connect to other instances
 
@@ -92,7 +96,11 @@ This command starts the tracking process.
 db$track("I8BlHXFXqZOG0000", path = "laminr.Rmd")
 ```
 
-**Tip:** The ID should be obtained by running `db$track(path = "your_file.R")` and copying the ID from the output.
+<div class="alert alert-info" role="alert">
+**Tip**
+
+The ID should be obtained by running `db$track(path = "your_file.R")` and copying the ID from the output.
+</div>
 
 # Download a dataset
 
@@ -103,8 +111,12 @@ artifact <- cellxgene$Artifact$get("7dVluLROpalzEh8mNyxk")
 artifact
 ```
 
-**Tip:** You can view information about this dataset at https://lamin.ai/laminlabs/cellxgene/artifact/7dVluLROpalzEh8mNyxk.
+<div class="alert alert-info" role="alert">
+**Tip**
+
+You can view information about this dataset at https://lamin.ai/laminlabs/cellxgene/artifact/7dVluLROpalzEh8mNyxk.
 This website can also be used to search for other CELLxGENE datasets.
+</div>
 
 So far we have only retrieved the metadata about this artifact.
 To download the data itself we need to run another command.
@@ -178,16 +190,16 @@ Do do that:
 1. Render the notebook to HTML (not needed for `.R` scripts)
 
 - In RStudio, click the "Knit" button
-- From the command line, run:  
+- **OR** From the command line, run:  
   ```bash
-  Rscript -e 'rmarkdown::render("example_workflow.Rmd")'
+  Rscript -e 'rmarkdown::render("laminr.Rmd")'
   ```
-- Or use the `rmarkdown` package in R:  
+- **OR** Use the `rmarkdown` package in R:  
   ```r
-  rmarkdown::render("example_workflow.Rmd")
+  rmarkdown::render("laminr.Rmd")
   ```
 
-And then save it to your LaminDB instance using the `lamin` CLI:
+2. Save it to your LaminDB instance using the `lamin` CLI:
 
 ```bash
 lamin save laminr.Rmd
