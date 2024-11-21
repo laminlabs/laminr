@@ -143,7 +143,6 @@ seurat <- SeuratObject::CreateSeuratObject(
 SeuratObject::Idents(seurat) <- "Cell_Type"
 # Normalise the data
 seurat <- Seurat::NormalizeData(seurat)
-seurat <- Seurat::ScaleData(seurat)
 # Test for marker genes (the output is a data.frame)
 markers <- Seurat::FindAllMarkers(
   seurat,
@@ -152,7 +151,8 @@ markers <- Seurat::FindAllMarkers(
 # Display the marker genes
 knitr::kable(markers)
 # Plot the marker genes
-Seurat::DoHeatmap(seurat, features = markers$gene)
+Seurat::DotPlot(seurat, features = unique(markers$gene)) +
+  ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, vjust = 0.5))
 ```
 
 # Store the results in LaminDB
