@@ -62,7 +62,7 @@ The default LaminDB instance is set using the `lamin` CLI on the command line:
 lamin connect <owner>/<name>
 ```
 
-Once a default instance has been set, we can connect to it with **{laminr}**:
+Once a default instance has been set, connect to it with **{laminr}**:
 
 ```{r connect-default}
 db <- connect()
@@ -80,7 +80,7 @@ This tutorial assumes you have access to an instance where you have permission t
 
 It is possible to connect to non-default instances by providing a slug to the `connect()` function.
 Instances connected to in this way can be used to query data but cannot make any changes.
-Let's connect to the public CELLxGENE instance:
+Connect to the public CELLxGENE instance:
 
 ```{r connect-cellxgene}
 cellxgene <- connect("laminlabs/cellxgene")
@@ -90,7 +90,7 @@ cellxgene
 # Track data provenance
 
 LaminDB can track which scripts or notebooks were used to create data.
-This command starts the tracking process.
+Starts the tracking process:
 
 ```{r track, eval = submit_eval}
 db$track("I8BlHXFXqZOG0000", path = "laminr.Rmd")
@@ -104,7 +104,7 @@ The ID should be obtained by running `db$track(path = "your_file.R")` and copyin
 
 # Download a dataset
 
-Artifacts are objects that contain information (single-cell data, images, data frames etc.) as well as associated metadata.
+Artifacts are objects that contain measurements as well as associated metadata.
 
 ```{r get-artifact}
 artifact <- cellxgene$Artifact$get("7dVluLROpalzEh8mNyxk")
@@ -114,12 +114,12 @@ artifact
 <div class="alert alert-info" role="alert">
 **Tip**
 
-You can view information about this dataset at https://lamin.ai/laminlabs/cellxgene/artifact/7dVluLROpalzEh8mNyxk.
-This website can also be used to search for other CELLxGENE datasets.
+You can view information about this dataset on Lamin Hub https://lamin.ai/laminlabs/cellxgene/artifact/7dVluLROpalzEh8mNyxk.
+It can also be used to search for other CELLxGENE datasets.
 </div>
 
-So far we have only retrieved the metadata about this artifact.
-To download the data itself we need to run another command.
+So far only retrieved the metadata of this artifact has been retrieved.
+To download the data itself, run:
 
 ```{r load-artifact}
 adata <- artifact$load()
@@ -131,7 +131,7 @@ You can see that this artifact contains an [`AnnData`](https://anndata.readthedo
 # Work with the data
 
 Once you have loaded a dataset you can perform any analysis with it as you would normally.
-As a quick example we calculate marker genes for each of the provided cell type labels using [**{Seurat}**](https://satijalab.org/seurat/).
+Here, marker genes are exemplarily calculated for each of the provided cell type labels using [**{Seurat}**](https://satijalab.org/seurat/).
 
 ```{r create-seurat}
 # Create a Seurat object
@@ -155,7 +155,7 @@ Seurat::DotPlot(seurat, features = unique(markers$gene)) +
   ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, vjust = 0.5))
 ```
 
-# Store the results in LaminDB
+# Save the results to your instance
 
 Any results can be saved to the default LaminDB instance.
 
@@ -174,27 +174,29 @@ db$Artifact$from_path(
 )$save()
 ```
 
-# Stop tracking
+# Finish tracking
 
-When we are done we end the tracking run.
+End the tracking run to generate a timestamp:
 
 ```{r finish, eval = submit_eval}
 db$finish()
 ```
 
-# Upload notebooks and code
+## Save notebooks and code
 
-Running this code with upload the created datasets but not the code itself.
-Do do that:
+Save the tracked notebook to your instance:
 
 1. Render the notebook to HTML (not needed for `.R` scripts)
 
 - In RStudio, click the "Knit" button
-- **OR** From the command line, run:  
+- **OR** From the command line, run:
+
   ```bash
   Rscript -e 'rmarkdown::render("laminr.Rmd")'
   ```
-- **OR** Use the `rmarkdown` package in R:  
+
+- **OR** Use the `rmarkdown` package in R:
+
   ```r
   rmarkdown::render("laminr.Rmd")
   ```
