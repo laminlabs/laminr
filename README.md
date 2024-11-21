@@ -1,4 +1,4 @@
-# {laminr}: An R interface to LaminDB
+# {laminr}: An R client for LaminDB
 
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/laminr)](https://CRAN.R-project.org/package=laminr)
