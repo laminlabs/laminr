@@ -39,6 +39,7 @@ jobs:
         with:
           extra-packages: any::pkgdown, local::.
           needs: website
+          quarto-version: pre-release
 
       - name: Install lamindb
         run: |
