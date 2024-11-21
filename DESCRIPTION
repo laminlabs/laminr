@@ -1,5 +1,5 @@
 Package: laminr
-Title: Interface for 'LaminDB'
+Title: Client for 'LaminDB'
 Version: 0.2.0
 Authors@R: c(
     person("Robrecht", "Cannoodt", email = "robrecht@data-intuitive.com", role = c("aut", "cre"),

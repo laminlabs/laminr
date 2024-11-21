@@ -1,8 +1,8 @@
 ---
-title: "Getting Started"
+title: "Getting started"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Getting Started}
+  %\VignetteIndexEntry{Getting started}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 ---
@@ -12,149 +12,197 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+# whether or not this code will be used to
+# actually upload results to the LaminDB instance
+# -> testuser1 is a test account that cannot upload results
+submit_eval <- laminr:::.get_user_settings()$handle != "testuser1"
 ```
 
-This vignette provides a practical introduction to using the **{laminr}** package to interact with LaminDB.
-We'll start with a brief overview of key concepts and then walk through the basic steps to connect to a LaminDB instance and work with its core components.
+# Introduction
 
-## Key Concepts in LaminDB
+This vignettes provides a quick introduction to the **{laminr}** workflow.
+For more details about how **{laminr}** works see `vignette("concepts_features", package = "laminr")`.
 
-Before diving into the practical usage of **{laminr}**, it's helpful to understand some core concepts in LaminDB.
-For a more detailed explanation, refer to the Architecture vignette (`vignette("architecture", package = "laminr")`).
+# Installation
 
-* **Instance**: A LaminDB instance is a self-contained environment for storing and managing data and metadata. Think of it like a database or a project directory. Each instance has its own schema, storage location, and metadata database.
-* **Module**: A module is a collection of related registries that provide specific functionality. For example, the core module contains essential registries for general data management, while the bionty module provides registries for biological entities like genes and proteins.
-* **Registry**: A registry is a centralized collection of related records, similar to a table in a database. Each registry holds a specific type of metadata, such as information about artifacts, transforms, or features.
-* **Record**: A record is a single entry within a registry, analogous to a row in a database table. Each record represents a specific entity and combines multiple fields of information.
-* **Field**: A field is a single piece of information within a record, like a column in a database table. For example, an artifact record might have fields for its name, description, and creation date.
+Install **{laminr}** from CRAN using:
 
-## Initial setup
+```r
+install.packages("laminr")
+```
 
-Now, let's set up your environment to use **{laminr}**.
+You will also need to install the `lamindb` Python package:
 
-### Python setup
+```bash
+pip install lamindb[aws]
+```
 
-1. Install the `lamindb` Python package.
+Some functionality requires additional packages.
+You will be prompted to install them as needed or you can install them all now with:
 
-  ```bash
-  pip install lamindb[aws]
-  ```
+```r
+install.packages("laminr", dependencies = TRUE)
+```
 
-2. Connect to a LaminDB instance:
+See the "Initial setup" section of `vignette("concepts_features", package = "laminr")` for more details.
 
-  ```bash
-  lamin connect laminlabs/cellxgene
-  ```
+# Connecting to LaminDB
 
-### R setup
+Load **{laminr}** to get started.
 
-1. Install the **{laminr}** package.
-
-  ```r
-  install.packages("laminr")
-  ```
-
-2. (Optional) Install suggested dependencies.
-
-  ```r
-  install.packages("laminr", dependencies = TRUE)
-  ```
-
-  This includes packages like **{anndata}** for working with
-  AnnData objects and **{s3}** for interacting with S3 storage.
-
-## Connecting to LaminDB from R
-
-Connect to the `laminlabs/cellxgene` instance from your R session:
-
-```{r connect}
+```{r library}
 library(laminr)
-
-db <- connect("laminlabs/cellxgene")
 ```
 
-The `db` object now represents your connection to the LaminDB
-instance. You can explore the available registries (like `Artifact`, 
-`Collection`, `Feature`, etc.) by simply printing the `db` object:
+## Connect to the default instance
 
-```{r print_instance}
+The default LaminDB instance is set using the `lamin` CLI on the command line:
+
+```shell
+lamin connect <owner>/<name>
+```
+
+Once a default instance has been set, connect to it with **{laminr}**:
+
+```{r connect-default}
+db <- connect()
 db
 ```
 
-These registries correspond to [Python classes in LaminDB](https://docs.lamin.ai/lamindb).
+<div class="alert alert-warning" role="alert">
+**Note**
 
-To access registries within specific modules, use the $ operator. For example, to access the bionty module:
+Only the default instance can create new records.
+This tutorial assumes you have access to an instance where you have permission to add data.
+</div>
 
-```{r get_module}
-db$bionty
+## Connect to other instances
+
+It is possible to connect to non-default instances by providing a slug to the `connect()` function.
+Instances connected to in this way can be used to query data but cannot make any changes.
+Connect to the public CELLxGENE instance:
+
+```{r connect-cellxgene}
+cellxgene <- connect("laminlabs/cellxgene")
+cellxgene
 ```
 
-The `bionty` and other registries also have corresponding [Python classes](https://docs.lamin.ai/bionty).
+# Track data provenance
 
-## Working with registries
+LaminDB can track which scripts or notebooks were used to create data.
+Starts the tracking process:
 
-Let's use the `Artifact` registry as an example. This registry stores datasets, models, and other data entities.
-
-To see the available functions for the `Artifact` registry, print the registry object:
-
-```{r get_artifact_registry}
-db$Artifact
+```{r track, eval = submit_eval}
+db$track("I8BlHXFXqZOG0000", path = "laminr.Rmd")
 ```
 
-You can also get a data frame summarising the records associated with a registry.
+<div class="alert alert-info" role="alert">
+**Tip**
 
-```{r artifact_registry_df}
-db$Artifact$df(limit = 5)
-```
+The ID should be obtained by running `db$track(path = "your_file.R")` and copying the ID from the output.
+</div>
 
-## Working with records
+# Download a dataset
 
-You can fetch a specific record from a registry using its ID or UID. For instance, to get the artifact with UID [KBW89Mf7IGcekja2hADu](https://lamin.ai/laminlabs/cellxgene/artifact/KBW89Mf7IGcekja2hADu):
+Artifacts are objects that contain measurements as well as associated metadata.
 
-```{r get_artifact}
-artifact <- db$Artifact$get("KBW89Mf7IGcekja2hADu")
-```
-
-This artifact contains an `AnnData` object with myeloid cell data. You can view its metadata:
-
-```{r print_artifact}
+```{r get-artifact}
+artifact <- cellxgene$Artifact$get("7dVluLROpalzEh8mNyxk")
 artifact
 ```
 
-For artifact records, you can get more detailed information:
+<div class="alert alert-info" role="alert">
+**Tip**
 
-```{r describe_artifact}
-artifact$describe()
-```
-
-Access specific fields of the record using the `$` operator:
-
-```{r access_fields}
-artifact$id
-artifact$uid
-artifact$key
-```
-
-Some fields of a record contain links to related information.
-
-```{r artifact_related}
-artifact$storage
-artifact$developmental_stages
-```
-
-When those that are one-to-many or many-to-many relationship, a summary of the related information can be retrieved as a data frame.
-
-```{r artifact_related_df}
-artifact$developmental_stages$df()
-```
-
-Finally, for artifact records only, you can download the associated data:
-
-```{r cache_artifact}
-artifact$cache() # Cache the data locally
-artifact$load() # Load the data into memory
-```
-
-<div class="alert alert-warning" role="alert">
-  Currently, **{laminr}** primarily supports S3 storage. Support for other storage backends will be added in the future. For more information related to planned features and the roadmap, please refer to the Development vignette (`vignette("development", package = "laminr")`).
+You can view information about this dataset on Lamin Hub https://lamin.ai/laminlabs/cellxgene/artifact/7dVluLROpalzEh8mNyxk.
+It can also be used to search for other CELLxGENE datasets.
 </div>
+
+So far only retrieved the metadata of this artifact has been retrieved.
+To download the data itself, run:
+
+```{r load-artifact}
+adata <- artifact$load()
+adata
+```
+
+You can see that this artifact contains an [`AnnData`](https://anndata.readthedocs.io) object.
+
+# Work with the data
+
+Once you have loaded a dataset you can perform any analysis with it as you would normally.
+Here, marker genes are calculated for each of the provided cell type labels using [**{Seurat}**](https://satijalab.org/seurat/).
+
+```{r create-seurat}
+# Create a Seurat object
+seurat <- SeuratObject::CreateSeuratObject(
+  counts = as(Matrix::t(adata$X), "CsparseMatrix"),
+  meta.data = adata$obs,
+)
+# Set cell identities to the provided cell type annotation
+SeuratObject::Idents(seurat) <- "Cell_Type"
+# Normalise the data
+seurat <- Seurat::NormalizeData(seurat)
+# Test for marker genes (the output is a data.frame)
+markers <- Seurat::FindAllMarkers(
+  seurat,
+  features = SeuratObject::Features(seurat)[1:100] # Only test a few features for speed
+)
+# Display the marker genes
+knitr::kable(markers)
+# Plot the marker genes
+Seurat::DotPlot(seurat, features = unique(markers$gene)) +
+  ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, vjust = 0.5))
+```
+
+# Save the results to your instance
+
+Any results can be saved to the default LaminDB instance.
+
+```{r save-results, eval = submit_eval}
+seurat_path <- tempfile(fileext = ".rds")
+saveRDS(seurat, seurat_path)
+
+db$Artifact$from_df(
+  markers,
+  description = "Marker genes for renal cell carcinoma dataset"
+)$save()
+
+db$Artifact$from_path(
+  seurat_path,
+  description = "Seurat object for renal cell carcinoma dataset"
+)$save()
+```
+
+# Finish tracking
+
+End the tracking run to generate a timestamp:
+
+```{r finish, eval = submit_eval}
+db$finish()
+```
+
+## Save notebooks and code
+
+Save the tracked notebook to your instance:
+
+1. Render the notebook to HTML (not needed for `.R` scripts)
+
+- In RStudio, click the "Knit" button
+- **OR** From the command line, run:
+
+  ```bash
+  Rscript -e 'rmarkdown::render("laminr.Rmd")'
+  ```
+
+- **OR** Use the `rmarkdown` package in R:
+
+  ```r
+  rmarkdown::render("laminr.Rmd")
+  ```
+
+2. Save it to your LaminDB instance using the `lamin` CLI:
+
+```bash
+lamin save laminr.Rmd
+```

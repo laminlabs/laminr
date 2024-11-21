@@ -19,8 +19,8 @@ navbar:
       text: Articles
       menu:
         - text: Introduction
-        - text: Example Workflow
-          href: articles/example_workflow.html
+        - text: Concepts and features
+          href: articles/concepts_features.html
         - text: Package Architecture
           href: articles/architecture.html
         - text: Development Roadmap
