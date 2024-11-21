@@ -1,8 +1,8 @@
 ---
-title: "Example Workflow: CELLxGENE"
+title: "Getting started"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Example Workflow: CELLxGENE}
+  %\VignetteIndexEntry{Getting started}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 ---
@@ -19,10 +19,9 @@ submit_eval <- laminr:::.get_user_settings()$handle != "testuser1"
 ```
 
 # Introduction
-  
-This vignette demonstrates a basic workflow for accessing and analysing single-cell RNA-seq data from the CELLxGENE repository using **{laminr}**.
-[CZ CELLxGENE Discover](https://cellxgene.cziscience.com/) is a standardised collection of scRNA-seq datasets and LaminDB makes it easy to query and access data in this repository.
-We will go through the steps of finding and downloading a dataset using **{laminr}**, performing some simple analysis using **{Seurat}** and saving the results your own LaminDB database.
+
+This vignettes provides a quick introduction to the **{laminr}** workflow.
+For more details about how **{laminr}** works see `vignette("concepts_features", package = "laminr")`.
 
 # Before we start
 
