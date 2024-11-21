@@ -44,22 +44,30 @@ Get started with **{laminr}** by installing the package from CRAN:
 install.packages("laminr")
 ```
 
-To include all suggested dependencies for enhanced functionality, use:
+You will also need to install the `lamindb` Python package:
+
+```bash
+pip install lamindb[aws]
+```
+
+### Additional packages
+
+Some functionality requires additional packages. To install all of these use:
 
 ```r
 install.packages("laminr", dependencies = TRUE)
 ```
 
-This further installs:
+This will also install these package for the following tasks:
 
-- anndata: For native AnnData support in R
-- S3: To fetch datasets from AWS S3
+- **{anndata}** - Native `AnnData` support in R
+- **{nanoparquet}** - Reading `.parquet` files
+- **{readr}** - Reading CSV/TSV files
+- **{reticulate}** - Functionality that requires the Python `lamindb` package
+- **{rsvg}** - Reading SVG files
+- **{s3}** - Fetching datasets from AWS S3
 
-For now, you will also need to install the `lamindb` Python package:
-
-```bash
-pip install lamindb[aws]
-```
+If you choose not to install all packages now you will be prompted to do so whenever one is required.
 
 ## Getting started
 
