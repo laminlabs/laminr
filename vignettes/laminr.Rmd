@@ -43,7 +43,7 @@ lamin connect <owner>/<name>
 This instance acts as the default instance for everything that follows.
 Any data and tracking information will be added to it.
 
-# Start an R session
+# Start your analysis
 
 Load **{laminr}** to get started.
 
@@ -59,9 +59,7 @@ db <- connect()
 
 It is used to manage all datasets and metadata entities.
 
-# Track data lineage
-
-LaminDB can track which scripts or notebooks were used to create data.
+LaminDB tracks which code is used to create data.
 To track the current source code, run:
 
 ```{r track, eval = submit_eval}
