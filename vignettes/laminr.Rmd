@@ -2,7 +2,7 @@
 title: "Get started"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Getting started}
+  %\VignetteIndexEntry{Get started}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 ---
@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 submit_eval <- laminr:::.get_user_settings()$handle != "testuser1"
 ```
 
-This vignettes introduce the basic workflow.
+This vignette introduces the basic **{laminr}** workflow.
 
 # Setup
 
@@ -41,8 +41,9 @@ lamin connect <owner>/<name>
 ```
 
 This instance acts as the default instance for everything that follows.
+Any new records or other changes will be added here.
 
-# Start an R session
+# Connect to the default instance
 
 Load **{laminr}** to get started.
 
@@ -57,7 +58,7 @@ db <- connect()
 db
 ```
 
-It allows you to manage all datasets & metadata entities with auto-complete.
+It is used to manage all datasets and metadata entities.
 
 # Track data lineage
 
@@ -86,7 +87,8 @@ cellxgene
 
 # Download a dataset
 
-Artifacts are objects that bundle data and associated metadata. An artifact can be any file or folder but is typically a dataset.
+Artifacts are objects that bundle data and associated metadata.
+An artifact can be any file or folder but is typically a dataset.
 
 ```{r get-artifact}
 artifact <- cellxgene$Artifact$get("7dVluLROpalzEh8mNyxk")
@@ -98,7 +100,7 @@ artifact
 
 You can view detailed information about this dataset on LaminHub: https://lamin.ai/laminlabs/cellxgene/artifact/7dVluLROpalzEh8mNyxk.
 
-You can search & query more datasets here: https://lamin.ai/laminlabs/cellxgene/artifacts.
+You can search and query more CELLxGENE datasets here: https://lamin.ai/laminlabs/cellxgene/artifacts.
 </div>
 
 To download the dataset and load it into memory, run:
@@ -114,7 +116,6 @@ This artifact contains an [`AnnData`](https://anndata.readthedocs.io) object.
 **Tip**
 
 If you prefer a path to a local file or folder, call `path <- artifact$cache()`.
-
 </div>
 
 # Work with the data
@@ -126,10 +127,12 @@ Here, marker genes are calculated for each of the provided cell type labels usin
 # Create a Seurat object
 seurat <- SeuratObject::CreateSeuratObject(
   counts = as(Matrix::t(adata$X), "CsparseMatrix"),
-  meta.data = adata$obs,
+  meta.data = adata$obs
 )
 # Set cell identities to the provided cell type annotation
 SeuratObject::Idents(seurat) <- "cell_type"
+# Normalise the data
+seurat <- Seurat::NormalizeData(seurat)
 # Test for marker genes (the output is a data.frame)
 markers <- Seurat::FindAllMarkers(
   seurat,
