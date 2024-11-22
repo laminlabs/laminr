@@ -1,8 +1,8 @@
 ---
-title: "Getting started"
+title: "Get started"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Getting started}
+  %\VignetteIndexEntry{Get started}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 ---
@@ -18,35 +18,32 @@ knitr::opts_chunk$set(
 submit_eval <- laminr:::.get_user_settings()$handle != "testuser1"
 ```
 
-# Introduction
+This vignette introduces the basic **{laminr}** workflow.
 
-This vignettes provides a quick introduction to the **{laminr}** workflow.
-For more details about how **{laminr}** works see `vignette("concepts_features", package = "laminr")`.
+# Setup
 
-# Installation
-
-Install **{laminr}** from CRAN using:
+Install **{laminr}** from CRAN:
 
 ```r
 install.packages("laminr")
 ```
 
-You will also need to install the `lamindb` Python package:
+Install `lamindb` from PyPI:
 
 ```bash
-pip install lamindb[aws]
+pip install 'lamindb[aws]'
 ```
 
-Some functionality requires additional packages.
-You will be prompted to install them as needed or you can install them all now with:
+Connect to a LaminDB instance on the command line:
 
-```r
-install.packages("laminr", dependencies = TRUE)
+```shell
+lamin connect <owner>/<name>
 ```
 
-See the "Initial setup" section of `vignette("concepts_features", package = "laminr")` for more details.
+This instance acts as the default instance for everything that follows.
+Any new records or other changes will be added here.
 
-# Connecting to LaminDB
+# Connect to the default instance
 
 Load **{laminr}** to get started.
 
@@ -54,43 +51,19 @@ Load **{laminr}** to get started.
 library(laminr)
 ```
 
-## Connect to the default instance
-
-The default LaminDB instance is set using the `lamin` CLI on the command line:
-
-```shell
-lamin connect <owner>/<name>
-```
-
-Once a default instance has been set, connect to it with **{laminr}**:
+Create your default database `db` object for this R session:
 
 ```{r connect-default}
 db <- connect()
 db
 ```
 
-<div class="alert alert-warning" role="alert">
-**Note**
+It is used to manage all datasets and metadata entities.
 
-Only the default instance can create new records.
-This tutorial assumes you have access to an instance where you have permission to add data.
-</div>
-
-## Connect to other instances
-
-It is possible to connect to non-default instances by providing a slug to the `connect()` function.
-Instances connected to in this way can be used to query data but cannot make any changes.
-Connect to the public CELLxGENE instance:
-
-```{r connect-cellxgene}
-cellxgene <- connect("laminlabs/cellxgene")
-cellxgene
-```
-
-# Track data provenance
+# Track data lineage
 
 LaminDB can track which scripts or notebooks were used to create data.
-Starts the tracking process:
+To track the current source code, run:
 
 ```{r track, eval = submit_eval}
 db$track("I8BlHXFXqZOG0000", path = "laminr.Rmd")
@@ -99,12 +72,23 @@ db$track("I8BlHXFXqZOG0000", path = "laminr.Rmd")
 <div class="alert alert-info" role="alert">
 **Tip**
 
-The ID should be obtained by running `db$track(path = "your_file.R")` and copying the ID from the output.
+The UID (here "I8BlHXFXqZOG0000") is obtained by running `db$track(path = "your_file.R")` and copying the UID from the output.
 </div>
+
+## Connect to other instances
+
+It is possible to connect to any LaminDB instance for reading data.
+Connect to the public CELLxGENE instance:
+
+```{r connect-cellxgene}
+cellxgene <- connect("laminlabs/cellxgene")
+cellxgene
+```
 
 # Download a dataset
 
-Artifacts are objects that contain measurements as well as associated metadata.
+Artifacts are objects that bundle data and associated metadata.
+An artifact can be any file or folder but is typically a dataset.
 
 ```{r get-artifact}
 artifact <- cellxgene$Artifact$get("7dVluLROpalzEh8mNyxk")
@@ -114,19 +98,25 @@ artifact
 <div class="alert alert-info" role="alert">
 **Tip**
 
-You can view information about this dataset on Lamin Hub https://lamin.ai/laminlabs/cellxgene/artifact/7dVluLROpalzEh8mNyxk.
-It can also be used to search for other CELLxGENE datasets.
+You can view detailed information about this dataset on LaminHub: https://lamin.ai/laminlabs/cellxgene/artifact/7dVluLROpalzEh8mNyxk.
+
+You can search and query more CELLxGENE datasets here: https://lamin.ai/laminlabs/cellxgene/artifacts.
 </div>
 
-So far only retrieved the metadata of this artifact has been retrieved.
-To download the data itself, run:
+To download the dataset and load it into memory, run:
 
 ```{r load-artifact}
 adata <- artifact$load()
 adata
 ```
 
-You can see that this artifact contains an [`AnnData`](https://anndata.readthedocs.io) object.
+This artifact contains an [`AnnData`](https://anndata.readthedocs.io) object.
+
+<div class="alert alert-info" role="alert">
+**Tip**
+
+If you prefer a path to a local file or folder, call `path <- artifact$cache()`.
+</div>
 
 # Work with the data
 
@@ -137,10 +127,10 @@ Here, marker genes are calculated for each of the provided cell type labels usin
 # Create a Seurat object
 seurat <- SeuratObject::CreateSeuratObject(
   counts = as(Matrix::t(adata$X), "CsparseMatrix"),
-  meta.data = adata$obs,
+  meta.data = adata$obs
 )
 # Set cell identities to the provided cell type annotation
-SeuratObject::Idents(seurat) <- "Cell_Type"
+SeuratObject::Idents(seurat) <- "cell_type"
 # Normalise the data
 seurat <- Seurat::NormalizeData(seurat)
 # Test for marker genes (the output is a data.frame)
@@ -155,9 +145,9 @@ Seurat::DotPlot(seurat, features = unique(markers$gene)) +
   ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, vjust = 0.5))
 ```
 
-# Save the results to your instance
+# Save the results
 
-Any results can be saved to the default LaminDB instance.
+Save results as new artifacts to the default LaminDB instance.
 
 ```{r save-results, eval = submit_eval}
 seurat_path <- tempfile(fileext = ".rds")
@@ -174,19 +164,19 @@ db$Artifact$from_path(
 )$save()
 ```
 
-# Finish tracking
+# Mark the analysis as finished
 
-End the tracking run to generate a timestamp:
+Mark the analysis run as finished to create a time stamp and upload source code to the hub.
 
 ```{r finish, eval = submit_eval}
 db$finish()
 ```
 
-## Save notebooks and code
+## Save a notebook report (not needed for `.R` scripts)
 
-Save the tracked notebook to your instance:
+Save a run report of your notebook (`.Rmd` or `.qmd` file) to your instance:
 
-1. Render the notebook to HTML (not needed for `.R` scripts)
+1. Render the notebook to HTML
 
 - In RStudio, click the "Knit" button
 - **OR** From the command line, run:
@@ -206,3 +196,7 @@ Save the tracked notebook to your instance:
 ```bash
 lamin save laminr.Rmd
 ```
+
+# Further reading
+
+For more details about how **{laminr}** works see `vignette("concepts_features", package = "laminr")`.
