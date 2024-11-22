@@ -6,11 +6,7 @@
 [![R-CMD-check](https://github.com/laminlabs/laminr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/laminlabs/laminr/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-**{laminr}** is an R package that provides an interface to [LaminDB](https://lamin.ai).
-
-> [!WARNING]  
-> This package is currently in **early access** and is under active development.
-> Features, APIs, and functionality are subject to change.
+**{laminr}** is an R client for [LaminDB](https://lamin.ai).
 
 ## What is LaminDB
 
