@@ -41,9 +41,9 @@ lamin connect <owner>/<name>
 ```
 
 This instance acts as the default instance for everything that follows.
-Any new records or other changes will be added here.
+Any data and tracking information will be added to it.
 
-# Connect to the default instance
+# Start an R session
 
 Load **{laminr}** to get started.
 
@@ -55,7 +55,6 @@ Create your default database `db` object for this R session:
 
 ```{r connect-default}
 db <- connect()
-db
 ```
 
 It is used to manage all datasets and metadata entities.
@@ -72,10 +71,10 @@ db$track("I8BlHXFXqZOG0000", path = "laminr.Rmd")
 <div class="alert alert-info" role="alert">
 **Tip**
 
-The UID (here "I8BlHXFXqZOG0000") is obtained by running `db$track(path = "your_file.R")` and copying the UID from the output.
+The UID (here `"I8BlHXFXqZOG0000"`) is obtained by running `db$track(path = "your_file.R")` and copying the UID from the output.
 </div>
 
-## Connect to other instances
+# Connect to other instances
 
 It is possible to connect to any LaminDB instance for reading data.
 Connect to the public CELLxGENE instance:
