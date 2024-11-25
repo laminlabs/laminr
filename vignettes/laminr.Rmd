@@ -115,33 +115,57 @@ This artifact contains an [`AnnData`](https://anndata.readthedocs.io) object.
 If you prefer a path to a local file or folder, call `path <- artifact$cache()`.
 </div>
 
-# Work with the data
+# Work with the dataset
 
 Once you have loaded a dataset you can perform any analysis with it as you would normally.
 Here, marker genes are calculated for each of the provided cell type labels using [**{Seurat}**](https://satijalab.org/seurat/).
 
 ```{r create-seurat}
 # Create a Seurat object
-seurat <- SeuratObject::CreateSeuratObject(
+seurat_obj <- SeuratObject::CreateSeuratObject(
   counts = as(Matrix::t(adata$X), "CsparseMatrix"),
   meta.data = adata$obs
 )
 # add gene metadata
-seurat[["RNA"]] <- AddMetaData(GetAssay(seurat), adata$var)
+seurat_obj[["RNA"]] <- AddMetaData(GetAssay(seurat_obj), adata$var)
 # Set cell identities to the provided cell type annotation
-SeuratObject::Idents(seurat) <- "cell_type"
+SeuratObject::Idents(seurat_obj) <- "cell_type"
 # Normalise the data
-seurat <- Seurat::NormalizeData(seurat)
+seurat_obj <- Seurat::NormalizeData(seurat_obj)
 # Test for marker genes (the output is a data.frame)
 markers <- Seurat::FindAllMarkers(
-  seurat,
-  features = SeuratObject::Features(seurat)[1:100] # Only test a few features for speed
+  seurat_obj,
+  features = SeuratObject::Features(seurat_obj)[1:100] # Only test a few features for speed
 )
 # Display the marker genes
 knitr::kable(markers)
 # Plot the marker genes
-Seurat::DotPlot(seurat, features = unique(markers$gene)) +
+Seurat::DotPlot(seurat_obj, features = unique(markers$gene)) +
   ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, vjust = 0.5))
+```
+
+# Slice the tiledbsoma array store
+
+Alternatively to querying individual datasets, you can also slice the `.tiledbsoma` array store, which stores Census, a concatenated version of most datasets in CELLxGENE.
+
+```{r create-seurat}
+
+library("cellxgene.census")
+
+census <- open_soma()
+
+organism <- "Homo sapiens"
+gene_filter <- "feature_id %in% c('ENSG00000107317', 'ENSG00000106034')"
+cell_filter <-  "cell_type == 'sympathetic neuron'"
+cell_columns <- c("assay", "cell_type", "tissue", "tissue_general", "suspension_type", "disease")
+
+seurat_obj2 <- get_seurat(
+   census = census,
+   organism = organism,
+   var_value_filter = gene_filter,
+   obs_value_filter = cell_filter,
+   obs_column_names = cell_columns
+)
 ```
 
 # Save the results
@@ -150,7 +174,7 @@ Save results as new artifacts to the default LaminDB instance.
 
 ```{r save-results, eval = submit_eval}
 seurat_path <- tempfile(fileext = ".rds")
-saveRDS(seurat, seurat_path)
+saveRDS(seurat_obj, seurat_path)
 
 db$Artifact$from_df(
   markers,
