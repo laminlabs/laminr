@@ -177,7 +177,8 @@ etc.) by simply printing the <code>db</code> object:</p>
 <span><span class="co">#&gt;     $ParamValue</span></span>
 <span><span class="co">#&gt;     $FeatureValue</span></span>
 <span><span class="co">#&gt; <span style="color: #FF55FF; font-style: italic;">  Additional modules</span></span></span>
-<span><span class="co">#&gt;     bionty</span></span></code></pre></div>
+<span><span class="co">#&gt;     bionty</span></span>
+<span><span class="co">#&gt;     ourprojects</span></span></code></pre></div>
 <p>These registries correspond to <a href="https://docs.lamin.ai/lamindb" class="external-link">Python classes in LaminDB</a>.</p>
 <p>To access registries within specific modules, use the $ operator. For
 example, to access the bionty module:</p>
@@ -250,47 +251,50 @@ registry, print the registry object:</p>
 <span><span class="co">#&gt;     ethnicities: bionty$Ethnicity<span style="color: #555555;"> (many-to-many)</span></span></span>
 <span><span class="co">#&gt;     cell_markers: bionty$CellMarker<span style="color: #555555;"> (many-to-many)</span></span></span>
 <span><span class="co">#&gt;     developmental_stages: bionty$DevelopmentalStage<span style="color: #555555;"> (many-to-many)</span></span></span>
-<span><span class="co">#&gt;     experimental_factors: bionty$ExperimentalFactor<span style="color: #555555;"> (many-to-many)</span></span></span></code></pre></div>
+<span><span class="co">#&gt;     experimental_factors: bionty$ExperimentalFactor<span style="color: #555555;"> (many-to-many)</span></span></span>
+<span><span class="co">#&gt; <span style="color: #FF55FF; font-style: italic;">  Ourprojects fields</span></span></span>
+<span><span class="co">#&gt;     projects: ourprojects$Project<span style="color: #555555;"> (many-to-many)</span></span></span>
+<span><span class="co">#&gt;     references: ourprojects$Reference<span style="color: #555555;"> (many-to-many)</span></span></span></code></pre></div>
 <p>You can also get a data frame summarising the records associated with
 a registry.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">db</span><span class="op">$</span><span class="va">Artifact</span><span class="op">$</span><span class="fu">df</span><span class="op">(</span>limit <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
-<span><span class="co">#&gt;           size                          description n_observations</span></span>
-<span><span class="co">#&gt; 1 635848093433                    Census 2023-12-15       68683222</span></span>
-<span><span class="co">#&gt; 2 870700998221                    Census 2024-07-01      115556140</span></span>
-<span><span class="co">#&gt; 3   1297573950      Supercluster: Hippocampal CA1-3          74979</span></span>
-<span><span class="co">#&gt; 4        36297 Source of transform G69jtgzKO0eJ6K79             NA</span></span>
-<span><span class="co">#&gt; 5       716529   Report of run UAAiLAi0BrLvlKnsuvP3             NA</span></span>
-<span><span class="co">#&gt;                     hash is_latest X_hash_type    type</span></span>
-<span><span class="co">#&gt; 1 Mfyw8VuqftX5REITfQH_yg     FALSE       md5-d dataset</span></span>
-<span><span class="co">#&gt; 2 bzrXBPNvitSVKvb3GG38_w      TRUE       md5-d dataset</span></span>
-<span><span class="co">#&gt; 3 UlsVvBz9kMzn2r9RdoAAOg     FALSE       md5-n    &lt;NA&gt;</span></span>
-<span><span class="co">#&gt; 4 gNdUkonYgQJP_Mi3xLzt_g     FALSE         md5    &lt;NA&gt;</span></span>
-<span><span class="co">#&gt; 5 BDGZac3qU3oLVFpO035Qhg     FALSE         md5    &lt;NA&gt;</span></span>
-<span><span class="co">#&gt;                         created_at                       updated_at</span></span>
-<span><span class="co">#&gt; 1 2024-07-12T12:12:16.091881+00:00 2024-09-17T13:00:13.714256+00:00</span></span>
-<span><span class="co">#&gt; 2 2024-07-16T12:52:01.424629+00:00 2024-09-17T13:01:23.739635+00:00</span></span>
-<span><span class="co">#&gt; 3 2023-11-28T21:46:12.685907+00:00 2024-01-24T07:10:21.725547+00:00</span></span>
-<span><span class="co">#&gt; 4 2024-01-29T08:32:13.311741+00:00 2024-01-29T08:32:13.311792+00:00</span></span>
-<span><span class="co">#&gt; 5 2024-01-29T08:32:18.346499+00:00 2024-01-30T09:12:06.027928+00:00</span></span>
-<span><span class="co">#&gt;   X_key_is_virtual                  uid X_accessor visibility   id suffix</span></span>
-<span><span class="co">#&gt; 1            FALSE FYMewVq5twKMDXVy0000 tiledbsoma          1 2846       </span></span>
-<span><span class="co">#&gt; 2            FALSE FYMewVq5twKMDXVy0001 tiledbsoma          1 3665       </span></span>
-<span><span class="co">#&gt; 3            FALSE tczTlSHFPOcAcBnfyxKA    AnnData          1 1270  .h5ad</span></span>
-<span><span class="co">#&gt; 4             TRUE JIIPyQX5l9qELPl42d75       &lt;NA&gt;          0 2840 .ipynb</span></span>
-<span><span class="co">#&gt; 5             TRUE Whyxwf3k2GjJwTPCl1FK       &lt;NA&gt;          0 2842  .html</span></span>
-<span><span class="co">#&gt;      version n_objects</span></span>
-<span><span class="co">#&gt; 1 2023-12-15       290</span></span>
-<span><span class="co">#&gt; 2 2024-07-01       330</span></span>
-<span><span class="co">#&gt; 3 2023-07-25        NA</span></span>
-<span><span class="co">#&gt; 4          0        NA</span></span>
-<span><span class="co">#&gt; 5          1        NA</span></span>
-<span><span class="co">#&gt;                                                                      key</span></span>
-<span><span class="co">#&gt; 1                                            cell-census/2023-12-15/soma</span></span>
-<span><span class="co">#&gt; 2                                            cell-census/2024-07-01/soma</span></span>
-<span><span class="co">#&gt; 3 cell-census/2023-07-25/h5ads/7a0a8891-9a22-4549-a55b-c2aca23c3a2a.h5ad</span></span>
-<span><span class="co">#&gt; 4                                                                   &lt;NA&gt;</span></span>
-<span><span class="co">#&gt; 5                                                                   &lt;NA&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt;                    uid visibility X_key_is_virtual   id</span></span>
+<span><span class="co">#&gt; 1 FYMewVq5twKMDXVy0000          1            FALSE 2846</span></span>
+<span><span class="co">#&gt; 2 FYMewVq5twKMDXVy0001          1            FALSE 3665</span></span>
+<span><span class="co">#&gt; 3 tczTlSHFPOcAcBnfyxKA          1            FALSE 1270</span></span>
+<span><span class="co">#&gt; 4 JIIPyQX5l9qELPl42d75          0             TRUE 2840</span></span>
+<span><span class="co">#&gt; 5 Whyxwf3k2GjJwTPCl1FK          0             TRUE 2842</span></span>
+<span><span class="co">#&gt;                                                                      key suffix</span></span>
+<span><span class="co">#&gt; 1                                            cell-census/2023-12-15/soma       </span></span>
+<span><span class="co">#&gt; 2                                            cell-census/2024-07-01/soma       </span></span>
+<span><span class="co">#&gt; 3 cell-census/2023-07-25/h5ads/7a0a8891-9a22-4549-a55b-c2aca23c3a2a.h5ad  .h5ad</span></span>
+<span><span class="co">#&gt; 4                                                                   &lt;NA&gt; .ipynb</span></span>
+<span><span class="co">#&gt; 5                                                                   &lt;NA&gt;  .html</span></span>
+<span><span class="co">#&gt;   is_latest         size    type X_hash_type                       created_at</span></span>
+<span><span class="co">#&gt; 1     FALSE 635848093433 dataset       md5-d 2024-07-12T12:12:16.091881+00:00</span></span>
+<span><span class="co">#&gt; 2      TRUE 870700998221 dataset       md5-d 2024-07-16T12:52:01.424629+00:00</span></span>
+<span><span class="co">#&gt; 3     FALSE   1297573950    &lt;NA&gt;       md5-n 2023-11-28T21:46:12.685907+00:00</span></span>
+<span><span class="co">#&gt; 4     FALSE        36297    &lt;NA&gt;         md5 2024-01-29T08:32:13.311741+00:00</span></span>
+<span><span class="co">#&gt; 5     FALSE       716529    &lt;NA&gt;         md5 2024-01-29T08:32:18.346499+00:00</span></span>
+<span><span class="co">#&gt;   X_accessor                       updated_at</span></span>
+<span><span class="co">#&gt; 1 tiledbsoma 2024-09-17T13:00:13.714256+00:00</span></span>
+<span><span class="co">#&gt; 2 tiledbsoma 2024-09-17T13:01:23.739635+00:00</span></span>
+<span><span class="co">#&gt; 3    AnnData 2024-01-24T07:10:21.725547+00:00</span></span>
+<span><span class="co">#&gt; 4       &lt;NA&gt; 2024-01-29T08:32:13.311792+00:00</span></span>
+<span><span class="co">#&gt; 5       &lt;NA&gt; 2024-01-30T09:12:06.027928+00:00</span></span>
+<span><span class="co">#&gt;                            description    version n_observations</span></span>
+<span><span class="co">#&gt; 1                    Census 2023-12-15 2023-12-15       68683222</span></span>
+<span><span class="co">#&gt; 2                    Census 2024-07-01 2024-07-01      115556140</span></span>
+<span><span class="co">#&gt; 3      Supercluster: Hippocampal CA1-3 2023-07-25          74979</span></span>
+<span><span class="co">#&gt; 4 Source of transform G69jtgzKO0eJ6K79          0             NA</span></span>
+<span><span class="co">#&gt; 5   Report of run UAAiLAi0BrLvlKnsuvP3          1             NA</span></span>
+<span><span class="co">#&gt;                     hash n_objects</span></span>
+<span><span class="co">#&gt; 1 Mfyw8VuqftX5REITfQH_yg       290</span></span>
+<span><span class="co">#&gt; 2 bzrXBPNvitSVKvb3GG38_w       330</span></span>
+<span><span class="co">#&gt; 3 UlsVvBz9kMzn2r9RdoAAOg        NA</span></span>
+<span><span class="co">#&gt; 4 gNdUkonYgQJP_Mi3xLzt_g        NA</span></span>
+<span><span class="co">#&gt; 5 BDGZac3qU3oLVFpO035Qhg        NA</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="working-with-records">Working with records<a class="anchor" aria-label="anchor" href="#working-with-records"></a>
