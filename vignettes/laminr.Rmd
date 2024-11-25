@@ -126,6 +126,8 @@ seurat <- SeuratObject::CreateSeuratObject(
   counts = as(Matrix::t(adata$X), "CsparseMatrix"),
   meta.data = adata$obs
 )
+# add gene metadata
+seurat[["RNA"]] <- AddMetaData(GetAssay(seurat), adata$var)
 # Set cell identities to the provided cell type annotation
 SeuratObject::Idents(seurat) <- "cell_type"
 # Normalise the data
