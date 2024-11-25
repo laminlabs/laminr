@@ -141,7 +141,7 @@ To make things a bit quicker we only test the first 1000 genes but if you have a
 
 ```{r markers}
 # Set cell identities to the provided cell type annotation
-SeuratObject::Idents(seurat) <- "Cell_Type"
+SeuratObject::Idents(seurat) <- "cell_type"
 # Normalise the data
 seurat <- Seurat::NormalizeData(seurat)
 # Test for marker genes
