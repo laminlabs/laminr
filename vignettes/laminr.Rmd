@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
 # actually upload results to the LaminDB instance
 # -> testuser1 is a test account that cannot upload results
 submit_eval <- laminr:::.get_user_settings()$handle != "testuser1"
+submit_eval <- FALSE
 ```
 
 This vignette introduces the basic **{laminr}** workflow.
@@ -126,8 +127,10 @@ seurat_obj <- SeuratObject::CreateSeuratObject(
   counts = as(Matrix::t(adata$X), "CsparseMatrix"),
   meta.data = adata$obs
 )
-# add gene metadata
-seurat_obj[["RNA"]] <- AddMetaData(GetAssay(seurat_obj), adata$var)
+# Add gene metadata
+seurat_obj[["RNA"]] <- SeuratObject::AddMetaData(
+  Seurat::GetAssay(seurat_obj), adata$var
+)
 # Set cell identities to the provided cell type annotation
 SeuratObject::Idents(seurat_obj) <- "cell_type"
 # Normalise the data
@@ -146,10 +149,9 @@ Seurat::DotPlot(seurat_obj, features = unique(markers$gene)) +
 
 # Slice the tiledbsoma array store
 
-Alternatively to querying individual datasets, you can also slice the `.tiledbsoma` array store, which stores Census, a concatenated version of most datasets in CELLxGENE.
+Alternatively to accessing individual CELLxGENE datasets from LaminDB, the **{cellxgene.census}** package can be used to slice the TileDB-SOMA array store for CELLxGENE Census, a concatenated version of most datasets in CELLxGENE.
 
-```{r slice-tiledb}
-
+```{r cellxgene-census}
 library("cellxgene.census")
 
 census <- open_soma()
@@ -157,7 +159,9 @@ census <- open_soma()
 organism <- "Homo sapiens"
 gene_filter <- "feature_id %in% c('ENSG00000107317', 'ENSG00000106034')"
 cell_filter <-  "cell_type == 'sympathetic neuron'"
-cell_columns <- c("assay", "cell_type", "tissue", "tissue_general", "suspension_type", "disease")
+cell_columns <- c(
+  "assay", "cell_type", "tissue", "tissue_general", "suspension_type", "disease"
+)
 
 seurat_obj2 <- get_seurat(
    census = census,
