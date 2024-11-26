@@ -154,23 +154,23 @@ DotPlot(seurat_obj, features = unique(markers$gene)) +
 Alternatively to accessing individual CELLxGENE datasets from LaminDB, the **{cellxgene.census}** package can be used to slice the TileDB-SOMA array store for CELLxGENE Census, a concatenated version of most datasets in CELLxGENE.
 
 ```{r slice-tiledbsoma, eval=FALSE}
-library("cellxgene.census")
+library(cellxgene.census)
 
 census <- open_soma()
 
 organism <- "Homo sapiens"
 gene_filter <- "feature_id %in% c('ENSG00000107317', 'ENSG00000106034')"
-cell_filter <-  "cell_type == 'sympathetic neuron'"
+cell_filter <- "cell_type == 'sympathetic neuron'"
 cell_columns <- c(
   "assay", "cell_type", "tissue", "tissue_general", "suspension_type", "disease"
 )
 
 seurat_obj2 <- get_seurat(
-   census = census,
-   organism = organism,
-   var_value_filter = gene_filter,
-   obs_value_filter = cell_filter,
-   obs_column_names = cell_columns
+  census = census,
+  organism = organism,
+  var_value_filter = gene_filter,
+  obs_value_filter = cell_filter,
+  obs_column_names = cell_columns
 )
 ```
 
