@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
 # actually upload results to the LaminDB instance
 # -> testuser1 is a test account that cannot upload results
 submit_eval <- laminr:::.get_user_settings()$handle != "testuser1"
+submit_eval <- FALSE
 ```
 
 This vignette introduces the basic **{laminr}** workflow.
@@ -115,31 +116,62 @@ This artifact contains an [`AnnData`](https://anndata.readthedocs.io) object.
 If you prefer a path to a local file or folder, call `path <- artifact$cache()`.
 </div>
 
-# Work with the data
+# Work with the dataset
 
 Once you have loaded a dataset you can perform any analysis with it as you would normally.
 Here, marker genes are calculated for each of the provided cell type labels using [**{Seurat}**](https://satijalab.org/seurat/).
 
 ```{r create-seurat}
+library(Seurat)
+
 # Create a Seurat object
-seurat <- SeuratObject::CreateSeuratObject(
+seurat_obj <- CreateSeuratObject(
   counts = as(Matrix::t(adata$X), "CsparseMatrix"),
   meta.data = adata$obs
 )
+# Add gene metadata
+seurat_obj[["RNA"]] <- AddMetaData(
+  GetAssay(seurat_obj), adata$var
+)
 # Set cell identities to the provided cell type annotation
-SeuratObject::Idents(seurat) <- "cell_type"
+Idents(seurat_obj) <- "cell_type"
 # Normalise the data
-seurat <- Seurat::NormalizeData(seurat)
+seurat_obj <- NormalizeData(seurat_obj)
 # Test for marker genes (the output is a data.frame)
-markers <- Seurat::FindAllMarkers(
-  seurat,
-  features = SeuratObject::Features(seurat)[1:100] # Only test a few features for speed
+markers <- FindAllMarkers(
+  seurat_obj,
+  features = Features(seurat_obj)[1:100] # Only test a few features for speed
 )
 # Display the marker genes
 knitr::kable(markers)
 # Plot the marker genes
-Seurat::DotPlot(seurat, features = unique(markers$gene)) +
+DotPlot(seurat_obj, features = unique(markers$gene)) +
   ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, vjust = 0.5))
+```
+
+# Slice the tiledbsoma array store
+
+Alternatively to accessing individual CELLxGENE datasets from LaminDB, the **{cellxgene.census}** package can be used to slice the TileDB-SOMA array store for CELLxGENE Census, a concatenated version of most datasets in CELLxGENE.
+
+```{r slice-tiledbsoma, eval=FALSE}
+library(cellxgene.census)
+
+census <- open_soma()
+
+organism <- "Homo sapiens"
+gene_filter <- "feature_id %in% c('ENSG00000107317', 'ENSG00000106034')"
+cell_filter <- "cell_type == 'sympathetic neuron'"
+cell_columns <- c(
+  "assay", "cell_type", "tissue", "tissue_general", "suspension_type", "disease"
+)
+
+seurat_obj2 <- get_seurat(
+  census = census,
+  organism = organism,
+  var_value_filter = gene_filter,
+  obs_value_filter = cell_filter,
+  obs_column_names = cell_columns
+)
 ```
 
 # Save the results
@@ -148,7 +180,7 @@ Save results as new artifacts to the default LaminDB instance.
 
 ```{r save-results, eval = submit_eval}
 seurat_path <- tempfile(fileext = ".rds")
-saveRDS(seurat, seurat_path)
+saveRDS(seurat_obj, seurat_path)
 
 db$Artifact$from_df(
   markers,
