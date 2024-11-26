@@ -153,7 +153,7 @@ DotPlot(seurat_obj, features = unique(markers$gene)) +
 
 Alternatively to accessing individual CELLxGENE datasets from LaminDB, the **{cellxgene.census}** package can be used to slice the TileDB-SOMA array store for CELLxGENE Census, a concatenated version of most datasets in CELLxGENE.
 
-```{r cellxgene-census}
+```{r slice-tiledbsoma, eval=FALSE}
 library("cellxgene.census")
 
 census <- open_soma()
