@@ -46,6 +46,32 @@ ArtifactRecord <- R6::R6Class( # nolint object_name_linter
       }
     },
     #' @description
+    #' Return a backed data object. Currently only supports TileDB-SOMA
+    #' artifacts.
+    #'
+    #' @return A [tiledbsoma::SOMACollection] or [tiledbsoma::SOMAExperiment]
+    #' object
+    open = function() {
+      is_tiledbsoma <- private$get_value("suffix") == ".tiledbsoma" ||
+        private$get_value("_accessor") == "tiledbsoma"
+
+      if (!is_tiledbsoma) {
+        cli::cli_abort(
+          "The {.code open} method is only supported for TileDB-SOMA artifacts"
+        )
+      }
+
+      check_requires("Opening TileDB-SOMA artifacts", "tiledbsoma")
+
+      artifact_uri <- paste0(
+        private$get_value("storage")$root,
+        "/",
+        private$get_value("key")
+      )
+
+      tiledbsoma::SOMAOpen(artifact_uri)
+    },
+    #' @description
     #' Print a more detailed description of an `ArtifactRecord`
     #'
     #' @param style Logical, whether the output is styled using ANSI codes
