@@ -61,7 +61,7 @@ create_instance <- function(instance_settings, is_default = FALSE) {
 
   py_lamin <- NULL
   if (isTRUE(is_default)) {
-    check_requires("Connecting to Python", "reticulate", type = "warning")
+    check_requires("Connecting to Python", "reticulate", alert = "warning")
 
     py_lamin <- tryCatch(
       reticulate::import("lamindb"),

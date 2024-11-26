@@ -61,7 +61,10 @@ ArtifactRecord <- R6::R6Class( # nolint object_name_linter
         )
       }
 
-      check_requires("Opening TileDB-SOMA artifacts", "tiledbsoma")
+      check_requires(
+        "Opening TileDB-SOMA artifacts", "tiledbsoma",
+        extra_repos = "https://chanzuckerberg.r-universe.dev"
+      )
 
       artifact_uri <- paste0(
         private$get_value("storage")$root,
