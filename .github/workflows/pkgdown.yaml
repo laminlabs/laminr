@@ -41,6 +41,12 @@ jobs:
           needs: website
           quarto-version: pre-release
 
+      - name: Install {tiledbsoma}
+        run: |
+          options(repos = c("https://chanzuckerberg.r-universe.dev", getOption(repos)))
+          install.packages("tiledbsoma")
+        shell: Rscript {0}
+
       - name: Install lamindb
         run: |
           pip install lamindb[aws]
