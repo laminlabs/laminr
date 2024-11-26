@@ -63,6 +63,7 @@ jobs:
           echo "CPPFLAGS=-I$OPENBLAS/include" >> $GITHUB_ENV
 
       - name: Install {tiledbsoma}
+        if: runner.os == 'Linux'
         run: |
           options(repos = c("https://chanzuckerberg.r-universe.dev", getOption(repos)))
           install.packages("tiledbsoma")
