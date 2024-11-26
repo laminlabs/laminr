@@ -65,7 +65,7 @@ jobs:
       - name: Install {tiledbsoma}
         if: runner.os == 'Linux'
         run: |
-          options(repos = c("https://chanzuckerberg.r-universe.dev", getOption(repos)))
+          options(repos = c("https://chanzuckerberg.r-universe.dev", getOption("repos")))
           install.packages("tiledbsoma")
         shell: Rscript {0}
 
