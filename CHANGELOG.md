@@ -1,3 +1,9 @@
+# laminr devel
+
+## NEW FUNCTIONALITY
+
+- Add a `open()` method to the `Artifact` class to connect to TileDB-SOMA stores (PR #117). 
+
 # laminr v0.2.0
 
 This release adds support for creating new artifacts in a LaminDB instance.
