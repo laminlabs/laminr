@@ -126,13 +126,18 @@ A first version of the package that allows users to:
 
 ### Version 0.2.0
 
-* Expand query functionality with comparators, relationships, and pagination.
 * Implement basic data and metadata management features (create, save, load and delete artifacts).
-* Expand support for different data formats and storage backends.
+* Expand support for different data formats.
 * Implement code tracking.
+
+### Version 0.2.1
+
+* UX improvements to existing functionality.
 
 ### Version 0.3.0
 
+* Expand support for different storage backends.
+* Expand query functionality with comparators, relationships, and pagination.
 * Implement data lineage visualization.
 * Introduce data curation features (validation, standardization, annotation).
 * Enhance support for bionty registries and ontology interactions.
