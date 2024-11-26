@@ -148,7 +148,7 @@ Seurat::DotPlot(seurat_obj, features = unique(markers$gene)) +
 
 Alternatively to querying individual datasets, you can also slice the `.tiledbsoma` array store, which stores Census, a concatenated version of most datasets in CELLxGENE.
 
-```{r create-seurat}
+```{r slice-tiledb}
 
 library("cellxgene.census")
 
