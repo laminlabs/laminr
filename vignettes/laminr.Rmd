@@ -122,28 +122,30 @@ Once you have loaded a dataset you can perform any analysis with it as you would
 Here, marker genes are calculated for each of the provided cell type labels using [**{Seurat}**](https://satijalab.org/seurat/).
 
 ```{r create-seurat}
+library(Seurat)
+
 # Create a Seurat object
-seurat_obj <- SeuratObject::CreateSeuratObject(
+seurat_obj <- CreateSeuratObject(
   counts = as(Matrix::t(adata$X), "CsparseMatrix"),
   meta.data = adata$obs
 )
 # Add gene metadata
-seurat_obj[["RNA"]] <- SeuratObject::AddMetaData(
-  Seurat::GetAssay(seurat_obj), adata$var
+seurat_obj[["RNA"]] <- AddMetaData(
+  GetAssay(seurat_obj), adata$var
 )
 # Set cell identities to the provided cell type annotation
-SeuratObject::Idents(seurat_obj) <- "cell_type"
+Idents(seurat_obj) <- "cell_type"
 # Normalise the data
-seurat_obj <- Seurat::NormalizeData(seurat_obj)
+seurat_obj <- NormalizeData(seurat_obj)
 # Test for marker genes (the output is a data.frame)
-markers <- Seurat::FindAllMarkers(
+markers <- FindAllMarkers(
   seurat_obj,
-  features = SeuratObject::Features(seurat_obj)[1:100] # Only test a few features for speed
+  features = Features(seurat_obj)[1:100] # Only test a few features for speed
 )
 # Display the marker genes
 knitr::kable(markers)
 # Plot the marker genes
-Seurat::DotPlot(seurat_obj, features = unique(markers$gene)) +
+DotPlot(seurat_obj, features = unique(markers$gene)) +
   ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, vjust = 0.5))
 ```
 
