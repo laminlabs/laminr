@@ -71,6 +71,8 @@ This document outlines the features of the **{laminr}** package and the roadmap 
 * [x] **Delete artifacts**: Delete an existing artifact.
 * [ ] **Manage artifact metadata**: Add, update, and delete artifact metadata.
 * [ ] **Work with collections**: Create, manage, and query collections of artifacts.
+* [ ] **Stream backed artifacts**: Connect to file-backed artifacts (`$open`).
+  - [x] `tiledbsoma`: Stream TileDB-SOMA objects
 
 ### Track notebooks & scripts
 
@@ -141,6 +143,7 @@ A first version of the package that allows users to:
 * Implement data lineage visualization.
 * Introduce data curation features (validation, standardization, annotation).
 * Enhance support for bionty registries and ontology interactions.
+* Connect to TileDB-SOMA artifacts.
 
 ### Future versions
 
