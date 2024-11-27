@@ -1,3 +1,11 @@
+# laminr v0.2.1
+
+## DOCUMENTATION
+
+* Update the laminr Getting Started vignette with feedback from demo (PR #113).
+
+* Update roadmap (PR #112).
+
 # laminr v0.2.0
 
 This release adds support for creating new artifacts in a LaminDB instance.
