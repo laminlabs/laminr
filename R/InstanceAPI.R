@@ -31,7 +31,19 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
         "/schema"
       )
 
-      response <- httr::GET(url)
+      headers <- httr::add_headers(
+        accept = "application/json",
+        `Content-Type` = "application/json"
+      )
+      user_settings <- .get_user_settings()
+      if (!is.null(user_settings$access_token)) {
+        headers$Authorization <- paste("Bearer", user_settings$access_token)
+      }
+
+      response <- httr::GET(
+        url,
+        headers
+      )
 
       private$process_response(response, "get schema")
     },
@@ -92,6 +104,15 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
         tolower(include_foreign_keys)
       )
 
+      headers <- httr::add_headers(
+        accept = "application/json",
+        `Content-Type` = "application/json"
+      )
+      user_settings <- .get_user_settings()
+      if (!is.null(user_settings$access_token)) {
+        headers$Authorization <- paste("Bearer", user_settings$access_token)
+      }
+
       if (verbose) {
         cli_inform("URL: {url}")
         cli_inform("Body: {jsonlite::minify(body)}")
@@ -99,10 +120,7 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
 
       response <- httr::POST(
         url,
-        httr::add_headers(
-          accept = "application/json",
-          `Content-Type` = "application/json"
-        ),
+        headers,
         body = body
       )
 
@@ -180,6 +198,15 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
         tolower(include_foreign_keys)
       )
 
+      headers <- httr::add_headers(
+        accept = "application/json",
+        `Content-Type` = "application/json"
+      )
+      user_settings <- .get_user_settings()
+      if (!is.null(user_settings$access_token)) {
+        headers$Authorization <- paste("Bearer", user_settings$access_token)
+      }
+
       if (verbose) {
         cli_inform("URL: {url}")
         cli_inform("Body: {jsonlite::minify(body)}")
@@ -187,10 +214,7 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
 
       response <- httr::POST(
         url,
-        httr::add_headers(
-          accept = "application/json",
-          `Content-Type` = "application/json"
-        ),
+        headers,
         body = body
       )
 

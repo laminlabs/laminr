@@ -1,5 +1,9 @@
 # laminr v0.2.1
 
+## BUG FIXES
+
+* Allow connecting to private LaminDB instances (PR #xxx).
+
 ## DOCUMENTATION
 
 * Update the laminr Getting Started vignette with feedback from demo (PR #113).
