@@ -13,8 +13,8 @@
 - Get records by UID: `artifact <- db$Artifact$get()`
 - Cache artifacts locally: `artifact$cache()`
 - Load artifacts into memory for a broad range of storage formats: `artifact$load()`
-- Create artifacts from data frames, paths, and `AnnData` objects: `db$Artifact.from_path()`
-- Delete records: `artifact.delete()`
+- Create artifacts from data frames, paths, and `AnnData` objects: `db$Artifact$from_path()`
+- Delete records: `artifact$delete()`
 
 See the development roadmap for more details (`vignette("development", package = "laminr")`).
 
