@@ -1,7 +1,7 @@
 skip_if_offline()
 
 test_that("RelatedRecord methods work", {
-  local_setup_lamindata_instance()
+  skip_if_not_logged_in()
 
   db <- connect("laminlabs/lamindata")
   artifact <- db$Artifact$get("mePviem4DGM4SFzvLXf3")
