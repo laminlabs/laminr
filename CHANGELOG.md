@@ -2,7 +2,7 @@
 
 ## BUG FIXES
 
-* Allow connecting to private LaminDB instances (PR #xxx).
+* Allow connecting to private LaminDB instances (PR #118).
 
 ## DOCUMENTATION
 
