@@ -6,29 +6,15 @@
 [![R-CMD-check](https://github.com/laminlabs/laminr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/laminlabs/laminr/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-**{laminr}** is an R client for [LaminDB](https://lamin.ai).
+**{laminr}** is an R client for [LaminDB](https://lamin.ai). If you are new to LaminDB, please read this [introduction](https://docs.lamin.ai/introduction).
 
-## What is LaminDB
-
-If you are new to LaminDB, it's helpful to start with [Lamin's problem statement](https://lamin.ai/blog/problems).
-LaminDB is an open-source data framework for biology, built as a Python API that structures data and metadata, tracks analysis lineage, and enables reproducible, scalable research.
-With tools for curating data against public ontologies and flexible dataset querying, LaminDB is designed to address core data challenges in the field.
-Please refer to [LaminDB's introduction](https://docs.lamin.ai/introduction) for a more detailed introduction.
-LaminDB is accompanied by LaminHub which is a data collaboration hub built on LaminDB similar to how Github is built on git.
-
-## Features of **{laminr}**
-
-- Connect to a LaminDB instance and list all records in a registry.
-- Fetch records by ID or UID.
-- Cache artifacts locally.
-  - Currently supported storage backends: `s3`.
-  - Planned: `gcs`.
-- Load artifacts into memory.
-  - Currently supported file formats: `.csv`, `.h5ad`, `.html`, `.jpg`, `.json`, `.parquet`, `.png`, `.rds`, `.svg`, `.tsv`, `.yaml`.  
-  - Planned: `.fcs`, `.h5mu`, `.zarr`.
-- Create records from data frames, paths and `AnnData` objects.
-- Delete records.
-- Track code in R scripts and notebooks.
+- Connect to a LaminDB instance: `db <- connect()`
+- Track scripts and notebooks as transforms: `db$track()`
+- Get records by UID: `artifact <- db$Artifact$get()`
+- Cache artifacts locally: `artifact$cache()`
+- Load artifacts into memory for a broad range of storage formats: `artifact$load()`
+- Create artifacts from data frames, paths, and `AnnData` objects: `db$Artifact$from_path()`
+- Delete records: `artifact$delete()`
 
 See the development roadmap for more details (`vignette("development", package = "laminr")`).
 
@@ -69,17 +55,10 @@ If you choose not to install all packages now you will be prompted to do so when
 
 The best way to get started with **{laminr}** is to explore the package vignettes (available at [laminr.lamin.ai](https://laminr.lamin.ai)):
 
-- **Getting Started**: Learn the basics and explore practical examples (`vignette("laminr", package = "laminr")`).
+- **Get started**: Learn the basics and explore practical examples (`vignette("laminr", package = "laminr")`).
 - **Package Architecture**: Get a better understanding of how **{laminr}** works (`vignette("architecture", package = "laminr")`).
 
 For information on specific modules and functionalities, check out the following vignettes:
 
 - **Core Module**: Learn about the core registries available in a LaminDB instance (`vignette("module_core", package = "laminr")`).
 - **Bionty Module**: Explore the bionty module for biology-related entities (`vignette("module_bionty", package = "laminr")`).
-
-## Learn more
-
-For more information about LaminDB and its features, check out the following resources:
-
-- [LaminDB website](https://lamin.ai/)
-- [LaminDB documentation](https://docs.lamin.ai/)

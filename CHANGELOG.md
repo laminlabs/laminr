@@ -2,13 +2,17 @@
 
 ## BUG FIXES
 
-* Allow connecting to private LaminDB instances (PR #118).
+- Allow connecting to private LaminDB instances (PR #118)
+
+## TESTING
+
+- Use the host system user for tests (PR #119)
 
 ## DOCUMENTATION
 
-* Update the laminr Getting Started vignette with feedback from demo (PR #113).
-
-* Update roadmap (PR #112).
+- Update the laminr Getting Started vignette with feedback from demo (PR #113)
+- Update roadmap (PR #112)
+- Simplify `README` content (PR #116)
 
 # laminr v0.2.0
 
