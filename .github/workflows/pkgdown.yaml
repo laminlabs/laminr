@@ -49,9 +49,9 @@ jobs:
         run: |
           lamin login
 
-      - name: Set cellxgene as default instance
+      - name: Set lamindata as default instance
         run: |
-          lamin connect laminlabs/cellxgene
+          lamin connect laminlabs/lamindata
 
       - name: Build site
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)

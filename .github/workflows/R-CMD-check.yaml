@@ -70,9 +70,9 @@ jobs:
         run: |
           lamin login
 
-      - name: Set cellxgene as default instance
+      - name: Set lamindata as default instance
         run: |
-          lamin connect laminlabs/cellxgene
+          lamin connect laminlabs/lamindata
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
