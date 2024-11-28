@@ -64,7 +64,7 @@ jobs:
 
       - name: Install lamindb
         run: |
-          pip install lamindb[aws]
+          pip install lamindb[aws] huggingface_hub
 
       - name: Log in to Lamin
         run: |
