@@ -65,38 +65,24 @@
 </h1></div>
 <!-- badges: start -->
 
-<p><strong>{laminr}</strong> is an R client for <a href="https://lamin.ai" class="external-link">LaminDB</a>.</p>
-<div class="section level2">
-<h2 id="what-is-lamindb">What is LaminDB<a class="anchor" aria-label="anchor" href="#what-is-lamindb"></a>
-</h2>
-<p>If you are new to LaminDB, it’s helpful to start with <a href="https://lamin.ai/blog/problems" class="external-link">Lamin’s problem statement</a>. LaminDB is an open-source data framework for biology, built as a Python API that structures data and metadata, tracks analysis lineage, and enables reproducible, scalable research. With tools for curating data against public ontologies and flexible dataset querying, LaminDB is designed to address core data challenges in the field. Please refer to <a href="https://docs.lamin.ai/introduction" class="external-link">LaminDB’s introduction</a> for a more detailed introduction. LaminDB is accompanied by LaminHub which is a data collaboration hub built on LaminDB similar to how Github is built on git.</p>
-</div>
-<div class="section level2">
-<h2 id="features-of-laminr">Features of <strong>{laminr}</strong>
-<a class="anchor" aria-label="anchor" href="#features-of-laminr"></a>
-</h2>
+<p><strong>{laminr}</strong> is an R client for <a href="https://lamin.ai" class="external-link">LaminDB</a>. If you are new to LaminDB, please read this <a href="https://docs.lamin.ai/introduction" class="external-link">introduction</a>.</p>
 <ul>
-<li>Connect to a LaminDB instance and list all records in a registry.</li>
-<li>Fetch records by ID or UID.</li>
-<li>Cache artifacts locally.
-<ul>
-<li>Currently supported storage backends: <code>s3</code>.</li>
-<li>Planned: <code>gcs</code>.</li>
-</ul>
+<li>Connect to a LaminDB instance: <code>db &lt;- connect()</code>
 </li>
-<li>Load artifacts into memory.
-<ul>
-<li>Currently supported file formats: <code>.csv</code>, <code>.h5ad</code>, <code>.html</code>, <code>.jpg</code>, <code>.json</code>, <code>.parquet</code>, <code>.png</code>, <code>.rds</code>, <code>.svg</code>, <code>.tsv</code>, <code>.yaml</code>.<br>
+<li>Track scripts and notebooks as transforms: <code>db$track()</code>
 </li>
-<li>Planned: <code>.fcs</code>, <code>.h5mu</code>, <code>.zarr</code>.</li>
-</ul>
+<li>Get records by UID: <code>artifact &lt;- db$Artifact$get()</code>
 </li>
-<li>Create records from data frames, paths and <code>AnnData</code> objects.</li>
-<li>Delete records.</li>
-<li>Track code in R scripts and notebooks.</li>
+<li>Cache artifacts locally: <code>artifact$cache()</code>
+</li>
+<li>Load artifacts into memory for a broad range of storage formats: <code>artifact$load()</code>
+</li>
+<li>Create artifacts from data frames, paths, and <code>AnnData</code> objects: <code>db$Artifact$from_path()</code>
+</li>
+<li>Delete records: <code>artifact$delete()</code>
+</li>
 </ul>
 <p>See the development roadmap for more details (<code><a href="articles/development.html">vignette("development", package = "laminr")</a></code>).</p>
-</div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -135,7 +121,7 @@
 <p>The best way to get started with <strong>{laminr}</strong> is to explore the package vignettes (available at <a href="https://laminr.lamin.ai">laminr.lamin.ai</a>):</p>
 <ul>
 <li>
-<strong>Getting Started</strong>: Learn the basics and explore practical examples (<code><a href="articles/laminr.html">vignette("laminr", package = "laminr")</a></code>).</li>
+<strong>Get started</strong>: Learn the basics and explore practical examples (<code><a href="articles/laminr.html">vignette("laminr", package = "laminr")</a></code>).</li>
 <li>
 <strong>Package Architecture</strong>: Get a better understanding of how <strong>{laminr}</strong> works (<code><a href="articles/architecture.html">vignette("architecture", package = "laminr")</a></code>).</li>
 </ul>
@@ -145,15 +131,6 @@
 <strong>Core Module</strong>: Learn about the core registries available in a LaminDB instance (<code><a href="articles/module_core.html">vignette("module_core", package = "laminr")</a></code>).</li>
 <li>
 <strong>Bionty Module</strong>: Explore the bionty module for biology-related entities (<code><a href="articles/module_bionty.html">vignette("module_bionty", package = "laminr")</a></code>).</li>
-</ul>
-</div>
-<div class="section level2">
-<h2 id="learn-more">Learn more<a class="anchor" aria-label="anchor" href="#learn-more"></a>
-</h2>
-<p>For more information about LaminDB and its features, check out the following resources:</p>
-<ul>
-<li><a href="https://lamin.ai/" class="external-link">LaminDB website</a></li>
-<li><a href="https://docs.lamin.ai/" class="external-link">LaminDB documentation</a></li>
 </ul>
 </div>
 </div>
