@@ -4,7 +4,7 @@ test_that("creating an artifact from a data frame works", {
   skip_if_not_installed("reticulate")
   skip_if_not(reticulate::py_module_available("lamindb"))
 
-  local_setup_lamindata_instance()
+  skip_if_not_logged_in()
 
   db <- connect()
 
@@ -25,7 +25,7 @@ test_that("creating an artifact from a file works", {
   skip_if_not_installed("reticulate")
   skip_if_not(reticulate::py_module_available("lamindb"))
 
-  local_setup_lamindata_instance()
+  skip_if_not_logged_in()
 
   db <- connect()
 
@@ -45,7 +45,7 @@ test_that("creating an artifact from a directory works", {
   skip_if_not_installed("reticulate")
   skip_if_not(reticulate::py_module_available("lamindb"))
 
-  local_setup_lamindata_instance()
+  skip_if_not_logged_in()
 
   db <- connect()
 
@@ -68,7 +68,7 @@ test_that("creating an artifact from an AnnData works", {
   skip_if_not(reticulate::py_module_available("lamindb"))
   skip_if_not_installed("anndata")
 
-  local_setup_lamindata_instance()
+  skip_if_not_logged_in()
 
   db <- connect()
 
