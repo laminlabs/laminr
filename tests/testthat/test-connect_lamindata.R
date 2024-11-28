@@ -1,7 +1,7 @@
 skip_if_offline()
 
 test_that("Connecting to lamindata works", {
-  local_setup_lamindata_instance()
+  skip_if_not_logged_in()
 
   # try to connect to lamindata
   db <- connect("laminlabs/lamindata")
