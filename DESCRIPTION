@@ -21,6 +21,7 @@ Imports:
     httr,
     jsonlite,
     purrr,
+    R.utils,
     R6,
     rlang,
     tibble

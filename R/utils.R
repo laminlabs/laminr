@@ -53,3 +53,50 @@ is_knitr_notebook <- function() {
   # check if we are in a notebook
   !is.null(knitr::opts_knit$get("out.format"))
 }
+
+#' Detect path
+#'
+#' Find the path of the file where code is currently been run
+#'
+#' @return If found, path to the file relative to the working directory,
+#'   otherwise `NULL`
+#' @noRd
+detect_path <- function() {
+  # Based on various responses from https://stackoverflow.com/questions/47044068/get-the-path-of-current-script
+
+  current_path <- NULL
+
+  # Get path if in a running RMarkdown notebook
+  if (is_knitr_notebook()) {
+    current_path <- knitr::current_input()
+  }
+
+  # Get path if in a script run by `source("script.R")`
+  source_trace <- R.utils::findSourceTraceback()
+  if (is.null(current_path) && length(source_trace) > 0) {
+    current_path <- names(source_trace)[1]
+  }
+
+  # Get path if in a script run by `Rscript script.R`
+  if (is.null(current_path)) {
+    cmd_args <- R.utils::commandArgs(asValues = TRUE)
+    current_path <- cmd_args[["file"]]
+  }
+
+  # Get path if in a document in RStudio
+  if (is.null(current_path) &&
+      requireNamespace("rstudioapi", quietly = TRUE) &&
+      rstudioapi::isAvailable()) {
+    doc_context <- rstudioapi::getActiveDocumentContext()
+    if (doc_context$id != "#console") {
+      current_path <- doc_context$path
+    }
+  }
+
+  # Normalise the path relative to the working directory
+  if (!is.null(current_path)) {
+    current_path <- R.utils::getRelativePath(current_path)
+  }
+
+  return(current_path)
+}
