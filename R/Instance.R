@@ -225,7 +225,12 @@ Instance <- R6::R6Class( # nolint object_name_linter
       py_lamin <- self$get_py_lamin(check = TRUE, what = "Tracking")
 
       if (is.null(path)) {
-        cli::cli_abort("The {.arg path} argument must be provided")
+        path <- detect_path()
+        if (is.null(path)) {
+          cli::cli_abort(
+            "Failed to detect the path to track. Please set the {.arg path} argument."
+          )
+        }
       }
 
       if (is.null(transform)) {
