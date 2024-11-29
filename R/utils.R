@@ -84,9 +84,11 @@ detect_path <- function() {
   }
 
   # Get path if in a document in RStudio
-  if (is.null(current_path) &&
+  if (
+    is.null(current_path) &&
       requireNamespace("rstudioapi", quietly = TRUE) &&
-      rstudioapi::isAvailable()) {
+      rstudioapi::isAvailable()
+  ) {
     doc_context <- rstudioapi::getActiveDocumentContext()
     if (doc_context$id != "#console") {
       current_path <- doc_context$path
