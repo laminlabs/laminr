@@ -264,7 +264,19 @@ Instance <- R6::R6Class( # nolint object_name_linter
     #' @description Finish a tracked run
     finish = function() {
       py_lamin <- self$get_py_lamin(check = TRUE, what = "Tracking")
-      py_lamin$finish()
+      tryCatch(
+        py_lamin$finish(),
+        error = function(err) {
+          py_err <- reticulate::py_last_error()
+          if (py_err$type != "NotebookNotSaved") {
+              cli::cli_abort(c(
+                "Python {py_err$message}",
+                "i" = "Run {.run reticulate::py_last_error()} for details"
+              ))            
+          }
+          cli::cli_inform(py_err$message)
+        }
+      )
     },
     #' @description
     #' Print an `Instance`
