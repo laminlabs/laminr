@@ -247,8 +247,7 @@ Instance <- R6::R6Class( # nolint object_name_linter
 
             uid <- gsub(".*\\(\"(.*?)\"\\).*", "\\1", py_err$value)
             cli::cli_inform(paste(
-              "Got UID {.val {uid}} for path {.file {path}}.",
-              "Run this function with {.code transform = \"{uid}\"} to track this path."
+              "To track this notebook, run: db$track(\"{uid}\")"
             ))
           }
         )
