@@ -280,7 +280,7 @@ Instance <- R6::R6Class( # nolint object_name_linter
           cli::cli_inform(paste("NotebookNotSaved: {message}"))
         }
       )
-    }, 
+    },
     #' @description
     #' Print an `Instance`
     #'
