@@ -273,14 +273,14 @@ Instance <- R6::R6Class( # nolint object_name_linter
             cli::cli_abort(c(
               "Python {py_err$message}",
               "i" = "Run {.run reticulate::py_last_error()} for details"
-            ))            
+            ))
           }
           # please don't change the below without changing it in lamindb
           message <- gsub(".*NotebookNotSaved: (.*)$", "\\1", py_err$value)
           cli::cli_inform(paste("NotebookNotSaved: {message}"))
         }
       )
-    },    
+    }, 
     #' @description
     #' Print an `Instance`
     #'
