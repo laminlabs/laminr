@@ -16,7 +16,7 @@ broken_instance_settings <- function() {
 }
 
 test_that("get_schema works", {
-  local_setup_lamindata_instance()
+  skip_if_not_logged_in()
 
   instance_file <- .settings_store__instance_settings_file("laminlabs", "lamindata")
   instance_settings <- .settings_load__load_instance_settings()
@@ -42,7 +42,7 @@ test_that("get_schema fails gracefully", {
 })
 
 test_that("get_record works", {
-  local_setup_lamindata_instance()
+  skip_if_not_logged_in()
 
   instance_file <- .settings_store__instance_settings_file("laminlabs", "lamindata")
   instance_settings <- .settings_load__load_instance_settings()
@@ -68,7 +68,7 @@ test_that("test get_record fails gracefully with incorrect host", {
 })
 
 test_that("get_record with select works", {
-  local_setup_lamindata_instance()
+  skip_if_not_logged_in()
 
   instance_file <- .settings_store__instance_settings_file("laminlabs", "lamindata")
   instance_settings <- .settings_load__load_instance_settings()
@@ -84,7 +84,7 @@ test_that("get_record with select works", {
 })
 
 test_that("get_record fails gracefully", {
-  local_setup_lamindata_instance()
+  skip_if_not_logged_in()
 
   instance_file <- .settings_store__instance_settings_file("laminlabs", "lamindata")
   instance_settings <- .settings_load__load_instance_settings()
@@ -106,7 +106,7 @@ test_that("get_record fails gracefully", {
 })
 
 test_that("get_records works", {
-  local_setup_lamindata_instance()
+  skip_if_not_logged_in()
 
   instance_file <- .settings_store__instance_settings_file("laminlabs", "lamindata")
   instance_settings <- .settings_load__load_instance_settings()

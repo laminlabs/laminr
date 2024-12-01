@@ -1,7 +1,7 @@
 skip_if_offline()
 
 test_that("Connecting to lamindata works", {
-  local_setup_lamindata_instance()
+  skip_if_not_logged_in()
 
   # try to connect to lamindata
   db <- connect("laminlabs/lamindata")
@@ -23,4 +23,13 @@ test_that("Connecting to lamindata works", {
   expect_null(artifact$type) # one to one
 
   expect_s3_class(artifact$wells, "RelatedRecords") # one-to-many
+})
+
+test_that("Connecting to a private instance works", {
+  skip_if_not_logged_in()
+
+  db <- connect("laminlabs/lamin-dev")
+
+  instance_settings <- db$get_settings()
+  expect_equal(instance_settings$name, "lamin-dev")
 })

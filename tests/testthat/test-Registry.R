@@ -1,7 +1,7 @@
 skip_if_offline()
 
 test_that("df works", {
-  local_setup_lamindata_instance()
+  skip_if_not_logged_in()
 
   db <- connect("laminlabs/lamindata")
 
@@ -12,7 +12,7 @@ test_that("df works", {
 })
 
 test_that("to_string works", {
-  local_setup_lamindata_instance()
+  skip_if_not_logged_in()
 
   db <- connect("laminlabs/lamindata")
 
@@ -32,7 +32,7 @@ test_that("to_string works", {
 })
 
 test_that("print works", {
-  local_setup_lamindata_instance()
+  skip_if_not_logged_in()
 
   db <- connect("laminlabs/lamindata")
 

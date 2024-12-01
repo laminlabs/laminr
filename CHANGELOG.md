@@ -1,8 +1,22 @@
 # laminr devel
 
-## NEW FUNCTIONALITY
+# laminr v0.3.0
 
 - Add a `open()` method to the `Artifact` class to connect to TileDB-SOMA stores (PR #117). 
+
+## BUG FIXES
+
+- Allow connecting to private LaminDB instances (PR #118)
+
+## TESTING
+
+- Use the host system user for tests (PR #119)
+
+## DOCUMENTATION
+
+- Update the laminr Getting Started vignette with feedback from demo (PR #113)
+- Update roadmap (PR #112)
+- Simplify `README` content (PR #116)
 
 # laminr v0.2.0
 

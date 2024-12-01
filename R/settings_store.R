@@ -90,11 +90,10 @@
     }
     raw_type <- field_types[[name]]
 
-    optional <- grepl("Optional\\[.*\\]", raw_type)
     type <- gsub("Optional\\[(.*)\\]", "\\1", raw_type)
 
     value <-
-      if (optional && raw_value == "null") {
+      if (raw_value == "null") {
         NULL
       } else if (type == "str") {
         raw_value
