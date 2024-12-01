@@ -199,7 +199,6 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
                              registry_name,
                              id_or_uid,
                              verbose = FALSE) {
-
       url <- paste0(
         private$.instance_settings$api_url,
         "/instances/",
