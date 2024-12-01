@@ -269,15 +269,16 @@ Instance <- R6::R6Class( # nolint object_name_linter
         error = function(err) {
           py_err <- reticulate::py_last_error()
           if (py_err$type != "NotebookNotSaved") {
-              cli::cli_abort(c(
-                "Python {py_err$message}",
-                "i" = "Run {.run reticulate::py_last_error()} for details"
-              ))            
+            cli::cli_abort(c(
+              "Python {py_err$message}",
+              "i" = "Run {.run reticulate::py_last_error()} for details"
+            ))            
           }
-          cli::cli_inform(py_err$message)
+          message <- gsub(".*NotebookNotSaved: (.*)$", "\\1", py_err$value)
+          cli::cli_inform(paste("NotebookNotSaved: {message}"))
         }
       )
-    },
+    },    
     #' @description
     #' Print an `Instance`
     #'
