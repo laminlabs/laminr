@@ -6,37 +6,56 @@
 #' @param what A message stating what the packages are required for. Used at the
 #'   start of the error message e.g. "{what} requires...".
 #' @param requires Character vector of required package names
-#' @param type Type of message to give if packages are missing
+#' @param alert Type of message to give if packages are missing
+#' @param extra_repos Additional repositories that are required to install the
+#'   checked packages
 #'
 #' @return Invisibly, Boolean whether or not all packages are available or
 #'   raises an error if any are missing and `type = "error"`
 #' @noRd
-check_requires <- function(what, requires, type = c("error", "warning")) {
-  type <- match.arg(type)
+check_requires <- function(what, requires,
+                           alert = c("error", "warning", "message", "none"),
+                           extra_repos = NULL) {
+  alert <- match.arg(alert)
 
   is_available <- map_lgl(requires, requireNamespace, quietly = TRUE)
 
-  msg_fun <- switch(type,
+  msg_fun <- switch(alert,
     error = cli::cli_abort,
-    warning = cli::cli_warn
+    warning = cli::cli_warn,
+    message = cli::cli_inform,
+    none = NULL
   )
 
-  if (any(!is_available)) {
+  if (!any(is_available) && !is.null(msg_fun)) {
     missing <- requires[!is_available]
     missing_str <- paste0("'", paste(missing, collapse = "', '"), "'") # nolint object_usage_linter
-    msg_fun(
-      c(
-        "{what} requires the {.pkg {missing}} package{?s}",
-        "i" = paste(
-          "Install {cli::qty(missing)}{?it/them} using",
-          "{.run install.packages(c({missing_str}))}"
+
+    msg <- "{what} requires the {.pkg {missing}} package{?s}"
+
+    if (!is.null(extra_repos)) {
+      msg <- c(
+        msg,
+        "i" = paste0(
+          "Add repositories using {.run options(repos = c(",
+          paste0("'", paste(extra_repos, collapse = "', '"), "'"),
+          ", getOption('repos'))}, then:"
         )
-      ),
-      call = rlang::caller_env()
+      )
+    }
+
+    msg <- c(
+      msg,
+      "i" = paste(
+        "Install {cli::qty(missing)}{?it/them} using",
+        "{.run install.packages(c({missing_str}))}"
+      )
     )
+
+    msg_fun(msg, call = rlang::caller_env())
   }
 
-  invisible(all(is_available))
+  invisible(any(is_available))
 }
 
 #' Check if we are in a knitr notebook

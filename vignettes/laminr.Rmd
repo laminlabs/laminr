@@ -16,7 +16,6 @@ knitr::opts_chunk$set(
 # actually upload results to the LaminDB instance
 # -> testuser1 is a test account that cannot upload results
 submit_eval <- laminr:::.get_user_settings()$handle != "testuser1"
-submit_eval <- FALSE
 ```
 
 This vignette introduces the basic **{laminr}** workflow.
@@ -149,29 +148,37 @@ DotPlot(seurat_obj, features = unique(markers$gene)) +
   ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, vjust = 0.5))
 ```
 
-# Slice the tiledbsoma array store
+# Slice a TileDB-SOMA array store
 
-Alternatively to accessing individual CELLxGENE datasets from LaminDB, the **{cellxgene.census}** package can be used to slice the TileDB-SOMA array store for CELLxGENE Census, a concatenated version of most datasets in CELLxGENE.
+When artifacts contain TileDB-SOMA array stores they can be opened and sliced using the [**{tiledbsoma}** package](https://single-cell-data.github.io/TileDB-SOMA/index.html).
 
-```{r slice-tiledbsoma, eval=FALSE}
-library(cellxgene.census)
+```{r slice-tiledbsoma, eval = requireNamespace("tiledbsoma", quietly = TRUE)}
+# Set some environment variables to avoid an issue with {tiledbsoma}
+# https://github.com/chanzuckerberg/cellxgene-census/issues/1261
+Sys.setenv(TILEDB_VFS_S3_REGION = "us-west-2")
+Sys.setenv(AWS_DEFAULT_REGION = "us-west-2")
+Sys.setenv(TILEDB_VFS_S3_NO_SIGN_REQUEST = "true")
 
-census <- open_soma()
-
-organism <- "Homo sapiens"
-gene_filter <- "feature_id %in% c('ENSG00000107317', 'ENSG00000106034')"
-cell_filter <- "cell_type == 'sympathetic neuron'"
-cell_columns <- c(
-  "assay", "cell_type", "tissue", "tissue_general", "suspension_type", "disease"
+# Define a filter to select specific cells
+value_filter <- paste(
+  "tissue == 'brain' &&",
+  "cell_type %in% c('microglial cell', 'neuron') &&",
+  "suspension_type == 'cell' &&",
+  "assay == '10x 3\\' v3'"
 )
 
-seurat_obj2 <- get_seurat(
-  census = census,
-  organism = organism,
-  var_value_filter = gene_filter,
-  obs_value_filter = cell_filter,
-  obs_column_names = cell_columns
-)
+# Get the artifact containing the CELLxGENE Census TileDB-SOMA store
+census_artifact <- cellxgene$Artifact$get("FYMewVq5twKMDXVy0001")
+# Open the SOMACollection
+soma_collection <- census_artifact$open()
+# Slice the store to get a SOMADataFrame containing metadata for the cells of interest
+cell_metadata <- soma_collection$get("census_data")$get("homo_sapiens")$obs$read(value_filter = value_filter)
+# Concatenate the results to an arrow::Table
+cell_metadata <- cell_metadata$concat()
+# Convert to a data.frame
+cell_metadata <- cell_metadata$to_data_frame()
+
+cell_metadata
 ```
 
 # Save the results

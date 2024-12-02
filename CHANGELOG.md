@@ -1,15 +1,16 @@
+
 # laminr v0.3.0
 
 This release contains mostly UX improvements:
 
 * Support for interacting with private LaminDB instances
-* Support for interacting with TileDB-SOMA / CELLxGENE Census instances
+* Support for interacting with TileDB-SOMA / CELLxGENE Census
 * Improved UX for tracking and finishing runs
 
 ## NEW FUNCTIONALITY
 
 - Allow tracking of artifacts loaded for non-default instances (PR #124).
-- Add a tiledbsoma loader (PR #117).
+- Interact with TileDB-SOMA stores (PR #117). Add a `open()` method to the `Artifact` class to connect to TileDB-SOMA stores.
 
 ## MINOR CHANGES
 
