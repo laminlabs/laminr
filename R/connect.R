@@ -158,11 +158,8 @@ connect <- function(slug = NULL) {
     ),
     body = body
   )
-  content <- httr::content(request)
+  content <- process_httr_response(request, "connect to instance")
 
-  if (httr::http_error(request)) {
-    cli_abort(content)
-  }
   if (length(content) == 0) {
     cli_abort(paste0("Instance '", owner, "/", name, "' not found"))
   }

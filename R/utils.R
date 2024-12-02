@@ -121,3 +121,30 @@ detect_path <- function() {
 
   return(current_path)
 }
+
+#' Resolve an httr response with error handling
+#'
+#' @param response An httr response object
+#' @param request_type A string describing the request type
+#'
+#' @return The content of the response if successful
+#' @noRd
+process_httr_response <- function(response, request_type) {
+  content <- httr::content(response)
+  if (httr::http_error(response)) {
+    if (is.list(content) && "detail" %in% names(content)) {
+      detail <- content$detail
+      if (is.list(detail)) {
+        detail <- jsonlite::minify(jsonlite::toJSON(content$detail))
+      }
+    } else {
+      detail <- content
+    }
+    cli_abort(c(
+      "Failed to {request_type} with status code {response$status_code}",
+      "i" = "Details: {detail}"
+    ))
+  }
+
+  content
+}

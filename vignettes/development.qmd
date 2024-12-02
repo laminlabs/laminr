@@ -79,6 +79,7 @@ This document outlines the features of the **{laminr}** package and the roadmap 
 * [x] **Track code execution**: Automatically track the execution of R scripts and notebooks.
 * [ ] **Capture run context**: Record information about the execution environment (e.g., package versions, parameters).
 * [x] **Link code to artifacts**: Associate code execution with generated artifacts.
+  - [x] Link to artifacts loaded from other instances
 * [ ] **Visualize data lineage**: Create visualizations of data lineage and dependencies.
 * [x] **Finalize tracking**: End and save a run.
 

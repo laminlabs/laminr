@@ -4,6 +4,10 @@
 
 - Add a `open()` method to the `Artifact` class to connect to TileDB-SOMA stores (PR #117). 
 
+## NEW FUNCTIONALITY
+
+- Allow tracking of artifacts loaded for non-default instances (PR #124)
+
 ## BUG FIXES
 
 - Allow connecting to private LaminDB instances (PR #118)
