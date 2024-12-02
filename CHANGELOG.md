@@ -1,12 +1,24 @@
-# laminr v0.2.1
+# laminr v0.3.0
+
+This release contains mostly UX improvements:
+
+* Support for interacting with private LaminDB instances
+* Support for interacting with TileDB-SOMA / CELLxGENE Census instances
+* Improved UX for tracking and finishing runs
 
 ## NEW FUNCTIONALITY
 
-- Allow tracking of artifacts loaded for non-default instances (PR #124)
+- Allow tracking of artifacts loaded for non-default instances (PR #124).
+- Add a tiledbsoma loader (PR #117).
+
+## MINOR CHANGES
+
+- Improve UX of `db$track()` and `db$finish()` (PR #120).
 
 ## BUG FIXES
 
-- Allow connecting to private LaminDB instances (PR #118)
+- Allow connecting to private LaminDB instances (PR #118).
+- Fix error message when fetching the instance details fails (PR #123).
 
 ## TESTING
 
@@ -14,9 +26,10 @@
 
 ## DOCUMENTATION
 
-- Update the laminr Getting Started vignette with feedback from demo (PR #113)
-- Update roadmap (PR #112)
-- Simplify `README` content (PR #116)
+- Update the laminr Getting Started vignette with feedback from demo (PR #113).
+- Update roadmap (PR #112).
+- Simplify `README` content (PR #116).
+
 
 # laminr v0.2.0
 

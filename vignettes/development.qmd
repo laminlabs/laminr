@@ -131,11 +131,12 @@ A first version of the package that allows users to:
 * Expand support for different data formats.
 * Implement code tracking.
 
-### Version 0.2.1
-
-* UX improvements to existing functionality.
-
 ### Version 0.3.0
+
+* Track input artifacts.
+* Support for more storage backends using a reticulate Python backend.
+
+### Version 0.4.0
 
 * Expand support for different storage backends.
 * Expand query functionality with comparators, relationships, and pagination.
