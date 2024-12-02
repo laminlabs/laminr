@@ -67,7 +67,7 @@
       <h1>Concepts and features</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/laminlabs/laminr/blob/main/vignettes/concepts_features.Rmd" class="external-link"><code>vignettes/concepts_features.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/laminlabs/laminr/blob/v0.3.0/vignettes/concepts_features.Rmd" class="external-link"><code>vignettes/concepts_features.Rmd</code></a></small>
       <div class="d-none name"><code>concepts_features.Rmd</code></div>
     </div>
 
@@ -156,8 +156,8 @@ session:</p>
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://laminr.lamin.ai">laminr</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">db</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/connect.html">connect</a></span><span class="op">(</span><span class="st">"laminlabs/cellxgene"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #FFFF55;">!</span> schema module 'wetlab' is not installed → no access to its labels &amp; registries (resolve via `pip install wetlab`)</span></span>
 <span><span class="co">#&gt; <span style="color: #FFFF55;">!</span> schema module 'bionty' is not installed → no access to its labels &amp; registries (resolve via `pip install bionty`)</span></span>
+<span><span class="co">#&gt; <span style="color: #FFFF55;">!</span> schema module 'wetlab' is not installed → no access to its labels &amp; registries (resolve via `pip install wetlab`)</span></span>
 <span><span class="co">#&gt; <span style="color: #55FF55;">→</span> connected lamindb: laminlabs/lamindata</span></span></code></pre></div>
 <p>The <code>db</code> object now represents your connection to the
 LaminDB instance. You can explore the available registries (like
