@@ -22,8 +22,8 @@ ArtifactRecord <- R6::R6Class( # nolint object_name_linter
       load_file(file_path, suffix, ...)
     },
     #' @description
-    #' Cache the artifact to the local filesystem. This currently only supports
-    #' S3 storage.
+    #' Cache the artifact to the local filesystem. When the Python `lamindb`
+    #' package is not available this only supports S3 storage.
     #'
     #' @return The path to the cached artifact
     cache = function() {
