@@ -27,6 +27,18 @@ ArtifactRecord <- R6::R6Class( # nolint object_name_linter
     #'
     #' @return The path to the cached artifact
     cache = function() {
+
+      py_lamin <- private$.instance$get_py_lamin()
+      if (!is.null(py_lamin)) {
+        py_artifact <- py_lamin$Artifact$get(self$uid)
+        return(py_artifact$cache()$path)
+      }
+
+      cli::cli_warn(paste(
+        "The Python {.pkg lamindb} package is not available.",
+        "Loaded artifacts will not be tracked."
+      ))
+
       # assume that an artifact will have a storage field,
       # and that the storage field will have a type field
       artifact_storage <- private$get_value("storage")
