@@ -37,7 +37,7 @@ Now, let's set up your environment to use **{laminr}**.
 1. Install the `lamindb` Python package.
 
   ```bash
-  pip install 'lamindb[aws,bionty,wetlab]>=0.77.2'
+  pip install 'lamindb[aws]>=0.77.2'
   ```
 
 2. Connect to a LaminDB instance:

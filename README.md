@@ -29,7 +29,7 @@ install.packages("laminr")
 You will also need to install the `lamindb` Python package:
 
 ```bash
-pip install 'lamindb[aws,bionty,wetlab]>=0.77.2'
+pip install 'lamindb[aws]>=0.77.2'
 ```
 
 ### Additional packages
