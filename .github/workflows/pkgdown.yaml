@@ -62,6 +62,8 @@ jobs:
       - name: Build site
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
         shell: Rscript {0}
+        env:
+          RETICULATE_PYTHON: /usr/bin/python
 
       - name: Create built site artifact
         uses: actions/upload-artifact@v4
