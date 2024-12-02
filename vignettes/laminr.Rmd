@@ -31,7 +31,7 @@ install.packages("laminr", dependencies = TRUE)
 Install `lamindb` from PyPI:
 
 ```bash
-pip install 'lamindb[aws]>=0.77.2'
+pip install 'lamindb[aws,bionty,wetlab]>=0.77.2'
 ```
 
 Connect to a LaminDB instance on the command line:

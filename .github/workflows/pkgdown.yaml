@@ -49,7 +49,7 @@ jobs:
 
       - name: Install lamindb
         run: |
-          pip install 'lamindb[aws]>=0.77.2' huggingface_hub
+          pip install 'lamindb[aws,bionty,wetlab]>=0.77.2' huggingface_hub
 
       - name: Log in to Lamin
         run: |
