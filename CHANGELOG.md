@@ -1,5 +1,9 @@
 # laminr v0.2.1
 
+## NEW FUNCTIONALITY
+
+- Allow tracking of artifacts loaded for non-default instances (PR #124)
+
 ## BUG FIXES
 
 - Allow connecting to private LaminDB instances (PR #118)
