@@ -30,7 +30,14 @@ ArtifactRecord <- R6::R6Class( # nolint object_name_linter
 
       py_lamin <- private$.instance$get_py_lamin()
       if (!is.null(py_lamin)) {
-        py_artifact <- py_lamin$Artifact$get(self$uid)
+        if (isTRUE(private$.instance$is_default)) {
+          py_artifact <- py_lamin$Artifact$get(self$uid)
+        } else {
+          instance_settings <- private$.instance$get_settings()
+          slug <- paste0(instance_settings$owner, "/", instance_settings$name)
+
+          py_artifact <- py_lamin$Artifact$using(slug)$get(self$uid)
+        }
         return(py_artifact$cache()$path)
       }
 
