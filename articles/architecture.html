@@ -286,14 +286,14 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">db</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/connect.html">connect</a></span><span class="op">(</span><span class="st">"laminlabs/cellxgene"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">artifact</span> <span class="op">&lt;-</span> <span class="va">db</span><span class="op">$</span><span class="fu">get_module</span><span class="op">(</span><span class="st">"core"</span><span class="op">)</span><span class="op">$</span><span class="fu">get_registry</span><span class="op">(</span><span class="st">"artifact"</span><span class="op">)</span><span class="op">$</span><span class="fu">get</span><span class="op">(</span><span class="st">"KBW89Mf7IGcekja2hADu"</span><span class="op">)</span></span>
+<span><span class="va">artifact</span> <span class="op">&lt;-</span> <span class="va">db</span><span class="op">$</span><span class="fu">get_module</span><span class="op">(</span><span class="st">"core"</span><span class="op">)</span><span class="op">$</span><span class="fu">get_registry</span><span class="op">(</span><span class="st">"artifact"</span><span class="op">)</span><span class="op">$</span><span class="fu">get</span><span class="op">(</span><span class="st">"MkRm3eUKPwfnAyZMWD9v"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">artifact</span><span class="op">$</span><span class="fu">get_value</span><span class="op">(</span><span class="st">"id"</span><span class="op">)</span></span></code></pre></div>
 <p>With the sugar syntax classes, you can achieve the same result more concisely:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">db</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/connect.html">connect</a></span><span class="op">(</span><span class="st">"laminlabs/cellxgene"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">artifact</span> <span class="op">&lt;-</span> <span class="va">db</span><span class="op">$</span><span class="va">Artifact</span><span class="op">$</span><span class="fu">get</span><span class="op">(</span><span class="st">"KBW89Mf7IGcekja2hADu"</span><span class="op">)</span></span>
+<span><span class="va">artifact</span> <span class="op">&lt;-</span> <span class="va">db</span><span class="op">$</span><span class="va">Artifact</span><span class="op">$</span><span class="fu">get</span><span class="op">(</span><span class="st">"MkRm3eUKPwfnAyZMWD9v"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">artifact</span><span class="op">$</span><span class="va">id</span></span></code></pre></div>
 <p>This sugar syntax is achieved by creating RichInstance and RichRecord classes that inherit from Instance and Record, respectively. These classes provide additional methods and properties to simplify working with LaminDB data.</p>
