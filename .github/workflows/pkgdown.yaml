@@ -52,9 +52,11 @@ jobs:
 
       - name: Install {tiledbsoma}
         run: |
-          install.packages("pak")
-          options(repos = c("https://chanzuckerberg.r-universe.dev", getOption("repos")))
-          pak::pkg_install("tiledbsoma")
+          # Install {tiledbsoma} if not already installed
+          if (!requireNamespace("tiledbsoma", quietly = TRUE)) {
+            options(repos = c("https://chanzuckerberg.r-universe.dev", getOption("repos")))
+            install.packages("tiledbsoma")
+          }
         shell: Rscript {0}
 
       - name: Check dependencies
