@@ -40,8 +40,6 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@v2
 
-      - uses: r-lib/actions/setup-tinytex@v2
-
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.config.python }}
@@ -62,6 +60,11 @@ jobs:
           echo "LDFLAGS=-L$OPENBLAS/lib" >> $GITHUB_ENV
           echo "CPPFLAGS=-I$OPENBLAS/include" >> $GITHUB_ENV
 
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::rcmdcheck
+          needs: check
+
       - name: Install {tiledbsoma}
         if: runner.os == 'Linux'
         run: |
@@ -74,7 +77,7 @@ jobs:
           pip install 'lamindb[aws]>=0.77.2'
           
           # Make sure IPython is installed --
-          # Workaround for laminlabs/laminhub-public/issues/29
+          # Workaround for laminlabs/laminhub-public#29
           pip install ipython
 
       - name: Log in to Lamin
@@ -92,12 +95,14 @@ jobs:
           laminr::connect()
         shell: Rscript {0}
 
-      - uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          extra-packages: any::rcmdcheck
-          needs: check
-
-      - uses: r-lib/actions/check-r-package@v2
+      - name: Check package
+        uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
           build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
+
+        
+      - name: Upload check results
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ runner.os }}-r${{ matrix.config.r }}-check-results

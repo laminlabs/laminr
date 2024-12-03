@@ -31,8 +31,7 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@v2
 
-      - id: setup-python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.x"
 
@@ -58,6 +57,7 @@ jobs:
 
       - name: Install lamindb
         run: |
+          # install bionty and wetlab to avoid warnings about missing dependencies
           pip install 'lamindb[aws,bionty,wetlab]>=0.77.2'
           
           # Make sure IPython is installed --
