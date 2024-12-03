@@ -27,7 +27,6 @@ ArtifactRecord <- R6::R6Class( # nolint object_name_linter
     #'
     #' @return The path to the cached artifact
     cache = function() {
-
       py_lamin <- private$.instance$get_py_lamin()
       if (!is.null(py_lamin)) {
         if (isTRUE(private$.instance$is_default)) {

@@ -68,7 +68,7 @@ create_instance <- function(instance_settings, is_default = FALSE) {
           "Failed to connect to the Python {.pkg lamindb} package,",
           "some functionality may be limited."
         ),
-        "i" = "Run {.run reticulate::py_last_error()} or {reticulate::py_last_error()} for details",
+        "i" = "Run {.run reticulate::py_last_error()} or {reticulate::py_last_error()} for details"
       ))
       NULL
     }
