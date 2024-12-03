@@ -59,7 +59,7 @@ jobs:
         run: |
           # install bionty and wetlab to avoid warnings about missing dependencies
           pip install 'lamindb[aws,bionty,wetlab]>=0.77.2'
-          
+
           # Make sure IPython is installed --
           # Workaround for laminlabs/laminhub-public#29
           pip install ipython
