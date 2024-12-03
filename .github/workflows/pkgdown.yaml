@@ -35,10 +35,6 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.x"
-      
-      - run: |
-          which python
-          which pip
 
       - name: Install lamindb
         run: |
@@ -56,9 +52,18 @@ jobs:
 
       - name: Install {tiledbsoma}
         run: |
+          install.packages("pak")
           options(repos = c("https://chanzuckerberg.r-universe.dev", getOption("repos")))
-          install.packages("tiledbsoma")
+          pak::pkg_install("tiledbsoma")
         shell: Rscript {0}
+
+      - name: Check dependencies
+        run: |
+          reticulate::py_config()
+          reticulate::import("lamindb")
+        shell: Rscript {0}
+        env:
+          RETICULATE_PYTHON: ${{ steps.setup-python.outputs.python-path }}
 
       - name: Log in to Lamin
         run: |
