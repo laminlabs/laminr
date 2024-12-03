@@ -72,6 +72,10 @@ jobs:
       - name: Install lamindb
         run: |
           pip install 'lamindb[aws]>=0.77.2'
+          
+          # Make sure IPython is installed --
+          # Workaround for laminlabs/laminhub-public/issues/29
+          pip install ipython
 
       - name: Log in to Lamin
         run: |
@@ -80,6 +84,13 @@ jobs:
       - name: Set lamindata as default instance
         run: |
           lamin connect laminlabs/lamindata
+
+      - name: Check whether we can import lamindb and connect to the default instance
+        run: |
+          reticulate::py_config()
+          reticulate::import("lamindb")
+          laminr::connect()
+        shell: Rscript {0}
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:

@@ -40,7 +40,8 @@ jobs:
         run: |
           pip install 'lamindb[aws,bionty,wetlab]>=0.77.2'
           
-          # Avoid 'No module named 'IPython' when loading lamindb
+          # Make sure IPython is installed --
+          # Workaround for laminlabs/laminhub-public#29
           pip install ipython
 
       - uses: r-lib/actions/setup-r@v2
@@ -53,9 +54,8 @@ jobs:
           needs: website
           quarto-version: pre-release
 
-      - name: Install {tiledbsoma}
+      - name: Install {tiledbsoma} if not already installed
         run: |
-          # Install {tiledbsoma} if not already installed
           if (!requireNamespace("tiledbsoma", quietly = TRUE)) {
             options(repos = c("https://chanzuckerberg.r-universe.dev", getOption("repos")))
             install.packages("tiledbsoma")
@@ -63,14 +63,6 @@ jobs:
             message("Package 'tiledbsoma' already installed")
           }
         shell: Rscript {0}
-
-      - name: Check dependencies
-        run: |
-          reticulate::py_config()
-          reticulate::import("lamindb")
-        shell: Rscript {0}
-        env:
-          RETICULATE_PYTHON: ${{ steps.setup-python.outputs.python-path }}
 
       - name: Log in to Lamin
         run: |
@@ -80,11 +72,16 @@ jobs:
         run: |
           lamin connect laminlabs/lamindata
 
+      - name: Check whether we can import lamindb and connect to the default instance
+        run: |
+          reticulate::py_config()
+          reticulate::import("lamindb")
+          laminr::connect()
+        shell: Rscript {0}
+
       - name: Build site
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
         shell: Rscript {0}
-        env:
-          RETICULATE_PYTHON: ${{ steps.setup-python.outputs.python-path }}
 
       - name: Create built site artifact
         uses: actions/upload-artifact@v4
