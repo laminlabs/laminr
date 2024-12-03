@@ -1,3 +1,25 @@
+<!--
+Improve the heading of your PR by adding an emoji, e.g.:
+
+- ✨ New feature
+- 🐛 Bug fix
+- 🚸 UX
+
+To add emojis to all your commits, use [gitmoji](https://gitmoji.dev/).
+
+1. Install with:
+
+npm i -g gitmoji-cli
+
+OR
+
+brew install gitmoji
+
+2. Install the gitmoji git hook
+
+gitmoji -i
+-->
+
 **Related to:** <!-- Add links to related issues etc. here -->
 
 ## Description
