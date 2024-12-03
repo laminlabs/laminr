@@ -59,6 +59,8 @@ jobs:
           if (!requireNamespace("tiledbsoma", quietly = TRUE)) {
             options(repos = c("https://chanzuckerberg.r-universe.dev", getOption("repos")))
             install.packages("tiledbsoma")
+          } else {
+            message("Package 'tiledbsoma' already installed")
           }
         shell: Rscript {0}
 
