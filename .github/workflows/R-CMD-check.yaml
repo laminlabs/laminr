@@ -75,7 +75,7 @@ jobs:
       - name: Install lamindb
         run: |
           pip install 'lamindb[aws]>=0.77.2'
-          
+
           # Make sure IPython is installed --
           # Workaround for laminlabs/laminhub-public#29
           pip install ipython
@@ -92,7 +92,6 @@ jobs:
         run: |
           reticulate::py_config()
           reticulate::import("lamindb")
-          laminr::connect()
         shell: Rscript {0}
 
       - name: Check package
@@ -101,7 +100,6 @@ jobs:
           upload-snapshots: true
           build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
 
-        
       - name: Upload check results
         uses: actions/upload-artifact@v4
         with:
