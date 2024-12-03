@@ -40,8 +40,6 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@v2
 
-      - uses: r-lib/actions/setup-tinytex@v2
-
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.config.python }}
@@ -62,6 +60,11 @@ jobs:
           echo "LDFLAGS=-L$OPENBLAS/lib" >> $GITHUB_ENV
           echo "CPPFLAGS=-I$OPENBLAS/include" >> $GITHUB_ENV
 
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::rcmdcheck
+          needs: check
+
       - name: Install {tiledbsoma}
         if: runner.os == 'Linux'
         run: |
@@ -71,7 +74,11 @@ jobs:
 
       - name: Install lamindb
         run: |
-          pip install 'lamindb[aws]>=0.77.2' huggingface_hub
+          pip install 'lamindb[aws]>=0.77.2'
+
+          # Make sure IPython is installed --
+          # Workaround for laminlabs/laminhub-public#29
+          pip install ipython
 
       - name: Log in to Lamin
         run: |
@@ -81,12 +88,21 @@ jobs:
         run: |
           lamin connect laminlabs/lamindata
 
-      - uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          extra-packages: any::rcmdcheck
-          needs: check
+      - name: Check whether we can import lamindb and connect to the default instance
+        run: |
+          reticulate::py_config()
+          reticulate::import("lamindb")
+        shell: Rscript {0}
 
-      - uses: r-lib/actions/check-r-package@v2
+      - name: Check
+        env:
+          _R_CHECK_CRAN_INCOMING_REMOTE_: false
+        run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
+        shell: Rscript {0}
+
+      - name: Upload check results
+        if: failure()
+        uses: actions/upload-artifact@main
         with:
-          upload-snapshots: true
-          build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
+          name: ${{ runner.os }}-r${{ matrix.config.r }}-results
+          path: check

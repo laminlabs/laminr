@@ -59,23 +59,20 @@ create_instance <- function(instance_settings, is_default = FALSE) {
     active = active
   )
 
-  py_lamin <- NULL
   check_requires("Connecting to Python", "reticulate", alert = "warning")
   py_lamin <- tryCatch(
     reticulate::import("lamindb"),
     error = function(err) {
+      cli::cli_warn(c(
+        paste(
+          "Failed to connect to the Python {.pkg lamindb} package,",
+          "some functionality may be limited."
+        ),
+        "i" = "Run {.run reticulate::py_config()} and {.run reticulate::py_last_error()} for details"
+      ))
       NULL
     }
   )
-  if (isTRUE(is_default) && is.null(py_lamin)) {
-    cli::cli_warn(c(
-      paste(
-        "Default instance failed to connect to the Python {.pkg lamindb} package,",
-        "you will not be able to create records"
-      ),
-      "i" = "See {.run reticulate::py_config()} for more information"
-    ))
-  }
 
   # create the instance
   RichInstance$new(
@@ -107,7 +104,7 @@ create_instance <- function(instance_settings, is_default = FALSE) {
 #' db <- connect("laminlabs/cellxgene")
 #'
 #' # fetch an artifact
-#' artifact <- db$Artifact$get("KBW89Mf7IGcekja2hADu")
+#' artifact <- db$Artifact$get("MkRm3eUKPwfnAyZMWD9v")
 #'
 #' # describe the artifact
 #' artifact$describe()
