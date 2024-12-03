@@ -230,7 +230,7 @@ For example, to get an artifact with a specific ID using **only** base classes, 
 ```r
 db <- connect("laminlabs/cellxgene")
 
-artifact <- db$get_module("core")$get_registry("artifact")$get("KBW89Mf7IGcekja2hADu")
+artifact <- db$get_module("core")$get_registry("artifact")$get("MkRm3eUKPwfnAyZMWD9v")
 
 artifact$get_value("id")
 ```
@@ -240,7 +240,7 @@ With the sugar syntax classes, you can achieve the same result more concisely:
 ```r
 db <- connect("laminlabs/cellxgene")
 
-artifact <- db$Artifact$get("KBW89Mf7IGcekja2hADu")
+artifact <- db$Artifact$get("MkRm3eUKPwfnAyZMWD9v")
 
 artifact$id
 ```

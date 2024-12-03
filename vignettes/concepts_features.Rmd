@@ -109,10 +109,10 @@ db$Artifact$df(limit = 5)
 
 ## Working with records
 
-You can fetch a specific record from a registry using its ID or UID. For instance, to get the artifact with UID [KBW89Mf7IGcekja2hADu](https://lamin.ai/laminlabs/cellxgene/artifact/KBW89Mf7IGcekja2hADu):
+You can fetch a specific record from a registry using its ID or UID. For instance, to get the artifact with UID [MkRm3eUKPwfnAyZMWD9v](https://lamin.ai/laminlabs/cellxgene/artifact/MkRm3eUKPwfnAyZMWD9v):
 
 ```{r get_artifact}
-artifact <- db$Artifact$get("KBW89Mf7IGcekja2hADu")
+artifact <- db$Artifact$get("MkRm3eUKPwfnAyZMWD9v")
 ```
 
 This artifact contains an `AnnData` object with myeloid cell data. You can view its metadata:

@@ -21,7 +21,7 @@ See the vignette on "Package Architecture" for more information:
 db <- connect("laminlabs/cellxgene")
 
 # fetch an artifact
-artifact <- db$Artifact$get("KBW89Mf7IGcekja2hADu")
+artifact <- db$Artifact$get("MkRm3eUKPwfnAyZMWD9v")
 
 # describe the artifact
 artifact$describe()
