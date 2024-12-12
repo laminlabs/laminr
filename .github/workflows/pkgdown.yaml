@@ -55,25 +55,25 @@ jobs:
           }
         shell: Rscript {0}
 
-      - name: Install lamindb
+      - name: Setup Python environment
         run: |
-          # install bionty and wetlab to avoid warnings about missing dependencies
-          pip install 'lamindb[aws,bionty,wetlab]>=0.77.2'
-
-          # Make sure IPython is installed --
-          # Workaround for laminlabs/laminhub-public#29
-          pip install ipython
+          laminr::install_lamindb()
+        shell: Rscript {0}
 
       - name: Log in to Lamin
         run: |
-          lamin login
+          reticulate::use_virtualenv("r-lamindb")
+          laminr::lamin_login()
 
       - name: Set lamindata as default instance
         run: |
-          lamin connect laminlabs/lamindata
+          reticulate::use_virtualenv("r-lamindb")
+          laminr::lamin_connect("laminlabs/lamindata")
+        shell: Rscript {0}
 
       - name: Check whether we can import lamindb and connect to the default instance
         run: |
+          reticulate::use_virtualenv("r-lamindb")
           reticulate::py_config()
           reticulate::import("lamindb")
           laminr::connect()
