@@ -80,7 +80,7 @@ wrap_python <- function(obj, public = list(), active = list(), private = list())
 
       fun_src <- paste0(
         "function() {\n",
-        "  py_to_r_ifneedbeprivate$.py_object[['", .name, "']))",
+        "  py_to_r_ifneedbe(private$.py_object[['", .name, "']])",
         "\n}"
       )
       active[[.name]] <- eval(parse(text = fun_src))
