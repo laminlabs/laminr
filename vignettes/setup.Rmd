@@ -88,6 +88,25 @@ laminr::install_lamindb(envname = "your-env")
 
 Be aware that there may be dependency conflicts with packages already installed in the environment and installing **lamindb** may cause package versions to change.
 
+# Logging in to LaminDB
+
+If you have not used LaminDB before you will need to login to access public instances.
+To do this you will need a user API key which you can get by logging in to [LaminHub](https://lamin.ai/dashboard) and going to your user settings.
+
+You can then login with:
+
+```r
+laminr::lamin_login(api_key = "your_api_key")
+```
+
+## Switching users
+
+If you have already given an API key for a user you can log in as them by giving the user name:
+
+```r
+laminr::lamin_login(user = "user_handle")
+```
+
 # Setting a default instance
 
 Using `connect(slug = NULL)` will connect to the current default LaminDB instance.
@@ -97,4 +116,4 @@ The default instance can be set using:
 laminr::lamin_connect("<owner>/<name>")
 ```
 
-Note that this must be called before attempting to connect to default instance and cannot be changed once the default instance is connected.
+Note that this must be called before attempting to connect to a default instance and cannot be changed once the default instance is connected.

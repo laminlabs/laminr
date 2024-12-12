@@ -55,7 +55,19 @@ Before loading **{laminr}** for the first time you should:
 laminr::install_lamindb()
 ```
 
-2. Set a default instance
+2. Log in
+
+```r
+laminr::lamin_login(api_key = "your_api_key")
+```
+
+OR
+
+```r
+laminr::lamin_login(user = "user_handle")
+```
+
+3. Set a default instance
 
 ```r
 laminr::lamin_connect("<owner>/<name>")
