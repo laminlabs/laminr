@@ -1,0 +1,100 @@
+---
+title: "Setting up {laminr}"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{setup}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Introduction
+
+This vignette provides more detailed instructions for how to set up **{laminr}**.
+
+# Installing **{laminr}**
+
+The **{laminr}** package can be installed from CRAN:
+
+```r
+install.packages("laminr")
+```
+
+## Additional packages
+
+Some functionality in **{laminr}** requires additional packages.
+To install all suggested dependencies use:
+
+```r
+install.packages("laminr", dependencies = TRUE)
+```
+
+If you choose not to install all additional packages you will be prompted to do so as needed.
+
+# Installing Python **lamindb**
+
+Using **{laminr}** requires that the Python **lamindb** package is available.
+
+## Using the included Python environment
+
+The recommended way to use **{laminr}** is to connect to the included `r-lamindb` Python environment.
+This can be created using:
+
+```r
+laminr::install_lamindb()
+```
+
+This should be run before the first time you load the **{laminr}** library.
+The **{reticulate}** package will then be told to use this environment when **{laminr}** is loaded.
+
+### Adding additional packages
+
+If you want to add additional packages to the environment, these can be specified using the `extra_packages` argument.
+For example, to add the **bionty** package:
+
+```r
+laminr::install_lamindb(extra_packages = "bionty")
+```
+
+This can also be useful if you want to use another R package which expects a particular Python module to be installed.
+
+## Using another environment
+
+In some cases you may prefer to use another Python environment.
+This may be the case if you use another R package which requires a Python module or if you are managing your own Python environment.
+
+Specifying another Python environment to use should be done ***before*** loading **{laminr}** using one of these methods:
+
+- Loading another R package that sets the Python environment
+- Using `reticulate::use_virtualenv()`, `reticulate::use_condaenv()` or `reticulate::use_python()`
+- Setting the `RETICULATE_PYTHON` or `RETICULATE_PYTHON_ENV` environment variables
+
+Details of the current Python environment can be viewed using `reticulate::py_config()`.
+For more information about setting the active Python environment see `vignette("versions", package = "reticulate")` (also [available here](https://rstudio.github.io/reticulate/articles/versions.html)).
+
+### Adding **lamindb** to another environment
+
+To install **lamindb** into another environment, set the `envname` argument:
+
+```r
+laminr::install_lamindb(envname = "your-env")
+```
+
+Be aware that there may be dependency conflicts with packages already installed in the environment and installing **lamindb** may cause package versions to change.
+
+# Setting a default instance
+
+Using `connect(slug = NULL)` will connect to the current default LaminDB instance.
+The default instance can be set using:
+
+```
+laminr::lamin_connect("<owner>/<name>")
+```
+
+Note that this must be called before attempting to connect to default instance and cannot be changed once the default instance is connected.

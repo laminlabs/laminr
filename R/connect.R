@@ -172,7 +172,7 @@ connect <- function(slug = NULL) {
 #' Set the default LaminDB instance by calling `lamin connect` on the command
 #' line
 #'
-#' @param slug Slug giving the instance to connect to ("<user>/<instance>")
+#' @param slug Slug giving the instance to connect to ("<owner>/<name>")
 #'
 #' @export
 #'
