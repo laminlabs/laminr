@@ -1,32 +1,54 @@
-wrap_python <- function(py_object) {
-
-  if (!inherits(py_object, "python.builtin.object")) {
-    # Not a Python object so just return
-    return(py_object)
+py_to_r_ifneedbe <- function(obj) {
+  # Not a Python object so just return
+  if (!inherits(obj, "python.builtin.object")) {
+    return(obj)
   }
 
   # Ask reticulate to convert to R
-  r_object <- reticulate::py_to_r(py_object)
-  if (!inherits(r_object, "python.builtin.object")) {
-    # Return the R object if converted
-    return(r_object)
-  }
+  reticulate::py_to_r(obj)
+}
 
-  # class_split <- strsplit(class(py_object)[1], "\\.")[[1]]
-  # class_name <- paste(class_split[1], rev(class_split)[1])
+py_to_r.lnschema_core.models.Record <- function(obj) {
+  wrap_python(
+    obj,
+    public = list(
+      message = function() {
+        message("This is a record")
+      }
+    )
+  )
+}
 
-  class_name <- paste("wrapped", class(py_object)[1])
+py_to_r.lnschema_core.models.Artifact <- function(obj) {
+  wrap_python(
+    obj,
+    public = list(
+      message = function() {
+        message("This is an artifact")
+      },
+      print = function() {
+        cat("--ARTIFACT--\n")
+        print(private$.py_object)
+      }
+    )
+  )
+}
 
-  public <- list(
-    print = function() {
+
+wrap_python <- function(obj, public = list(), active = list(), private = list()) {
+  class_name <- paste0("laminr.", class(obj)[1])
+
+  if (!"print" %in% names(public)) {
+    public$print <- function() {
       print(private$.py_object)
     }
-  )
-  active <- list()
-  for (.name in names(py_object)) {
+  }
+  private$.py_object <- obj
+
+  for (.name in names(obj)) {
 
     # Try to get the value for this slot
-    value <- try(py_object[[.name]], silent = TRUE)
+    value <- try(obj[[.name]], silent = TRUE)
     if (inherits(value, "try-error")) {
       # Skip if there is an error
       # This should only happen if there is a Python error stopping this slot
@@ -35,36 +57,42 @@ wrap_python <- function(py_object) {
     }
 
     if (inherits(value, c("python.builtin.function", "python.builtin.method"))) {
+      # skip if this is already defined
+      if (.name %in% names(public)) {
+        next
+      }
+
       arguments <- get_py_arguments(value)
       argument_defaults_string <- make_argument_defaults_string(arguments)
       argument_values_string <- make_argument_usage_string(arguments)
 
       fun_src <- paste0(
         "function(", argument_defaults_string, ") {\n",
-        "  wrap_python(private$.py_object[['", .name, "']](", argument_values_string, "))",
+        "  py_to_r_ifneedbe(private$.py_object[['", .name, "']](", argument_values_string, "))",
         "\n}"
       )
       public[[.name]] <- eval(parse(text = fun_src))
     } else {
+      # skip if this is already defined
+      if (.name %in% names(active)) {
+        next
+      }
+
       fun_src <- paste0(
         "function() {\n",
-        "  wrap_python(private$.py_object[['", .name, "']])",
+        "  py_to_r_ifneedbeprivate$.py_object[['", .name, "']))",
         "\n}"
       )
       active[[.name]] <- eval(parse(text = fun_src))
     }
   }
 
-  public <- add_class_methods(public, class(py_object))
-
   r6_class <- R6::R6Class(
     class_name,
     cloneable = FALSE,
     public = public,
     active = active,
-    private = list(
-      .py_object = py_object
-    )
+    private = private
   )
 
   r6_class$new()
@@ -134,43 +162,6 @@ make_argument_usage_string <- function(arguments) {
     paste(.argument, "=", .argument)
   }) |>
     paste(collapse = ", ")
-}
-
-record_message <- function() {
-  message("This is a record")
-}
-
-artifact_message <- function() {
-  message("This is an artifact")
-}
-
-artifact_print <- function() {
-  cat("--ARTIFACT--\n")
-  print(private$.py_object)
-}
-
-class_methods <- list(
-  lnschema_core.models.Artifact = list(
-    message = artifact_message,
-    print = artifact_print
-  ),
-  lnschema_core.models.Record = list(
-    message = record_message
-  )
-)
-
-add_class_methods <- function(methods, classes) {
-
-  for (.class in rev(classes)) {
-    if (.class %in% names(class_methods)) {
-      method_functions <- class_methods[[.class]]
-      for (.method in names(method_functions)) {
-        methods[[.method]] <- method_functions[[.method]]
-      }
-    }
-  }
-
-  return(methods)
 }
 
 py_help <- function(py_obj) {
