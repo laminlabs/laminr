@@ -193,7 +193,7 @@ lamin_connect <- function(slug) {
   reticulate::use_virtualenv("r-lamindb", required = FALSE)
   if (!reticulate::py_available()) {
     # Force reticulate to connect to Python
-    py_config <- reticulate::py_config()
+    py_config <- reticulate::py_config() # nolint object_usage_linter
   }
 
   system2("lamin", paste("connect", slug))
@@ -231,7 +231,7 @@ lamin_connect <- function(user = NULL, api_key = NULL) {
   reticulate::use_virtualenv("r-lamindb", required = FALSE)
   if (!reticulate::py_available()) {
     # Force reticulate to connect to Python
-    py_config <- reticulate::py_config()
+    py_config <- reticulate::py_config() # nolint object_usage_linter
   }
 
   if (!is.null(user)) {

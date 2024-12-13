@@ -31,7 +31,7 @@
 install_lamindb <- function(..., envname = "r-lamindb", extra_packages = NULL,
                             new_env = identical(envname, "r-lamindb")) {
 
-  if(new_env && reticulate::virtualenv_exists(envname)) {
+  if (new_env && reticulate::virtualenv_exists(envname)) {
     reticulate::virtualenv_remove(envname)
   }
 
