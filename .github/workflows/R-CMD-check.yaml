@@ -81,6 +81,7 @@ jobs:
         run: |
           reticulate::use_virtualenv("r-lamindb")
           laminr::lamin_login()
+        shell: Rscript {0}
 
       - name: Set lamindata as default instance
         run: |
