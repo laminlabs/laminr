@@ -214,7 +214,7 @@ lamin_connect <- function(slug) {
 #'
 #'
 #' @export
-lamin_connect <- function(user = NULL, api_key = NULL) {
+lamin_login <- function(user = NULL, api_key = NULL) {
   if (is.null(user) && is.null(api_key)) {
     cli::cli_abort("One of {.arg user} or {.arg api_key} must be set")
   }

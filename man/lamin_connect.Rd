@@ -4,28 +4,14 @@
 \alias{lamin_connect}
 \title{Set the default LaminDB instance}
 \usage{
-lamin_connect(user = NULL, api_key = NULL)
-
-lamin_connect(user = NULL, api_key = NULL)
+lamin_connect(slug)
 }
 \arguments{
-\item{user}{Handle for the user to login as}
-
-\item{api_key}{API key for a user}
-
 \item{slug}{Slug giving the instance to connect to ("\if{html}{\out{<owner>}}/\if{html}{\out{<name>}}")}
 }
 \description{
 Set the default LaminDB instance by calling \verb{lamin connect} on the command
 line
-
-Login as a LaminDB user
-}
-\details{
-Setting \code{user} will run \verb{lamin login <user>}. Setting \code{api_key} will set the
-\code{LAMIN_API_KEY} environment variable tempoarily with \code{withr::with_envvar()}
-and run \verb{lamin login}. If neither \code{user} or \code{api_key} are set \verb{lamin login}
-will be run if \code{LAMIN_API_KEY} is set.
 }
 \examples{
 dontrun{

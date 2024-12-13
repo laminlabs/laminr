@@ -3,6 +3,7 @@
 export(connect)
 export(install_lamindb)
 export(lamin_connect)
+export(lamin_login)
 importFrom(R6,R6Class)
 importFrom(cli,cli_abort)
 importFrom(cli,cli_inform)
