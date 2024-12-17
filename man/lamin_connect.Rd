@@ -14,7 +14,7 @@ Set the default LaminDB instance by calling \verb{lamin connect} on the command
 line
 }
 \examples{
-dontrun{
+\dontrun{
 lamin_connect("laminlabs/cellxgene")
 }
 }

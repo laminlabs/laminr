@@ -177,7 +177,7 @@ connect <- function(slug = NULL) {
 #' @export
 #'
 #' @examples
-#' dontrun{
+#' \dontrun{
 #' lamin_connect("laminlabs/cellxgene")
 #' }
 lamin_connect <- function(slug) {
@@ -238,7 +238,7 @@ lamin_login <- function(user = NULL, api_key = NULL) {
     })
   } else {
     if (Sys.getenv("LAMIN_API_KEY") == "") {
-      cli::abort("{.arg LAMIN_API_KEY} is not set")
+      cli::cli_abort("{.arg LAMIN_API_KEY} is not set")
     }
 
     system2("lamin", "login")

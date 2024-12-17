@@ -19,7 +19,7 @@
 #' a Python environment
 #'
 #' @examples
-#' dontrun{
+#' \dontrun{
 #' install_lamindb()
 #'
 #' # Add additional packages to the environment

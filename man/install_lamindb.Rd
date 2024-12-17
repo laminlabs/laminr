@@ -35,7 +35,7 @@ See \code{vignette("setup", package = "laminr")} for further details on setting 
 a Python environment
 }
 \examples{
-dontrun{
+\dontrun{
 install_lamindb()
 
 # Add additional packages to the environment
