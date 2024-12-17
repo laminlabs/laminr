@@ -57,7 +57,7 @@ jobs:
 
       - name: Setup Python environment
         run: |
-          laminr::install_lamindb()
+          laminr::install_lamindb(extra_packages = c("s3fs"))
         shell: Rscript {0}
 
       - name: Log in to Lamin
