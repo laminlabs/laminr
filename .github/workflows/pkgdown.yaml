@@ -49,7 +49,7 @@ jobs:
         run: |
           if (!requireNamespace("tiledbsoma", quietly = TRUE)) {
             options(repos = c("https://chanzuckerberg.r-universe.dev", getOption("repos")))
-            install.packages("tiledbsoma")
+            pak::pkg_install("tiledbsoma")
           } else {
             message("Package 'tiledbsoma' already installed")
           }

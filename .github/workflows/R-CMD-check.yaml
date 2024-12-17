@@ -64,7 +64,7 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           options(repos = c("https://chanzuckerberg.r-universe.dev", getOption("repos")))
-          install.packages("tiledbsoma")
+          pak::pkg_install("tiledbsoma")
         shell: Rscript {0}
 
       - name: Setup Python environment
