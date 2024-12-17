@@ -68,7 +68,7 @@ jobs:
 
       - name: Install Python 3.12 on macOS
         # We use python 3.12 on mac os x so we can install scipy 1.13 from a wheel
-        if: runner.os == 'Linux'
+        if: runner.os == 'macOS'
         run: |
           reticulate::install_python(version = "3.12")
         shell: Rscript {0}
