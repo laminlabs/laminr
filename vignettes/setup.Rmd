@@ -1,8 +1,8 @@
 ---
-title: "Setting up {laminr}"
+title: "Setting up laminr"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{setup}
+  %\VignetteIndexEntry{Setting up laminr}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -62,7 +62,21 @@ For example, to add the **bionty** package:
 laminr::install_lamindb(extra_packages = "bionty")
 ```
 
-This can also be useful if you want to use another R package which expects a particular Python module to be installed.
+Python packages providing additional registries that may be used in your instance:
+
+- **bionty** - Basic biological entities, coupled to public ontologies
+- **cellregistry** - A registry for single cells
+- **clinicore** - Basic clinical entities
+- **findrefs** - Store references to studies, reports, papers, blog posts, preprints
+- **omop** - OMOP Common Data Model
+- **ourprojects** - Manage projects and teams
+- **wetlab** - Basic wetlab entities
+
+Other Python packages you may want to install:
+
+- **s3fs** - Accessing artifacts stored on Amazon S3
+
+Installing additional Python packages also be useful if you want to use another R package which expects a particular Python module to be installed.
 
 ## Using another environment
 
