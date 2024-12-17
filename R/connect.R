@@ -215,10 +215,6 @@ lamin_connect <- function(slug) {
 #'
 #' @export
 lamin_login <- function(user = NULL, api_key = NULL) {
-  if (is.null(user) && is.null(api_key)) {
-    cli::cli_abort("One of {.arg user} or {.arg api_key} must be set")
-  }
-
   current_default <- getOption("LAMINR_DEFAULT_INSTANCE")
   if (!is.null(current_default)) {
     cli::cli_abort(c(
