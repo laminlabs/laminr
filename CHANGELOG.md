@@ -1,11 +1,21 @@
+# laminr v0.3.0
+
+## NEW FUNCTIONALITY
+
+- Add a `install_lamindb()` function to help with setting up the default Python environment
+- Add `lamin_login()` and `lamin_connect()` functions to allow access to CLI functionality from R
+
+## DOCUMENTATION
+
+- Add a set up vignette and update other documentation with instructions for how to set up a Python environment
 
 # laminr v0.3.0
 
 This release contains mostly UX improvements:
 
-* Support for interacting with private LaminDB instances
-* Support for interacting with TileDB-SOMA / CELLxGENE Census
-* Improved UX for tracking and finishing runs
+- Support for interacting with private LaminDB instances
+- Support for interacting with TileDB-SOMA / CELLxGENE Census
+- Improved UX for tracking and finishing runs
 
 ## NEW FUNCTIONALITY
 
