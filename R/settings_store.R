@@ -7,7 +7,12 @@
   if (settings_dir != "") {
     file.path(settings_dir, ".lamin")
   } else {
-    file.path(Sys.getenv("HOME"), ".lamin")
+    if (.Platform$OS.type == "windows") {
+      home_dir <- paste0(Sys.getenv("HOMEDRIVE"), Sys.getenv("HOMEPATH"))
+    } else {
+      home_dir <- Sys.getenv("HOME")
+    }
+    file.path(home_dir, ".lamin")
   }
 }
 
