@@ -212,7 +212,6 @@ lamin_connect <- function(slug) {
 #' and run `lamin login`. If neither `user` or `api_key` are set `lamin login`
 #' will be run if `LAMIN_API_KEY` is set.
 #'
-#'
 #' @export
 lamin_login <- function(user = NULL, api_key = NULL) {
   current_default <- getOption("LAMINR_DEFAULT_INSTANCE")
@@ -232,7 +231,7 @@ lamin_login <- function(user = NULL, api_key = NULL) {
 
   if (!is.null(user)) {
     system2("lamin", paste("login", user))
-  } else if (is.null(api_key)) {
+  } else if (!is.null(api_key)) {
     withr::with_envvar(c("LAMIN_API_KEY" = api_key), {
       system2("lamin", "login")
     })
