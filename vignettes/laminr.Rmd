@@ -28,20 +28,22 @@ Install **{laminr}** from CRAN:
 install.packages("laminr", dependencies = TRUE)
 ```
 
-Install `lamindb` from PyPI:
+Set up the Python environment:
 
-```bash
-pip install 'lamindb[aws]>=0.77.2'
+```r
+laminr::install_lamindb()
 ```
 
-Connect to a LaminDB instance on the command line:
+Set the default LaminDB instance:
 
-```shell
-lamin connect <owner>/<name>
+```r
+laminr::lamin_connect("<owner>/<name>")
 ```
 
 This instance acts as the default instance for everything that follows.
 Any data and tracking information will be added to it.
+
+See `vignette("setup", package = "laminr")` for more details.
 
 # Start your analysis
 

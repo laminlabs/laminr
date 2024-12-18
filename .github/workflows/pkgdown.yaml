@@ -49,31 +49,32 @@ jobs:
         run: |
           if (!requireNamespace("tiledbsoma", quietly = TRUE)) {
             options(repos = c("https://chanzuckerberg.r-universe.dev", getOption("repos")))
-            install.packages("tiledbsoma")
+            pak::pkg_install("tiledbsoma")
           } else {
             message("Package 'tiledbsoma' already installed")
           }
         shell: Rscript {0}
 
-      - name: Install lamindb
+      - name: Setup Python environment
         run: |
-          # install bionty and wetlab to avoid warnings about missing dependencies
-          pip install 'lamindb[aws,bionty,wetlab]>=0.77.2'
-
-          # Make sure IPython is installed --
-          # Workaround for laminlabs/laminhub-public#29
-          pip install ipython
+          laminr::install_lamindb(extra_packages = c("s3fs"))
+        shell: Rscript {0}
 
       - name: Log in to Lamin
         run: |
-          lamin login
+          reticulate::use_virtualenv("r-lamindb")
+          laminr::lamin_login()
+        shell: Rscript {0}
 
       - name: Set lamindata as default instance
         run: |
-          lamin connect laminlabs/lamindata
+          reticulate::use_virtualenv("r-lamindb")
+          laminr::lamin_connect("laminlabs/lamindata")
+        shell: Rscript {0}
 
       - name: Check whether we can import lamindb and connect to the default instance
         run: |
+          reticulate::use_virtualenv("r-lamindb")
           reticulate::py_config()
           reticulate::import("lamindb")
           laminr::connect()

@@ -23,6 +23,7 @@ Imports:
     purrr,
     R.utils,
     R6,
+    reticulate,
     rlang,
     tibble
 Suggests:
@@ -31,7 +32,6 @@ Suggests:
     nanoparquet,
     quarto,
     readr,
-    reticulate,
     rstudioapi,
     rsvg,
     s3 (>= 1.1.0),
@@ -39,7 +39,7 @@ Suggests:
     testthat (>= 3.0.0),
     withr,
     yaml
-VignetteBuilder: 
+VignetteBuilder:
     quarto
 Config/testthat/edition: 3
 Encoding: UTF-8
