@@ -1,4 +1,4 @@
-# laminr v0.3.0
+# laminr v0.3.1
 
 ## NEW FUNCTIONALITY
 
