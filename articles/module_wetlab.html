@@ -108,7 +108,11 @@ treatments, such as genes, proteins, or pathways.</li>
 <strong>Wells</strong>: Represent individual wells in microplates or
 other experimental setups.</li>
 </ul>
-<pre><code><span><span class="co">#&gt; <span style="color: #55FF55;">→</span> connected lamindb: laminlabs/lamindata</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; Error in get(paste0(generic, ".", class), envir = get_method_env()) : </span></span>
+<span><span class="co">#&gt;   object 'type_sum.accel' not found</span></span>
+<span><span class="co">#&gt; <span style="color: #FFFF55;">!</span> schema module 'wetlab' is not installed → no access to its labels &amp; registries (resolve via `pip install wetlab`)</span></span>
+<span><span class="co">#&gt; <span style="color: #FFFF55;">!</span> schema module 'bionty' is not installed → no access to its labels &amp; registries (resolve via `pip install bionty`)</span></span>
+<span><span class="co">#&gt; <span style="color: #55FF55;">→</span> connected lamindb: laminlabs/lamindata</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="well">Well<a class="anchor" aria-label="anchor" href="#well"></a>
@@ -148,11 +152,105 @@ other experimental setups.</li>
 </div>
 </div>
 <div class="section level2">
-<h2 id="compound">Compound<a class="anchor" aria-label="anchor" href="#compound"></a>
+<h2 id="donor">Donor<a class="anchor" aria-label="anchor" href="#donor"></a>
 </h2>
 <p>Base classes: <code><a href="../reference/Registry.html">?Registry</a></code></p>
 <div class="section level3">
 <h3 id="simple-fields-1">Simple fields<a class="anchor" aria-label="anchor" href="#simple-fields-1"></a>
+</h3>
+<ul>
+<li>
+<code>id</code> (<code>integer</code>)</li>
+<li>
+<code>age</code> (<code>IntegerField</code>)</li>
+<li>
+<code>bmi</code> (<code>FloatField</code>)</li>
+<li>
+<code>uid</code> (<code>character</code>)</li>
+<li>
+<code>name</code> (<code>character</code>)</li>
+<li>
+<code>batch</code> (<code>character</code>)</li>
+<li>
+<code>created_at</code> (<code>POSIXct</code>)</li>
+<li>
+<code>updated_at</code> (<code>POSIXct</code>)</li>
+<li>
+<code>description</code> (<code>character</code>)</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="relational-fields-1">Relational fields<a class="anchor" aria-label="anchor" href="#relational-fields-1"></a>
+</h3>
+<ul>
+<li>
+<code>run</code> (<a href="module_core.html#run"><code>Run</code></a>)</li>
+<li>
+<code>sex</code> (<a href="module_bionty.html#phenotype"><code>bionty$Phenotype</code></a>)</li>
+<li>
+<code>diseases</code> (<a href="module_bionty.html#disease"><code>bionty$Disease</code></a>)</li>
+<li>
+<code>organism</code> (<a href="module_bionty.html#organism"><code>bionty$Organism</code></a>)</li>
+<li>
+<code>artifacts</code> (<a href="module_core.html#artifact"><code>Artifact</code></a>)</li>
+<li>
+<code>ethnicity</code> (<a href="module_bionty.html#ethnicity"><code>bionty$Ethnicity</code></a>)</li>
+<li>
+<code>created_by</code> (<a href="module_core.html#user"><code>User</code></a>)</li>
+</ul>
+</div>
+</div>
+<div class="section level2">
+<h2 id="biologic">Biologic<a class="anchor" aria-label="anchor" href="#biologic"></a>
+</h2>
+<p>Base classes: <code><a href="../reference/Registry.html">?Registry</a></code></p>
+<div class="section level3">
+<h3 id="simple-fields-2">Simple fields<a class="anchor" aria-label="anchor" href="#simple-fields-2"></a>
+</h3>
+<ul>
+<li>
+<code>id</code> (<code>integer</code>)</li>
+<li>
+<code>uid</code> (<code>character</code>)</li>
+<li>
+<code>abbr</code> (<code>character</code>)</li>
+<li>
+<code>name</code> (<code>character</code>)</li>
+<li>
+<code>type</code> (<code>character</code>)</li>
+<li>
+<code>synonyms</code> (<code>character</code>)</li>
+<li>
+<code>created_at</code> (<code>POSIXct</code>)</li>
+<li>
+<code>updated_at</code> (<code>POSIXct</code>)</li>
+<li>
+<code>description</code> (<code>character</code>)</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="relational-fields-2">Relational fields<a class="anchor" aria-label="anchor" href="#relational-fields-2"></a>
+</h3>
+<ul>
+<li>
+<code>run</code> (<a href="module_core.html#run"><code>Run</code></a>)</li>
+<li>
+<code>targets</code> (<a href="#perturbationtarget"><code>wetlab$PerturbationTarget</code></a>)</li>
+<li>
+<code>proteins</code> (<a href="module_bionty.html#protein"><code>bionty$Protein</code></a>)</li>
+<li>
+<code>artifacts</code> (<a href="module_core.html#artifact"><code>Artifact</code></a>)</li>
+<li>
+<code>created_by</code> (<a href="module_core.html#user"><code>User</code></a>)</li>
+</ul>
+</div>
+</div>
+<div class="section level2">
+<h2 id="compound">Compound<a class="anchor" aria-label="anchor" href="#compound"></a>
+</h2>
+<p>Base classes: <code><a href="../reference/Registry.html">?Registry</a></code></p>
+<div class="section level3">
+<h3 id="simple-fields-3">Simple fields<a class="anchor" aria-label="anchor" href="#simple-fields-3"></a>
 </h3>
 <ul>
 <li>
@@ -178,7 +276,7 @@ other experimental setups.</li>
 </ul>
 </div>
 <div class="section level3">
-<h3 id="relational-fields-1">Relational fields<a class="anchor" aria-label="anchor" href="#relational-fields-1"></a>
+<h3 id="relational-fields-3">Relational fields<a class="anchor" aria-label="anchor" href="#relational-fields-3"></a>
 </h3>
 <ul>
 <li>
@@ -192,100 +290,14 @@ other experimental setups.</li>
 <li>
 <code>artifacts</code> (<a href="module_core.html#artifact"><code>Artifact</code></a>)</li>
 <li>
-<code>compounds</code> (<a href="#compoundtreatment"><code>wetlab$CompoundTreatment</code></a>)</li>
-<li>
 <code>created_by</code> (<a href="module_core.html#user"><code>User</code></a>)</li>
+<li>
+<code>compoundperturbation</code> (<a href="#compoundperturbation"><code>wetlab$CompoundPerturbation</code></a>)</li>
 </ul>
 </div>
 </div>
 <div class="section level2">
 <h2 id="biosample">Biosample<a class="anchor" aria-label="anchor" href="#biosample"></a>
-</h2>
-<p>Base classes: <code><a href="../reference/Registry.html">?Registry</a></code></p>
-<div class="section level3">
-<h3 id="simple-fields-2">Simple fields<a class="anchor" aria-label="anchor" href="#simple-fields-2"></a>
-</h3>
-<ul>
-<li>
-<code>id</code> (<code>integer</code>)</li>
-<li>
-<code>uid</code> (<code>character</code>)</li>
-<li>
-<code>name</code> (<code>character</code>)</li>
-<li>
-<code>batch</code> (<code>character</code>)</li>
-<li>
-<code>created_at</code> (<code>POSIXct</code>)</li>
-<li>
-<code>updated_at</code> (<code>POSIXct</code>)</li>
-<li>
-<code>description</code> (<code>character</code>)</li>
-</ul>
-</div>
-<div class="section level3">
-<h3 id="relational-fields-2">Relational fields<a class="anchor" aria-label="anchor" href="#relational-fields-2"></a>
-</h3>
-<ul>
-<li>
-<code>run</code> (<a href="module_core.html#run"><code>Run</code></a>)</li>
-<li>
-<code>tissues</code> (<a href="module_bionty.html#tissue"><code>bionty$Tissue</code></a>)</li>
-<li>
-<code>diseases</code> (<a href="module_bionty.html#disease"><code>bionty$Disease</code></a>)</li>
-<li>
-<code>organism</code> (<a href="module_bionty.html#organism"><code>bionty$Organism</code></a>)</li>
-<li>
-<code>artifacts</code> (<a href="module_core.html#artifact"><code>Artifact</code></a>)</li>
-<li>
-<code>cell_lines</code> (<a href="module_bionty.html#cellline"><code>bionty$CellLine</code></a>)</li>
-<li>
-<code>cell_types</code> (<a href="module_bionty.html#celltype"><code>bionty$CellType</code></a>)</li>
-<li>
-<code>created_by</code> (<a href="module_core.html#user"><code>User</code></a>)</li>
-<li>
-<code>techsamples</code> (<a href="#techsample"><code>wetlab$Techsample</code></a>)</li>
-</ul>
-</div>
-</div>
-<div class="section level2">
-<h2 id="experiment">Experiment<a class="anchor" aria-label="anchor" href="#experiment"></a>
-</h2>
-<p>Base classes: <code><a href="../reference/Registry.html">?Registry</a></code></p>
-<div class="section level3">
-<h3 id="simple-fields-3">Simple fields<a class="anchor" aria-label="anchor" href="#simple-fields-3"></a>
-</h3>
-<ul>
-<li>
-<code>id</code> (<code>integer</code>)</li>
-<li>
-<code>uid</code> (<code>character</code>)</li>
-<li>
-<code>date</code> (<code>DateField</code>)</li>
-<li>
-<code>name</code> (<code>character</code>)</li>
-<li>
-<code>created_at</code> (<code>POSIXct</code>)</li>
-<li>
-<code>updated_at</code> (<code>POSIXct</code>)</li>
-<li>
-<code>description</code> (<code>character</code>)</li>
-</ul>
-</div>
-<div class="section level3">
-<h3 id="relational-fields-3">Relational fields<a class="anchor" aria-label="anchor" href="#relational-fields-3"></a>
-</h3>
-<ul>
-<li>
-<code>run</code> (<a href="module_core.html#run"><code>Run</code></a>)</li>
-<li>
-<code>artifacts</code> (<a href="module_core.html#artifact"><code>Artifact</code></a>)</li>
-<li>
-<code>created_by</code> (<a href="module_core.html#user"><code>User</code></a>)</li>
-</ul>
-</div>
-</div>
-<div class="section level2">
-<h2 id="techsample">Techsample<a class="anchor" aria-label="anchor" href="#techsample"></a>
 </h2>
 <p>Base classes: <code><a href="../reference/Registry.html">?Registry</a></code></p>
 <div class="section level3">
@@ -315,16 +327,26 @@ other experimental setups.</li>
 <li>
 <code>run</code> (<a href="module_core.html#run"><code>Run</code></a>)</li>
 <li>
+<code>tissues</code> (<a href="module_bionty.html#tissue"><code>bionty$Tissue</code></a>)</li>
+<li>
+<code>diseases</code> (<a href="module_bionty.html#disease"><code>bionty$Disease</code></a>)</li>
+<li>
+<code>organism</code> (<a href="module_bionty.html#organism"><code>bionty$Organism</code></a>)</li>
+<li>
 <code>artifacts</code> (<a href="module_core.html#artifact"><code>Artifact</code></a>)</li>
 <li>
-<code>biosamples</code> (<a href="#biosample"><code>wetlab$Biosample</code></a>)</li>
+<code>cell_lines</code> (<a href="module_bionty.html#cellline"><code>bionty$CellLine</code></a>)</li>
+<li>
+<code>cell_types</code> (<a href="module_bionty.html#celltype"><code>bionty$CellType</code></a>)</li>
 <li>
 <code>created_by</code> (<a href="module_core.html#user"><code>User</code></a>)</li>
+<li>
+<code>techsamples</code> (<a href="#techsample"><code>wetlab$Techsample</code></a>)</li>
 </ul>
 </div>
 </div>
 <div class="section level2">
-<h2 id="treatmenttarget">TreatmentTarget<a class="anchor" aria-label="anchor" href="#treatmenttarget"></a>
+<h2 id="experiment">Experiment<a class="anchor" aria-label="anchor" href="#experiment"></a>
 </h2>
 <p>Base classes: <code><a href="../reference/Registry.html">?Registry</a></code></p>
 <div class="section level3">
@@ -335,6 +357,8 @@ other experimental setups.</li>
 <code>id</code> (<code>integer</code>)</li>
 <li>
 <code>uid</code> (<code>character</code>)</li>
+<li>
+<code>date</code> (<code>DateField</code>)</li>
 <li>
 <code>name</code> (<code>character</code>)</li>
 <li>
@@ -352,6 +376,80 @@ other experimental setups.</li>
 <li>
 <code>run</code> (<a href="module_core.html#run"><code>Run</code></a>)</li>
 <li>
+<code>artifacts</code> (<a href="module_core.html#artifact"><code>Artifact</code></a>)</li>
+<li>
+<code>created_by</code> (<a href="module_core.html#user"><code>User</code></a>)</li>
+</ul>
+</div>
+</div>
+<div class="section level2">
+<h2 id="techsample">Techsample<a class="anchor" aria-label="anchor" href="#techsample"></a>
+</h2>
+<p>Base classes: <code><a href="../reference/Registry.html">?Registry</a></code></p>
+<div class="section level3">
+<h3 id="simple-fields-6">Simple fields<a class="anchor" aria-label="anchor" href="#simple-fields-6"></a>
+</h3>
+<ul>
+<li>
+<code>id</code> (<code>integer</code>)</li>
+<li>
+<code>uid</code> (<code>character</code>)</li>
+<li>
+<code>name</code> (<code>character</code>)</li>
+<li>
+<code>batch</code> (<code>character</code>)</li>
+<li>
+<code>created_at</code> (<code>POSIXct</code>)</li>
+<li>
+<code>updated_at</code> (<code>POSIXct</code>)</li>
+<li>
+<code>description</code> (<code>character</code>)</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="relational-fields-6">Relational fields<a class="anchor" aria-label="anchor" href="#relational-fields-6"></a>
+</h3>
+<ul>
+<li>
+<code>run</code> (<a href="module_core.html#run"><code>Run</code></a>)</li>
+<li>
+<code>artifacts</code> (<a href="module_core.html#artifact"><code>Artifact</code></a>)</li>
+<li>
+<code>biosamples</code> (<a href="#biosample"><code>wetlab$Biosample</code></a>)</li>
+<li>
+<code>created_by</code> (<a href="module_core.html#user"><code>User</code></a>)</li>
+</ul>
+</div>
+</div>
+<div class="section level2">
+<h2 id="perturbationtarget">PerturbationTarget<a class="anchor" aria-label="anchor" href="#perturbationtarget"></a>
+</h2>
+<p>Base classes: <code><a href="../reference/Registry.html">?Registry</a></code></p>
+<div class="section level3">
+<h3 id="simple-fields-7">Simple fields<a class="anchor" aria-label="anchor" href="#simple-fields-7"></a>
+</h3>
+<ul>
+<li>
+<code>id</code> (<code>integer</code>)</li>
+<li>
+<code>uid</code> (<code>character</code>)</li>
+<li>
+<code>name</code> (<code>character</code>)</li>
+<li>
+<code>created_at</code> (<code>POSIXct</code>)</li>
+<li>
+<code>updated_at</code> (<code>POSIXct</code>)</li>
+<li>
+<code>description</code> (<code>character</code>)</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="relational-fields-7">Relational fields<a class="anchor" aria-label="anchor" href="#relational-fields-7"></a>
+</h3>
+<ul>
+<li>
+<code>run</code> (<a href="module_core.html#run"><code>Run</code></a>)</li>
+<li>
 <code>genes</code> (<a href="module_bionty.html#gene"><code>bionty$Gene</code></a>)</li>
 <li>
 <code>pathways</code> (<a href="module_bionty.html#pathway"><code>bionty$Pathway</code></a>)</li>
@@ -362,20 +460,22 @@ other experimental setups.</li>
 <li>
 <code>created_by</code> (<a href="module_core.html#user"><code>User</code></a>)</li>
 <li>
-<code>genetic_targets</code> (<a href="#genetictreatment"><code>wetlab$GeneticTreatment</code></a>)</li>
+<code>genetic_targets</code> (<a href="#geneticperturbation"><code>wetlab$GeneticPerturbation</code></a>)</li>
 <li>
-<code>compound_targets</code> (<a href="#compoundtreatment"><code>wetlab$CompoundTreatment</code></a>)</li>
+<code>biologic_targets</code> (<a href="#biologic"><code>wetlab$Biologic</code></a>)</li>
 <li>
-<code>environmental_targets</code> (<a href="#environmentaltreatment"><code>wetlab$EnvironmentalTreatment</code></a>)</li>
+<code>compound_targets</code> (<a href="#compoundperturbation"><code>wetlab$CompoundPerturbation</code></a>)</li>
+<li>
+<code>environmental_targets</code> (<a href="#environmentalperturbation"><code>wetlab$EnvironmentalPerturbation</code></a>)</li>
 </ul>
 </div>
 </div>
 <div class="section level2">
-<h2 id="genetictreatment">GeneticTreatment<a class="anchor" aria-label="anchor" href="#genetictreatment"></a>
+<h2 id="geneticperturbation">GeneticPerturbation<a class="anchor" aria-label="anchor" href="#geneticperturbation"></a>
 </h2>
 <p>Base classes: <code><a href="../reference/Registry.html">?Registry</a></code></p>
 <div class="section level3">
-<h3 id="simple-fields-6">Simple fields<a class="anchor" aria-label="anchor" href="#simple-fields-6"></a>
+<h3 id="simple-fields-8">Simple fields<a class="anchor" aria-label="anchor" href="#simple-fields-8"></a>
 </h3>
 <ul>
 <li>
@@ -393,34 +493,36 @@ other experimental setups.</li>
 <li>
 <code>updated_at</code> (<code>POSIXct</code>)</li>
 <li>
+<code>description</code> (<code>character</code>)</li>
+<li>
 <code>on_target_score</code> (<code>FloatField</code>)</li>
 <li>
 <code>off_target_score</code> (<code>FloatField</code>)</li>
 </ul>
 </div>
 <div class="section level3">
-<h3 id="relational-fields-6">Relational fields<a class="anchor" aria-label="anchor" href="#relational-fields-6"></a>
+<h3 id="relational-fields-8">Relational fields<a class="anchor" aria-label="anchor" href="#relational-fields-8"></a>
 </h3>
 <ul>
 <li>
 <code>run</code> (<a href="module_core.html#run"><code>Run</code></a>)</li>
 <li>
-<code>targets</code> (<a href="#treatmenttarget"><code>wetlab$TreatmentTarget</code></a>)</li>
+<code>targets</code> (<a href="#perturbationtarget"><code>wetlab$PerturbationTarget</code></a>)</li>
 <li>
 <code>artifacts</code> (<a href="module_core.html#artifact"><code>Artifact</code></a>)</li>
 <li>
 <code>created_by</code> (<a href="module_core.html#user"><code>User</code></a>)</li>
 <li>
-<code>genetic_treatments</code> (<a href="#combinationtreatment"><code>wetlab$CombinationTreatment</code></a>)</li>
+<code>combination_perturbations</code> (<a href="#combinationperturbation"><code>wetlab$CombinationPerturbation</code></a>)</li>
 </ul>
 </div>
 </div>
 <div class="section level2">
-<h2 id="compoundtreatment">CompoundTreatment<a class="anchor" aria-label="anchor" href="#compoundtreatment"></a>
+<h2 id="compoundperturbation">CompoundPerturbation<a class="anchor" aria-label="anchor" href="#compoundperturbation"></a>
 </h2>
 <p>Base classes: <code><a href="../reference/Registry.html">?Registry</a></code></p>
 <div class="section level3">
-<h3 id="simple-fields-7">Simple fields<a class="anchor" aria-label="anchor" href="#simple-fields-7"></a>
+<h3 id="simple-fields-9">Simple fields<a class="anchor" aria-label="anchor" href="#simple-fields-9"></a>
 </h3>
 <ul>
 <li>
@@ -436,36 +538,38 @@ other experimental setups.</li>
 <li>
 <code>updated_at</code> (<code>POSIXct</code>)</li>
 <li>
+<code>description</code> (<code>character</code>)</li>
+<li>
 <code>concentration</code> (<code>FloatField</code>)</li>
 <li>
 <code>concentration_unit</code> (<code>character</code>)</li>
 </ul>
 </div>
 <div class="section level3">
-<h3 id="relational-fields-7">Relational fields<a class="anchor" aria-label="anchor" href="#relational-fields-7"></a>
+<h3 id="relational-fields-9">Relational fields<a class="anchor" aria-label="anchor" href="#relational-fields-9"></a>
 </h3>
 <ul>
 <li>
 <code>run</code> (<a href="module_core.html#run"><code>Run</code></a>)</li>
 <li>
-<code>targets</code> (<a href="#treatmenttarget"><code>wetlab$TreatmentTarget</code></a>)</li>
+<code>targets</code> (<a href="#perturbationtarget"><code>wetlab$PerturbationTarget</code></a>)</li>
+<li>
+<code>compound</code> (<a href="#compound"><code>wetlab$Compound</code></a>)</li>
 <li>
 <code>artifacts</code> (<a href="module_core.html#artifact"><code>Artifact</code></a>)</li>
 <li>
-<code>compounds</code> (<a href="#compound"><code>wetlab$Compound</code></a>)</li>
-<li>
 <code>created_by</code> (<a href="module_core.html#user"><code>User</code></a>)</li>
 <li>
-<code>compound_treatments</code> (<a href="#combinationtreatment"><code>wetlab$CombinationTreatment</code></a>)</li>
+<code>combination_perturbations</code> (<a href="#combinationperturbation"><code>wetlab$CombinationPerturbation</code></a>)</li>
 </ul>
 </div>
 </div>
 <div class="section level2">
-<h2 id="combinationtreatment">CombinationTreatment<a class="anchor" aria-label="anchor" href="#combinationtreatment"></a>
+<h2 id="combinationperturbation">CombinationPerturbation<a class="anchor" aria-label="anchor" href="#combinationperturbation"></a>
 </h2>
 <p>Base classes: <code><a href="../reference/Registry.html">?Registry</a></code></p>
 <div class="section level3">
-<h3 id="simple-fields-8">Simple fields<a class="anchor" aria-label="anchor" href="#simple-fields-8"></a>
+<h3 id="simple-fields-10">Simple fields<a class="anchor" aria-label="anchor" href="#simple-fields-10"></a>
 </h3>
 <ul>
 <li>
@@ -485,30 +589,30 @@ other experimental setups.</li>
 </ul>
 </div>
 <div class="section level3">
-<h3 id="relational-fields-8">Relational fields<a class="anchor" aria-label="anchor" href="#relational-fields-8"></a>
+<h3 id="relational-fields-10">Relational fields<a class="anchor" aria-label="anchor" href="#relational-fields-10"></a>
 </h3>
 <ul>
 <li>
 <code>run</code> (<a href="module_core.html#run"><code>Run</code></a>)</li>
 <li>
-<code>genetics</code> (<a href="#genetictreatment"><code>wetlab$GeneticTreatment</code></a>)</li>
-<li>
 <code>artifacts</code> (<a href="module_core.html#artifact"><code>Artifact</code></a>)</li>
-<li>
-<code>compounds</code> (<a href="#compoundtreatment"><code>wetlab$CompoundTreatment</code></a>)</li>
 <li>
 <code>created_by</code> (<a href="module_core.html#user"><code>User</code></a>)</li>
 <li>
-<code>environmentals</code> (<a href="#environmentaltreatment"><code>wetlab$EnvironmentalTreatment</code></a>)</li>
+<code>genetic_perturbations</code> (<a href="#geneticperturbation"><code>wetlab$GeneticPerturbation</code></a>)</li>
+<li>
+<code>compound_perturbations</code> (<a href="#compoundperturbation"><code>wetlab$CompoundPerturbation</code></a>)</li>
+<li>
+<code>environmental_perturbations</code> (<a href="#environmentalperturbation"><code>wetlab$EnvironmentalPerturbation</code></a>)</li>
 </ul>
 </div>
 </div>
 <div class="section level2">
-<h2 id="environmentaltreatment">EnvironmentalTreatment<a class="anchor" aria-label="anchor" href="#environmentaltreatment"></a>
+<h2 id="environmentalperturbation">EnvironmentalPerturbation<a class="anchor" aria-label="anchor" href="#environmentalperturbation"></a>
 </h2>
 <p>Base classes: <code><a href="../reference/Registry.html">?Registry</a></code></p>
 <div class="section level3">
-<h3 id="simple-fields-9">Simple fields<a class="anchor" aria-label="anchor" href="#simple-fields-9"></a>
+<h3 id="simple-fields-11">Simple fields<a class="anchor" aria-label="anchor" href="#simple-fields-11"></a>
 </h3>
 <ul>
 <li>
@@ -528,23 +632,25 @@ other experimental setups.</li>
 <li>
 <code>updated_at</code> (<code>POSIXct</code>)</li>
 <li>
+<code>description</code> (<code>character</code>)</li>
+<li>
 <code>ontology_id</code> (<code>character</code>)</li>
 </ul>
 </div>
 <div class="section level3">
-<h3 id="relational-fields-9">Relational fields<a class="anchor" aria-label="anchor" href="#relational-fields-9"></a>
+<h3 id="relational-fields-11">Relational fields<a class="anchor" aria-label="anchor" href="#relational-fields-11"></a>
 </h3>
 <ul>
 <li>
 <code>run</code> (<a href="module_core.html#run"><code>Run</code></a>)</li>
 <li>
-<code>targets</code> (<a href="#treatmenttarget"><code>wetlab$TreatmentTarget</code></a>)</li>
+<code>targets</code> (<a href="#perturbationtarget"><code>wetlab$PerturbationTarget</code></a>)</li>
 <li>
 <code>artifacts</code> (<a href="module_core.html#artifact"><code>Artifact</code></a>)</li>
 <li>
 <code>created_by</code> (<a href="module_core.html#user"><code>User</code></a>)</li>
 <li>
-<code>environmental_treatments</code> (<a href="#combinationtreatment"><code>wetlab$CombinationTreatment</code></a>)</li>
+<code>combination_perturbations</code> (<a href="#combinationperturbation"><code>wetlab$CombinationPerturbation</code></a>)</li>
 </ul>
 </div>
 </div>

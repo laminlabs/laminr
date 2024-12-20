@@ -10,6 +10,7 @@
 <url><loc>https://laminr.lamin.ai/articles/module_bionty.html</loc></url>
 <url><loc>https://laminr.lamin.ai/articles/module_core.html</loc></url>
 <url><loc>https://laminr.lamin.ai/articles/module_wetlab.html</loc></url>
+<url><loc>https://laminr.lamin.ai/articles/setup.html</loc></url>
 <url><loc>https://laminr.lamin.ai/authors.html</loc></url>
 <url><loc>https://laminr.lamin.ai/index.html</loc></url>
 <url><loc>https://laminr.lamin.ai/reference/Field.html</loc></url>
@@ -20,6 +21,9 @@
 <url><loc>https://laminr.lamin.ai/reference/RelatedRecords.html</loc></url>
 <url><loc>https://laminr.lamin.ai/reference/connect.html</loc></url>
 <url><loc>https://laminr.lamin.ai/reference/index.html</loc></url>
+<url><loc>https://laminr.lamin.ai/reference/install_lamindb.html</loc></url>
+<url><loc>https://laminr.lamin.ai/reference/lamin_connect.html</loc></url>
+<url><loc>https://laminr.lamin.ai/reference/lamin_login.html</loc></url>
 <url><loc>https://laminr.lamin.ai/reference/laminr-package.html</loc></url>
 </urlset>
 
