@@ -14,6 +14,12 @@ This document outlines the features of the **{laminr}** package and the roadmap 
 
 ## Features
 
+### Setup
+
+* [x] Create a default Python instance for **{laminr}** (`install_lamindb()`)
+* [x] Login to LaminDB from R (`lamin_login()`)
+* [x] Set a default instance from R (`lamin_connect()`)
+
 ### Connect to an instance
 
 * [x] Connect to a LaminDB instance (`connect()`).
@@ -146,6 +152,8 @@ A first version of the package that allows users to:
 * Introduce data curation features (validation, standardization, annotation).
 * Enhance support for bionty registries and ontology interactions.
 * Connect to TileDB-SOMA artifacts.
+* Allow users to install **lamindb** and manage a Python environment
+* Login and set a default instance from R
 
 ### Future versions
 

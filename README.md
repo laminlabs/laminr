@@ -26,12 +26,6 @@ Get started with **{laminr}** by installing the package from CRAN:
 install.packages("laminr")
 ```
 
-You will also need to install the `lamindb` Python package:
-
-```bash
-pip install 'lamindb[aws]>=0.77.2'
-```
-
 ### Additional packages
 
 Some functionality requires additional packages. To install all of these use:
@@ -50,6 +44,30 @@ This will also install these package for the following tasks:
 - **{s3}** - Fetching datasets from AWS S3
 
 If you choose not to install all packages now you will be prompted to do so whenever one is required.
+
+## Setting up
+
+Before loading **{laminr}** for the first time you should:
+
+1. Set up a Python environment
+
+```r
+laminr::install_lamindb()
+```
+
+2. Log in
+
+```r
+laminr::lamin_login(api_key = "your_api_key")
+```
+
+3. Set a default instance
+
+```r
+laminr::lamin_connect("<owner>/<name>")
+```
+
+See the [setup vignette](https://laminr.lamin.ai/articles/setup.html) for more information (`vignette("setup", package = "laminr")`).
 
 ## Getting started
 
