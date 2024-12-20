@@ -61,12 +61,6 @@ laminr::install_lamindb()
 laminr::lamin_login(api_key = "your_api_key")
 ```
 
-OR
-
-```r
-laminr::lamin_login(user = "user_handle")
-```
-
 3. Set a default instance
 
 ```r
