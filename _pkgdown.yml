@@ -19,6 +19,8 @@ navbar:
       text: Articles
       menu:
         - text: Introduction
+        - text: Setting up laminr
+          href: articles/setup.html
         - text: Concepts and features
           href: articles/concepts_features.html
         - text: Package Architecture
