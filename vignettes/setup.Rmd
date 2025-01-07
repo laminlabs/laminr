@@ -37,6 +37,19 @@ install.packages("laminr", dependencies = TRUE)
 
 If you choose not to install all additional packages you will be prompted to do so as needed.
 
+## Installing the development version
+
+The current development version of **{laminr}** can be installed from GitHub using:
+
+```r
+if (!requireNamespace("laminr", quietly = TRUE)) {
+  install.packages("remotes")
+}
+remotes::install_github("laminlabs/laminr")
+```
+
+This version may have bug fixes and new features but could also be unstable so is not recommended for most users.
+
 # Installing Python **lamindb**
 
 Using **{laminr}** requires that the Python **lamindb** package is available.
