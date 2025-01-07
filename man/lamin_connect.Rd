@@ -7,7 +7,7 @@
 lamin_connect(slug)
 }
 \arguments{
-\item{slug}{Slug giving the instance to connect to ("\if{html}{\out{<owner>}}/\if{html}{\out{<name>}}")}
+\item{slug}{Slug giving the instance to connect to (\verb{<owner>/<name>})}
 }
 \description{
 Set the default LaminDB instance by calling \verb{lamin connect} on the command
