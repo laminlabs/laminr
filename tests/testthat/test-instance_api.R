@@ -26,7 +26,7 @@ test_that("get_schema works", {
   # try to get the schema
   schema <- api$get_schema()
 
-  expect_named(schema, c("core", "bionty", "wetlab"))
+  expect_named(schema, c("core", "bionty", "wetlab", "ourprojects"))
 
   expect_true(all(c("run", "user", "param", "artifact", "storage") %in% names(schema$core)))
 
