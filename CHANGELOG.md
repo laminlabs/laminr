@@ -1,5 +1,7 @@
 # laminr v0.3.1
 
+This release improves the UX for setting up the Python environment and adds functions to allow access to CLI functionality from R.
+
 ## NEW FUNCTIONALITY
 
 - Add a `install_lamindb()` function to help with setting up the default Python environment
