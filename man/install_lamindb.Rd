@@ -24,7 +24,7 @@ to install}
 before creating a new one with the requested packages}
 }
 \value{
-The result of \code{reticulate::py_install()}
+\code{NULL}, invisibly
 }
 \description{
 Create a Python environment containing \strong{lamindb} or install \strong{lamindb}
