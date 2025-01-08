@@ -39,16 +39,17 @@ install_lamindb <- function(..., envname = "r-lamindb", extra_packages = NULL,
 
   reticulate::py_install(packages = packages, envname = envname, ...)
 
-  if (reticulate::virtualenv_exists(envname)) {
-    env_type <- "virtualenv"
-  } else if (reticulate::condaenv_exists(envname)) {
-    env_type <- "conda"
-  } else {
-    cli::cli_abort(paste(
-      "Neither a virtualenv or conda environment with the name {.val {envname}} exists.",
-      "The installation may have failed."
-    ))
-  }
+  env_type <-
+    if (reticulate::virtualenv_exists(envname)) {
+      "virtualenv"
+    } else if (reticulate::condaenv_exists(envname)) {
+      "conda"
+    } else {
+      cli::cli_abort(paste(
+        "Neither a virtualenv or conda environment with the name {.val {envname}} exists.",
+        "The installation may have failed."
+      ))
+    }
 
   tryCatch(
     switch(
