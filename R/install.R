@@ -11,7 +11,7 @@
 #' @param new_env Whether to remove any existing `virtualenv` with the same name
 #'   before creating a new one with the requested packages
 #'
-#' @return The result of `reticulate::py_install()`
+#' @return `NULL`, invisibly
 #' @export
 #'
 #' @details
@@ -35,10 +35,35 @@ install_lamindb <- function(..., envname = "r-lamindb", extra_packages = NULL,
     reticulate::virtualenv_remove(envname)
   }
 
-  packages <- unique(c(
-    "lamindb",
-    "ipython",
-    extra_packages
-  ))
+  packages <- unique(c("lamindb", "ipython", extra_packages))
+
   reticulate::py_install(packages = packages, envname = envname, ...)
+
+  env_type <-
+    if (reticulate::virtualenv_exists(envname)) {
+      "virtualenv"
+    } else if (reticulate::condaenv_exists(envname)) {
+      "conda"
+    } else {
+      cli::cli_abort(paste(
+        "Neither a virtualenv or conda environment with the name {.val {envname}} exists.",
+        "The installation may have failed."
+      ))
+    }
+
+  tryCatch(
+    switch(
+      env_type,
+      virtualenv = reticulate::use_virtualenv(envname),
+      conda = reticulate::use_condaenv(envname)
+    ),
+    error = function(err) {
+      cli::cli_warn(paste(
+        "Unable to attach to the {.val {envname}} {env_type} environment.",
+        "Try starting a new R session before using {.pkg laminr}."
+      ))
+    }
+  )
+
+  invisible(NULL)
 }
