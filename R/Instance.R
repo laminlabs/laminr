@@ -228,33 +228,6 @@ Instance <- R6::R6Class( # nolint object_name_linter
           )
         }
       }
-
-      if (is.null(transform)) {
-        transform <- tryCatch(
-          py_lamin$track(path = path),
-          error = function(err) {
-            py_err <- reticulate::py_last_error()
-            # please don't change the below without changing it in lamindb
-            if (py_err$type != "MissingContextUID") {
-              cli::cli_abort(c(
-                "Python {py_err$message}",
-                "i" = "Run {.run reticulate::py_last_error()} for details"
-              ))
-            }
-
-            uid <- gsub(".*\\(\"(.*?)\"\\).*", "\\1", py_err$value)
-            cli::cli_inform(paste(
-              "To track this notebook, run: db$track(\"{uid}\")"
-            ))
-          }
-        )
-      } else {
-        if (is.character(transform) && nchar(transform) != 16) {
-          cli::cli_abort(
-            "The transform UID must be exactly 16 characters, got {nchar(transform)}"
-          )
-        }
-
         py_lamin$track(transform = transform, path = path)
       }
     },
