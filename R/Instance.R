@@ -74,6 +74,22 @@ create_instance <- function(instance_settings, is_default = FALSE) {
     }
   )
 
+  if (!is.null(py_lamin)) {
+    lamin_version <- reticulate::py_get_attr(py_lamin, "__version__")
+    lamin_version_clean <- sub("([a-zA-Z].*)", "", lamin_version) # Remove pre-release versions, e.g. 1.0a5 -> 1.0
+    if (compareVersion("1.0", lamin_version_clean) == 1) {
+      cli::cli_abort(
+        c(
+          paste(
+            "This version of {.pkg laminr} requires Python {.pkg lamindb} >= 1.0.",
+            "You have {.pkg lamindb} v{lamin_version}."
+          ),
+          "i" = "Run {.run laminr::install_lamindb()} to update."
+        )
+      )
+    }
+  }
+
   # create the instance
   RichInstance$new(
     settings = instance_settings,
