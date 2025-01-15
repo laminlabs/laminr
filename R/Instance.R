@@ -228,8 +228,8 @@ Instance <- R6::R6Class( # nolint object_name_linter
           )
         }
       }
-        py_lamin$track(transform = transform, path = path)
-      }
+
+      py_lamin$track(transform = transform, path = path)
     },
     #' @description Finish a tracked run
     finish = function() {
