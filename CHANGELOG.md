@@ -1,3 +1,13 @@
+# laminr devel
+
+## MAJOR CHANGES
+
+- Updates for compatibility with the Python `lamindb` v1.0 release
+
+## MINOR CHANGES
+
+- `db$track()` can not automatically create a transform UID when not supplied
+
 # laminr v0.3.1
 
 This release improves the UX for setting up the Python environment and adds functions to allow access to CLI functionality from R.
@@ -42,7 +52,6 @@ This release contains mostly UX improvements:
 - Update the laminr Getting Started vignette with feedback from demo (PR #113).
 - Update roadmap (PR #112).
 - Simplify `README` content (PR #116).
-
 
 # laminr v0.2.0
 
