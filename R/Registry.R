@@ -519,7 +519,7 @@ create_record_from_python <- function(py_record, instance) {
 
   class_split <- strsplit(py_classes[1], "\\.")[[1]]
   module_name <- class_split[1]
-  if (module_name == "lnschema_core") {
+  if (module_name == "lamindb") {
     module_name <- "core"
   }
   registry_name <- tolower(class_split[3])
@@ -534,7 +534,7 @@ create_record_from_python <- function(py_record, instance) {
         NULL
       }
     )
-    if (inherits(value, "lnschema_core.models.Record")) {
+    if (inherits(value, "lamindb.models.Record")) {
       value <- create_record_from_python(value, instance)
     }
     value
