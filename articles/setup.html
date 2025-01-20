@@ -31,10 +31,11 @@
       <ul class="navbar-nav me-auto">
 <li class="nav-item"><a class="nav-link" href="../articles/laminr.html">Get started</a></li>
 <li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
-<li class="nav-item dropdown">
+<li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><h6 class="dropdown-header" data-toc-skip>Introduction</h6></li>
+    <li><a class="dropdown-item" href="../articles/setup.html">Setting up laminr</a></li>
     <li><a class="dropdown-item" href="../articles/concepts_features.html">Concepts and features</a></li>
     <li><a class="dropdown-item" href="../articles/architecture.html">Package Architecture</a></li>
     <li><a class="dropdown-item" href="../articles/development.html">Development Roadmap</a></li>
@@ -95,6 +96,19 @@ packages. To install all suggested dependencies use:</p>
 <p>If you choose not to install all additional packages you will be
 prompted to do so as needed.</p>
 </div>
+<div class="section level3">
+<h3 id="installing-the-development-version">Installing the development version<a class="anchor" aria-label="anchor" href="#installing-the-development-version"></a>
+</h3>
+<p>The current development version of <strong>{laminr}</strong> can be
+installed from GitHub using:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"laminr"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"laminlabs/laminr"</span><span class="op">)</span></span></code></pre></div>
+<p>This version may have bug fixes and new features but could also be
+unstable so is not recommended for most users.</p>
+</div>
 </div>
 <div class="section level2">
 <h2 id="installing-python-lamindb">Installing Python <strong>lamindb</strong><a class="anchor" aria-label="anchor" href="#installing-python-lamindb"></a>
@@ -107,7 +121,7 @@ prompted to do so as needed.</p>
 <p>The recommended way to use <strong>{laminr}</strong> is to connect to
 the included <code>r-lamindb</code> Python environment. This can be
 created using:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">laminr</span><span class="fu">::</span><span class="fu"><a href="../reference/install_lamindb.html">install_lamindb</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>This should be run before the first time you load the
 <strong>{laminr}</strong> library. The <strong>{reticulate}</strong>
@@ -119,7 +133,7 @@ package will then be told to use this environment when
 <p>If you want to add additional packages to the environment, these can
 be specified using the <code>extra_packages</code> argument. For
 example, to add the <strong>bionty</strong> package:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">laminr</span><span class="fu">::</span><span class="fu"><a href="../reference/install_lamindb.html">install_lamindb</a></span><span class="op">(</span>extra_packages <span class="op">=</span> <span class="st">"bionty"</span><span class="op">)</span></span></code></pre></div>
 <p>Python packages providing additional registries that may be used in
 your instance:</p>
@@ -150,16 +164,38 @@ papers, blog posts, preprints</li>
 use another R package which expects a particular Python module to be
 installed.</p>
 </div>
+<div class="section level4">
+<h4 id="adding-lamindb-to-another-environment">Adding <strong>lamindb</strong> to another environment<a class="anchor" aria-label="anchor" href="#adding-lamindb-to-another-environment"></a>
+</h4>
+<p>To install <strong>lamindb</strong> into another environment, set the
+<code>envname</code> argument:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">laminr</span><span class="fu">::</span><span class="fu"><a href="../reference/install_lamindb.html">install_lamindb</a></span><span class="op">(</span>envname <span class="op">=</span> <span class="st">"your-env"</span><span class="op">)</span></span></code></pre></div>
+<p>Be aware that there may be dependency conflicts with packages already
+installed in the environment and installing <strong>lamindb</strong> may
+cause package versions to change.</p>
+</div>
 </div>
 <div class="section level3">
-<h3 id="using-another-environment">Using another environment<a class="anchor" aria-label="anchor" href="#using-another-environment"></a>
+<h3 id="setting-the-python-environment">Setting the Python environment<a class="anchor" aria-label="anchor" href="#setting-the-python-environment"></a>
 </h3>
+<p>Running <code><a href="https://laminr.lamin.ai">library(laminr)</a></code> will tell
+<strong>{reticulate}</strong> to use the included <code>r-lamindb</code>
+environment (if it has not already connected to another
+environment).</p>
+<p>If you prefer to not load the whole package, and instead call
+functions using <code>laminr::</code>, you should tell
+<strong>{reticulate}</strong> which environment to use by running
+<code>reticulate::use_virtualenv("r-lamindb")</code>.</p>
+<div class="section level4">
+<h4 id="using-another-environment">Using another environment<a class="anchor" aria-label="anchor" href="#using-another-environment"></a>
+</h4>
 <p>In some cases you may prefer to use another Python environment. This
 may be the case if you use another R package which requires a Python
 module or if you are managing your own Python environment.</p>
 <p>Specifying another Python environment to use should be done
-<strong><em>before</em></strong> loading <strong>{laminr}</strong> using
-one of these methods:</p>
+<strong><em>before</em></strong> loading <strong>{laminr}</strong> (or
+<strong>{reticulate}</strong>) using one of these methods:</p>
 <ul>
 <li>Loading another R package that sets the Python environment</li>
 <li>Using <code><a href="https://rstudio.github.io/reticulate/reference/use_python.html" class="external-link">reticulate::use_virtualenv()</a></code>,
@@ -174,16 +210,6 @@ one of these methods:</p>
 the active Python environment see
 <code><a href="https://rstudio.github.io/reticulate/articles/versions.html" class="external-link">vignette("versions", package = "reticulate")</a></code> (also <a href="https://rstudio.github.io/reticulate/articles/versions.html" class="external-link">available
 here</a>).</p>
-<div class="section level4">
-<h4 id="adding-lamindb-to-another-environment">Adding <strong>lamindb</strong> to another environment<a class="anchor" aria-label="anchor" href="#adding-lamindb-to-another-environment"></a>
-</h4>
-<p>To install <strong>lamindb</strong> into another environment, set the
-<code>envname</code> argument:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">laminr</span><span class="fu">::</span><span class="fu"><a href="../reference/install_lamindb.html">install_lamindb</a></span><span class="op">(</span>envname <span class="op">=</span> <span class="st">"your-env"</span><span class="op">)</span></span></code></pre></div>
-<p>Be aware that there may be dependency conflicts with packages already
-installed in the environment and installing <strong>lamindb</strong> may
-cause package versions to change.</p>
 </div>
 </div>
 </div>
@@ -195,14 +221,14 @@ public instances. To do this you will need a user API key which you can
 get by logging in to <a href="https://lamin.ai/dashboard" class="external-link">LaminHub</a>
 and going to your user settings.</p>
 <p>You can then login with:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">laminr</span><span class="fu">::</span><span class="fu"><a href="../reference/lamin_login.html">lamin_login</a></span><span class="op">(</span>api_key <span class="op">=</span> <span class="st">"your_api_key"</span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="switching-users">Switching users<a class="anchor" aria-label="anchor" href="#switching-users"></a>
 </h3>
 <p>If you have already given an API key for a user you can log in as
 them by giving the user name:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">laminr</span><span class="fu">::</span><span class="fu"><a href="../reference/lamin_login.html">lamin_login</a></span><span class="op">(</span>user <span class="op">=</span> <span class="st">"user_handle"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
