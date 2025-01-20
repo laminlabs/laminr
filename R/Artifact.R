@@ -70,8 +70,7 @@ ArtifactRecord <- R6::R6Class( # nolint object_name_linter
     #' @return A [tiledbsoma::SOMACollection] or [tiledbsoma::SOMAExperiment]
     #' object
     open = function() {
-      is_tiledbsoma <- private$get_value("suffix") == ".tiledbsoma" ||
-        private$get_value("_accessor") == "tiledbsoma"
+      is_tiledbsoma <- private$get_value("otype") == "tiledbsoma"
 
       if (!is_tiledbsoma) {
         cli::cli_abort(

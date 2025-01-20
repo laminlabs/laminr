@@ -23,6 +23,8 @@ jobs:
           - { os: ubuntu-latest, r: "devel", http-user-agent: "release", python: "3.x" }
           - { os: ubuntu-latest, r: "release", python: "3.x" }
           - { os: ubuntu-latest, r: "oldrel-1", python: "3.9" }
+          - { os: ubuntu-latest, r: "release", http-user-agent: "release", python: "3.x", lamin: "devel" }
+          - { os: ubuntu-latest, r: "devel", http-user-agent: "release", python: "3.x", lamin: "devel" }
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -76,6 +78,10 @@ jobs:
       - name: Setup Python environment
         run: |
           laminr::install_lamindb(extra_packages = c("s3fs"))
+          if ("${{ matrix.config.lamin }}" == "devel") {
+            reticulate::use_virtualenv("r-lamindb")
+            reticulate::py_install("git+https://github.com/laminlabs/lamindb.git")
+          }
         shell: Rscript {0}
 
       - name: Log in to Lamin
