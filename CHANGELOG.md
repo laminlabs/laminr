@@ -1,12 +1,15 @@
-# laminr devel
+# laminr v0.4.0
 
-## MAJOR CHANGES
+Minor (breaking) changes to support the Python `lamindb` v1.0 release.
 
-- Updates for compatibility with the Python `lamindb` v1.0 release
+## BREAKING CHANGES
+
+- Updates for compatibility with the Python `lamindb` v1.0 release (PR #136)
 
 ## MINOR CHANGES
 
-- `db$track()` can not automatically create a transform UID when not supplied
+- `db$track()` can not automatically create a transform UID when not supplied (PR #136)
+
 
 # laminr v0.3.1
 
@@ -14,12 +17,13 @@ This release improves the UX for setting up the Python environment and adds func
 
 ## NEW FUNCTIONALITY
 
-- Add a `install_lamindb()` function to help with setting up the default Python environment
-- Add `lamin_login()` and `lamin_connect()` functions to allow access to CLI functionality from R
+- Add a `install_lamindb()` function to help with setting up the default Python environment (PR #129).
+- Add `lamin_login()` and `lamin_connect()` functions to allow access to CLI functionality from R (PR #129).
 
 ## DOCUMENTATION
 
-- Add a set up vignette and update other documentation with instructions for how to set up a Python environment
+- Add a set up vignette and update other documentation with instructions for how to set up a Python environment (PR #129).
+
 
 # laminr v0.3.0
 
