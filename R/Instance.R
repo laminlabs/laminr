@@ -77,7 +77,7 @@ create_instance <- function(instance_settings, is_default = FALSE) {
   if (!is.null(py_lamin)) {
     lamin_version <- reticulate::py_get_attr(py_lamin, "__version__")
     lamin_version_clean <- sub("([a-zA-Z].*)", "", lamin_version) # Remove pre-release versions, e.g. 1.0a5 -> 1.0
-    if (compareVersion("1.0.2", lamin_version_clean) == 1) {
+    if (utils::compareVersion("1.0.2", lamin_version_clean) == 1) {
       cli::cli_abort(
         c(
           paste(
