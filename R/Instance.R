@@ -74,6 +74,22 @@ create_instance <- function(instance_settings, is_default = FALSE) {
     }
   )
 
+  if (!is.null(py_lamin)) {
+    lamin_version <- reticulate::py_get_attr(py_lamin, "__version__")
+    lamin_version_clean <- sub("([a-zA-Z].*)", "", lamin_version) # Remove pre-release versions, e.g. 1.0a5 -> 1.0
+    if (compareVersion("1.0.2", lamin_version_clean) == 1) {
+      cli::cli_abort(
+        c(
+          paste(
+            "This version of {.pkg laminr} requires Python {.pkg lamindb} >= 1.0.",
+            "You have {.pkg lamindb} v{lamin_version}."
+          ),
+          "i" = "Run {.run laminr::install_lamindb()} to update."
+        )
+      )
+    }
+  }
+
   # create the instance
   RichInstance$new(
     settings = instance_settings,
@@ -229,34 +245,7 @@ Instance <- R6::R6Class( # nolint object_name_linter
         }
       }
 
-      if (is.null(transform)) {
-        transform <- tryCatch(
-          py_lamin$track(path = path),
-          error = function(err) {
-            py_err <- reticulate::py_last_error()
-            # please don't change the below without changing it in lamindb
-            if (py_err$type != "MissingContextUID") {
-              cli::cli_abort(c(
-                "Python {py_err$message}",
-                "i" = "Run {.run reticulate::py_last_error()} for details"
-              ))
-            }
-
-            uid <- gsub(".*\\(\"(.*?)\"\\).*", "\\1", py_err$value)
-            cli::cli_inform(paste(
-              "To track this notebook, run: db$track(\"{uid}\")"
-            ))
-          }
-        )
-      } else {
-        if (is.character(transform) && nchar(transform) != 16) {
-          cli::cli_abort(
-            "The transform UID must be exactly 16 characters, got {nchar(transform)}"
-          )
-        }
-
-        py_lamin$track(transform = transform, path = path)
-      }
+      py_lamin$track(transform = transform, path = path)
     },
     #' @description Finish a tracked run
     finish = function() {

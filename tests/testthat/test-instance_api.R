@@ -52,7 +52,7 @@ test_that("get_record works", {
   # try to get a record
   artifact <- api$get_record("core", "artifact", "mePviem4DGM4SFzvLXf3")
 
-  expect_true(all(c("uid", "size", "hash", "description", "type") %in% names(artifact)))
+  expect_true(all(c("uid", "size", "hash", "description") %in% names(artifact)))
 })
 
 test_that("test get_record fails gracefully with incorrect host", {
@@ -78,7 +78,7 @@ test_that("get_record with select works", {
   # try to get a record
   artifact <- api$get_record("core", "artifact", "mePviem4DGM4SFzvLXf3", select = "storage")
 
-  expect_true(all(c("uid", "size", "hash", "description", "type") %in% names(artifact)))
+  expect_true(all(c("uid", "size", "hash", "description") %in% names(artifact)))
 
   expect_true(all(c("uid", "type", "region", "root") %in% names(artifact$storage)))
 })
