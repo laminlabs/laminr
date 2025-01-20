@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">laminr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,7 +67,7 @@
       <h1>Wetlab Module</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/laminlabs/laminr/blob/v0.3.1/vignettes/module_wetlab.Rmd" class="external-link"><code>vignettes/module_wetlab.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/laminlabs/laminr/blob/main/vignettes/module_wetlab.Rmd" class="external-link"><code>vignettes/module_wetlab.Rmd</code></a></small>
       <div class="d-none name"><code>module_wetlab.Rmd</code></div>
     </div>
 
@@ -110,7 +110,6 @@ other experimental setups.</li>
 </ul>
 <pre><code><span><span class="co">#&gt; <span style="color: #FFFF55;">!</span> schema module 'bionty' is not installed → no access to its labels &amp; registries (resolve via `pip install bionty`)</span></span>
 <span><span class="co">#&gt; <span style="color: #FFFF55;">!</span> schema module 'wetlab' is not installed → no access to its labels &amp; registries (resolve via `pip install wetlab`)</span></span>
-<span><span class="co">#&gt; <span style="color: #FFFF55;">!</span> schema module 'ourprojects' is not installed → no access to its labels &amp; registries (resolve via `pip install ourprojects`)</span></span>
 <span><span class="co">#&gt; <span style="color: #55FF55;">→</span> connected lamindb: laminlabs/lamindata</span></span></code></pre>
 </div>
 <div class="section level2">
@@ -143,6 +142,8 @@ other experimental setups.</li>
 <ul>
 <li>
 <code>run</code> (<a href="module_core.html#run"><code>Run</code></a>)</li>
+<li>
+<code>space</code> (<a href="module_core.html#space"><code>Space</code></a>)</li>
 <li>
 <code>artifacts</code> (<a href="module_core.html#artifact"><code>Artifact</code></a>)</li>
 <li>
@@ -186,6 +187,8 @@ other experimental setups.</li>
 <code>run</code> (<a href="module_core.html#run"><code>Run</code></a>)</li>
 <li>
 <code>sex</code> (<a href="module_bionty.html#phenotype"><code>bionty$Phenotype</code></a>)</li>
+<li>
+<code>space</code> (<a href="module_core.html#space"><code>Space</code></a>)</li>
 <li>
 <code>diseases</code> (<a href="module_bionty.html#disease"><code>bionty$Disease</code></a>)</li>
 <li>
@@ -234,6 +237,8 @@ other experimental setups.</li>
 <li>
 <code>run</code> (<a href="module_core.html#run"><code>Run</code></a>)</li>
 <li>
+<code>space</code> (<a href="module_core.html#space"><code>Space</code></a>)</li>
+<li>
 <code>targets</code> (<a href="#perturbationtarget"><code>wetlab$PerturbationTarget</code></a>)</li>
 <li>
 <code>proteins</code> (<a href="module_bionty.html#protein"><code>bionty$Protein</code></a>)</li>
@@ -281,6 +286,8 @@ other experimental setups.</li>
 <li>
 <code>run</code> (<a href="module_core.html#run"><code>Run</code></a>)</li>
 <li>
+<code>space</code> (<a href="module_core.html#space"><code>Space</code></a>)</li>
+<li>
 <code>source</code> (<a href="module_bionty.html#source"><code>bionty$Source</code></a>)</li>
 <li>
 <code>parents</code> (<a href="#compound"><code>wetlab$Compound</code></a>)</li>
@@ -325,6 +332,8 @@ other experimental setups.</li>
 <ul>
 <li>
 <code>run</code> (<a href="module_core.html#run"><code>Run</code></a>)</li>
+<li>
+<code>space</code> (<a href="module_core.html#space"><code>Space</code></a>)</li>
 <li>
 <code>tissues</code> (<a href="module_bionty.html#tissue"><code>bionty$Tissue</code></a>)</li>
 <li>
@@ -375,6 +384,8 @@ other experimental setups.</li>
 <li>
 <code>run</code> (<a href="module_core.html#run"><code>Run</code></a>)</li>
 <li>
+<code>space</code> (<a href="module_core.html#space"><code>Space</code></a>)</li>
+<li>
 <code>artifacts</code> (<a href="module_core.html#artifact"><code>Artifact</code></a>)</li>
 <li>
 <code>created_by</code> (<a href="module_core.html#user"><code>User</code></a>)</li>
@@ -411,6 +422,8 @@ other experimental setups.</li>
 <ul>
 <li>
 <code>run</code> (<a href="module_core.html#run"><code>Run</code></a>)</li>
+<li>
+<code>space</code> (<a href="module_core.html#space"><code>Space</code></a>)</li>
 <li>
 <code>artifacts</code> (<a href="module_core.html#artifact"><code>Artifact</code></a>)</li>
 <li>
@@ -450,6 +463,8 @@ other experimental setups.</li>
 <code>run</code> (<a href="module_core.html#run"><code>Run</code></a>)</li>
 <li>
 <code>genes</code> (<a href="module_bionty.html#gene"><code>bionty$Gene</code></a>)</li>
+<li>
+<code>space</code> (<a href="module_core.html#space"><code>Space</code></a>)</li>
 <li>
 <code>pathways</code> (<a href="module_bionty.html#pathway"><code>bionty$Pathway</code></a>)</li>
 <li>
@@ -506,6 +521,8 @@ other experimental setups.</li>
 <li>
 <code>run</code> (<a href="module_core.html#run"><code>Run</code></a>)</li>
 <li>
+<code>space</code> (<a href="module_core.html#space"><code>Space</code></a>)</li>
+<li>
 <code>targets</code> (<a href="#perturbationtarget"><code>wetlab$PerturbationTarget</code></a>)</li>
 <li>
 <code>artifacts</code> (<a href="module_core.html#artifact"><code>Artifact</code></a>)</li>
@@ -551,6 +568,8 @@ other experimental setups.</li>
 <li>
 <code>run</code> (<a href="module_core.html#run"><code>Run</code></a>)</li>
 <li>
+<code>space</code> (<a href="module_core.html#space"><code>Space</code></a>)</li>
+<li>
 <code>targets</code> (<a href="#perturbationtarget"><code>wetlab$PerturbationTarget</code></a>)</li>
 <li>
 <code>compound</code> (<a href="#compound"><code>wetlab$Compound</code></a>)</li>
@@ -593,6 +612,8 @@ other experimental setups.</li>
 <ul>
 <li>
 <code>run</code> (<a href="module_core.html#run"><code>Run</code></a>)</li>
+<li>
+<code>space</code> (<a href="module_core.html#space"><code>Space</code></a>)</li>
 <li>
 <code>artifacts</code> (<a href="module_core.html#artifact"><code>Artifact</code></a>)</li>
 <li>
@@ -642,6 +663,8 @@ other experimental setups.</li>
 <ul>
 <li>
 <code>run</code> (<a href="module_core.html#run"><code>Run</code></a>)</li>
+<li>
+<code>space</code> (<a href="module_core.html#space"><code>Space</code></a>)</li>
 <li>
 <code>targets</code> (<a href="#perturbationtarget"><code>wetlab$PerturbationTarget</code></a>)</li>
 <li>

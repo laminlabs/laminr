@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">laminr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,7 +67,7 @@
       <h1>Bionty Module</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/laminlabs/laminr/blob/v0.3.1/vignettes/module_bionty.Rmd" class="external-link"><code>vignettes/module_bionty.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/laminlabs/laminr/blob/main/vignettes/module_bionty.Rmd" class="external-link"><code>vignettes/module_bionty.Rmd</code></a></small>
       <div class="d-none name"><code>module_bionty.Rmd</code></div>
     </div>
 
@@ -104,7 +104,6 @@ maintain historical versions.</li>
 </ul>
 <pre><code><span><span class="co">#&gt; <span style="color: #FFFF55;">!</span> schema module 'bionty' is not installed → no access to its labels &amp; registries (resolve via `pip install bionty`)</span></span>
 <span><span class="co">#&gt; <span style="color: #FFFF55;">!</span> schema module 'wetlab' is not installed → no access to its labels &amp; registries (resolve via `pip install wetlab`)</span></span>
-<span><span class="co">#&gt; <span style="color: #FFFF55;">!</span> schema module 'ourprojects' is not installed → no access to its labels &amp; registries (resolve via `pip install ourprojects`)</span></span>
 <span><span class="co">#&gt; <span style="color: #55FF55;">→</span> connected lamindb: laminlabs/lamindata</span></span></code></pre>
 </div>
 <div class="section level2">
@@ -146,7 +145,11 @@ maintain historical versions.</li>
 <li>
 <code>run</code> (<a href="module_core.html#run"><code>Run</code></a>)</li>
 <li>
+<code>space</code> (<a href="module_core.html#space"><code>Space</code></a>)</li>
+<li>
 <code>source</code> (<a href="#source"><code>bionty$Source</code></a>)</li>
+<li>
+<code>schemas</code> (<a href="module_core.html#schema"><code>Schema</code></a>)</li>
 <li>
 <code>organism</code> (<a href="#organism"><code>bionty$Organism</code></a>)</li>
 <li>
@@ -155,8 +158,6 @@ maintain historical versions.</li>
 <code>artifacts</code> (<a href="module_core.html#artifact"><code>Artifact</code></a>)</li>
 <li>
 <code>created_by</code> (<a href="module_core.html#user"><code>User</code></a>)</li>
-<li>
-<code>feature_sets</code> (<a href="module_core.html#featureset"><code>FeatureSet</code></a>)</li>
 </ul>
 </div>
 </div>
@@ -205,6 +206,8 @@ maintain historical versions.</li>
 <li>
 <code>run</code> (<a href="module_core.html#run"><code>Run</code></a>)</li>
 <li>
+<code>space</code> (<a href="module_core.html#space"><code>Space</code></a>)</li>
+<li>
 <code>artifacts</code> (<a href="module_core.html#artifact"><code>Artifact</code></a>)</li>
 <li>
 <code>created_by</code> (<a href="module_core.html#user"><code>User</code></a>)</li>
@@ -247,6 +250,8 @@ maintain historical versions.</li>
 <ul>
 <li>
 <code>run</code> (<a href="module_core.html#run"><code>Run</code></a>)</li>
+<li>
+<code>space</code> (<a href="module_core.html#space"><code>Space</code></a>)</li>
 <li>
 <code>source</code> (<a href="#source"><code>bionty$Source</code></a>)</li>
 <li>
@@ -294,6 +299,8 @@ maintain historical versions.</li>
 <ul>
 <li>
 <code>run</code> (<a href="module_core.html#run"><code>Run</code></a>)</li>
+<li>
+<code>space</code> (<a href="module_core.html#space"><code>Space</code></a>)</li>
 <li>
 <code>source</code> (<a href="#source"><code>bionty$Source</code></a>)</li>
 <li>
@@ -344,17 +351,19 @@ maintain historical versions.</li>
 <li>
 <code>genes</code> (<a href="#gene"><code>bionty$Gene</code></a>)</li>
 <li>
+<code>space</code> (<a href="module_core.html#space"><code>Space</code></a>)</li>
+<li>
 <code>source</code> (<a href="#source"><code>bionty$Source</code></a>)</li>
 <li>
 <code>parents</code> (<a href="#pathway"><code>bionty$Pathway</code></a>)</li>
+<li>
+<code>schemas</code> (<a href="module_core.html#schema"><code>Schema</code></a>)</li>
 <li>
 <code>children</code> (<a href="#pathway"><code>bionty$Pathway</code></a>)</li>
 <li>
 <code>artifacts</code> (<a href="module_core.html#artifact"><code>Artifact</code></a>)</li>
 <li>
 <code>created_by</code> (<a href="module_core.html#user"><code>User</code></a>)</li>
-<li>
-<code>feature_sets</code> (<a href="module_core.html#featureset"><code>FeatureSet</code></a>)</li>
 </ul>
 </div>
 </div>
@@ -397,15 +406,17 @@ maintain historical versions.</li>
 <li>
 <code>run</code> (<a href="module_core.html#run"><code>Run</code></a>)</li>
 <li>
+<code>space</code> (<a href="module_core.html#space"><code>Space</code></a>)</li>
+<li>
 <code>source</code> (<a href="#source"><code>bionty$Source</code></a>)</li>
+<li>
+<code>schemas</code> (<a href="module_core.html#schema"><code>Schema</code></a>)</li>
 <li>
 <code>organism</code> (<a href="#organism"><code>bionty$Organism</code></a>)</li>
 <li>
 <code>artifacts</code> (<a href="module_core.html#artifact"><code>Artifact</code></a>)</li>
 <li>
 <code>created_by</code> (<a href="module_core.html#user"><code>User</code></a>)</li>
-<li>
-<code>feature_sets</code> (<a href="module_core.html#featureset"><code>FeatureSet</code></a>)</li>
 </ul>
 </div>
 </div>
@@ -443,6 +454,8 @@ maintain historical versions.</li>
 <ul>
 <li>
 <code>run</code> (<a href="module_core.html#run"><code>Run</code></a>)</li>
+<li>
+<code>space</code> (<a href="module_core.html#space"><code>Space</code></a>)</li>
 <li>
 <code>source</code> (<a href="#source"><code>bionty$Source</code></a>)</li>
 <li>
@@ -490,6 +503,8 @@ maintain historical versions.</li>
 <ul>
 <li>
 <code>run</code> (<a href="module_core.html#run"><code>Run</code></a>)</li>
+<li>
+<code>space</code> (<a href="module_core.html#space"><code>Space</code></a>)</li>
 <li>
 <code>source</code> (<a href="#source"><code>bionty$Source</code></a>)</li>
 <li>
@@ -539,6 +554,8 @@ maintain historical versions.</li>
 <code>run</code> (<a href="module_core.html#run"><code>Run</code></a>)</li>
 <li>
 <code>genes</code> (<a href="#gene"><code>bionty$Gene</code></a>)</li>
+<li>
+<code>space</code> (<a href="module_core.html#space"><code>Space</code></a>)</li>
 <li>
 <code>source</code> (<a href="#source"><code>bionty$Source</code></a>)</li>
 <li>
@@ -591,6 +608,8 @@ maintain historical versions.</li>
 <li>
 <code>run</code> (<a href="module_core.html#run"><code>Run</code></a>)</li>
 <li>
+<code>space</code> (<a href="module_core.html#space"><code>Space</code></a>)</li>
+<li>
 <code>source</code> (<a href="#source"><code>bionty$Source</code></a>)</li>
 <li>
 <code>parents</code> (<a href="#ethnicity"><code>bionty$Ethnicity</code></a>)</li>
@@ -637,6 +656,8 @@ maintain historical versions.</li>
 <ul>
 <li>
 <code>run</code> (<a href="module_core.html#run"><code>Run</code></a>)</li>
+<li>
+<code>space</code> (<a href="module_core.html#space"><code>Space</code></a>)</li>
 <li>
 <code>source</code> (<a href="#source"><code>bionty$Source</code></a>)</li>
 <li>
@@ -687,15 +708,17 @@ maintain historical versions.</li>
 <li>
 <code>run</code> (<a href="module_core.html#run"><code>Run</code></a>)</li>
 <li>
+<code>space</code> (<a href="module_core.html#space"><code>Space</code></a>)</li>
+<li>
 <code>source</code> (<a href="#source"><code>bionty$Source</code></a>)</li>
+<li>
+<code>schemas</code> (<a href="module_core.html#schema"><code>Schema</code></a>)</li>
 <li>
 <code>organism</code> (<a href="#organism"><code>bionty$Organism</code></a>)</li>
 <li>
 <code>artifacts</code> (<a href="module_core.html#artifact"><code>Artifact</code></a>)</li>
 <li>
 <code>created_by</code> (<a href="module_core.html#user"><code>User</code></a>)</li>
-<li>
-<code>feature_sets</code> (<a href="module_core.html#featureset"><code>FeatureSet</code></a>)</li>
 </ul>
 </div>
 </div>
@@ -733,6 +756,8 @@ maintain historical versions.</li>
 <ul>
 <li>
 <code>run</code> (<a href="module_core.html#run"><code>Run</code></a>)</li>
+<li>
+<code>space</code> (<a href="module_core.html#space"><code>Space</code></a>)</li>
 <li>
 <code>source</code> (<a href="#source"><code>bionty$Source</code></a>)</li>
 <li>
@@ -786,6 +811,8 @@ maintain historical versions.</li>
 <ul>
 <li>
 <code>run</code> (<a href="module_core.html#run"><code>Run</code></a>)</li>
+<li>
+<code>space</code> (<a href="module_core.html#space"><code>Space</code></a>)</li>
 <li>
 <code>source</code> (<a href="#source"><code>bionty$Source</code></a>)</li>
 <li>

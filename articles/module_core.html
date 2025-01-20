@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">laminr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,7 +67,7 @@
       <h1>Core Module</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/laminlabs/laminr/blob/v0.3.1/vignettes/module_core.Rmd" class="external-link"><code>vignettes/module_core.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/laminlabs/laminr/blob/main/vignettes/module_core.Rmd" class="external-link"><code>vignettes/module_core.Rmd</code></a></small>
       <div class="d-none name"><code>module_core.Rmd</code></div>
     </div>
 
@@ -109,7 +109,6 @@ concepts and <strong>{laminr}</strong>’s architecture, refer to the
 operations, see the <strong>Getting started</strong> vignette:
 <code><a href="../articles/laminr.html">vignette("laminr", package = "laminr")</a></code>.</p>
 <pre><code><span><span class="co">#&gt; <span style="color: #FFFF55;">!</span> schema module 'bionty' is not installed → no access to its labels &amp; registries (resolve via `pip install bionty`)</span></span>
-<span><span class="co">#&gt; <span style="color: #FFFF55;">!</span> schema module 'ourprojects' is not installed → no access to its labels &amp; registries (resolve via `pip install ourprojects`)</span></span>
 <span><span class="co">#&gt; <span style="color: #FFFF55;">!</span> schema module 'wetlab' is not installed → no access to its labels &amp; registries (resolve via `pip install wetlab`)</span></span>
 <span><span class="co">#&gt; <span style="color: #55FF55;">→</span> connected lamindb: laminlabs/lamindata</span></span></code></pre>
 </div>
@@ -126,6 +125,8 @@ operations, see the <strong>Getting started</strong> vignette:
 <li>
 <code>uid</code> (<code>character</code>)</li>
 <li>
+<code>name</code> (<code>character</code>)</li>
+<li>
 <code>reference</code> (<code>character</code>)</li>
 <li>
 <code>created_at</code> (<code>POSIXct</code>)</li>
@@ -133,8 +134,6 @@ operations, see the <strong>Getting started</strong> vignette:
 <code>started_at</code> (<code>POSIXct</code>)</li>
 <li>
 <code>finished_at</code> (<code>POSIXct</code>)</li>
-<li>
-<code>is_consecutive</code> (<code>logical</code>)</li>
 <li>
 <code>reference_type</code> (<code>character</code>)</li>
 </ul>
@@ -144,9 +143,11 @@ operations, see the <strong>Getting started</strong> vignette:
 </h3>
 <ul>
 <li>
-<code>parent</code> (<a href="#run"><code>Run</code></a>)</li>
+<code>space</code> (<a href="#space"><code>Space</code></a>)</li>
 <li>
 <code>report</code> (<a href="#artifact"><code>Artifact</code></a>)</li>
+<li>
+<code>ulabels</code> (<a href="#ulabel"><code>ULabel</code></a>)</li>
 <li>
 <code>transform</code> (<a href="#transform"><code>Transform</code></a>)</li>
 <li>
@@ -155,6 +156,8 @@ operations, see the <strong>Getting started</strong> vignette:
 <code>environment</code> (<a href="#artifact"><code>Artifact</code></a>)</li>
 <li>
 <code>input_artifacts</code> (<a href="#artifact"><code>Artifact</code></a>)</li>
+<li>
+<code>initiated_by_run</code> (<a href="#run"><code>Run</code></a>)</li>
 <li>
 <code>output_artifacts</code> (<a href="#artifact"><code>Artifact</code></a>)</li>
 <li>
@@ -214,6 +217,8 @@ operations, see the <strong>Getting started</strong> vignette:
 <li>
 <code>dtype</code> (<code>character</code>)</li>
 <li>
+<code>is_type</code> (<code>logical</code>)</li>
+<li>
 <code>created_at</code> (<code>POSIXct</code>)</li>
 <li>
 <code>updated_at</code> (<code>POSIXct</code>)</li>
@@ -226,18 +231,87 @@ operations, see the <strong>Getting started</strong> vignette:
 <li>
 <code>run</code> (<a href="#run"><code>Run</code></a>)</li>
 <li>
+<code>type</code> (<a href="#param"><code>Param</code></a>)</li>
+<li>
+<code>space</code> (<a href="#space"><code>Space</code></a>)</li>
+<li>
 <code>values</code> (<a href="#paramvalue"><code>ParamValue</code></a>)</li>
+<li>
+<code>schemas</code> (<a href="#schema"><code>Schema</code></a>)</li>
 <li>
 <code>created_by</code> (<a href="#user"><code>User</code></a>)</li>
 </ul>
 </div>
 </div>
 <div class="section level2">
-<h2 id="ulabel">ULabel<a class="anchor" aria-label="anchor" href="#ulabel"></a>
+<h2 id="space">Space<a class="anchor" aria-label="anchor" href="#space"></a>
 </h2>
 <p>Base classes: <code><a href="../reference/Registry.html">?Registry</a></code></p>
 <div class="section level3">
 <h3 id="simple-fields-3">Simple fields<a class="anchor" aria-label="anchor" href="#simple-fields-3"></a>
+</h3>
+<ul>
+<li>
+<code>id</code> (<code>SmallAutoField</code>)</li>
+<li>
+<code>uid</code> (<code>character</code>)</li>
+<li>
+<code>name</code> (<code>character</code>)</li>
+<li>
+<code>created_at</code> (<code>POSIXct</code>)</li>
+<li>
+<code>description</code> (<code>character</code>)</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="relational-fields-3">Relational fields<a class="anchor" aria-label="anchor" href="#relational-fields-3"></a>
+</h3>
+<ul>
+<li>
+<code>run</code> (<a href="#run"><code>Run</code></a>)</li>
+<li>
+<code>param</code> (<a href="#param"><code>Param</code></a>)</li>
+<li>
+<code>person</code> (<a href="#person"><code>Person</code></a>)</li>
+<li>
+<code>schema</code> (<a href="#schema"><code>Schema</code></a>)</li>
+<li>
+<code>ulabel</code> (<a href="#ulabel"><code>ULabel</code></a>)</li>
+<li>
+<code>feature</code> (<a href="#feature"><code>Feature</code></a>)</li>
+<li>
+<code>project</code> (<a href="#project"><code>Project</code></a>)</li>
+<li>
+<code>rundata</code> (<a href="#rundata"><code>RunData</code></a>)</li>
+<li>
+<code>storage</code> (<a href="#storage"><code>Storage</code></a>)</li>
+<li>
+<code>artifact</code> (<a href="#artifact"><code>Artifact</code></a>)</li>
+<li>
+<code>flextable</code> (<a href="#flextable"><code>FlexTable</code></a>)</li>
+<li>
+<code>reference</code> (<a href="#reference"><code>Reference</code></a>)</li>
+<li>
+<code>transform</code> (<a href="#transform"><code>Transform</code></a>)</li>
+<li>
+<code>collection</code> (<a href="#collection"><code>Collection</code></a>)</li>
+<li>
+<code>created_by</code> (<a href="#user"><code>User</code></a>)</li>
+<li>
+<code>paramvalue</code> (<a href="#paramvalue"><code>ParamValue</code></a>)</li>
+<li>
+<code>featurevalue</code> (<a href="#featurevalue"><code>FeatureValue</code></a>)</li>
+<li>
+<code>flextabledata</code> (<a href="#flextabledata"><code>FlexTableData</code></a>)</li>
+</ul>
+</div>
+</div>
+<div class="section level2">
+<h2 id="person">Person<a class="anchor" aria-label="anchor" href="#person"></a>
+</h2>
+<p>Base classes: <code><a href="../reference/Registry.html">?Registry</a></code></p>
+<div class="section level3">
+<h3 id="simple-fields-4">Simple fields<a class="anchor" aria-label="anchor" href="#simple-fields-4"></a>
 </h3>
 <ul>
 <li>
@@ -246,6 +320,116 @@ operations, see the <strong>Getting started</strong> vignette:
 <code>uid</code> (<code>character</code>)</li>
 <li>
 <code>name</code> (<code>character</code>)</li>
+<li>
+<code>email</code> (<code>character</code>)</li>
+<li>
+<code>external</code> (<code>logical</code>)</li>
+<li>
+<code>created_at</code> (<code>POSIXct</code>)</li>
+<li>
+<code>updated_at</code> (<code>POSIXct</code>)</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="relational-fields-4">Relational fields<a class="anchor" aria-label="anchor" href="#relational-fields-4"></a>
+</h3>
+<ul>
+<li>
+<code>run</code> (<a href="#run"><code>Run</code></a>)</li>
+<li>
+<code>space</code> (<a href="#space"><code>Space</code></a>)</li>
+<li>
+<code>projects</code> (<a href="#project"><code>Project</code></a>)</li>
+<li>
+<code>created_by</code> (<a href="#user"><code>User</code></a>)</li>
+<li>
+<code>references</code> (<a href="#reference"><code>Reference</code></a>)</li>
+</ul>
+</div>
+</div>
+<div class="section level2">
+<h2 id="schema">Schema<a class="anchor" aria-label="anchor" href="#schema"></a>
+</h2>
+<p>Base classes: <code><a href="../reference/Registry.html">?Registry</a></code></p>
+<div class="section level3">
+<h3 id="simple-fields-5">Simple fields<a class="anchor" aria-label="anchor" href="#simple-fields-5"></a>
+</h3>
+<ul>
+<li>
+<code>n</code> (<code>IntegerField</code>)</li>
+<li>
+<code>id</code> (<code>integer</code>)</li>
+<li>
+<code>uid</code> (<code>character</code>)</li>
+<li>
+<code>hash</code> (<code>character</code>)</li>
+<li>
+<code>name</code> (<code>character</code>)</li>
+<li>
+<code>slot</code> (<code>character</code>)</li>
+<li>
+<code>dtype</code> (<code>character</code>)</li>
+<li>
+<code>itype</code> (<code>character</code>)</li>
+<li>
+<code>otype</code> (<code>character</code>)</li>
+<li>
+<code>is_type</code> (<code>logical</code>)</li>
+<li>
+<code>created_at</code> (<code>POSIXct</code>)</li>
+<li>
+<code>description</code> (<code>character</code>)</li>
+<li>
+<code>maximal_set</code> (<code>logical</code>)</li>
+<li>
+<code>minimal_set</code> (<code>logical</code>)</li>
+<li>
+<code>ordered_set</code> (<code>logical</code>)</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="relational-fields-5">Relational fields<a class="anchor" aria-label="anchor" href="#relational-fields-5"></a>
+</h3>
+<ul>
+<li>
+<code>run</code> (<a href="#run"><code>Run</code></a>)</li>
+<li>
+<code>type</code> (<a href="#schema"><code>Schema</code></a>)</li>
+<li>
+<code>space</code> (<a href="#space"><code>Space</code></a>)</li>
+<li>
+<code>params</code> (<a href="#param"><code>Param</code></a>)</li>
+<li>
+<code>features</code> (<a href="#feature"><code>Feature</code></a>)</li>
+<li>
+<code>projects</code> (<a href="#project"><code>Project</code></a>)</li>
+<li>
+<code>artifacts</code> (<a href="#artifact"><code>Artifact</code></a>)</li>
+<li>
+<code>composite</code> (<a href="#schema"><code>Schema</code></a>)</li>
+<li>
+<code>created_by</code> (<a href="#user"><code>User</code></a>)</li>
+<li>
+<code>validated_by</code> (<a href="#schema"><code>Schema</code></a>)</li>
+</ul>
+</div>
+</div>
+<div class="section level2">
+<h2 id="ulabel">ULabel<a class="anchor" aria-label="anchor" href="#ulabel"></a>
+</h2>
+<p>Base classes: <code><a href="../reference/Registry.html">?Registry</a></code></p>
+<div class="section level3">
+<h3 id="simple-fields-6">Simple fields<a class="anchor" aria-label="anchor" href="#simple-fields-6"></a>
+</h3>
+<ul>
+<li>
+<code>id</code> (<code>integer</code>)</li>
+<li>
+<code>uid</code> (<code>character</code>)</li>
+<li>
+<code>name</code> (<code>character</code>)</li>
+<li>
+<code>is_type</code> (<code>logical</code>)</li>
 <li>
 <code>reference</code> (<code>character</code>)</li>
 <li>
@@ -259,15 +443,23 @@ operations, see the <strong>Getting started</strong> vignette:
 </ul>
 </div>
 <div class="section level3">
-<h3 id="relational-fields-3">Relational fields<a class="anchor" aria-label="anchor" href="#relational-fields-3"></a>
+<h3 id="relational-fields-6">Relational fields<a class="anchor" aria-label="anchor" href="#relational-fields-6"></a>
 </h3>
 <ul>
 <li>
 <code>run</code> (<a href="#run"><code>Run</code></a>)</li>
 <li>
+<code>runs</code> (<a href="#run"><code>Run</code></a>)</li>
+<li>
+<code>type</code> (<a href="#ulabel"><code>ULabel</code></a>)</li>
+<li>
+<code>space</code> (<a href="#space"><code>Space</code></a>)</li>
+<li>
 <code>parents</code> (<a href="#ulabel"><code>ULabel</code></a>)</li>
 <li>
 <code>children</code> (<a href="#ulabel"><code>ULabel</code></a>)</li>
+<li>
+<code>projects</code> (<a href="#project"><code>Project</code></a>)</li>
 <li>
 <code>artifacts</code> (<a href="#artifact"><code>Artifact</code></a>)</li>
 <li>
@@ -284,7 +476,7 @@ operations, see the <strong>Getting started</strong> vignette:
 </h2>
 <p>Base classes: <code><a href="../reference/Registry.html">?Registry</a></code></p>
 <div class="section level3">
-<h3 id="simple-fields-4">Simple fields<a class="anchor" aria-label="anchor" href="#simple-fields-4"></a>
+<h3 id="simple-fields-7">Simple fields<a class="anchor" aria-label="anchor" href="#simple-fields-7"></a>
 </h3>
 <ul>
 <li>
@@ -298,27 +490,161 @@ operations, see the <strong>Getting started</strong> vignette:
 <li>
 <code>dtype</code> (<code>character</code>)</li>
 <li>
+<code>is_type</code> (<code>logical</code>)</li>
+<li>
 <code>synonyms</code> (<code>character</code>)</li>
+<li>
+<code>array_rank</code> (<code>integer</code>)</li>
+<li>
+<code>array_size</code> (<code>IntegerField</code>)</li>
 <li>
 <code>created_at</code> (<code>POSIXct</code>)</li>
 <li>
 <code>updated_at</code> (<code>POSIXct</code>)</li>
 <li>
+<code>array_shape</code> (<code>list</code>)</li>
+<li>
 <code>description</code> (<code>character</code>)</li>
+<li>
+<code>proxy_dtype</code> (<code>character</code>)</li>
 </ul>
 </div>
 <div class="section level3">
-<h3 id="relational-fields-4">Relational fields<a class="anchor" aria-label="anchor" href="#relational-fields-4"></a>
+<h3 id="relational-fields-7">Relational fields<a class="anchor" aria-label="anchor" href="#relational-fields-7"></a>
 </h3>
 <ul>
 <li>
 <code>run</code> (<a href="#run"><code>Run</code></a>)</li>
 <li>
+<code>type</code> (<a href="#feature"><code>Feature</code></a>)</li>
+<li>
+<code>space</code> (<a href="#space"><code>Space</code></a>)</li>
+<li>
 <code>values</code> (<a href="#featurevalue"><code>FeatureValue</code></a>)</li>
+<li>
+<code>schemas</code> (<a href="#schema"><code>Schema</code></a>)</li>
+<li>
+<code>projects</code> (<a href="#project"><code>Project</code></a>)</li>
+<li>
+<code>created_by</code> (<a href="#user"><code>User</code></a>)</li>
+</ul>
+</div>
+</div>
+<div class="section level2">
+<h2 id="project">Project<a class="anchor" aria-label="anchor" href="#project"></a>
+</h2>
+<p>Base classes: <code><a href="../reference/Registry.html">?Registry</a></code></p>
+<div class="section level3">
+<h3 id="simple-fields-8">Simple fields<a class="anchor" aria-label="anchor" href="#simple-fields-8"></a>
+</h3>
+<ul>
+<li>
+<code>id</code> (<code>integer</code>)</li>
+<li>
+<code>uid</code> (<code>character</code>)</li>
+<li>
+<code>url</code> (<code>character</code>)</li>
+<li>
+<code>abbr</code> (<code>character</code>)</li>
+<li>
+<code>name</code> (<code>character</code>)</li>
+<li>
+<code>is_type</code> (<code>logical</code>)</li>
+<li>
+<code>end_date</code> (<code>DateField</code>)</li>
+<li>
+<code>created_at</code> (<code>POSIXct</code>)</li>
+<li>
+<code>start_date</code> (<code>DateField</code>)</li>
+<li>
+<code>updated_at</code> (<code>POSIXct</code>)</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="relational-fields-8">Relational fields<a class="anchor" aria-label="anchor" href="#relational-fields-8"></a>
+</h3>
+<ul>
+<li>
+<code>run</code> (<a href="#run"><code>Run</code></a>)</li>
+<li>
+<code>type</code> (<a href="#project"><code>Project</code></a>)</li>
+<li>
+<code>space</code> (<a href="#space"><code>Space</code></a>)</li>
+<li>
+<code>people</code> (<a href="#person"><code>Person</code></a>)</li>
+<li>
+<code>parents</code> (<a href="#project"><code>Project</code></a>)</li>
+<li>
+<code>schemas</code> (<a href="#schema"><code>Schema</code></a>)</li>
+<li>
+<code>ulabels</code> (<a href="#ulabel"><code>ULabel</code></a>)</li>
+<li>
+<code>children</code> (<a href="#project"><code>Project</code></a>)</li>
+<li>
+<code>features</code> (<a href="#feature"><code>Feature</code></a>)</li>
+<li>
+<code>artifacts</code> (<a href="#artifact"><code>Artifact</code></a>)</li>
 <li>
 <code>created_by</code> (<a href="#user"><code>User</code></a>)</li>
 <li>
-<code>feature_sets</code> (<a href="#featureset"><code>FeatureSet</code></a>)</li>
+<code>references</code> (<a href="#reference"><code>Reference</code></a>)</li>
+<li>
+<code>successors</code> (<a href="#project"><code>Project</code></a>)</li>
+<li>
+<code>transforms</code> (<a href="#transform"><code>Transform</code></a>)</li>
+<li>
+<code>collections</code> (<a href="#collection"><code>Collection</code></a>)</li>
+<li>
+<code>predecessors</code> (<a href="#project"><code>Project</code></a>)</li>
+</ul>
+</div>
+</div>
+<div class="section level2">
+<h2 id="rundata">RunData<a class="anchor" aria-label="anchor" href="#rundata"></a>
+</h2>
+<p>Base classes: <code><a href="../reference/Registry.html">?Registry</a></code></p>
+<div class="section level3">
+<h3 id="simple-fields-9">Simple fields<a class="anchor" aria-label="anchor" href="#simple-fields-9"></a>
+</h3>
+<ul>
+<li>
+<code>id</code> (<code>integer64</code>)</li>
+<li>
+<code>row</code> (<code>IntegerField</code>)</li>
+<li>
+<code>value_int</code> (<code>integer64</code>)</li>
+<li>
+<code>value_str</code> (<code>character</code>)</li>
+<li>
+<code>value_json</code> (<code>list</code>)</li>
+<li>
+<code>value_float</code> (<code>FloatField</code>)</li>
+<li>
+<code>value_datetime</code> (<code>POSIXct</code>)</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="relational-fields-9">Relational fields<a class="anchor" aria-label="anchor" href="#relational-fields-9"></a>
+</h3>
+<ul>
+<li>
+<code>run</code> (<a href="#run"><code>Run</code></a>)</li>
+<li>
+<code>param</code> (<a href="#param"><code>Param</code></a>)</li>
+<li>
+<code>space</code> (<a href="#space"><code>Space</code></a>)</li>
+<li>
+<code>feature</code> (<a href="#feature"><code>Feature</code></a>)</li>
+<li>
+<code>value_person</code> (<a href="#person"><code>Person</code></a>)</li>
+<li>
+<code>value_ulabel</code> (<a href="#ulabel"><code>ULabel</code></a>)</li>
+<li>
+<code>value_project</code> (<a href="#project"><code>Project</code></a>)</li>
+<li>
+<code>value_artifact</code> (<a href="#artifact"><code>Artifact</code></a>)</li>
+<li>
+<code>value_collection</code> (<a href="#collection"><code>Collection</code></a>)</li>
 </ul>
 </div>
 </div>
@@ -327,7 +653,7 @@ operations, see the <strong>Getting started</strong> vignette:
 </h2>
 <p>Base classes: <code><a href="../reference/Registry.html">?Registry</a></code></p>
 <div class="section level3">
-<h3 id="simple-fields-5">Simple fields<a class="anchor" aria-label="anchor" href="#simple-fields-5"></a>
+<h3 id="simple-fields-10">Simple fields<a class="anchor" aria-label="anchor" href="#simple-fields-10"></a>
 </h3>
 <ul>
 <li>
@@ -351,11 +677,13 @@ operations, see the <strong>Getting started</strong> vignette:
 </ul>
 </div>
 <div class="section level3">
-<h3 id="relational-fields-5">Relational fields<a class="anchor" aria-label="anchor" href="#relational-fields-5"></a>
+<h3 id="relational-fields-10">Relational fields<a class="anchor" aria-label="anchor" href="#relational-fields-10"></a>
 </h3>
 <ul>
 <li>
 <code>run</code> (<a href="#run"><code>Run</code></a>)</li>
+<li>
+<code>space</code> (<a href="#space"><code>Space</code></a>)</li>
 <li>
 <code>artifacts</code> (<a href="#artifact"><code>Artifact</code></a>)</li>
 <li>
@@ -368,7 +696,7 @@ operations, see the <strong>Getting started</strong> vignette:
 </h2>
 <p>Base classes: <code><a href="../reference/Registry.html">?Registry</a></code></p>
 <div class="section level3">
-<h3 id="simple-fields-6">Simple fields<a class="anchor" aria-label="anchor" href="#simple-fields-6"></a>
+<h3 id="simple-fields-11">Simple fields<a class="anchor" aria-label="anchor" href="#simple-fields-11"></a>
 </h3>
 <ul>
 <li>
@@ -380,23 +708,23 @@ operations, see the <strong>Getting started</strong> vignette:
 <li>
 <code>hash</code> (<code>character</code>)</li>
 <li>
+<code>kind</code> (<code>character</code>)</li>
+<li>
 <code>size</code> (<code>integer64</code>)</li>
 <li>
-<code>type</code> (<code>character</code>)</li>
+<code>otype</code> (<code>character</code>)</li>
 <li>
 <code>suffix</code> (<code>character</code>)</li>
+<li>
+<code>n_files</code> (<code>integer64</code>)</li>
 <li>
 <code>version</code> (<code>character</code>)</li>
 <li>
 <code>is_latest</code> (<code>logical</code>)</li>
 <li>
-<code>n_objects</code> (<code>integer64</code>)</li>
-<li>
 <code>created_at</code> (<code>POSIXct</code>)</li>
 <li>
 <code>updated_at</code> (<code>POSIXct</code>)</li>
-<li>
-<code>visibility</code> (<code>integer</code>)</li>
 <li>
 <code>description</code> (<code>character</code>)</li>
 <li>
@@ -404,25 +732,137 @@ operations, see the <strong>Getting started</strong> vignette:
 </ul>
 </div>
 <div class="section level3">
-<h3 id="relational-fields-6">Relational fields<a class="anchor" aria-label="anchor" href="#relational-fields-6"></a>
+<h3 id="relational-fields-11">Relational fields<a class="anchor" aria-label="anchor" href="#relational-fields-11"></a>
 </h3>
 <ul>
 <li>
 <code>run</code> (<a href="#run"><code>Run</code></a>)</li>
 <li>
+<code>space</code> (<a href="#space"><code>Space</code></a>)</li>
+<li>
+<code>schema</code> (<a href="#schema"><code>Schema</code></a>)</li>
+<li>
 <code>storage</code> (<a href="#storage"><code>Storage</code></a>)</li>
 <li>
 <code>ulabels</code> (<a href="#ulabel"><code>ULabel</code></a>)</li>
 <li>
-<code>transform</code> (<a href="#transform"><code>Transform</code></a>)</li>
+<code>projects</code> (<a href="#project"><code>Project</code></a>)</li>
 <li>
 <code>created_by</code> (<a href="#user"><code>User</code></a>)</li>
 <li>
+<code>references</code> (<a href="#reference"><code>Reference</code></a>)</li>
+<li>
 <code>collections</code> (<a href="#collection"><code>Collection</code></a>)</li>
 <li>
-<code>feature_sets</code> (<a href="#featureset"><code>FeatureSet</code></a>)</li>
-<li>
 <code>input_of_runs</code> (<a href="#run"><code>Run</code></a>)</li>
+</ul>
+</div>
+</div>
+<div class="section level2">
+<h2 id="flextable">FlexTable<a class="anchor" aria-label="anchor" href="#flextable"></a>
+</h2>
+<p>Base classes: <code><a href="../reference/Registry.html">?Registry</a></code></p>
+<div class="section level3">
+<h3 id="simple-fields-12">Simple fields<a class="anchor" aria-label="anchor" href="#simple-fields-12"></a>
+</h3>
+<ul>
+<li>
+<code>id</code> (<code>integer64</code>)</li>
+<li>
+<code>uid</code> (<code>character</code>)</li>
+<li>
+<code>name</code> (<code>character</code>)</li>
+<li>
+<code>is_type</code> (<code>logical</code>)</li>
+<li>
+<code>created_at</code> (<code>POSIXct</code>)</li>
+<li>
+<code>updated_at</code> (<code>POSIXct</code>)</li>
+<li>
+<code>description</code> (<code>character</code>)</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="relational-fields-12">Relational fields<a class="anchor" aria-label="anchor" href="#relational-fields-12"></a>
+</h3>
+<ul>
+<li>
+<code>run</code> (<a href="#run"><code>Run</code></a>)</li>
+<li>
+<code>data</code> (<a href="#flextabledata"><code>FlexTableData</code></a>)</li>
+<li>
+<code>type</code> (<a href="#flextable"><code>FlexTable</code></a>)</li>
+<li>
+<code>space</code> (<a href="#space"><code>Space</code></a>)</li>
+<li>
+<code>schema</code> (<a href="#schema"><code>Schema</code></a>)</li>
+<li>
+<code>ulabels</code> (<a href="#ulabel"><code>ULabel</code></a>)</li>
+<li>
+<code>projects</code> (<a href="#project"><code>Project</code></a>)</li>
+<li>
+<code>created_by</code> (<a href="#user"><code>User</code></a>)</li>
+</ul>
+</div>
+</div>
+<div class="section level2">
+<h2 id="reference">Reference<a class="anchor" aria-label="anchor" href="#reference"></a>
+</h2>
+<p>Base classes: <code><a href="../reference/Registry.html">?Registry</a></code></p>
+<div class="section level3">
+<h3 id="simple-fields-13">Simple fields<a class="anchor" aria-label="anchor" href="#simple-fields-13"></a>
+</h3>
+<ul>
+<li>
+<code>id</code> (<code>integer</code>)</li>
+<li>
+<code>doi</code> (<code>character</code>)</li>
+<li>
+<code>uid</code> (<code>character</code>)</li>
+<li>
+<code>url</code> (<code>character</code>)</li>
+<li>
+<code>abbr</code> (<code>character</code>)</li>
+<li>
+<code>date</code> (<code>DateField</code>)</li>
+<li>
+<code>name</code> (<code>character</code>)</li>
+<li>
+<code>text</code> (<code>character</code>)</li>
+<li>
+<code>is_type</code> (<code>logical</code>)</li>
+<li>
+<code>pubmed_id</code> (<code>integer64</code>)</li>
+<li>
+<code>created_at</code> (<code>POSIXct</code>)</li>
+<li>
+<code>updated_at</code> (<code>POSIXct</code>)</li>
+<li>
+<code>description</code> (<code>character</code>)</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="relational-fields-13">Relational fields<a class="anchor" aria-label="anchor" href="#relational-fields-13"></a>
+</h3>
+<ul>
+<li>
+<code>run</code> (<a href="#run"><code>Run</code></a>)</li>
+<li>
+<code>type</code> (<a href="#reference"><code>Reference</code></a>)</li>
+<li>
+<code>space</code> (<a href="#space"><code>Space</code></a>)</li>
+<li>
+<code>authors</code> (<a href="#person"><code>Person</code></a>)</li>
+<li>
+<code>projects</code> (<a href="#project"><code>Project</code></a>)</li>
+<li>
+<code>artifacts</code> (<a href="#artifact"><code>Artifact</code></a>)</li>
+<li>
+<code>created_by</code> (<a href="#user"><code>User</code></a>)</li>
+<li>
+<code>transforms</code> (<a href="#transform"><code>Transform</code></a>)</li>
+<li>
+<code>collections</code> (<a href="#collection"><code>Collection</code></a>)</li>
 </ul>
 </div>
 </div>
@@ -431,7 +871,7 @@ operations, see the <strong>Getting started</strong> vignette:
 </h2>
 <p>Base classes: <code><a href="../reference/Registry.html">?Registry</a></code></p>
 <div class="section level3">
-<h3 id="simple-fields-7">Simple fields<a class="anchor" aria-label="anchor" href="#simple-fields-7"></a>
+<h3 id="simple-fields-14">Simple fields<a class="anchor" aria-label="anchor" href="#simple-fields-14"></a>
 </h3>
 <ul>
 <li>
@@ -442,8 +882,6 @@ operations, see the <strong>Getting started</strong> vignette:
 <code>uid</code> (<code>character</code>)</li>
 <li>
 <code>hash</code> (<code>character</code>)</li>
-<li>
-<code>name</code> (<code>character</code>)</li>
 <li>
 <code>type</code> (<code>character</code>)</li>
 <li>
@@ -465,23 +903,25 @@ operations, see the <strong>Getting started</strong> vignette:
 </ul>
 </div>
 <div class="section level3">
-<h3 id="relational-fields-7">Relational fields<a class="anchor" aria-label="anchor" href="#relational-fields-7"></a>
+<h3 id="relational-fields-14">Relational fields<a class="anchor" aria-label="anchor" href="#relational-fields-14"></a>
 </h3>
 <ul>
 <li>
 <code>runs</code> (<a href="#run"><code>Run</code></a>)</li>
 <li>
+<code>space</code> (<a href="#space"><code>Space</code></a>)</li>
+<li>
 <code>ulabels</code> (<a href="#ulabel"><code>ULabel</code></a>)</li>
 <li>
+<code>projects</code> (<a href="#project"><code>Project</code></a>)</li>
+<li>
 <code>created_by</code> (<a href="#user"><code>User</code></a>)</li>
+<li>
+<code>references</code> (<a href="#reference"><code>Reference</code></a>)</li>
 <li>
 <code>successors</code> (<a href="#transform"><code>Transform</code></a>)</li>
 <li>
 <code>predecessors</code> (<a href="#transform"><code>Transform</code></a>)</li>
-<li>
-<code>output_artifacts</code> (<a href="#artifact"><code>Artifact</code></a>)</li>
-<li>
-<code>output_collections</code> (<a href="#collection"><code>Collection</code></a>)</li>
 </ul>
 </div>
 </div>
@@ -490,17 +930,17 @@ operations, see the <strong>Getting started</strong> vignette:
 </h2>
 <p>Base classes: <code><a href="../reference/Registry.html">?Registry</a></code></p>
 <div class="section level3">
-<h3 id="simple-fields-8">Simple fields<a class="anchor" aria-label="anchor" href="#simple-fields-8"></a>
+<h3 id="simple-fields-15">Simple fields<a class="anchor" aria-label="anchor" href="#simple-fields-15"></a>
 </h3>
 <ul>
 <li>
 <code>id</code> (<code>integer</code>)</li>
 <li>
+<code>key</code> (<code>character</code>)</li>
+<li>
 <code>uid</code> (<code>character</code>)</li>
 <li>
 <code>hash</code> (<code>character</code>)</li>
-<li>
-<code>name</code> (<code>character</code>)</li>
 <li>
 <code>version</code> (<code>character</code>)</li>
 <li>
@@ -512,27 +952,29 @@ operations, see the <strong>Getting started</strong> vignette:
 <li>
 <code>updated_at</code> (<code>POSIXct</code>)</li>
 <li>
-<code>visibility</code> (<code>integer</code>)</li>
-<li>
 <code>description</code> (<code>character</code>)</li>
 <li>
 <code>reference_type</code> (<code>character</code>)</li>
 </ul>
 </div>
 <div class="section level3">
-<h3 id="relational-fields-8">Relational fields<a class="anchor" aria-label="anchor" href="#relational-fields-8"></a>
+<h3 id="relational-fields-15">Relational fields<a class="anchor" aria-label="anchor" href="#relational-fields-15"></a>
 </h3>
 <ul>
 <li>
 <code>run</code> (<a href="#run"><code>Run</code></a>)</li>
 <li>
+<code>space</code> (<a href="#space"><code>Space</code></a>)</li>
+<li>
 <code>ulabels</code> (<a href="#ulabel"><code>ULabel</code></a>)</li>
+<li>
+<code>projects</code> (<a href="#project"><code>Project</code></a>)</li>
 <li>
 <code>artifacts</code> (<a href="#artifact"><code>Artifact</code></a>)</li>
 <li>
-<code>transform</code> (<a href="#transform"><code>Transform</code></a>)</li>
-<li>
 <code>created_by</code> (<a href="#user"><code>User</code></a>)</li>
+<li>
+<code>references</code> (<a href="#reference"><code>Reference</code></a>)</li>
 <li>
 <code>input_of_runs</code> (<a href="#run"><code>Run</code></a>)</li>
 <li>
@@ -541,56 +983,17 @@ operations, see the <strong>Getting started</strong> vignette:
 </div>
 </div>
 <div class="section level2">
-<h2 id="featureset">FeatureSet<a class="anchor" aria-label="anchor" href="#featureset"></a>
-</h2>
-<p>Base classes: <code><a href="../reference/Registry.html">?Registry</a></code></p>
-<div class="section level3">
-<h3 id="simple-fields-9">Simple fields<a class="anchor" aria-label="anchor" href="#simple-fields-9"></a>
-</h3>
-<ul>
-<li>
-<code>n</code> (<code>IntegerField</code>)</li>
-<li>
-<code>id</code> (<code>integer</code>)</li>
-<li>
-<code>uid</code> (<code>character</code>)</li>
-<li>
-<code>hash</code> (<code>character</code>)</li>
-<li>
-<code>name</code> (<code>character</code>)</li>
-<li>
-<code>dtype</code> (<code>character</code>)</li>
-<li>
-<code>registry</code> (<code>character</code>)</li>
-<li>
-<code>created_at</code> (<code>POSIXct</code>)</li>
-</ul>
-</div>
-<div class="section level3">
-<h3 id="relational-fields-9">Relational fields<a class="anchor" aria-label="anchor" href="#relational-fields-9"></a>
-</h3>
-<ul>
-<li>
-<code>run</code> (<a href="#run"><code>Run</code></a>)</li>
-<li>
-<code>features</code> (<a href="#feature"><code>Feature</code></a>)</li>
-<li>
-<code>artifacts</code> (<a href="#artifact"><code>Artifact</code></a>)</li>
-<li>
-<code>created_by</code> (<a href="#user"><code>User</code></a>)</li>
-</ul>
-</div>
-</div>
-<div class="section level2">
 <h2 id="paramvalue">ParamValue<a class="anchor" aria-label="anchor" href="#paramvalue"></a>
 </h2>
 <p>Base classes: <code><a href="../reference/Registry.html">?Registry</a></code></p>
 <div class="section level3">
-<h3 id="simple-fields-10">Simple fields<a class="anchor" aria-label="anchor" href="#simple-fields-10"></a>
+<h3 id="simple-fields-16">Simple fields<a class="anchor" aria-label="anchor" href="#simple-fields-16"></a>
 </h3>
 <ul>
 <li>
 <code>id</code> (<code>integer64</code>)</li>
+<li>
+<code>hash</code> (<code>character</code>)</li>
 <li>
 <code>value</code> (<code>list</code>)</li>
 <li>
@@ -598,13 +1001,15 @@ operations, see the <strong>Getting started</strong> vignette:
 </ul>
 </div>
 <div class="section level3">
-<h3 id="relational-fields-10">Relational fields<a class="anchor" aria-label="anchor" href="#relational-fields-10"></a>
+<h3 id="relational-fields-16">Relational fields<a class="anchor" aria-label="anchor" href="#relational-fields-16"></a>
 </h3>
 <ul>
 <li>
 <code>runs</code> (<a href="#run"><code>Run</code></a>)</li>
 <li>
 <code>param</code> (<a href="#param"><code>Param</code></a>)</li>
+<li>
+<code>space</code> (<a href="#space"><code>Space</code></a>)</li>
 <li>
 <code>artifacts</code> (<a href="#artifact"><code>Artifact</code></a>)</li>
 <li>
@@ -617,11 +1022,13 @@ operations, see the <strong>Getting started</strong> vignette:
 </h2>
 <p>Base classes: <code><a href="../reference/Registry.html">?Registry</a></code></p>
 <div class="section level3">
-<h3 id="simple-fields-11">Simple fields<a class="anchor" aria-label="anchor" href="#simple-fields-11"></a>
+<h3 id="simple-fields-17">Simple fields<a class="anchor" aria-label="anchor" href="#simple-fields-17"></a>
 </h3>
 <ul>
 <li>
 <code>id</code> (<code>integer64</code>)</li>
+<li>
+<code>hash</code> (<code>character</code>)</li>
 <li>
 <code>value</code> (<code>list</code>)</li>
 <li>
@@ -629,17 +1036,68 @@ operations, see the <strong>Getting started</strong> vignette:
 </ul>
 </div>
 <div class="section level3">
-<h3 id="relational-fields-11">Relational fields<a class="anchor" aria-label="anchor" href="#relational-fields-11"></a>
+<h3 id="relational-fields-17">Relational fields<a class="anchor" aria-label="anchor" href="#relational-fields-17"></a>
 </h3>
 <ul>
 <li>
 <code>run</code> (<a href="#run"><code>Run</code></a>)</li>
+<li>
+<code>space</code> (<a href="#space"><code>Space</code></a>)</li>
 <li>
 <code>feature</code> (<a href="#feature"><code>Feature</code></a>)</li>
 <li>
 <code>artifacts</code> (<a href="#artifact"><code>Artifact</code></a>)</li>
 <li>
 <code>created_by</code> (<a href="#user"><code>User</code></a>)</li>
+</ul>
+</div>
+</div>
+<div class="section level2">
+<h2 id="flextabledata">FlexTableData<a class="anchor" aria-label="anchor" href="#flextabledata"></a>
+</h2>
+<p>Base classes: <code><a href="../reference/Registry.html">?Registry</a></code></p>
+<div class="section level3">
+<h3 id="simple-fields-18">Simple fields<a class="anchor" aria-label="anchor" href="#simple-fields-18"></a>
+</h3>
+<ul>
+<li>
+<code>id</code> (<code>integer64</code>)</li>
+<li>
+<code>row</code> (<code>IntegerField</code>)</li>
+<li>
+<code>value_int</code> (<code>integer64</code>)</li>
+<li>
+<code>value_str</code> (<code>character</code>)</li>
+<li>
+<code>value_json</code> (<code>list</code>)</li>
+<li>
+<code>value_float</code> (<code>FloatField</code>)</li>
+<li>
+<code>value_datetime</code> (<code>POSIXct</code>)</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="relational-fields-18">Relational fields<a class="anchor" aria-label="anchor" href="#relational-fields-18"></a>
+</h3>
+<ul>
+<li>
+<code>param</code> (<a href="#param"><code>Param</code></a>)</li>
+<li>
+<code>space</code> (<a href="#space"><code>Space</code></a>)</li>
+<li>
+<code>feature</code> (<a href="#feature"><code>Feature</code></a>)</li>
+<li>
+<code>tidytable</code> (<a href="#flextable"><code>FlexTable</code></a>)</li>
+<li>
+<code>value_person</code> (<a href="#person"><code>Person</code></a>)</li>
+<li>
+<code>value_ulabel</code> (<a href="#ulabel"><code>ULabel</code></a>)</li>
+<li>
+<code>value_project</code> (<a href="#project"><code>Project</code></a>)</li>
+<li>
+<code>value_artifact</code> (<a href="#artifact"><code>Artifact</code></a>)</li>
+<li>
+<code>value_collection</code> (<a href="#collection"><code>Collection</code></a>)</li>
 </ul>
 </div>
 </div>
