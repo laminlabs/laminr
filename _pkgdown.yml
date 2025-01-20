@@ -35,3 +35,7 @@ navbar:
           href: articles/module_bionty.html
         - text: Wetlab module
           href: articles/module_wetlab.html
+
+# https://pkgdown.r-lib.org/reference/build_site.html#development-mode
+development:
+  mode: auto
