@@ -15,7 +15,7 @@ License: Apache License (>= 2)
 URL: https://laminr.lamin.ai, https://github.com/laminlabs/laminr
 BugReports: https://github.com/laminlabs/laminr/issues
 Depends:
-    R (>= 4.0.0)
+    R (>= 4.1.0)
 Imports:
     cli,
     httr,
