@@ -1,8 +1,8 @@
-# laminr devel
+# laminr v0.4.1
 
 ## MINOR CHANGES
 
-- Increase R dependency to >= 4.1.0 (PR #142)
+- Bump R dependency to >= 4.1.0 to fix note on CRAN (PR #142).
 
 # laminr v0.4.0
 
