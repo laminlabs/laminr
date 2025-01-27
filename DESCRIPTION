@@ -1,6 +1,6 @@
 Package: laminr
 Title: Client for 'LaminDB'
-Version: 0.4.0.9000
+Version: 0.4.0.9001
 Authors@R: c(
     person("Robrecht", "Cannoodt", email = "robrecht@data-intuitive.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-3641-729X")),
@@ -15,7 +15,7 @@ License: Apache License (>= 2)
 URL: https://laminr.lamin.ai, https://github.com/laminlabs/laminr
 BugReports: https://github.com/laminlabs/laminr/issues
 Depends:
-    R (>= 4.0.0)
+    R (>= 4.1.0)
 Imports:
     cli,
     httr,
