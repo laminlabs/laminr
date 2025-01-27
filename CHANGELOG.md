@@ -1,3 +1,9 @@
+# laminr devel
+
+## MINOR CHANGES
+
+- Increase R dependency to >= 4.1.0 (PR #142)
+
 # laminr v0.4.0
 
 Minor (breaking) changes to support the Python `lamindb` v1.0 release.
