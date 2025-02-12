@@ -79,7 +79,6 @@
 }
 
 .get_user_settings <- function(refresh = FALSE) {
-
   user_settings <- getOption("LAMINR_USER_SETTINGS")
 
   if (refresh || is.null(user_settings)) {

@@ -30,7 +30,6 @@
 #' }
 install_lamindb <- function(..., envname = "r-lamindb", extra_packages = NULL,
                             new_env = identical(envname, "r-lamindb")) {
-
   if (new_env && reticulate::virtualenv_exists(envname)) {
     reticulate::virtualenv_remove(envname)
   }
@@ -52,8 +51,7 @@ install_lamindb <- function(..., envname = "r-lamindb", extra_packages = NULL,
     }
 
   tryCatch(
-    switch(
-      env_type,
+    switch(env_type,
       virtualenv = reticulate::use_virtualenv(envname),
       conda = reticulate::use_condaenv(envname)
     ),

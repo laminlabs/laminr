@@ -237,16 +237,19 @@ lamin_login <- function(user = NULL, api_key = NULL) {
       system2("lamin", "login")
     })
   } else {
-    tryCatch({
-      handle <- .get_user_settings()$handle
-      cli::cli_alert_info("Using stored user handle {.val {handle}}")
-      system2("lamin", paste("login", handle))
-    }, error = function(err) {
-      if (Sys.getenv("LAMIN_API_KEY") == "") {
-        cli::cli_abort("{.arg LAMIN_API_KEY} is not set")
-      }
+    tryCatch(
+      {
+        handle <- .get_user_settings()$handle
+        cli::cli_alert_info("Using stored user handle {.val {handle}}")
+        system2("lamin", paste("login", handle))
+      },
+      error = function(err) {
+        if (Sys.getenv("LAMIN_API_KEY") == "") {
+          cli::cli_abort("{.arg LAMIN_API_KEY} is not set")
+        }
 
-      system2("lamin", "login")
-    })
+        system2("lamin", "login")
+      }
+    )
   }
 }
