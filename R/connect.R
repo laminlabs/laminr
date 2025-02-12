@@ -86,8 +86,9 @@ connect <- function(slug = NULL) {
   if (is.null(slug)) {
     instance_slug <- paste0(
       instance_settings$owner, "/",
-      name = instance_settings$name
+      instance_settings$name
     )
+
     current_default <- getOption("LAMINR_DEFAULT_INSTANCE")
     if (!is.null(current_default)) {
       if (!identical(instance_slug, current_default)) {
@@ -96,9 +97,8 @@ connect <- function(slug = NULL) {
           "i" = "To connect to another instance provide a slug"
         ))
       }
-    } else {
-      options(LAMINR_DEFAULT_INSTANCE = instance_slug)
     }
+
     is_default <- TRUE
   }
 
@@ -208,9 +208,10 @@ lamin_connect <- function(slug) {
 #'
 #' @details
 #' Setting `user` will run `lamin login <user>`. Setting `api_key` will set the
-#' `LAMIN_API_KEY` environment variable tempoarily with `withr::with_envvar()`
-#' and run `lamin login`. If neither `user` or `api_key` are set `lamin login`
-#' will be run if `LAMIN_API_KEY` is set.
+#' `LAMIN_API_KEY` environment variable temporarily with `withr::with_envvar()`
+#' and run `lamin login`. If neither `user` or `api_key` are set the user handle
+#' will be retrieved from the user settings file. If that is not possible
+#' `lamin login` will only be run if `LAMIN_API_KEY` is set.
 #'
 #' @export
 lamin_login <- function(user = NULL, api_key = NULL) {
@@ -236,10 +237,16 @@ lamin_login <- function(user = NULL, api_key = NULL) {
       system2("lamin", "login")
     })
   } else {
-    if (Sys.getenv("LAMIN_API_KEY") == "") {
-      cli::cli_abort("{.arg LAMIN_API_KEY} is not set")
-    }
+    tryCatch({
+      handle <- .get_user_settings()$handle
+      cli::cli_alert_info("Using stored user handle {.val {handle}}")
+      system2("lamin", paste("login", handle))
+    }, error = function(err) {
+      if (Sys.getenv("LAMIN_API_KEY") == "") {
+        cli::cli_abort("{.arg LAMIN_API_KEY} is not set")
+      }
 
-    system2("lamin", "login")
+      system2("lamin", "login")
+    })
   }
 }
