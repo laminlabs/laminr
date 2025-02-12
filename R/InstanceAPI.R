@@ -36,8 +36,10 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
         httr::add_headers(.headers = private$get_headers())
       )
 
-      if (response$status_code == 500 &&
-        grepl("Invalid token", httr::content(response)$detail)) {
+      if (
+        response$status_code == 500 &&
+          grepl("Invalid token", httr::content(response)$detail)
+      ) {
         cli::cli_alert(
           "Invalid token, attempting to refresh using {.code lamin_login()}..."
         )
