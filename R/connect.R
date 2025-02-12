@@ -207,11 +207,13 @@ lamin_connect <- function(slug) {
 #' @param api_key API key for a user
 #'
 #' @details
-#' Setting `user` will run `lamin login <user>`. Setting `api_key` will set the
-#' `LAMIN_API_KEY` environment variable temporarily with `withr::with_envvar()`
-#' and run `lamin login`. If neither `user` or `api_key` are set the user handle
-#' will be retrieved from the user settings file. If that is not possible
-#' `lamin login` will only be run if `LAMIN_API_KEY` is set.
+#' Setting `user` will run `lamin login <user>`. Setting `api_key` (without
+#' `user`) will set the`LAMIN_API_KEY` environment variable temporarily with
+#' `withr::with_envvar()` and run `lamin login`. If neither `user` or `api_key`
+#' are set the user handle will be retrieved from the user settings file and
+#' `login lamin <handle>` will be run. If there is no valid handle,
+#' `lamin login` will be run if `LAMIN_API_KEY` is set. If none of these
+#' conditions are met an error will be raised.
 #'
 #' @export
 lamin_login <- function(user = NULL, api_key = NULL) {
@@ -230,26 +232,29 @@ lamin_login <- function(user = NULL, api_key = NULL) {
     py_config <- reticulate::py_config() # nolint object_usage_linter
   }
 
+  # Avoid the warning about an anonymous user
+  handle <- suppressWarnings(.get_user_settings()$handle)
+
   if (!is.null(user)) {
+    # If user is provided run `lamin login <user>`
     system2("lamin", paste("login", user))
   } else if (!is.null(api_key)) {
+    # If api_key is provided, run `lamin login` with the LAMIN_API_KEY env var
     withr::with_envvar(c("LAMIN_API_KEY" = api_key), {
       system2("lamin", "login")
     })
+  } else if (handle != "anonymous") {
+    # If there is a stored user handle run `lamin login <handle>`
+    cli::cli_alert_info("Using stored user handle {.val {handle}}")
+    system2("lamin", paste("login", handle))
+  } else if (Sys.getenv("LAMIN_API_KEY") == "") {
+    # If the LAMIN_API_KEY env var is already set run `lamin login`
+    cli::cli_abort("{.arg LAMIN_API_KEY} is not set")
+    system2("lamin", "login")
   } else {
-    tryCatch(
-      {
-        handle <- .get_user_settings()$handle
-        cli::cli_alert_info("Using stored user handle {.val {handle}}")
-        system2("lamin", paste("login", handle))
-      },
-      error = function(err) {
-        if (Sys.getenv("LAMIN_API_KEY") == "") {
-          cli::cli_abort("{.arg LAMIN_API_KEY} is not set")
-        }
-
-        system2("lamin", "login")
-      }
+    # Fail to log in
+    cli::cli_abort(
+      "Unable to log in. Please provide {.arg user} or {.arg api_key}."
     )
   }
 }

@@ -37,7 +37,7 @@
   file <- .settings_store__current_user_settings_file()
 
   if (!file.exists(file)) {
-    cli_warn("using anonymous user (to identify, call `lamin login`)")
+    cli_warn("using anonymous user (to identify, run {.run lamin_login()})")
     content <- list(
       email = NULL,
       password = NULL,
