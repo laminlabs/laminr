@@ -90,6 +90,14 @@ create_instance <- function(instance_settings, is_default = FALSE) {
     }
   }
 
+  if (is_default) {
+    instance_slug <- paste0(
+      instance_settings$owner, "/",
+      instance_settings$name
+    )
+    options(LAMINR_DEFAULT_INSTANCE = instance_slug)
+  }
+
   # create the instance
   RichInstance$new(
     settings = instance_settings,
