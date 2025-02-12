@@ -36,6 +36,19 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
         httr::add_headers(.headers = private$get_headers())
       )
 
+      if (response$status_code == 500 &&
+          grepl("Invalid token", httr::content(response)$detail)) {
+        cli::cli_alert(
+          "Invalid token, attempting to refresh using {.code lamin_login()}..."
+        )
+        lamin_login()
+
+        response <- httr::GET(
+          url,
+          httr::add_headers(.headers = private$get_headers(refresh = TRUE))
+        )
+      }
+
       process_httr_response(response, "get schema from instance")
     },
     #' @description
@@ -249,19 +262,19 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
   ),
   private = list(
     .instance_settings = NULL,
-    get_headers = function(authorization_required = FALSE) {
+    get_headers = function(authorization_required = FALSE, refresh = FALSE) {
       headers <- c(
         accept = "application/json",
         `Content-Type` = "application/json"
       )
-      user_settings <- .get_user_settings()
+      user_settings <- .get_user_settings(refresh = refresh)
 
       if (!is.null(user_settings$access_token)) {
         headers[["Authorization"]] <- paste("Bearer", user_settings$access_token)
       } else if (authorization_required) {
         cli::cli_abort(c(
           "There is no access token for the current user",
-          "i" = "Run {.code lamin login} and reconnect to the database in a new R session"
+          "i" = "Run {.run lamnin_login()} and reconnect to the database in a new R session"
         ))
       }
 
