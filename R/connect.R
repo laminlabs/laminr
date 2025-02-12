@@ -237,9 +237,11 @@ lamin_login <- function(user = NULL, api_key = NULL) {
 
   if (!is.null(user)) {
     # If user is provided run `lamin login <user>`
+    cli::cli_alert_info("Using provided user {.val {user}}")
     system2("lamin", paste("login", user))
   } else if (!is.null(api_key)) {
     # If api_key is provided, run `lamin login` with the LAMIN_API_KEY env var
+    cli::cli_alert_info("Using provided API key")
     withr::with_envvar(c("LAMIN_API_KEY" = api_key), {
       system2("lamin", "login")
     })
@@ -247,9 +249,9 @@ lamin_login <- function(user = NULL, api_key = NULL) {
     # If there is a stored user handle run `lamin login <handle>`
     cli::cli_alert_info("Using stored user handle {.val {handle}}")
     system2("lamin", paste("login", handle))
-  } else if (Sys.getenv("LAMIN_API_KEY") == "") {
+  } else if (Sys.getenv("LAMIN_API_KEY") != "") {
     # If the LAMIN_API_KEY env var is already set run `lamin login`
-    cli::cli_abort("{.arg LAMIN_API_KEY} is not set")
+    cli::cli_alert_info("Using {.field LAMIN_API_KEY} environment variable")
     system2("lamin", "login")
   } else {
     # Fail to log in
