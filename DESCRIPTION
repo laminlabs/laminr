@@ -18,26 +18,26 @@ Depends:
     R (>= 4.1.0)
 Imports:
     cli,
-    httr,
-    jsonlite,
-    purrr,
-    R.utils,
-    R6,
     reticulate,
-    rlang,
-    tibble
+    withr
 Suggests:
     anndata,
+    httr,
+    jsonlite,
     knitr,
     nanoparquet,
+    purrr,
     quarto,
+    R.utils,
+    R6,
     readr,
+    rlang,
     rstudioapi,
     rsvg,
     s3 (>= 1.1.0),
     Seurat,
     testthat (>= 3.0.0),
-    withr,
+    tibble,
     yaml
 VignetteBuilder:
     quarto
