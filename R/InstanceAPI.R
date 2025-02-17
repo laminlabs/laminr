@@ -276,7 +276,7 @@ InstanceAPI <- R6::R6Class( # nolint object_name_linter
       } else if (authorization_required) {
         cli::cli_abort(c(
           "There is no access token for the current user",
-          "i" = "Run {.run lamnin_login()} and reconnect to the database in a new R session"
+          "i" = "Run {.run lamin_login()} and reconnect to the database in a new R session"
         ))
       }
 
