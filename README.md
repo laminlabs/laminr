@@ -8,7 +8,7 @@
 
 **{laminr}** is an R client for [LaminDB](https://lamin.ai). If you are new to LaminDB, please read this [introduction](https://docs.lamin.ai/introduction).
 
-- Connect to a LaminDB instance: `db <- connect()`
+- Connect to a LaminDB instance: `db <- api_connect()`
 - Track scripts and notebooks as transforms: `db$track()`
 - Get records by UID: `artifact <- db$Artifact$get()`
 - Cache artifacts locally: `artifact$cache()`

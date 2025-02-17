@@ -7,39 +7,31 @@
 #'   start of the error message e.g. "{what} requires...".
 #' @param requires Character vector of required package names
 #' @param alert Type of message to give if packages are missing
-#' @param language The language to check if the package exists, either "R" or
-#'   "Python"
 #' @param extra_repos Additional repositories that are required to install the
-#'   checked packages (only for R)
-#' @param check_fun The
+#'   checked packages
 #'
 #' @return Invisibly, Boolean whether or not all packages are available or
 #'   raises an error if any are missing and `type = "error"`
 #' @noRd
-check_requires <- function(what, requires,
-                           alert = c("error", "warning", "message", "none"),
-                           language = c("R", "Python"), extra_repos = NULL) {
+api_check_requires <- function(what, requires,
+                               alert = c("error", "warning", "message", "none"),
+                               extra_repos = NULL) {
   alert <- match.arg(alert)
-  language <- match.arg(language)
 
-  is_available <- if (language == "R") {
-    purrr::map_lgl(requires, requireNamespace, quietly = TRUE)
-  } else {
-    purrr::map_lgl(requires, reticulate::py_module_available)
-  }
+  is_available <- purrr::map_lgl(requires, requireNamespace, quietly = TRUE)
 
   msg_fun <- switch(alert,
-                    error = cli::cli_abort,
-                    warning = cli::cli_warn,
-                    message = cli::cli_inform,
-                    none = NULL
+    error = cli::cli_abort,
+    warning = cli::cli_warn,
+    message = cli::cli_inform,
+    none = NULL
   )
 
-  if (!all(is_available) && !is.null(msg_fun)) {
+  if (!any(is_available) && !is.null(msg_fun)) {
     missing <- requires[!is_available]
     missing_str <- paste0("'", paste(missing, collapse = "', '"), "'") # nolint object_usage_linter
 
-    msg <- "{what} requires the {language} {.pkg {missing}} package{?s}"
+    msg <- "{what} requires the {.pkg {missing}} package{?s}"
 
     if (!is.null(extra_repos)) {
       msg <- c(
@@ -52,17 +44,11 @@ check_requires <- function(what, requires,
       )
     }
 
-    install_msg <- if (language == "R") {
-      "{.run install.packages(c({missing_str}))}"
-    } else {
-      "{.run install_lamindb(extra_packages = c({missing_str}))}"
-    }
-
     msg <- c(
       msg,
       "i" = paste(
         "Install {cli::qty(missing)}{?it/them} using",
-        install_msg
+        "{.run install.packages(c({missing_str}))}"
       )
     )
 
@@ -77,13 +63,13 @@ check_requires <- function(what, requires,
 #' @return `TRUE` if we are in a knitr notebook, `FALSE` otherwise
 #'
 #' @noRd
-is_knitr_notebook <- function() {
-  # If knitr is not available, assume that we are not in a notebook
+api_is_knitr_notebook <- function() {
+  # if knitr is not available, assume that we are not in a notebook
   if (!requireNamespace("knitr", quietly = TRUE)) {
     return(FALSE)
   }
 
-  # Check if we are in a notebook
+  # check if we are in a notebook
   !is.null(knitr::opts_knit$get("out.format"))
 }
 
@@ -94,13 +80,13 @@ is_knitr_notebook <- function() {
 #' @return If found, path to the file relative to the working directory,
 #'   otherwise `NULL`
 #' @noRd
-detect_path <- function() {
+api_detect_path <- function() {
   # Based on various responses from https://stackoverflow.com/questions/47044068/get-the-path-of-current-script
 
   current_path <- NULL
 
   # Get path if in a running RMarkdown notebook
-  if (is_knitr_notebook()) {
+  if (api_is_knitr_notebook()) {
     current_path <- knitr::current_input()
   }
 
@@ -119,8 +105,8 @@ detect_path <- function() {
   # Get path if in a document in RStudio
   if (
     is.null(current_path) &&
-    requireNamespace("rstudioapi", quietly = TRUE) &&
-    rstudioapi::isAvailable()
+      requireNamespace("rstudioapi", quietly = TRUE) &&
+      rstudioapi::isAvailable()
   ) {
     doc_context <- rstudioapi::getActiveDocumentContext()
     if (doc_context$id != "#console") {
@@ -134,4 +120,31 @@ detect_path <- function() {
   }
 
   return(current_path)
+}
+
+#' Resolve an httr response with error handling
+#'
+#' @param response An httr response object
+#' @param request_type A string describing the request type
+#'
+#' @return The content of the response if successful
+#' @noRd
+api_process_httr_response <- function(response, request_type) {
+  content <- httr::content(response)
+  if (httr::http_error(response)) {
+    if (is.list(content) && "detail" %in% names(content)) {
+      detail <- content$detail
+      if (is.list(detail)) {
+        detail <- jsonlite::minify(jsonlite::toJSON(content$detail))
+      }
+    } else {
+      detail <- content
+    }
+    cli_abort(c(
+      "Failed to {request_type} with status code {response$status_code}",
+      "i" = "Details: {detail}"
+    ))
+  }
+
+  content
 }

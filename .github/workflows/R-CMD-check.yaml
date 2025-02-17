@@ -101,7 +101,7 @@ jobs:
           reticulate::use_virtualenv("r-lamindb")
           reticulate::py_config()
           reticulate::import("lamindb")
-          laminr::connect()
+          laminr::api_connect()
         shell: Rscript {0}
 
       - name: Check
