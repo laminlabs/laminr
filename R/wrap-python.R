@@ -61,7 +61,7 @@ wrap_python <- function(obj, public = list(), active = list(), private = list())
       # and passes those to the Python method
       fun_src <- paste0(
         "function(", argument_defaults_string, ") {\n",
-        "  py_to_r(\n",
+        "  py_to_r_nonull(\n",
         "    private$.py_object[['", .name, "']](", argument_values_string, ")\n",
         "  )\n",
         "\n}"
@@ -201,4 +201,23 @@ make_argument_usage_string <- function(arguments) {
     paste(.argument, "=", .argument)
   }) |>
     paste(collapse = ", ")
+}
+
+#' Python to R (no NULL)
+#'
+#' Convert a Python object to R, except if it is `NULL`
+#'
+#' @param x The Python object to convert
+#'
+#' @returns The result of [reticulate::py_to_r(x)] unless it is `NULL` in which
+#'   case `invisible(NULL)`
+#' @noRd
+py_to_r_nonull <- function(x) {
+  x <- reticulate::py_to_r(x)
+
+  if (is.null(x)) {
+    invisible(NULL)
+  } else {
+    return(x)
+  }
 }
