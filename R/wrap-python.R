@@ -37,7 +37,6 @@ wrap_python <- function(obj, public = list(), active = list(), private = list())
   private$.py_object <- obj
 
   for (.name in names(obj)) {
-
     # Try to get the value for this slot
     value <- try(obj[[.name]], silent = TRUE)
     if (inherits(value, "try-error")) {
@@ -62,7 +61,7 @@ wrap_python <- function(obj, public = list(), active = list(), private = list())
       # and passes those to the Python method
       fun_src <- paste0(
         "function(", argument_defaults_string, ") {\n",
-        "  py_to_r_ifneedbe(\n",
+        "  py_to_r(\n",
         "    private$.py_object[['", .name, "']](", argument_values_string, ")\n",
         "  )\n",
         "\n}"
@@ -80,7 +79,7 @@ wrap_python <- function(obj, public = list(), active = list(), private = list())
       # Build a function that accesses the correct variable in the Python object
       fun_src <- paste0(
         "function() {\n",
-        "  py_to_r_ifneedbe(private$.py_object[['", .name, "']])",
+        "  py_to_r(private$.py_object[['", .name, "']])",
         "\n}"
       )
 

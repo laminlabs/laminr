@@ -5,8 +5,8 @@
 #'
 #' @return A `data.frame`
 #' @noRd
-api_load_csv <- function(file, ...) {
-  api_check_requires("Reading CSV files", "readr")
+load_csv <- function(file, ...) {
+  check_requires("Loading CSV files", "readr")
   readr::read_csv(file, ...)
 }
 
@@ -17,8 +17,8 @@ api_load_csv <- function(file, ...) {
 #'
 #' @return A `data.frame`
 #' @noRd
-api_load_tsv <- function(file, ...) {
-  api_check_requires("Reading TSV files", "readr")
+load_tsv <- function(file, ...) {
+  check_requires("Loading TSV files", "readr")
   readr::read_tsv(file, ...)
 }
 
@@ -29,19 +29,19 @@ api_load_tsv <- function(file, ...) {
 #'
 #' @return An `anndata::AnnDataR6` object
 #' @noRd
-api_load_h5ad <- function(file, ...) {
-  api_check_requires("Loading AnnData objects", "anndata")
+load_h5ad <- function(file, ...) {
+  check_requires("Loading AnnData objects", "anndata")
   anndata::read_h5ad(file, ...)
 }
 
-#' Load an `.zarr` file to `AnnData`
+#' Load a `.zarr` file to `AnnData`
 #'
 #' @param file Path to the file to load
 #' @param ... Additional arguments to pass to `anndata::read_zarr()`
 #'
 #' @return The path to the file
 #' @noRd
-api_load_anndata_zarr <- function(file, ...) {
+load_anndata_zarr <- function(file, ...) {
   cli_warn("Loading AnnData Zarr files is not yet supported")
   file
 }
@@ -53,8 +53,8 @@ api_load_anndata_zarr <- function(file, ...) {
 #'
 #' @return A data frame
 #' @noRd
-api_load_parquet <- function(file) {
-  api_check_requires("Reading Parquet files", "nanoparquet")
+load_parquet <- function(file) {
+  check_requires("Reading Parquet files", "nanoparquet")
   nanoparquet::read_parquet(file)
 }
 
@@ -65,7 +65,7 @@ api_load_parquet <- function(file) {
 #'
 #' @return An `anndata::AnnDataR6` object
 #' @noRd
-api_load_fcs <- function(file, ...) {
+load_fcs <- function(file, ...) {
   cli_warn("Loading FCS files is not yet supported")
   file
 }
@@ -77,9 +77,9 @@ api_load_fcs <- function(file, ...) {
 #'
 #' @return A `MuData` object
 #' @noRd
-api_load_h5mu <- function(file, ...) {
-  # Note: this is probably not the best solution
-  api_check_requires("Loading MuData objects", "reticulate")
+load_h5mu <- function(file, ...) {
+  # NOTE: this is probably not the best solution
+  check_requires("Loading MuData objects", "mudata", language = "Python")
   mudata <- reticulate::import("mudata")
 
   mudata$read_h5mu(file, ...)
@@ -95,8 +95,8 @@ api_load_h5mu <- function(file, ...) {
 #'
 #' @return NULL if interactive mode is enabled, the path to the file otherwise
 #' @noRd
-api_load_html <- function(file, ...) {
-  if (api_is_knitr_notebook()) {
+load_html <- function(file, ...) {
+  if (is_knitr_notebook()) {
     lines <- readLines(file)
     return(knitr::raw_html(paste(lines, collapse = "\n")))
   }
@@ -115,24 +115,25 @@ api_load_html <- function(file, ...) {
 #'
 #' @return A list
 #' @noRd
-api_load_json <- function(file, ...) {
+load_json <- function(file, ...) {
   jsonlite::fromJSON(file, ...)
 }
 
-#' Display an `.svg`, `.jpg`, `.png` or `.gif` in the viewer
+#' Display an `.svg`, `.jpg`, `.png` or `.gif`
 #'
 #' @param file Path to the file to load
 #' @param ... Additional arguments to pass to ...
 #'
-#' @return NULL
+#' @return Display the image in the viewer if interactive mode is enabled,
+#'   include it in document if in knitr or the path to the file otherwise
 #' @noRd
-api_load_image <- function(file, ...) {
-  # if part of a knitr document, include the SVG
-  if (api_is_knitr_notebook()) {
+load_image <- function(file, ...) {
+  # If part of a knitr document, include the image
+  if (is_knitr_notebook()) {
     ext <- tools::file_ext(file)
 
     if (knitr::is_latex_output() && ext == "svg") {
-      api_check_requires("Displaying SVG images in LaTeX", "rsvg")
+      check_requires("Displaying SVG images in LaTeX", "rsvg")
       pdf_file <- tempfile(fileext = ".pdf")
       return(rsvg::rsvg_pdf(file, pdf_file, ...))
     }
@@ -140,8 +141,8 @@ api_load_image <- function(file, ...) {
     return(knitr::include_graphics(file, ...))
   }
 
+  # If interactive, show the image
   if (interactive()) {
-    api_check_requires("Displaying images", "utils")
     return(utils::browseURL(file, ...))
   }
 
@@ -155,7 +156,7 @@ api_load_image <- function(file, ...) {
 #'
 #' @return The object stored in the RDS file
 #' @noRd
-api_load_rds <- function(file, ...) {
+load_rds <- function(file, ...) {
   readRDS(file, ...)
 }
 
@@ -166,31 +167,32 @@ api_load_rds <- function(file, ...) {
 #'
 #' @return A list
 #' @noRd
-api_load_yaml <- function(file, ...) {
-  api_check_requires("Reading YAML files", "yaml")
+load_yaml <- function(file, ...) {
+  check_requires("Reading YAML files", "yaml")
   yaml::yaml.load_file(file, ...)
 }
 
 file_loaders <- list(
-  ".csv" = api_load_csv,
-  ".fcs" = api_load_fcs,
-  ".h5ad" = api_load_h5ad,
-  ".h5mu" = api_load_h5mu,
-  ".html" = api_load_html,
-  ".jpg" = api_load_image,
-  ".json" = api_load_json,
-  ".parquet" = api_load_parquet,
-  ".png" = api_load_image,
-  ".rds" = api_load_rds,
-  ".svg" = api_load_image,
-  ".tsv" = api_load_tsv,
-  ".yaml" = api_load_yaml,
-  ".zarr" = api_load_anndata_zarr
+  ".csv" = load_csv,
+  ".fcs" = load_fcs,
+  ".gif" = load_image,
+  ".h5ad" = load_h5ad,
+  ".h5mu" = load_h5mu,
+  ".html" = load_html,
+  ".jpg" = load_image,
+  ".json" = load_json,
+  ".parquet" = load_parquet,
+  ".png" = load_image,
+  ".rds" = load_rds,
+  ".svg" = load_image,
+  ".tsv" = load_tsv,
+  ".yaml" = load_yaml,
+  ".zarr" = load_anndata_zarr
 )
 
 #' Load a file into memory
 #'
-#' Returns the filepath if no in-memory form is found
+#' Returns the file path if no in-memory form is found
 #'
 #' @param file Path to the file to load
 #' @param suffix The file extension to use for loading
@@ -200,7 +202,7 @@ file_loaders <- list(
 #' @noRd
 #'
 #' @importFrom tools file_ext
-api_load_file <- function(file, suffix = NULL, ...) {
+load_file <- function(file, suffix = NULL, ...) {
   if (is.null(suffix)) {
     suffix <- paste0(".", tools::file_ext(file))
   }
