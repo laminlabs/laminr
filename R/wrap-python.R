@@ -38,7 +38,7 @@ wrap_python <- function(obj, public = list(), active = list(), private = list())
 
   for (.name in names(obj)) {
     # Try to get the value for this slot
-    value <- try(obj[[.name]], silent = TRUE)
+    value <- try(suppress_future_warning(obj[[.name]]), silent = TRUE)
     if (inherits(value, "try-error")) {
       # Skip if there is an error
       # This should only happen if there is a Python error stopping this slot
@@ -220,4 +220,23 @@ py_to_r_nonull <- function(x) {
   } else {
     return(x)
   }
+}
+
+#' Suppress FutureWarning
+#'
+#' Suppress Python FutureWarning warnings for when they are expected but
+#' shouldn't be visible to users
+#'
+#' @param expr The expression to run
+#'
+#' @returns The results of `expr`
+#' @noRd
+suppress_future_warning <- function(expr) {
+  py_builtins <- reticulate::import_builtins()
+  warnings <- reticulate::import("warnings")
+
+  with(warnings$catch_warnings(), {
+    warnings$simplefilter(action='ignore', category=py_builtins$FutureWarning)
+    eval(expr)
+  })
 }
