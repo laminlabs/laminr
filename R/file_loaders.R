@@ -210,6 +210,7 @@ load_file <- function(file, suffix = NULL, ...) {
   file_loader <- file_loaders[[suffix]]
 
   if (is.null(file_loader)) {
+    cli::cli_warn("Loading files of type {.val suffix} is not supported")
     return(file)
   } else {
     return(file_loader(file, ...))
