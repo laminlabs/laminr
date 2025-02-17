@@ -52,8 +52,7 @@ lamindb_finish <- function(ignore_non_consecutive = NULL) {
   tryCatch(
     private$.py_object[['finish']](
       ignore_non_consecutive = ignore_non_consecutive
-    ) |>
-      py_to_r(),
+    ),
     error = function(err) {
       py_err <- reticulate::py_last_error()
       if (py_err$type != "NotebookNotSaved") {
@@ -65,6 +64,31 @@ lamindb_finish <- function(ignore_non_consecutive = NULL) {
       # Please don't change the below without changing it in lamindb
       message <- gsub(".*NotebookNotSaved: (.*)$", "\\1", py_err$value)
       cli::cli_inform(paste("NotebookNotSaved: {message}"))
+    }
+  )
+}
+
+#' Import bionty
+#'
+#' Import the `bionty` Python package
+#'
+#' @returns An object representing the `bionty` Python package
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' bt <- import_bionty()
+#' }
+import_bionty <- function() {
+  check_requires("Importing bionty", "bionty", language = "Python")
+
+  tryCatch(
+    reticulate::import("bionty"),
+    error = function(err) {
+      cli::cli_abort(c(
+        "Failed to connect to the Python {.pkg bionty} package,",
+        "i" = "Run {.run reticulate::py_config()} and {.run reticulate::py_last_error()} for details"
+      ))
     }
   )
 }
