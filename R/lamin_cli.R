@@ -32,9 +32,9 @@ lamin_connect <- function(instance) {
   system2("lamin", paste("connect", instance))
 }
 
-#' Login to LaminDB
+#' Log into LaminDB
 #'
-#' Login as a LaminDB user
+#' Log in as a LaminDB user
 #'
 #' @param user Handle for the user to login as
 #' @param api_key API key for a user
@@ -57,10 +57,11 @@ lamin_login <- function(user = NULL, api_key = NULL) {
     cli::cli_abort(c(
       "There is already a default instance connected ({.val {current_default}})",
       "x" = "{.code lamin login} will not be run",
-      "i" = "Start a new R session to connect to another instance"
+      "i" = "Start a new R session before attempting to log in"
     ))
   }
 
+  reticulate::use_virtualenv("r-lamindb", required = FALSE)
   ln <- reticulate::import("lamindb")
   handle <- ln$setup$settings$user$handle
 
@@ -88,6 +89,31 @@ lamin_login <- function(user = NULL, api_key = NULL) {
       "Unable to log in. Please provide {.arg user} or {.arg api_key}."
     )
   }
+}
+
+#' Log out of LaminDB
+#'
+#' Log out of LaminDB
+#'
+#' @export
+lamin_logout <- function() {
+  current_default <- getOption("LAMINR_DEFAULT_INSTANCE")
+  if (!is.null(current_default)) {
+    cli::cli_abort(c(
+      "There is already a default instance connected ({.val {current_default}})",
+      "x" = "{.code lamin logout} will not be run",
+      "i" = "Start a new R session before attempting to log out"
+    ))
+  }
+
+  # Set the default environment if not set
+  reticulate::use_virtualenv("r-lamindb", required = FALSE)
+  if (!reticulate::py_available()) {
+    # Force reticulate to connect to Python
+    py_config <- reticulate::py_config() # nolint object_usage_linter
+  }
+
+  system2("lamin", "logout")
 }
 
 #' Initalise LaminDB

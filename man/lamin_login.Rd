@@ -2,7 +2,7 @@
 % Please edit documentation in R/lamin_cli.R
 \name{lamin_login}
 \alias{lamin_login}
-\title{Login to LaminDB}
+\title{Log into LaminDB}
 \usage{
 lamin_login(user = NULL, api_key = NULL)
 }
@@ -12,7 +12,7 @@ lamin_login(user = NULL, api_key = NULL)
 \item{api_key}{API key for a user}
 }
 \description{
-Login as a LaminDB user
+Log in as a LaminDB user
 }
 \details{
 Depending on the input, one of these commands will be run (in this order):
