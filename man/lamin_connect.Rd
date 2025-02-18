@@ -4,10 +4,11 @@
 \alias{lamin_connect}
 \title{Set the default LaminDB instance}
 \usage{
-lamin_connect(slug)
+lamin_connect(instance)
 }
 \arguments{
-\item{slug}{Slug giving the instance to connect to (\verb{<owner>/<name>})}
+\item{instance}{Either a slug giving the instance to connect to
+(\verb{<owner>/<name>}) or an instance URL (\verb{https://lamin.ai/owner/name})}
 }
 \description{
 Set the default LaminDB instance by calling \verb{lamin connect} on the command

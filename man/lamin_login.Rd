@@ -15,8 +15,14 @@ lamin_login(user = NULL, api_key = NULL)
 Login as a LaminDB user
 }
 \details{
-Setting \code{user} will run \verb{lamin login <user>}. Setting \code{api_key} will set the
-\code{LAMIN_API_KEY} environment variable tempoarily with \code{withr::with_envvar()}
-and run \verb{lamin login}. If neither \code{user} or \code{api_key} are set \verb{lamin login}
-will be run if \code{LAMIN_API_KEY} is set.
+Depending on the input, one of these commands will be run (in this order):
+\enumerate{
+\item If \code{user} is set then \verb{lamin login <user>}
+\item Else if \code{api_key} is set then set the \code{LAMIN_API_KEY} environment variable
+temporarily with \code{withr::with_envvar()} and run \verb{lamin login}
+\item Else if there is a stored user handle run \verb{lamin login <handle>}
+\item Else if the \code{LAMIN_API_KEY} environment variable is set run \verb{lamin login}
+}
+
+Otherwise, exit with an error
 }

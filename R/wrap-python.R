@@ -209,7 +209,7 @@ make_argument_usage_string <- function(arguments) {
 #'
 #' @param x The Python object to convert
 #'
-#' @returns The result of [reticulate::py_to_r(x)] unless it is `NULL` in which
+#' @returns The result of `reticulate::py_to_r(x)` unless it is `NULL` in which
 #'   case `invisible(NULL)`
 #' @noRd
 py_to_r_nonull <- function(x) {
