@@ -89,6 +89,7 @@ wrap_python <- function(obj, public = list(), active = list(), private = list())
 
   r6_class <- R6::R6Class(
     class_name,
+    inherit = WrappedPythonObject,
     cloneable = FALSE,
     public = public,
     active = active,
@@ -239,4 +240,19 @@ suppress_future_warning <- function(expr) {
     warnings$simplefilter(action='ignore', category=py_builtins$FutureWarning)
     eval(expr)
   })
+}
+
+# Base class for wrapped Python objects. Only exists to allow shared S3 methods.
+WrappedPythonObject <- R6::R6Class( # nolint object_name_linter
+  "laminr.WrappedPythonObject"
+)
+
+.DollarNames.laminr.WrappedPythonObject <- function(x, pattern) {
+  # Get the corresponding Python object
+  py_object <- x[[".__enclos_env__"]][["private"]][[".py_object"]]
+  # Get the dollar names for the Python object
+  dollar_names <- .DollarNames(py_object, pattern)
+  # Replace the help handler
+  attr(dollar_names, "helpHandler") <- "laminr:::help_handler"
+  dollar_names
 }
