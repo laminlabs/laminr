@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">laminr</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.4.0.9001</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.4.1.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -70,9 +70,10 @@
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Setting <code>user</code> will run <code>lamin login &lt;user&gt;</code>. Setting <code>api_key</code> will set the
-<code>LAMIN_API_KEY</code> environment variable tempoarily with <code><a href="https://withr.r-lib.org/reference/with_envvar.html" class="external-link">withr::with_envvar()</a></code>
-and run <code>lamin login</code>. If neither <code>user</code> or <code>api_key</code> are set <code>lamin login</code>
-will be run if <code>LAMIN_API_KEY</code> is set.</p>
+<code>LAMIN_API_KEY</code> environment variable temporarily with <code><a href="https://withr.r-lib.org/reference/with_envvar.html" class="external-link">withr::with_envvar()</a></code>
+and run <code>lamin login</code>. If neither <code>user</code> or <code>api_key</code> are set the user handle
+will be retrieved from the user settings file. If that is not possible
+<code>lamin login</code> will only be run if <code>LAMIN_API_KEY</code> is set.</p>
     </div>
 
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

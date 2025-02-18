@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="index.html">laminr</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.4.0.9001</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.4.1.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,7 +50,16 @@
 
 <div class="section level2">
 <h2 id="minor-changes">MINOR CHANGES<a class="anchor" aria-label="anchor" href="#minor-changes"></a></h2>
-<ul><li>Increase R dependency to &gt;= 4.1.0 (PR #142)</li>
+<ul><li>Automatically refresh expired user tokens in <code><a href="reference/connect.html">connect()</a></code> by running <code><a href="reference/lamin_login.html">lamin_login()</a></code> (PR #145)</li>
+<li>
+<code><a href="reference/lamin_login.html">lamin_login()</a></code> now tries to use a stored user handle when arguments are not set (PR #145)</li>
+</ul></div>
+</div>
+<div class="section level1">
+<h1 id="laminr-v041">laminr v0.4.1<a class="anchor" aria-label="anchor" href="#laminr-v041"></a></h1>
+<div class="section level2">
+<h2 id="minor-changes-1">MINOR CHANGES<a class="anchor" aria-label="anchor" href="#minor-changes-1"></a></h2>
+<ul><li>Bump R dependency to &gt;= 4.1.0 to fix note on CRAN (PR #142).</li>
 </ul></div>
 </div>
 <div class="section level1">
@@ -61,9 +70,9 @@
 <ul><li>Updates for compatibility with the Python <code>lamindb</code> v1.0 release (PR #136)</li>
 </ul></div>
 <div class="section level2">
-<h2 id="minor-changes-1">MINOR CHANGES<a class="anchor" aria-label="anchor" href="#minor-changes-1"></a></h2>
+<h2 id="minor-changes-2">MINOR CHANGES<a class="anchor" aria-label="anchor" href="#minor-changes-2"></a></h2>
 <ul><li>
-<code>db$track()</code> can not automatically create a transform UID when not supplied (PR #136)</li>
+<code>db$track()</code> can now automatically create a transform UID when not supplied (PR #136)</li>
 </ul></div>
 </div>
 <div class="section level1">
@@ -91,7 +100,7 @@
 <li>Interact with TileDB-SOMA stores (PR #117). Add a <code><a href="https://rdrr.io/r/base/connections.html" class="external-link">open()</a></code> method to the <code>Artifact</code> class to connect to TileDB-SOMA stores.</li>
 </ul></div>
 <div class="section level2">
-<h2 id="minor-changes-2">MINOR CHANGES<a class="anchor" aria-label="anchor" href="#minor-changes-2"></a></h2>
+<h2 id="minor-changes-3">MINOR CHANGES<a class="anchor" aria-label="anchor" href="#minor-changes-3"></a></h2>
 <ul><li>Improve UX of <code>db$track()</code> and <code>db$finish()</code> (PR #120).</li>
 </ul></div>
 <div class="section level2">
@@ -131,7 +140,7 @@ Currently supported: <code>.csv</code>, <code>.h5ad</code>, <code>.html</code>, 
 <li>User setting are stored in a global option the first time <code><a href="reference/connect.html">connect()</a></code> is run (PR #78)</li>
 </ul></div>
 <div class="section level2">
-<h2 id="minor-changes-3">MINOR CHANGES<a class="anchor" aria-label="anchor" href="#minor-changes-3"></a></h2>
+<h2 id="minor-changes-4">MINOR CHANGES<a class="anchor" aria-label="anchor" href="#minor-changes-4"></a></h2>
 <ul><li>Adjusted argument order in <code>Instance$track()</code> and improved Python error handling (PR #89)</li>
 </ul></div>
 <div class="section level2">
@@ -179,7 +188,7 @@ Currently supported: <code>.csv</code>, <code>.h5ad</code>, <code>.html</code>, 
 <li><p>Allow unauthenticated users to connect to an instance if they ran <code>lamin connect &lt;instance&gt;</code> beforehand (PR #19).</p></li>
 </ul></div>
 <div class="section level2">
-<h2 id="minor-changes-4">MINOR CHANGES<a class="anchor" aria-label="anchor" href="#minor-changes-4"></a></h2>
+<h2 id="minor-changes-5">MINOR CHANGES<a class="anchor" aria-label="anchor" href="#minor-changes-5"></a></h2>
 <ul><li>Do not complain when foreign keys are not found in a record, but also do not complain when they are (PR #13).</li>
 <li>Define a current user and current instance with lamin-cli prior to testing and generating documentation in the CI (PR #23).</li>
 <li>Add progress bars to <code>Artifact$cache()</code> (PR #58)</li>
