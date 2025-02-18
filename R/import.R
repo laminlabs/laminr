@@ -38,6 +38,10 @@ import_lamindb <- function() {
     options(LAMINR_DEFAULT_INSTANCE = instance_slug)
   }
 
+  reticulate::register_module_help_handler(
+    "lamindb", lamindb_module_help_handler
+  )
+
   # Avoid "no visible binding for global variable"
   self <- NULL # nolint object_usage_linter
   private <- NULL # nolint object_usage_linter

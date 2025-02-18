@@ -9,3 +9,7 @@ laminr_help_handler <- function(type, topic, source, ...) {
 # This function uses internal {reticulate} functions so pretend it is part of
 # "reticulate" namespace to avoid check warnings
 environment(laminr_help_handler) <- asNamespace("reticulate")
+
+lamindb_module_help_handler <- function(name, subtopic = NULL) {
+  paste0("https://docs.lamin.ai/", tolower(name))
+}
