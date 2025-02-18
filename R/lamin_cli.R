@@ -103,7 +103,7 @@ lamin_login <- function(user = NULL, api_key = NULL) {
 #'
 #' @examples
 #' \dontrun{
-#' lamin_init("mydata", modules = c("bionty", "wetlab")
+#' lamin_init("mydata", modules = c("bionty", "wetlab"))
 #' }
 lamin_init <- function(storage, name = NULL, db = NULL, modules = NULL) {
   # Set the default environment if not set

@@ -20,6 +20,6 @@ Initialise a new LaminDB instance
 }
 \examples{
 \dontrun{
-lamin_init("mydata", modules = c("bionty", "wetlab")
+lamin_init("mydata", modules = c("bionty", "wetlab"))
 }
 }

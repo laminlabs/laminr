@@ -111,11 +111,12 @@ APIRelatedRecords <- R6::R6Class( # nolint object_name_linter
 
         purrr::map(related_fields, function(.field) {
           if (.field %in% colnames(values)) {
-            return(values[, .field, drop = FALSE])
+            values[, .field, drop = FALSE]
           } else {
             column <- data.frame(rep(NA, nrow(values)))
             colnames(column) <- .field
-            return(column)
+
+            column
           }
         }) |>
           purrr::list_cbind()

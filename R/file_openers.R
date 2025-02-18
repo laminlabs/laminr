@@ -3,15 +3,18 @@
 #' @param uri URI for the object to open
 #' @param ... Additional arguments to pass to [tiledbsoma::SOMAOpen()]
 #'
-#' @return A TileDB-SOMA connection object
+#' @return A [tiledbsoma::SOMACollection] or [tiledbsoma::SOMAExperiment]
 #' @noRd
-open_tiledbsoma <- function(uri) {
+open_tiledbsoma <- function(uri, ...) {
   check_requires(
     "Opening TileDB-SOMA artifacts", "tiledbsoma",
     extra_repos = "https://chanzuckerberg.r-universe.dev"
   )
 
-  tiledbsoma::SOMAOpen(uri)
+  args <- list(...)
+  args$uri <- uri
+
+  do.call(get("SOMAOpen", asNamespace("tiledbsoma")), args)
 }
 
 file_openers <- list(

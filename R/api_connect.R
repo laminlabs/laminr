@@ -128,7 +128,8 @@ api_connect <- function(slug = NULL) {
     owner <- user_settings$handle
     name <- identifier
   }
-  return(list(owner = owner, name = name))
+
+  list(owner = owner, name = name)
 }
 
 .connect_get_instance_settings <- function(owner, name, access_token) { # nolint object_length_linter

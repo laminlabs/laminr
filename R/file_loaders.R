@@ -105,7 +105,7 @@ load_html <- function(file, ...) {
     return(utils::browseURL(file, ...))
   }
 
-  return(file)
+  file
 }
 
 #' Load a JSON file

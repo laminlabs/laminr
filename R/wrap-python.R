@@ -115,7 +115,6 @@ wrap_python <- function(obj, public = list(), active = list(), private = list())
 #' @returns A named list where names are arguments and values and default values
 #' @noRd
 get_py_arguments <- function(py_func) {
-
   py_builtins <- reticulate::import_builtins()
   py_inspect <- reticulate::import("inspect")
 
@@ -126,14 +125,14 @@ get_py_arguments <- function(py_func) {
     default <- .param$default
 
     if (default == .param$empty) {
-      default = "__NODEFAULT__"
+      default <- "__NODEFAULT__"
     }
 
     if (.param$kind == .param$VAR_KEYWORD) {
-      default = "..."
+      default <- "..."
     }
 
-    return(default)
+    default
   })
 }
 
@@ -148,13 +147,11 @@ get_py_arguments <- function(py_func) {
 #' @noRd
 make_argument_defaults_string <- function(arguments) {
   lapply(names(arguments), function(.argument) {
-
     default <- arguments[[.argument]]
 
     if (is.null(default)) {
       default <- "NULL"
     } else {
-
       # If the default is "..." replace it with literal `...` and no name
       if (default == "...") {
         return("...")
@@ -219,7 +216,7 @@ py_to_r_nonull <- function(x) {
   if (is.null(x)) {
     invisible(NULL)
   } else {
-    return(x)
+    x
   }
 }
 
@@ -233,11 +230,11 @@ py_to_r_nonull <- function(x) {
 #' @returns The results of `expr`
 #' @noRd
 suppress_future_warning <- function(expr) {
-  py_builtins <- reticulate::import_builtins()
+  py_builtins <- reticulate::import_builtins() # nolint object_usage_linter
   warnings <- reticulate::import("warnings")
 
   with(warnings$catch_warnings(), {
-    warnings$simplefilter(action='ignore', category=py_builtins$FutureWarning)
+    warnings$simplefilter(action = "ignore", category = py_builtins$FutureWarning)
     eval(expr)
   })
 }
@@ -251,8 +248,8 @@ WrappedPythonObject <- R6::R6Class( # nolint object_name_linter
   # Get the corresponding Python object
   py_object <- x[[".__enclos_env__"]][["private"]][[".py_object"]]
   # Get the dollar names for the Python object
-  dollar_names <- .DollarNames(py_object, pattern)
+  dollar_names <- utils::.DollarNames(py_object, pattern)
   # Replace the help handler
-  attr(dollar_names, "helpHandler") <- "laminr:::help_handler"
+  attr(dollar_names, "helpHandler") <- "laminr:::laminr_help_handler"
   dollar_names
 }

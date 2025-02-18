@@ -19,7 +19,7 @@ APIArtifactRecord <- R6::R6Class( # nolint object_name_linter
 
       suffix <- private$get_value("suffix")
 
-      api_load_file(file_path, suffix, ...)
+      load_file(file_path, suffix, ...)
     },
     #' @description
     #' Cache the artifact to the local filesystem. When the Python `lamindb`

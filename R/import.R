@@ -38,16 +38,24 @@ import_lamindb <- function() {
     options(LAMINR_DEFAULT_INSTANCE = instance_slug)
   }
 
+  # Avoid "no visible binding for global variable"
+  self <- NULL # nolint object_usage_linter
+  private <- NULL # nolint object_usage_linter
+
   wrap_python(
     py_lamindb,
     public = list(
-      track = lamindb_track,
-      finish = lamindb_finish
+      track = function(transform = NULL, params = NULL, new_run = NULL, path = NULL, log_to_file = NULL) {
+        lamindb_track(private, transform, params, new_run, path, log_to_file)
+      },
+      finish = function(ignore_non_consecutive = NULL) {
+        lamindb_finish(private, ignore_non_consecutive)
+      }
     )
   )
 }
 
-lamindb_track <- function(transform = NULL, params = NULL, new_run = NULL, path = NULL, log_to_file = NULL) {
+lamindb_track <- function(private, transform = NULL, params = NULL, new_run = NULL, path = NULL, log_to_file = NULL) {
   if (is.null(path)) {
     path <- detect_path()
     if (is.null(path)) {
@@ -57,7 +65,7 @@ lamindb_track <- function(transform = NULL, params = NULL, new_run = NULL, path 
     }
   }
 
-  private$.py_object[['track']](
+  private$.py_object$track(
     transform = transform,
     params = params,
     new_run = new_run,
@@ -66,9 +74,9 @@ lamindb_track <- function(transform = NULL, params = NULL, new_run = NULL, path 
   )
 }
 
-lamindb_finish <- function(ignore_non_consecutive = NULL) {
+lamindb_finish <- function(private, ignore_non_consecutive = NULL) {
   tryCatch(
-    private$.py_object[['finish']](
+    private$.py_object$finish(
       ignore_non_consecutive = ignore_non_consecutive
     ),
     error = function(err) {
@@ -80,7 +88,7 @@ lamindb_finish <- function(ignore_non_consecutive = NULL) {
         ))
       }
       # Please don't change the below without changing it in lamindb
-      message <- gsub(".*NotebookNotSaved: (.*)$", "\\1", py_err$value)
+      message <- gsub(".*NotebookNotSaved: (.*)$", "\\1", py_err$value) # nolint object_usage_linter
       cli::cli_inform(paste("NotebookNotSaved: {message}"))
     }
   )

@@ -124,7 +124,7 @@ APIRegistry <- R6::R6Class( # nolint object_name_linter
             attr(.data_list, "finished") <- TRUE
           }
 
-          return(.data_list)
+          .data_list
         },
         .init = data_list
       )
@@ -518,10 +518,13 @@ api_create_record_from_python <- function(py_record, instance) {
 
   class_split <- strsplit(py_classes[1], "\\.")[[1]]
   module_name <- class_split[1]
+  if (module_name == "laminr") {
+    module_name <- class_split[2]
+  }
   if (module_name == "lamindb") {
     module_name <- "core"
   }
-  registry_name <- tolower(class_split[3])
+  registry_name <- tolower(rev(class_split)[1])
 
   registry <- instance$get_module(module_name)$get_registry(registry_name)
   fields <- registry$get_field_names()

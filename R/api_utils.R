@@ -119,7 +119,7 @@ api_detect_path <- function() {
     current_path <- R.utils::getRelativePath(current_path)
   }
 
-  return(current_path)
+  current_path
 }
 
 #' Resolve an httr response with error handling

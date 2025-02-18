@@ -29,10 +29,10 @@ check_requires <- function(what, requires,
   }
 
   msg_fun <- switch(alert,
-                    error = cli::cli_abort,
-                    warning = cli::cli_warn,
-                    message = cli::cli_inform,
-                    none = NULL
+    error = cli::cli_abort,
+    warning = cli::cli_warn,
+    message = cli::cli_inform,
+    none = NULL
   )
 
   if (!all(is_available) && !is.null(msg_fun)) {
@@ -119,8 +119,8 @@ detect_path <- function() {
   # Get path if in a document in RStudio
   if (
     is.null(current_path) &&
-    requireNamespace("rstudioapi", quietly = TRUE) &&
-    rstudioapi::isAvailable()
+      requireNamespace("rstudioapi", quietly = TRUE) &&
+      rstudioapi::isAvailable()
   ) {
     doc_context <- rstudioapi::getActiveDocumentContext()
     if (doc_context$id != "#console") {
@@ -133,5 +133,5 @@ detect_path <- function() {
     current_path <- R.utils::getRelativePath(current_path)
   }
 
-  return(current_path)
+  current_path
 }
