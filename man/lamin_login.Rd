@@ -16,7 +16,8 @@ Login as a LaminDB user
 }
 \details{
 Setting \code{user} will run \verb{lamin login <user>}. Setting \code{api_key} will set the
-\code{LAMIN_API_KEY} environment variable tempoarily with \code{withr::with_envvar()}
-and run \verb{lamin login}. If neither \code{user} or \code{api_key} are set \verb{lamin login}
-will be run if \code{LAMIN_API_KEY} is set.
+\code{LAMIN_API_KEY} environment variable temporarily with \code{withr::with_envvar()}
+and run \verb{lamin login}. If neither \code{user} or \code{api_key} are set the user handle
+will be retrieved from the user settings file. If that is not possible
+\verb{lamin login} will only be run if \code{LAMIN_API_KEY} is set.
 }

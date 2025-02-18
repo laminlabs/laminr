@@ -1,3 +1,10 @@
+# laminr devel
+
+## MINOR CHANGES
+
+- Automatically refresh expired user tokens in `connect()` by running `lamin_login()` (PR #145)
+- `lamin_login()` now tries to use a stored user handle when arguments are not set (PR #145)
+
 # laminr v0.4.1
 
 ## MINOR CHANGES
@@ -14,8 +21,7 @@ Minor (breaking) changes to support the Python `lamindb` v1.0 release.
 
 ## MINOR CHANGES
 
-- `db$track()` can not automatically create a transform UID when not supplied (PR #136)
-
+- `db$track()` can now automatically create a transform UID when not supplied (PR #136)
 
 # laminr v0.3.1
 

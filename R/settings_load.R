@@ -37,7 +37,7 @@
   file <- .settings_store__current_user_settings_file()
 
   if (!file.exists(file)) {
-    cli_warn("using anonymous user (to identify, call `lamin login`)")
+    cli_warn("using anonymous user (to identify, run {.run lamin_login()})")
     content <- list(
       email = NULL,
       password = NULL,
@@ -78,10 +78,10 @@
   UserSettings$new(store)
 }
 
-.get_user_settings <- function() {
+.get_user_settings <- function(refresh = FALSE) {
   user_settings <- getOption("LAMINR_USER_SETTINGS")
 
-  if (is.null(user_settings)) {
+  if (refresh || is.null(user_settings)) {
     user_settings <- .settings_load__load_or_create_user_settings()
     options("LAMINR_USER_SETTINGS" = user_settings)
   }
