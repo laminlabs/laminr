@@ -113,8 +113,8 @@ wrap_python <- function(obj, public = list(), active = list(), private = list())
 #' Arguments are found using the Python `inspect` function. If an arguments does
 #' not have a default then the string "__NODEFAULT__" is returned for use by
 #' other functions. This is to differentiate from arguments with a default value
-#' of `NULL` or `NA`. Variable keyword arguments (e.g. `**kwargs`) are given a
-#' default of `...`.
+#' of `NULL` or `NA`. Variable keyword arguments (e.g. `**kwargs`) and variable
+#' positional arguments (e.g. `*args`) are given a default of `...`.
 #'
 #' @returns A named list where names are arguments and values and default values
 #' @noRd
@@ -133,6 +133,10 @@ get_py_arguments <- function(py_func) {
     }
 
     if (.param$kind == .param$VAR_KEYWORD) {
+      default <- "..."
+    }
+
+    if (.param$kind == .param$VAR_POSITIONAL) {
       default <- "..."
     }
 
@@ -179,6 +183,7 @@ make_argument_defaults_string <- function(arguments) {
 
     paste(.argument, "=", default)
   }) |>
+    unique() |>
     paste(collapse = ", ")
 }
 
@@ -202,6 +207,7 @@ make_argument_usage_string <- function(arguments) {
 
     paste(.argument, "=", .argument)
   }) |>
+    unique() |>
     paste(collapse = ", ")
 }
 
