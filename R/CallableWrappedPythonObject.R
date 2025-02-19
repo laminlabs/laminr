@@ -15,3 +15,8 @@
   attr(dollar_names, "helpHandler") <- "laminr:::laminr_help_handler"
   dollar_names
 }
+
+#' @export
+print.laminr.CallableWrappedPythonObject <- function(x, ...) {
+  print(attr(x, "wrapped", exact = TRUE))
+}
