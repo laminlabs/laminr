@@ -2,7 +2,6 @@
 py_to_r.lamindb.models.Artifact <- function(x) {
   # Avoid "no visible binding for global variable"
   self <- NULL
-  private <- NULL
 
   wrap_python(
     x,
