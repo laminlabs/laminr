@@ -139,6 +139,12 @@ lamin_init <- function(storage, name = NULL, db = NULL, modules = NULL) {
     py_config <- reticulate::py_config() # nolint object_usage_linter
   }
 
+  if (!is.null(modules)) {
+    check_requires(
+      "Initalising a database with these modules", modules, language = "Python"
+    )
+  }
+
   options_string <- paste("init --storage", storage)
 
   if (!is.null(name)) {
