@@ -34,6 +34,10 @@ wrap_python <- function(obj, public = list(), active = list(), private = list())
       print(private$.py_object)
     }
   }
+  if (is.function(obj)) {
+    # If obj is callable, store the environment so it can be restored later
+    attr(obj, "original_env") <- environment(obj)
+  }
   private$.py_object <- obj
 
   for (.name in names(obj)) {
@@ -201,73 +205,36 @@ make_argument_usage_string <- function(arguments) {
     paste(collapse = ", ")
 }
 
-#' Python to R (no NULL)
+#' Wrap a callable Python object
 #'
-#' Convert a Python object to R, except if it is `NULL`
+#' Creates a wrapper around a Python object where selected slots
+#' are replaced and it can be called as a function
 #'
-#' @param x The Python object to convert
+#' @param obj The Python object to wrap
+#' @param call A function used when the object is called
+#' @param public A list of public members. Will replace any Python methods with
+#'   the same names.
+#' @param active A list of active binding functions. Will replace any Python
+#'   items with the same names.
+#' @param private A list of private members
 #'
-#' @returns The result of `reticulate::py_to_r(x)` unless it is `NULL` in which
-#'   case `invisible(NULL)`
+#' @details
+#' The Python object is wrapped using `wrap_python()`. The result is included as
+#' attribute of a structure where `call` is the main data. S3 methods allow the
+#' slots of the wrapped object to be called while also allowing the whole object
+#' to be called.
+#'
+#' @references https://github.com/r-lib/R6/issues/220
+#'
+#' @returns A callable structure wrapping the Python object
 #' @noRd
-py_to_r_nonull <- function(x) {
-  x <- reticulate::py_to_r(x)
+wrap_python_callable <- function(obj, call, public = list(), active = list(), private = list()) {
+  public$call <- call
+  wrapped <- wrap_python(obj, public = public, active = active, private = private)
 
-  if (is.null(x)) {
-    invisible(NULL)
-  } else {
-    x
-  }
-}
-
-#' Suppress FutureWarning
-#'
-#' Suppress Python FutureWarning warnings for when they are expected but
-#' shouldn't be visible to users
-#'
-#' @param expr The expression to run
-#'
-#' @returns The results of `expr`
-#' @noRd
-suppress_future_warning <- function(expr) {
-  py_builtins <- reticulate::import_builtins() # nolint object_usage_linter
-  warnings <- reticulate::import("warnings")
-
-  with(warnings$catch_warnings(), {
-    warnings$simplefilter(action = "ignore", category = py_builtins$FutureWarning)
-    eval(expr)
-  })
-}
-
-#' Unwrap Python
-#'
-#' Unwrap a wrapped Python object
-#'
-#' @param obj The `laminr.WrappedPythonObject` to unwrap
-#'
-#' @returns The Python object stored in `obj` or `obj` or it is not a
-#'   `laminr.WrappedPythonObject`
-#' @noRd
-unwrap_python <- function(obj) {
-  if (inherits(obj, "laminr.WrappedPythonObject")) {
-    obj[[".__enclos_env__"]][["private"]][[".py_object"]]
-  } else {
-    obj
-  }
-}
-
-#' Unwrap arguments and call
-#'
-#' Unwrap any arguments that contain Python objects and make a function call
-#'
-#' @param what The function to call
-#' @param args A named list of function arguments
-#' @param ... Additional arguments passed to [do.call()]
-#'
-#' @returns The results of `what` called with unwrapped `args`
-#' @noRd
-unwrap_args_and_call <- function(what, args, ...) {
-  args <- purrr::map(args, unwrap_python)
-
-  do.call(what, args, ...)
+  structure(
+    wrapped$call,
+    wrapped = wrapped,
+    class = c(class(wrapped)[1], "laminr.CallableWrappedPythonObject")
+  )
 }

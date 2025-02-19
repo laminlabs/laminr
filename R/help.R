@@ -1,6 +1,9 @@
 laminr_help_handler <- function(type, topic, source, ...) {
   # Convert the help source to an object with {reticulate}
   source <- source_as_object(source) # nolint object_usage_linter
+  if (inherits(source, "laminr.CallableWrappedPythonObject")) {
+    source <- attr(source, "wrapped", exact = TRUE)
+  }
   # Extract the Python object
   py_object <- unwrap_python(source)
   # Ask {reticulate} to handle help for the Python object
