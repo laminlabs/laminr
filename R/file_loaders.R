@@ -51,11 +51,28 @@ load_anndata_zarr <- function(file, ...) {
 #' @param file Path to the file to load
 #' @param ... Additional arguments to pass to [nanoparquet::read_parquet()]
 #'
-#' @return A data frame
+#' @details
+#' Row indexes are read as columns by [nanoparquet::read_parquet()]. If there
+#' is a "__index_level_0__" then the results is converted to a `data.frame` and
+#' the row names are set to "__index_level_0__".
+#'
+#' @return Either a `data.frame` if the data includes row names or a `tbl` if
+#'   not
 #' @noRd
-load_parquet <- function(file) {
+load_parquet <- function(file, ...) {
   check_requires("Reading Parquet files", "nanoparquet")
-  nanoparquet::read_parquet(file)
+
+  df <- nanoparquet::read_parquet(file, ...)
+
+  # If there is a "__index_level_0__" column, convert to data.frame and
+  # set row names
+  if ("__index_level_0__" %in% colnames(df)) {
+    row_names <- df[["__index_level_0__"]]
+    df <- as.data.frame(df[, colnames(df) != "__index_level_0__"])
+    rownames(df) <- row_names
+  }
+
+  df
 }
 
 #' Load an `.fcs` file to `AnnData`
