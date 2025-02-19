@@ -8,30 +8,33 @@ py_to_r.lamindb.models.Artifact <- function(x) {
     x,
     public = list(
       cache = function(is_run_input = NULL) {
-        artifact_cache(private, is_run_input)
+        artifact_cache(self, is_run_input = is_run_input)
       },
       load = function(is_run_input = NULL, ...) {
-        artifact_load(self, private, is_run_input, ...)
+        artifact_load(self, is_run_input = is_run_input, ...)
       },
       open = function(mode = "r", is_run_input = NULL, ...) {
-        artifact_open(self, private, mode, is_run_input, ...)
+        artifact_open(self, mode = mode, is_run_input = is_run_input, ...)
       }
     )
   )
 }
 
-artifact_cache <- function(private, is_run_input) {
-  private$.py_object$cache(is_run_input = is_run_input)$path
+artifact_cache <- function(self, ...) {
+  py_object <- unwrap_python(self)
+
+  cache_path <- unwrap_args_and_call(py_object$cache, list(...))
+  cache_path$path
 }
 
-artifact_load <- function(self, private, is_run_input, ...) {
-  file_path <- self$cache()
-  suffix <- private$.py_object$suffix
+artifact_load <- function(self, is_run_input, ...) {
+  file_path <- self$cache(is_run_input = is_run_input)
+  suffix <- self$suffix
 
   load_file(file_path, suffix, ...)
 }
 
-artifact_open <- function(self, private, mode, is_run_input, ...) {
+artifact_open <- function(self, mode, is_run_input, ...) {
   artifact_uri <- paste0(self$storage$root, "/", self$key)
   otype <- self$otype
 
@@ -39,7 +42,8 @@ artifact_open <- function(self, private, mode, is_run_input, ...) {
 
   # Tell Python to track this artifact
   ln <- reticulate::import("lamindb")
-  ln$core$`_data`$`_track_run_input`(private$.py_object, is_run_input)
+  py_object <- unwrap_python(self)
+  ln$core$`_data`$`_track_run_input`(py_object, is_run_input)
 
   conn
 }

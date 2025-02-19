@@ -239,17 +239,35 @@ suppress_future_warning <- function(expr) {
   })
 }
 
-# Base class for wrapped Python objects. Only exists to allow shared S3 methods.
-WrappedPythonObject <- R6::R6Class( # nolint object_name_linter
-  "laminr.WrappedPythonObject"
-)
+#' Unwrap Python
+#'
+#' Unwrap a wrapped Python object
+#'
+#' @param obj The `laminr.WrappedPythonObject` to unwrap
+#'
+#' @returns The Python object stored in `obj` or `obj` or it is not a
+#'   `laminr.WrappedPythonObject`
+#' @noRd
+unwrap_python <- function(obj) {
+  if (inherits(obj, "laminr.WrappedPythonObject")) {
+    obj[[".__enclos_env__"]][["private"]][[".py_object"]]
+  } else {
+    obj
+  }
+}
 
-.DollarNames.laminr.WrappedPythonObject <- function(x, pattern) {
-  # Get the corresponding Python object
-  py_object <- x[[".__enclos_env__"]][["private"]][[".py_object"]]
-  # Get the dollar names for the Python object
-  dollar_names <- utils::.DollarNames(py_object, pattern)
-  # Replace the help handler
-  attr(dollar_names, "helpHandler") <- "laminr:::laminr_help_handler"
-  dollar_names
+#' Unwrap arguments and call
+#'
+#' Unwrap any arguments that contain Python objects and make a function call
+#'
+#' @param what The function to call
+#' @param args A named list of function arguments
+#' @param ... Additional arguments passed to [do.call()]
+#'
+#' @returns The results of `what` called with unwrapped `args`
+#' @noRd
+unwrap_args_and_call <- function(what, args, ...) {
+  args <- purrr::map(args, unwrap_python)
+
+  do.call(what, args, ...)
 }
