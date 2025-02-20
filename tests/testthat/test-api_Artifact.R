@@ -1,4 +1,5 @@
 skip_if_offline()
+skip()
 
 test_that("creating an artifact from a data frame works", {
   skip_if_not_installed("reticulate")

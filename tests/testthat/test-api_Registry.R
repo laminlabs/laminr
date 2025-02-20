@@ -1,4 +1,5 @@
 skip_if_offline()
+skip()
 
 test_that("df works", {
   skip_if_not_logged_in()

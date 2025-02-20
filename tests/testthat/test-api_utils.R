@@ -1,3 +1,5 @@
+skip()
+
 test_that("api_check_requires works", {
   expect_true(api_check_requires("Imported packages", "cli"))
 

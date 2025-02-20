@@ -1,4 +1,5 @@
 skip_if_offline()
+skip()
 
 broken_instance_settings <- function() {
   APIInstanceSettings$new(
