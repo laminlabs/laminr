@@ -29,3 +29,22 @@ prompt_yes_no <- function(msg) {
 
   yes_no
 }
+
+#' Get message function
+#'
+#' Get the appropriate message function for a particular type of alert
+#'
+#' @param alert The type of alert to get the message function for
+#'
+#' @returns The matching message function
+#' @noRd
+get_message_fun <- function(alert = c("error", "warning", "message", "none")) {
+  alert <- match.arg(alert)
+
+  switch(alert,
+         error = cli::cli_abort,
+         warning = cli::cli_warn,
+         message = cli::cli_inform,
+         none = NULL
+  )
+}

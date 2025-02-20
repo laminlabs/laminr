@@ -13,14 +13,7 @@
 #' lamin_connect("laminlabs/cellxgene")
 #' }
 lamin_connect <- function(instance) {
-  current_default <- getOption("LAMINR_DEFAULT_INSTANCE")
-  if (!is.null(current_default)) {
-    cli::cli_abort(c(
-      "There is already a default instance connected ({.val {current_default}})",
-      "x" = "{.code lamin connect} will not be run",
-      "i" = "Start a new R session to connect to another instance"
-    ))
-  }
+  check_default_instance()
 
   # Set the default environment if not set
   reticulate::use_virtualenv("r-lamindb", required = FALSE)
@@ -52,14 +45,7 @@ lamin_connect <- function(instance) {
 #'
 #' @export
 lamin_login <- function(user = NULL, api_key = NULL) {
-  current_default <- getOption("LAMINR_DEFAULT_INSTANCE")
-  if (!is.null(current_default)) {
-    cli::cli_abort(c(
-      "There is already a default instance connected ({.val {current_default}})",
-      "x" = "{.code lamin login} will not be run",
-      "i" = "Start a new R session before attempting to log in"
-    ))
-  }
+  check_default_instance()
 
   reticulate::use_virtualenv("r-lamindb", required = FALSE)
   ln <- reticulate::import("lamindb")
@@ -97,14 +83,7 @@ lamin_login <- function(user = NULL, api_key = NULL) {
 #'
 #' @export
 lamin_logout <- function() {
-  current_default <- getOption("LAMINR_DEFAULT_INSTANCE")
-  if (!is.null(current_default)) {
-    cli::cli_abort(c(
-      "There is already a default instance connected ({.val {current_default}})",
-      "x" = "{.code lamin logout} will not be run",
-      "i" = "Start a new R session before attempting to log out"
-    ))
-  }
+  check_default_instance()
 
   # Set the default environment if not set
   reticulate::use_virtualenv("r-lamindb", required = FALSE)
