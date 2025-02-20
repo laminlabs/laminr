@@ -8,7 +8,6 @@
 #'   `laminr.WrappedPythonObject` or `laminr.CallableWrappedPythonObject`
 #' @noRd
 unwrap_python <- function(obj) {
-
   # If obj is a list, unwrap every item
   if (is.list(obj) && is.vector(obj)) {
     return(purrr::map(obj, unwrap_python))

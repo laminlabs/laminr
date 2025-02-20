@@ -1,10 +1,10 @@
 #' @export
-`$.laminr.CallableWrappedPythonObject` <- function(x, name) {
+`$.laminr.CallableWrappedPythonObject` <- function(x, name) { # nolint object_length_linter
   wrapped <- attr(x, "wrapped", exact = TRUE)
   wrapped[[name]]
 }
 
-.DollarNames.laminr.CallableWrappedPythonObject <- function(x, pattern) {
+.DollarNames.laminr.CallableWrappedPythonObject <- function(x, pattern) { # nolint object_length_linter object_name_linter
   # Get the wrapped Python object
   wrapped <- attr(x, "wrapped", exact = TRUE)
   # Get the corresponding Python object
@@ -17,6 +17,6 @@
 }
 
 #' @export
-print.laminr.CallableWrappedPythonObject <- function(x, ...) {
+print.laminr.CallableWrappedPythonObject <- function(x, ...) { # nolint object_length_linter
   print(attr(x, "wrapped", exact = TRUE))
 }

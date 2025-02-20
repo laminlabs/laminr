@@ -25,14 +25,14 @@ registry_from_df <- function(self, ...) {
   args <- list(...)
 
   if (!is.data.frame(args$df)) {
-    df_class <- class(args$df)[1]
+    df_class <- class(args$df)[1] # nolint object_usage_linter
     cli::cli_abort(
       "{.arg df} must be a {.cls data.frame} but is a {.cls {df_class}}"
     )
   }
 
   if (!is.null(args$revises) && !inherits(args$revises, "laminr.lamindb.models.Artifact")) {
-    revises_class <- class(args$revises)[1]
+    revises_class <- class(args$revises)[1] # nolint object_usage_linter
     cli::cli_abort(
       "{.arg revises} must be an {.cls Artifact} but is a {.cls {revises_class}}"
     )

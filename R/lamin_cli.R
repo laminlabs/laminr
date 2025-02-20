@@ -141,7 +141,8 @@ lamin_init <- function(storage, name = NULL, db = NULL, modules = NULL) {
 
   if (!is.null(modules)) {
     check_requires(
-      "Initalising a database with these modules", modules, language = "Python"
+      "Initalising a database with these modules", modules,
+      language = "Python"
     )
   }
 

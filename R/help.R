@@ -5,7 +5,8 @@ laminr_help_handler <- function(type, topic, source, ...) {
     source <- attr(source, "wrapped", exact = TRUE)
   }
   # Extract the Python object
-  py_object <- unwrap_python(source)
+  # Don't use unwrap_python() here because of the namespace
+  py_object <- source[[".__enclos_env__"]][["private"]][[".py_object"]]
   # Ask {reticulate} to handle help for the Python object
   help_handler(type, topic, py_object, ...) # nolint object_usage_linter
 }
