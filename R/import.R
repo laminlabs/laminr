@@ -22,21 +22,7 @@ import_lamindb <- function() {
 
   instance_settings <- py_lamindb$setup$settings$instance
   instance_slug <- paste0(instance_settings$owner, "/", instance_settings$name)
-  current_default <- getOption("LAMINR_DEFAULT_INSTANCE")
-  if (!is.null(current_default)) {
-    if (!identical(instance_slug, current_default)) {
-      cli::cli_warn(c(
-        paste(
-          "The default instance has changed",
-          "({.field Old default:} {.val {current_default}},",
-          "{.field New default:} {.val {instance_slug}})",
-        ),
-        "i" = "It is recommended to start a new R session"
-      ))
-    }
-  } else {
-    options(LAMINR_DEFAULT_INSTANCE = instance_slug)
-  }
+  set_default_instance(instance_slug)
 
   reticulate::register_module_help_handler(
     "lamindb", lamindb_module_help_handler
@@ -110,6 +96,7 @@ lamindb_finish <- function(private, ignore_non_consecutive = NULL) {
 #' bt <- import_bionty()
 #' }
 import_bionty <- function() {
+  check_instance_module("bionty")
   check_requires("Importing bionty", "bionty", language = "Python")
 
   tryCatch(
