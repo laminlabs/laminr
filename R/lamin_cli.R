@@ -146,21 +146,59 @@ lamin_init <- function(storage, name = NULL, db = NULL, modules = NULL) {
     )
   }
 
-  options_string <- paste("init --storage", storage)
+  args <- paste("init --storage", storage)
 
   if (!is.null(name)) {
-    options_string <- c(options_string, paste("--name", name))
+    args <- c(args, paste("--name", name))
   }
 
   if (!is.null(db)) {
-    options_string <- c(options_string, paste("--db", name))
+    args <- c(args, paste("--db", name))
   }
 
   if (!is.null(modules)) {
-    options_string <- c(
-      options_string, paste("--modules", paste(modules, collapse = ","))
+    args <- c(
+      args, paste("--modules", paste(modules, collapse = ","))
     )
   }
 
-  system2("lamin", options_string)
+  system2("lamin", args)
+}
+
+#' LaminDB delete
+#'
+#' Delete a LaminDB entity. Currently only supports instances.
+#'
+#' @param instance Identifier for the instance to delete (e.g. "owner/name")
+#' @param force Whether to force deletion without asking for confirmation
+#'
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' lamin_init("to-delete")
+#' lamin_delete("to-delete")
+#' }
+lamin_delete <- function(instance, force = FALSE) {
+  reticulate::use_virtualenv("r-lamindb", required = FALSE)
+  ln_setup <- reticulate::import("lamindb_setup")
+
+  # Use lamindb_setup to resolve owner/name from instance
+  owner_name <- ln_setup$`_connect_instance`$get_owner_name_from_identifier(instance)
+  slug <- paste0(owner_name[[1]], "/", owner_name[[2]])
+
+  # Python prompts don't work so need to prompt in R
+  if (!isTRUE(force)) {
+    confirm <- prompt_yes_no(
+      "Are you sure you want to delete instance {.val {slug}}?"
+    )
+    if (isFALSE(confirm)) {
+      cli::cli_alert_danger("Instance {.val {slug}} will not be deleted")
+      return(invisible(NULL))
+    }
+  }
+
+  # Always force here to avoid Python prompt
+  args <- paste("delete --force", slug)
+  system2("lamin", args)
 }
