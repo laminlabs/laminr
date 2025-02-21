@@ -5,20 +5,12 @@ py_to_r.lamindb.models.Registry <- function(x) {
 
   wrap_python_callable(
     x,
-    call = function(...) {
-      registry_call(self, ...)
-    },
     public = list(
       from_df = function(df, key = NULL, description = NULL, run = NULL, revises = NULL, ...) {
         registry_from_df(self, df = df, key = key, description = description, run = run, revises = revises, ...)
       }
     )
   )
-}
-
-registry_call <- function(wrapped, ...) {
-  py_object <- unwrap_python(wrapped)
-  unwrap_args_and_call(py_object, list(...))
 }
 
 registry_from_df <- function(self, ...) {

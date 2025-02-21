@@ -125,6 +125,8 @@ get_py_arguments <- function(py_func) {
   signature <- py_inspect$signature(py_func)
   params <- py_builtins$dict(signature$parameters)
 
+  names(params)[names(params) == "function"] <- "func"
+
   lapply(params, function(.param) {
     default <- .param$default
 
@@ -137,6 +139,11 @@ get_py_arguments <- function(py_func) {
     }
 
     if (.param$kind == .param$VAR_POSITIONAL) {
+      default <- "..."
+    }
+
+    # Replace complex defaults with ...
+    if (inherits(default, "python.builtin.type")) {
       default <- "..."
     }
 
@@ -173,6 +180,13 @@ make_argument_defaults_string <- function(arguments) {
       # Quote string default values
       if (is.character(default)) {
         default <- paste0("'", default, "'")
+        check <- try(eval(parse(text = default)), silent = TRUE)
+        if (inherits(check, "try-error")) {
+          cli::cli_warn(
+            "Failed to parse default string for argument {.arg { .argument}}, using {.val ''} instead"
+          )
+          default <- "''"
+        }
       }
 
       # Python needs integer defaults to be kept as integers
@@ -217,7 +231,8 @@ make_argument_usage_string <- function(arguments) {
 #' are replaced and it can be called as a function
 #'
 #' @param obj The Python object to wrap
-#' @param call A function used when the object is called
+#' @param call A function used when the object is called. If `NULL` a generic
+#'   function will be used.
 #' @param public A list of public members. Will replace any Python methods with
 #'   the same names.
 #' @param active A list of active binding functions. Will replace any Python
@@ -234,8 +249,15 @@ make_argument_usage_string <- function(arguments) {
 #'
 #' @returns A callable structure wrapping the Python object
 #' @noRd
-wrap_python_callable <- function(obj, call, public = list(), active = list(), private = list()) {
+wrap_python_callable <- function(obj, call = NULL, public = list(), active = list(), private = list()) {
+  if (is.null(call)) {
+    call <- function(...) {
+      py_object <- unwrap_python(self)
+      unwrap_args_and_call(py_object, list(...))
+    }
+  }
   public$call <- call
+
   wrapped <- wrap_python(obj, public = public, active = active, private = private)
 
   structure(
