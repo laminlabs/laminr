@@ -8,20 +8,19 @@
 #' @noRd
 set_default_instance <- function(instance_slug) {
   current_default <- get_default_instance()
-  if (!is.null(current_default)) {
-    if (!identical(instance_slug, current_default)) {
-      cli::cli_warn(c(
-        paste(
-          "The default instance has changed",
-          "({.field Old default:} {.val {current_default}},",
-          "{.field New default:} {.val {instance_slug}})",
-        ),
-        "i" = "It is recommended to start a new R session"
-      ))
-    }
-  } else {
-    options(LAMINR_DEFAULT_INSTANCE = instance_slug)
+
+  if (!identical(instance_slug, current_default)) {
+    cli::cli_warn(c(
+      paste(
+        "The default instance has changed",
+        "({.field Old default:} {.val {current_default}},",
+        "{.field New default:} {.val {instance_slug}})"
+      ),
+      "i" = "It is recommended to start a new R session"
+    ))
   }
+
+  options(LAMINR_DEFAULT_INSTANCE = instance_slug)
 }
 
 #' Get default instance
