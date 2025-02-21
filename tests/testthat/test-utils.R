@@ -1,22 +1,10 @@
-test_that("check_requires works", {
-  expect_true(check_requires("Imported packages", "cli"))
+test_that("getting and setting LAMINR_DEFAULT_INSTANCE works", {
+  current_instance <- get_default_instance()
+  current_name <- strsplit(current_instance, "/")[[1]][2]
+  expect_identical(current_name, instance_name)
 
-  expect_error(
-    check_requires("Missing packages", "a_missing_package"),
-    regexp = "Missing packages requires"
-  )
+  op <- expect_warning(set_default_instance("new/instance"))
+  withr::defer(suppressWarnings(options(op)))
 
-  expect_warning(
-    check_requires("Missing packages", "a_missing_package", alert = "warning"),
-    regexp = "Missing packages requires"
-  )
-
-  expect_message(
-    check_requires("Missing packages", "a_missing_package", alert = "message"),
-    regexp = "Missing packages requires"
-  )
-
-  expect_false(
-    check_requires("Missing packages", "a_missing_package", alert = "none")
-  )
+  expect_identical(get_default_instance(), "new/instance")
 })

@@ -6,7 +6,7 @@
 #' @return A `data.frame`
 #' @noRd
 load_csv <- function(file, ...) {
-  check_requires("Reading CSV files", "readr")
+  check_requires("Loading CSV files", "readr")
   readr::read_csv(file, ...)
 }
 
@@ -18,7 +18,7 @@ load_csv <- function(file, ...) {
 #' @return A `data.frame`
 #' @noRd
 load_tsv <- function(file, ...) {
-  check_requires("Reading TSV files", "readr")
+  check_requires("Loading TSV files", "readr")
   readr::read_tsv(file, ...)
 }
 
@@ -34,7 +34,7 @@ load_h5ad <- function(file, ...) {
   anndata::read_h5ad(file, ...)
 }
 
-#' Load an `.zarr` file to `AnnData`
+#' Load a `.zarr` file to `AnnData`
 #'
 #' @param file Path to the file to load
 #' @param ... Additional arguments to pass to `anndata::read_zarr()`
@@ -51,11 +51,28 @@ load_anndata_zarr <- function(file, ...) {
 #' @param file Path to the file to load
 #' @param ... Additional arguments to pass to [nanoparquet::read_parquet()]
 #'
-#' @return A data frame
+#' @details
+#' Row indexes are read as columns by [nanoparquet::read_parquet()]. If there
+#' is a "__index_level_0__" then the results is converted to a `data.frame` and
+#' the row names are set to "__index_level_0__".
+#'
+#' @return Either a `data.frame` if the data includes row names or a `tbl` if
+#'   not
 #' @noRd
-load_parquet <- function(file) {
+load_parquet <- function(file, ...) {
   check_requires("Reading Parquet files", "nanoparquet")
-  nanoparquet::read_parquet(file)
+
+  df <- nanoparquet::read_parquet(file, ...)
+
+  # If there is a "__index_level_0__" column, convert to data.frame and
+  # set row names
+  if ("__index_level_0__" %in% colnames(df)) {
+    row_names <- df[["__index_level_0__"]]
+    df <- as.data.frame(df[, colnames(df) != "__index_level_0__"])
+    rownames(df) <- row_names
+  }
+
+  df
 }
 
 #' Load an `.fcs` file to `AnnData`
@@ -78,8 +95,8 @@ load_fcs <- function(file, ...) {
 #' @return A `MuData` object
 #' @noRd
 load_h5mu <- function(file, ...) {
-  # Note: this is probably not the best solution
-  check_requires("Loading MuData objects", "reticulate")
+  # NOTE: this is probably not the best solution
+  check_requires("Loading MuData objects", "mudata", language = "Python")
   mudata <- reticulate::import("mudata")
 
   mudata$read_h5mu(file, ...)
@@ -105,7 +122,7 @@ load_html <- function(file, ...) {
     return(utils::browseURL(file, ...))
   }
 
-  return(file)
+  file
 }
 
 #' Load a JSON file
@@ -115,20 +132,20 @@ load_html <- function(file, ...) {
 #'
 #' @return A list
 #' @noRd
-#' @importFrom jsonlite fromJSON
 load_json <- function(file, ...) {
   jsonlite::fromJSON(file, ...)
 }
 
-#' Display an `.svg`, `.jpg`, `.png` or `.gif` in the viewer
+#' Display an `.svg`, `.jpg`, `.png` or `.gif`
 #'
 #' @param file Path to the file to load
 #' @param ... Additional arguments to pass to ...
 #'
-#' @return NULL
+#' @return Display the image in the viewer if interactive mode is enabled,
+#'   include it in document if in knitr or the path to the file otherwise
 #' @noRd
 load_image <- function(file, ...) {
-  # if part of a knitr document, include the SVG
+  # If part of a knitr document, include the image
   if (is_knitr_notebook()) {
     ext <- tools::file_ext(file)
 
@@ -141,8 +158,8 @@ load_image <- function(file, ...) {
     return(knitr::include_graphics(file, ...))
   }
 
+  # If interactive, show the image
   if (interactive()) {
-    check_requires("Displaying images", "utils")
     return(utils::browseURL(file, ...))
   }
 
@@ -175,6 +192,7 @@ load_yaml <- function(file, ...) {
 file_loaders <- list(
   ".csv" = load_csv,
   ".fcs" = load_fcs,
+  ".gif" = load_image,
   ".h5ad" = load_h5ad,
   ".h5mu" = load_h5mu,
   ".html" = load_html,
@@ -191,7 +209,7 @@ file_loaders <- list(
 
 #' Load a file into memory
 #'
-#' Returns the filepath if no in-memory form is found
+#' Returns the file path if no in-memory form is found
 #'
 #' @param file Path to the file to load
 #' @param suffix The file extension to use for loading
@@ -209,6 +227,7 @@ load_file <- function(file, suffix = NULL, ...) {
   file_loader <- file_loaders[[suffix]]
 
   if (is.null(file_loader)) {
+    cli::cli_warn("Loading files of type {.val suffix} is not supported")
     return(file)
   } else {
     return(file_loader(file, ...))
