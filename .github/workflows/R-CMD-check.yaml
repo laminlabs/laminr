@@ -68,9 +68,10 @@ jobs:
           pak::pkg_install("tiledbsoma")
         shell: Rscript {0}
 
-      - name: Install Python 3.12 on macOS
-        # We use python 3.12 on mac os x so we can install scipy 1.13 from a wheel
-        if: runner.os == 'macOS'
+      - name: Install Python 3.12 on macOS/Windows
+        # lamindb currently supports python>=3.10,<3.13 and 3.13 is installed
+        # macOS also previously required 3.12 to install scipy 1.13 from a wheel
+        if: runner.os == 'macOS' || runner.os == 'Windows'
         run: |
           reticulate::install_python(version = "3.12")
         shell: Rscript {0}
