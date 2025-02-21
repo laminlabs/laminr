@@ -251,6 +251,9 @@ make_argument_usage_string <- function(arguments) {
 #' @noRd
 wrap_python_callable <- function(obj, call = NULL, public = list(), active = list(), private = list()) {
   if (is.null(call)) {
+    # Avoid "no visible binding" NOTE
+    self <- NULL
+
     call <- function(...) {
       py_object <- unwrap_python(self)
       unwrap_args_and_call(py_object, list(...))

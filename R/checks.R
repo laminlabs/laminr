@@ -82,13 +82,13 @@ check_default_instance <- function(alert = c("error", "warning", "message", "non
 
   if (check && !is.null(msg_fun)) {
     advice <- switch(alert,
-                     error = c(
-                       "x" = "This command will not be run",
-                       "i" = "Start a new R session before attempting to run it"
-                     ),
-                     warning = c(
-                       "i" = "It is recommended to start a new R session"
-                     )
+      error = c(
+        "x" = "This command will not be run",
+        "i" = "Start a new R session before attempting to run it"
+      ),
+      warning = c(
+        "i" = "It is recommended to start a new R session"
+      )
     )
 
     msg_fun(c(

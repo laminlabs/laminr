@@ -54,8 +54,8 @@ install_lamindb <- function(..., envname = "r-lamindb", extra_packages = NULL,
   if (isTRUE(use)) {
     tryCatch(
       switch(env_type,
-             virtualenv = reticulate::use_virtualenv(envname),
-             conda = reticulate::use_condaenv(envname)
+        virtualenv = reticulate::use_virtualenv(envname),
+        conda = reticulate::use_condaenv(envname)
       ),
       error = function(err) {
         cli::cli_warn(paste(

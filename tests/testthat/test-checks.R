@@ -33,21 +33,24 @@ test_that("check_requires() works with Python packages", {
 
   expect_warning(
     check_requires(
-      "Missing packages", "a_missing_package", alert = "warning", language = "Python"
+      "Missing packages", "a_missing_package",
+      alert = "warning", language = "Python"
     ),
     regexp = "Missing packages requires"
   )
 
   expect_message(
     check_requires(
-      "Missing packages", "a_missing_package", alert = "message", language = "Python"
+      "Missing packages", "a_missing_package",
+      alert = "message", language = "Python"
     ),
     regexp = "Missing packages requires"
   )
 
   expect_false(
     check_requires(
-      "Missing packages", "a_missing_package", alert = "none", language = "Python"
+      "Missing packages", "a_missing_package",
+      alert = "none", language = "Python"
     )
   )
 })

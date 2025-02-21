@@ -10,6 +10,7 @@ test_that("install_lamindb() works", {
 test_that("install_lamindb() works with extra packages", {
   expect_no_error(
     install_lamindb(
-      envname = instance_name, extra_packages = c("bionty", "wetlab"), use = FALSE)
+      envname = instance_name, extra_packages = c("bionty", "wetlab"), use = FALSE
+    )
   )
 })

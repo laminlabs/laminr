@@ -15,7 +15,9 @@ test_that("unwrap_args_and_call() works", {
   expect_identical(
     unwrap_args_and_call(
       function(arg, list_arg) {
-        c(class(arg)[1], purrr:::map_chr(list_arg, \(.x) {class(.x)[1]}))
+        c(class(arg)[1], purrr:::map_chr(list_arg, \(.x) {
+          class(.x)[1]
+        }))
       },
       args = list(
         arg = ln$ULabel,
