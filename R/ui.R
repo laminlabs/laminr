@@ -42,9 +42,9 @@ get_message_fun <- function(alert = c("error", "warning", "message", "none")) {
   alert <- match.arg(alert)
 
   switch(alert,
-         error = cli::cli_abort,
-         warning = cli::cli_warn,
-         message = cli::cli_inform,
-         none = NULL
+    error = cli::cli_abort,
+    warning = cli::cli_warn,
+    message = cli::cli_inform,
+    none = NULL
   )
 }
