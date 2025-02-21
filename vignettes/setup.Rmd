@@ -142,7 +142,7 @@ laminr::lamin_login(user = "user_handle")
 
 # Setting a default instance
 
-Using `api_connect(slug = NULL)` will connect to the current default LaminDB instance.
+Using `import_lamindb()` will connect to the current default LaminDB instance.
 The default instance can be set using:
 
 ```

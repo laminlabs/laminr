@@ -1,5 +1,5 @@
 test_that("check_requires() works", {
-  expect_true(api_check_requires("Imported packages", "cli"))
+  expect_true(check_requires("Imported packages", "cli"))
 
   expect_error(
     check_requires("Missing packages", "a_missing_package"),
