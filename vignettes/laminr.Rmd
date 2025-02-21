@@ -12,10 +12,6 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-# whether or not this code will be used to
-# actually upload results to the LaminDB instance
-# -> testuser1 is a test account that cannot upload results
-submit_eval <- laminr:::.api_get_user_settings()$handle != "testuser1"
 ```
 
 This vignette introduces the basic **{laminr}** workflow.
@@ -59,8 +55,14 @@ Import `lamindb`.
 ln <- import_lamindb()
 ```
 
-This is equivalent to `import lamindb as ln` in Python.
+```{r submit-eval, include = FALSE}
+# whether or not this code will be used to
+# actually upload results to the LaminDB instance
+# -> testuser1 is a test account that cannot upload results
+submit_eval <- ln$setup$settings$user$handle != "testuser1"
+```
 
+This is equivalent to `import lamindb as ln` in Python.
 
 LaminDB tracks which code is used to create data.
 To track the current source code, run:
@@ -68,7 +70,6 @@ To track the current source code, run:
 ```{r track, eval = submit_eval}
 ln$track()
 ```
-
 
 # Download a dataset
 
