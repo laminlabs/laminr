@@ -1,9 +1,54 @@
+test_that("Importing a module works", {
+  os <- import_module("os")
+
+  expect_s3_class(os, "python.builtin.module")
+})
+
 test_that("Importing lamindb works", {
   expect_s3_class(ln, "laminr.python.builtin.module")
 })
 
 test_that("Importing bionty works", {
+  skip_if_not(
+    check_requires(
+      "Testing imports",
+      "bionty",
+      language = "Python",
+      alert = "none"
+    )
+  )
+
   bt <- import_bionty()
 
   expect_s3_class(bt, "python.builtin.module")
+})
+
+test_that("Importing wetlab works", {
+  skip_if_not(
+    check_requires(
+      "Testing imports",
+      "wetlab",
+      language = "Python",
+      alert = "none"
+    )
+  )
+
+  wl <- import_wetlab()
+
+  expect_s3_class(wl, "python.builtin.module")
+})
+
+test_that("Importing clinicore works", {
+  skip_if_not(
+    check_requires(
+      "Testing imports",
+      "clinicore",
+      language = "Python",
+      alert = "none"
+    )
+  )
+
+  cc <- import_clinicore()
+
+  expect_s3_class(cc, "python.builtin.module")
 })

@@ -1,111 +1,79 @@
-#' Import lamindb
+#' Import Python modules
 #'
-#' Import the `lamindb` Python package
+#' These function can be used to import LaminDB Python modules with additional
+#' checks and nicer error messages.
 #'
-#' @returns An object representing the `lamindb` Python package
+#' @param module The name of the Python module to import
+#' @param check_instance Whether to check if the package is installed in the
+#'   current LaminDB instance.
+#'
+#' @returns An object representing a Python package
 #' @export
+#'
+#' @details
+#'
+#' - `import_lamindb()` - Import the main `lamindb` package. This is the
+#'   starting point for interacting with a LaminDB instance.
+#' - `import_bionty()` - Import the `bionty` module for accessing biological
+#'   entities.
+#' - `import_wetlab()` - Import the `wetlab` module for accessing wet lab
+#'   entities.
+#' - `import_clinicore()` - Import the `clincore` module for accessing clinical
+#'   entities.
+#' - `import_module()` - Import any Python module. This is mostly intended for
+#'   internal use and should only be used if there is not a specific function
+#'   for that module.
+#'
+#' @name importing
+#' @order 99
 #'
 #' @examples
 #' \dontrun{
+#' # Import lamindb to start interacting with an instance
 #' ln <- import_lamindb()
-#' }
-import_lamindb <- function() {
-  py_lamindb <- tryCatch(
-    reticulate::import("lamindb"),
-    error = function(err) {
-      cli::cli_abort(c(
-        "Failed to connect to the Python {.pkg lamindb} package,",
-        "i" = "Run {.run reticulate::py_config()} and {.run reticulate::py_last_error()} for details"
-      ))
-    }
-  )
-
-  instance_settings <- py_lamindb$setup$settings$instance
-  instance_slug <- paste0(instance_settings$owner, "/", instance_settings$name)
-  set_default_instance(instance_slug)
-
-  reticulate::register_module_help_handler(
-    "lamindb", lamindb_module_help_handler
-  )
-
-  # Avoid "no visible binding for global variable"
-  self <- NULL # nolint object_usage_linter
-  private <- NULL # nolint object_usage_linter
-
-  wrap_python(
-    py_lamindb,
-    public = list(
-      track = function(transform = NULL, params = NULL, new_run = NULL, path = NULL, log_to_file = NULL) {
-        lamindb_track(private, transform, params, new_run, path, log_to_file)
-      },
-      finish = function(ignore_non_consecutive = NULL) {
-        lamindb_finish(private, ignore_non_consecutive)
-      }
-    )
-  )
-}
-
-lamindb_track <- function(private, transform = NULL, params = NULL, new_run = NULL, path = NULL, log_to_file = NULL) {
-  if (is.null(path)) {
-    path <- detect_path()
-    if (is.null(path)) {
-      cli::cli_abort(
-        "Failed to detect the path to track. Please set the {.arg path} argument."
-      )
-    }
-  }
-
-  private$.py_object$track(
-    transform = transform,
-    params = params,
-    new_run = new_run,
-    path = path,
-    log_to_file = log_to_file
-  )
-}
-
-lamindb_finish <- function(private, ignore_non_consecutive = NULL) {
-  tryCatch(
-    private$.py_object$finish(
-      ignore_non_consecutive = ignore_non_consecutive
-    ),
-    error = function(err) {
-      py_err <- reticulate::py_last_error()
-      if (py_err$type != "NotebookNotSaved") {
-        cli::cli_abort(c(
-          "Python {py_err$message}",
-          "i" = "Run {.run reticulate::py_last_error()} for details"
-        ))
-      }
-      # Please don't change the below without changing it in lamindb
-      message <- gsub(".*NotebookNotSaved: (.*)$", "\\1", py_err$value) # nolint object_usage_linter
-      cli::cli_inform(paste("NotebookNotSaved: {message}"))
-    }
-  )
-}
-
-#' Import bionty
 #'
-#' Import the `bionty` Python package
-#'
-#' @returns An object representing the `bionty` Python package
-#' @export
-#'
-#' @examples
-#' \dontrun{
+#' # Import other LaminDB modules
 #' bt <- import_bionty()
+#' wl <- import_wetlab()
+#' cc <- import_clinicore()
+#'
+#' # Import any Python module
+#' np <- import_module("numpy")
 #' }
-import_bionty <- function() {
-  check_instance_module("bionty")
-  check_requires("Importing bionty", "bionty", language = "Python")
+import_module <- function(module, check_instance = FALSE) {
+  if (check_instance) {
+    check_instance_module(module)
+  }
+  check_requires(paste("Importing", module), module, language = "Python")
 
   tryCatch(
-    reticulate::import("bionty"),
+    reticulate::import(module),
     error = function(err) {
       cli::cli_abort(c(
-        "Failed to connect to the Python {.pkg bionty} package,",
+        "Failed to connect to the Python {.pkg {module}} package,",
         "i" = "Run {.run reticulate::py_config()} and {.run reticulate::py_last_error()} for details"
       ))
     }
   )
+}
+
+#' @rdname importing
+#' @order 2
+#' @export
+import_bionty <- function() {
+  import_module("bionty", check_instance = TRUE)
+}
+
+#' @rdname importing
+#' @order 3
+#' @export
+import_wetlab <- function() {
+  import_module("wetlab", check_instance = TRUE)
+}
+
+#' @rdname importing
+#' @order 4
+#' @export
+import_clinicore <- function() {
+  import_module("clinicore", check_instance = TRUE)
 }
