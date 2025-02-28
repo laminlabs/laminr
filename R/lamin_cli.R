@@ -207,3 +207,53 @@ lamin_delete <- function(instance, force = FALSE) {
   args <- paste("delete --force", slug)
   system2("lamin", args)
 }
+
+#' Save to a LaminDB instance
+#'
+#' Save a file or folder to a LaminDB instance by calling `lamin save` on the
+#' command line
+#'
+#' @param filepath Path to the file or folder to save
+#' @param key The key for the saved item
+#' @param description The description for the saved item
+#' @param registry The registry for the saved item
+#'
+#' @export
+#'
+#' @details
+#' See `lamin save --help` for details of what database entries are created for
+#' different file types
+#'
+#' @examples
+#' \dontrun{
+#' my_file <- tempfile()
+#' lamin_save(my_file)
+#' }
+lamin_save <- function(filepath, key = NULL, description = NULL, registry = NULL) {
+  # Set the default environment if not set
+  reticulate::use_virtualenv("r-lamindb", required = FALSE)
+  if (!reticulate::py_available()) {
+    # Force reticulate to connect to Python
+    py_config <- reticulate::py_config() # nolint object_usage_linter
+  }
+
+  args <- "save"
+
+  if (!is.null(key)) {
+    args <- c(args, paste("--key", key))
+  }
+
+  if (!is.null(description)) {
+    args <- c(args, paste("--description", description))
+  }
+
+  if (!is.null(registry)) {
+    args <- c(
+      args, paste("--registry", registry)
+    )
+  }
+
+  args <- c(args, filepath)
+
+  system2("lamin", args)
+}
