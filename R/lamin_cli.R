@@ -1,12 +1,16 @@
-#' Set the default LaminDB instance
+#' Connect to a LaminDB instance
 #'
-#' Set the default LaminDB instance by calling `lamin connect` on the command
-#' line
+#' Connect to a LaminDB instance by calling `lamin connect` on the command line
 #'
 #' @param instance Either a slug giving the instance to connect to
 #' (`<owner>/<name>`) or an instance URL (`https://lamin.ai/owner/name`)
 #'
 #' @export
+#'
+#' @details
+#' Running this will set the LaminDB auto-connect option to `True` so you
+#' auto-connect to `instance` when importing Python `lamindb`.
+#'
 #'
 #' @examples
 #' \dontrun{
@@ -23,6 +27,28 @@ lamin_connect <- function(instance) {
   }
 
   system2("lamin", paste("connect", instance))
+}
+
+#' Disconnect from a LaminDB instance
+#'
+#' Disconnect from the current LaminDB instance by calling `lamin connect` on
+#' the command line
+#'
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' lamin_disconnect()
+#' }
+lamin_disconnect <- function() {
+  # Set the default environment if not set
+  reticulate::use_virtualenv("r-lamindb", required = FALSE)
+  if (!reticulate::py_available()) {
+    # Force reticulate to connect to Python
+    py_config <- reticulate::py_config() # nolint object_usage_linter
+  }
+
+  system2("lamin", "disconnect")
 }
 
 #' Log into LaminDB

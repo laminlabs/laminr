@@ -2,7 +2,7 @@
 % Please edit documentation in R/lamin_cli.R
 \name{lamin_connect}
 \alias{lamin_connect}
-\title{Set the default LaminDB instance}
+\title{Connect to a LaminDB instance}
 \usage{
 lamin_connect(instance)
 }
@@ -11,8 +11,11 @@ lamin_connect(instance)
 (\verb{<owner>/<name>}) or an instance URL (\verb{https://lamin.ai/owner/name})}
 }
 \description{
-Set the default LaminDB instance by calling \verb{lamin connect} on the command
-line
+Connect to a LaminDB instance by calling \verb{lamin connect} on the command line
+}
+\details{
+Running this will set the LaminDB auto-connect option to \code{True} so you
+auto-connect to \code{instance} when importing Python \code{lamindb}.
 }
 \examples{
 \dontrun{
