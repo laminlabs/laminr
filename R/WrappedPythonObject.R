@@ -3,6 +3,7 @@ WrappedPythonObject <- R6::R6Class( # nolint object_name_linter
   "laminr.WrappedPythonObject"
 )
 
+#' @export
 .DollarNames.laminr.WrappedPythonObject <- function(x, pattern) { # nolint object_length_linter object_name_linter
   # Get the corresponding Python object
   py_object <- unwrap_python(x)

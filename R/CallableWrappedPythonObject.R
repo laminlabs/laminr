@@ -4,6 +4,7 @@
   wrapped[[name]]
 }
 
+#' @export
 .DollarNames.laminr.CallableWrappedPythonObject <- function(x, pattern) { # nolint object_length_linter object_name_linter
   # Get the wrapped Python object
   wrapped <- attr(x, "wrapped", exact = TRUE)
