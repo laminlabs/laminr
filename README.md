@@ -16,8 +16,6 @@
 - Create artifacts from data frames, paths, and `AnnData` objects: `db$Artifact()`
 - Delete records: `artifact$delete()`
 
-See the development roadmap for more details (`vignette("development", package = "laminr")`).
-
 ## Installation
 
 Get started with **{laminr}** by installing the package from CRAN:
@@ -71,5 +69,6 @@ See the [setup vignette](https://laminr.lamin.ai/articles/setup.html) for more i
 
 The best way to get started with **{laminr}** is to explore the package vignettes (available at [laminr.lamin.ai](https://laminr.lamin.ai)):
 
-- **Get started**: Learn the basics and explore practical examples (`vignette("laminr", package = "laminr")`).
-- **Setting up laminr**: Learn the basics and explore practical examples (`vignette("setup", package = "laminr")`).
+- **Get started**: Learn the basics and explore practical examples (`vignette("laminr", package = "laminr")`)
+- **Setting up laminr**: Learn the basics and explore practical examples (`vignette("setup", package = "laminr")`)
+- **Introduction to LaminDB**: Code for reproducing the LaminDB introduction tutorial (`vignette("introduction", package = "laminr")`)
