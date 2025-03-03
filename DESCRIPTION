@@ -19,6 +19,7 @@ Depends:
 Imports:
     cli,
     reticulate,
+    utils,
     withr
 Suggests:
     anndata,

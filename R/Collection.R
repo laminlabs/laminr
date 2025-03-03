@@ -1,8 +1,5 @@
 #' @export
 py_to_r.lamindb.models.Collection <- function(x) {
-  # Avoid "no visible binding for global variable"
-  self <- NULL
-
   wrap_python(
     x,
     public = list(

@@ -41,8 +41,9 @@ artifact_open <- function(self, mode, is_run_input, ...) {
   py_object <- unwrap_python(self)
 
   filepath_cache_key <- py_lamin$core$storage$paths$filepath_cache_key_from_artifact(py_object)
-  local_path <-  py_lamin$setup$settings$paths$cloud_to_local_no_update(
-    filepath_cache_key[[1]], cache_key = filepath_cache_key[[2]]
+  local_path <- py_lamin$setup$settings$paths$cloud_to_local_no_update(
+    filepath_cache_key[[1]],
+    cache_key = filepath_cache_key[[2]]
   )
 
   otype <- self$otype

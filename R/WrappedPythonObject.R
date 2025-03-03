@@ -15,7 +15,7 @@ WrappedPythonObject <- R6::R6Class( # nolint object_name_linter
 }
 
 #' @export
-r_to_py.laminr.WrappedPythonObject <- function(x, convert = FALSE) {
+r_to_py.laminr.WrappedPythonObject <- function(x, convert = FALSE) { # nolint object_length_linter object_name_linter
   py_object <- unwrap_python(x)
   assign("convert", convert, envir = py_object)
   py_object

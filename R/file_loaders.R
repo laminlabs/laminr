@@ -49,10 +49,10 @@ load_anndata_zarr <- function(file, ...) {
 #' Load a Parquet file
 #'
 #' @param file Path to the file to load
-#' @param ... Additional arguments to pass to [nanoparquet::read_parquet()]
+#' @param ... Additional arguments to pass to [arrow::read_parquet()]
 #'
 #' @details
-#' Row indexes are read as columns by [nanoparquet::read_parquet()]. If there
+#' Row indexes are read as columns by [arrow::read_parquet()]. If there
 #' is a "__index_level_0__" then the results is converted to a `data.frame` and
 #' the row names are set to "__index_level_0__".
 #'
