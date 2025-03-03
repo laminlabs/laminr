@@ -1,6 +1,13 @@
 ---
 title: "Welcome to laminr"
-format: html
+vignette: >
+  %\VignetteIndexEntry{Welcome to laminr}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{quarto::html}
+knitr:
+  opts_chunk: 
+    collapse: true
+    comment: "#>"
 ---
 
 **{laminr}** is an R client for [LaminDB](https://lamin.ai).
