@@ -1,0 +1,7 @@
+---
+title: "Welcome to laminr"
+format: html
+---
+
+**{laminr}** is an R client for [LaminDB](https://lamin.ai).
+For more information about using **{laminr}** please refer to https://laminr.lamin.ai/.
