@@ -21,6 +21,24 @@ file_openers <- list(
   "tiledbsoma" = open_tiledbsoma
 )
 
+#' Open a connection to a multi-file Parquet dataset
+#'
+#' @param sources A path or URI to the file(s) to open
+#' @param ... Additional arguments to pass to [arrow::open_dataset()]
+#'
+#' @return A [arrow::Dataset]
+#' @noRd
+open_parquet <- function(sources, ...) {
+  check_requires("Opening Parquet datasets", "arrow")
+
+  arrow::open_dataset(sources, ...)
+}
+
+file_openers <- list(
+  "DataFrame" = open_parquet,
+  "tiledbsoma" = open_tiledbsoma
+)
+
 #' Open a connection to a file
 #'
 #' Open a connection to a remote or backed file

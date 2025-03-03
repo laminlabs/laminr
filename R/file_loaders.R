@@ -60,9 +60,9 @@ load_anndata_zarr <- function(file, ...) {
 #'   not
 #' @noRd
 load_parquet <- function(file, ...) {
-  check_requires("Reading Parquet files", "nanoparquet")
+  check_requires("Reading Parquet files", "arrow")
 
-  df <- nanoparquet::read_parquet(file, ...)
+  df <- arrow::read_parquet(file, ...)
 
   # If there is a "__index_level_0__" column, convert to data.frame and
   # set row names

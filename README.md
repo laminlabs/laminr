@@ -35,7 +35,7 @@ install.packages("laminr", dependencies = TRUE)
 This will also install these package for the following tasks:
 
 - **{anndata}** - Native `AnnData` support in R
-- **{nanoparquet}** - Reading `.parquet` files
+- **{arrow}** - Reading `.parquet` files
 - **{readr}** - Reading CSV/TSV files
 - **{rsvg}** - Reading SVG files
 

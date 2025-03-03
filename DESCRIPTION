@@ -22,10 +22,10 @@ Imports:
     withr
 Suggests:
     anndata,
+    arrow,
     httr,
     jsonlite,
     knitr,
-    nanoparquet,
     purrr,
     quarto,
     R.utils,

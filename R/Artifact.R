@@ -37,15 +37,30 @@ artifact_load <- function(self, is_run_input, ...) {
 }
 
 artifact_open <- function(self, mode, is_run_input, ...) {
-  artifact_uri <- paste0(self$storage$root, "/", self$key)
+  py_lamin <- reticulate::import("lamindb")
+  py_object <- unwrap_python(self)
+
+  filepath_cache_key <- py_lamin$core$storage$paths$filepath_cache_key_from_artifact(py_object)
+  local_path <-  py_lamin$setup$settings$paths$cloud_to_local_no_update(
+    filepath_cache_key[[1]], cache_key = filepath_cache_key[[2]]
+  )
+
   otype <- self$otype
 
-  conn <- open_file(artifact_uri, otype, ...)
+  if (local_path$exists()) {
+    conn <- open_file(local_path$path, otype, ...)
+  } else {
+    remote_path <- tryCatch(
+      filepath_cache_key[[1]]$as_posix(),
+      error = function(err) {
+        filepath_cache_key[[1]]$path
+      }
+    )
+    conn <- open_file(remote_path, otype, ...)
+  }
 
   # Tell Python to track this artifact
-  ln <- reticulate::import("lamindb")
-  py_object <- unwrap_python(self)
-  ln$core$`_data`$`_track_run_input`(py_object, is_run_input)
+  py_lamin$core$`_data`$`_track_run_input`(py_object, is_run_input)
 
   conn
 }
