@@ -1,0 +1,330 @@
+---
+title: "Introduction"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{introduction}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Introduction
+
+This vignette reproduces the LaminDB [Introduction guide](https://docs.lamin.ai/guide).
+The equivalent **{laminr}** code is included here, for the related text see the associated links.
+This vignette requires the **bionty** Python package to be available.
+
+```{r prepare, include = FALSE}
+laminr::lamin_logout() # Use an anonymous user for this vignette
+```
+
+```{r setup}
+library(laminr)
+```
+
+# Walkthrough
+
+See https://docs.lamin.ai/guide#walkthrough.
+
+```{r walkthrough}
+lamin_init(
+  name = "lamin-intro",
+  storage = file.path(tempdir(), "lamin-intro"),
+  modules = c("bionty")
+)
+```
+
+**NOTE:** We have used a temporary directory for the vignette but normally you would use something like:
+
+```r
+lamin_init("lamin-intro", modules = c("bionty"))
+```
+
+## Transforms
+
+See https://docs.lamin.ai/guide#transforms.
+
+```{r transforms}
+ln <- import_lamindb()
+ln$track()
+
+ln$Transform$df()
+
+ln$Run$df()
+```
+
+## Artifacts
+
+See https://docs.lamin.ai/guide#artifacts.
+
+```{r artifacts}
+df <- ln$core$datasets$small_dataset1(otype = "DataFrame", with_typo = TRUE)
+df
+
+artifact <- ln$Artifact$from_df(df, key = "my_datasets/rnaseq1.parquet")$save()
+artifact$describe()
+
+artifact$cache()
+
+dataset <- artifact$open()
+as.data.frame(dataset)
+
+artifact$load()
+
+artifact$view_lineage()
+
+df_typo <- df
+levels(df$perturbation) <- c("DMSO", "IFNG")
+df["sample2", "perturbation"] <- "IFNG"
+artifact <- ln$Artifact$from_df(df, key = "my_datasets/rnaseq1.parquet")$save()
+artifact$versions$df()
+```
+
+## Labels
+
+See https://docs.lamin.ai/guide#labels.
+
+```{r labels}
+bt <- import_bionty()
+
+experiment_type <- ln$ULabel(name = "Experiment", is_type = TRUE)$save()
+candidate_marker_experiment <- ln$ULabel(
+  name = "Candidate marker experiment", type = experiment_type
+)$save()
+
+artifact$ulabels$add(candidate_marker_experiment)
+
+cell_type <- bt$CellType$from_source(name = "effector T cell")$save()
+artifact$cell_types$add(cell_type)
+
+artifact$describe()
+```
+
+## Registries
+
+See https://docs.lamin.ai/guide#registries.
+
+```{r registries}
+ln$ULabel$df()
+
+ln$Artifact
+```
+
+## Query & search
+
+See https://docs.lamin.ai/guide#query-search.
+
+```{r query-search}
+transform <- ln$Transform$get(key = "introduction.Rmd")
+
+ln$Artifact$filter(key__startswith = "my_datasets/")$df()
+
+artifacts <- ln$Artifact$filter(transform = transform)$all()
+
+artifacts <- ln$Artifact$filter(
+  transform__description__icontains = "intro", ulabels = candidate_marker_experiment
+)$all()
+
+ln$Transform$search("intro")$df()
+ulabels <- ln$ULabel$lookup()
+cell_types <- bt$CellType$lookup()
+```
+
+## Features
+
+See https://docs.lamin.ai/guide#features.
+
+```{r features}
+ln$Feature(name = "temperature", dtype = "float")$save()
+
+ln$Feature(name = "experiment", dtype = ln$ULabel)$save()
+
+artifact$features$add_values(
+  list("temperature" = 21.6, "experiment" = "Candidate marker experiment")
+)
+
+artifact$describe()
+
+ln$Artifact$features$filter(experiment__contains = "marker experiment")$df()
+```
+
+# Key use cases
+
+See https://docs.lamin.ai/guide#key-use-cases.
+
+## Understand data lineage
+
+See https://docs.lamin.ai/guide#understand-data-lineage.
+
+```{r understanding-lineage}
+artifact$view_lineage()
+transform$view_lineage()
+```
+
+```r
+# Example only, not run
+ln <- import_lamindb()
+ln$track()
+ln$finish()
+
+# lamin load https://lamin.ai/laminlabs/lamindata/transform/13VINnFk89PE0004
+```
+
+## Curate datasets
+
+See https://docs.lamin.ai/introduction#curate-datasets.
+
+```{r curate-datasets}
+perturbation_type <- ln$ULabel(name = "Perturbation", is_type = TRUE)$save()
+ln$ULabel(name = "DMSO", type = perturbation_type)$save()
+ln$ULabel(name = "IFNG", type = perturbation_type)$save()
+
+# Load Python built ins to get access to dtypes
+py_builtins <- reticulate::import_builtins()
+
+schema <- ln$Schema(
+  name = "My DataFrame schema",
+  features = list(
+    # NOTE: These have dtype=int in the original guide
+    ln$Feature(name = "ENSG00000153563", dtype = py_builtins$float)$save(),
+    ln$Feature(name = "ENSG00000010610", dtype = py_builtins$float)$save(),
+    ln$Feature(name = "ENSG00000170458", dtype = py_builtins$float)$save(),
+    ln$Feature(name = "perturbation", dtype = ln$ULabel)$save()
+  )
+)$save()
+
+curator <- ln$curators$DataFrameCurator(df, schema)
+artifact <- curator$save_artifact(key = "my_curated_dataset.parquet")
+artifact$describe()
+ln$Artifact$get(ulabels__name = "IFNG")
+
+curator <- ln$curators$DataFrameCurator(df_typo, schema)
+tryCatch(
+  curator$validate(),
+  error = function(err) {
+    cat(conditionMessage(err))
+  }
+)
+```
+
+## Manage biological registries
+
+See https://docs.lamin.ai/introduction#manage-biological-registries.
+
+```{r manage-biological-registries}
+cell_types <- bt$CellType$public()
+cell_types
+cell_types$search("gamma-delta T cell") |> head(2)
+
+var_schema <- ln$Schema(
+  name = "my_var_schema",
+  itype = bt$Gene$ensembl_gene_id,
+  dtype = py_builtins$float
+)$save()
+obs_schema <- ln$Schema(
+  name = "my_obs_schema",
+  features = list(
+    ln$Feature(name = "perturbation", dtype = ln$ULabel)$save()
+  )
+)$save()
+anndata_schema <- ln$Schema(
+  name = "my_anndata_schema",
+  otype = "AnnData",
+  components = list("obs" = obs_schema, "var" = var_schema)
+)$save()
+
+library(anndata)
+adata <- AnnData(
+  df[c("ENSG00000153563", "ENSG00000010610", "ENSG00000170458")],
+  obs = df[, "perturbation", drop = FALSE]
+)
+curator <- ln$curators$AnnDataCurator(adata, anndata_schema)
+artifact <- curator$save_artifact(description = "my RNA-seq")
+artifact$describe()
+
+genes <- bt$Gene$filter(organism__name = "human")$lookup()
+feature_sets <- ln$FeatureSet$filter(genes = genes$cd8a)$all()
+ln$Artifact$filter(feature_sets__in = feature_sets)$df()
+
+neuron <- bt$CellType$from_source(name = "neuron")$save()
+new_cell_state <- bt$CellType(
+  name = "my neuron cell state", description = "explains X"
+)$save()
+new_cell_state$parents$add(neuron)
+new_cell_state$view_parents(distance = 2)
+```
+
+## Scale learning
+
+See https://docs.lamin.ai/introduction#scale-learning.
+
+```{r scale-learning}
+df2 <- ln$core$datasets$small_dataset2(otype = "DataFrame")
+adata <- AnnData(
+  df2[c("ENSG00000153563", "ENSG00000010610", "ENSG00000004468")],
+  obs = df2[, "perturbation", drop = FALSE]
+)
+curator <- ln$curators$AnnDataCurator(adata, anndata_schema)
+artifact2 <- curator$save_artifact(key = "my_datasets/my_rnaseq2.h5ad")
+
+collection <- ln$Collection(
+  list(artifact, artifact2),
+  key = "my-RNA-seq-collection"
+)$save()
+collection$describe()
+collection$view_lineage()
+
+collection$load()
+collection$artifacts$all()
+collection$artifacts$df()
+```
+
+```python
+# This example might be beyond the scope of {laminr}
+from torch.utils.data import DataLoader, WeightedRandomSampler
+dataset = collection.mapped(obs_keys=["perturbation"])
+sampler = WeightedRandomSampler(
+    weights=dataset.get_label_weights("perturbation"), num_samples=len(dataset)
+)
+data_loader = DataLoader(dataset, batch_size=2, sampler=sampler)
+for batch in data_loader:
+    pass
+```
+
+# Design
+
+See https://docs.lamin.ai/introduction#design.
+
+## World model
+
+See https://docs.lamin.ai/introduction#world-model.
+
+## Architecture
+
+See https://docs.lamin.ai/introduction#architecture.
+
+## Registry schema & API
+
+See https://docs.lamin.ai/introduction#registry-schema-api.
+
+## Custom registries
+
+See https://docs.lamin.ai/introduction#custom-registries.
+
+## Repositories
+
+See https://docs.lamin.ai/introduction#repositories.
+
+## Influences
+
+See https://docs.lamin.ai/introduction#influences.
+
+```{r finish}
+ln$finish()
+```
