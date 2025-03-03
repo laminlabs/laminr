@@ -1,5 +1,5 @@
 ---
-title: "Introduction"
+title: "Introduction to LaminDB"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{introduction}

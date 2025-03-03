@@ -6,15 +6,8 @@
 [![R-CMD-check](https://github.com/laminlabs/laminr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/laminlabs/laminr/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-**{laminr}** is an R client for [LaminDB](https://lamin.ai). If you are new to LaminDB, please read this [introduction](https://docs.lamin.ai/introduction).
-
-- Connect to a LaminDB instance: `ln <- import_lamindb()`
-- Track scripts and notebooks as transforms: `ln$track()`
-- Get records by UID: `artifact <- ln$Artifact$get()`
-- Cache artifacts locally: `artifact$cache()`
-- Load artifacts into memory for a broad range of storage formats: `artifact$load()`
-- Create artifacts from data frames, paths, and `AnnData` objects: `db$Artifact()`
-- Delete records: `artifact$delete()`
+**{laminr}** is an R client for [LaminDB](https://lamin.ai).
+If you are new to LaminDB, please read this [introduction](https://docs.lamin.ai/guide).
 
 ## Installation
 
@@ -31,13 +24,6 @@ Some functionality requires additional packages. To install all of these use:
 ```r
 install.packages("laminr", dependencies = TRUE)
 ```
-
-This will also install these package for the following tasks:
-
-- **{anndata}** - Native `AnnData` support in R
-- **{arrow}** - Reading `.parquet` files
-- **{readr}** - Reading CSV/TSV files
-- **{rsvg}** - Reading SVG files
 
 If you choose not to install all packages now you will be prompted to do so whenever one is required.
 
@@ -63,12 +49,12 @@ laminr::lamin_login(api_key = "your_api_key")
 laminr::lamin_connect("<owner>/<name>")
 ```
 
-See the [setup vignette](https://laminr.lamin.ai/articles/setup.html) for more information (`vignette("setup", package = "laminr")`).
+See the [setup vignette](https://laminr.lamin.ai/articles/setup.html) for more information.
 
 ## Getting started
 
 The best way to get started with **{laminr}** is to explore the package vignettes (available at [laminr.lamin.ai](https://laminr.lamin.ai)):
 
-- **Get started**: Learn the basics and explore practical examples (`vignette("laminr", package = "laminr")`)
-- **Setting up laminr**: Learn the basics and explore practical examples (`vignette("setup", package = "laminr")`)
-- **Introduction to LaminDB**: Code for reproducing the LaminDB introduction tutorial (`vignette("introduction", package = "laminr")`)
+- [**Get started**](https://laminr.lamin.ai/articles/laminr.html): Learn the basics and explore practical examples
+- [**Setting up laminr**](https://laminr.lamin.ai/articles/setup.html): Learn set up **{laminr}** and manage Python environments
+- [**Introduction to LaminDB**](https://laminr.lamin.ai/articles/introduction.html): Code for reproducing the LaminDB introduction guide
