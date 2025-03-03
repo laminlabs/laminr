@@ -13,3 +13,10 @@ WrappedPythonObject <- R6::R6Class( # nolint object_name_linter
   attr(dollar_names, "helpHandler") <- "laminr:::laminr_help_handler"
   dollar_names
 }
+
+#' @export
+r_to_py.laminr.WrappedPythonObject <- function(x, convert = FALSE) {
+  py_object <- unwrap_python(x)
+  assign("convert", convert, envir = py_object)
+  py_object
+}

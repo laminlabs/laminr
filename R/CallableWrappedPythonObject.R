@@ -21,3 +21,10 @@
 print.laminr.CallableWrappedPythonObject <- function(x, ...) { # nolint object_length_linter
   print(attr(x, "wrapped", exact = TRUE))
 }
+
+#' @export
+r_to_py.laminr.CallableWrappedPythonObject <- function(x, convert = FALSE) {
+  py_object <- unwrap_python(x)
+  assign("convert", convert, envir = py_object)
+  py_object
+}
