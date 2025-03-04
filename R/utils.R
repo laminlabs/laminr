@@ -1,61 +1,107 @@
-#' Check required packages
+#' Set default instance
 #'
-#' Check that required packages are available and give a nice message with
-#' install instructions if not
+#' Set the current default LaminDB instance
 #'
-#' @param what A message stating what the packages are required for. Used at the
-#'   start of the error message e.g. "{what} requires...".
-#' @param requires Character vector of required package names
-#' @param alert Type of message to give if packages are missing
-#' @param extra_repos Additional repositories that are required to install the
-#'   checked packages
+#' @param instance_slug The slug (`<owner>/<name>`) for the default instance
 #'
-#' @return Invisibly, Boolean whether or not all packages are available or
-#'   raises an error if any are missing and `type = "error"`
+#' @returns Sets the `LAMINR_DEFAULT_INSTANCE` option
 #' @noRd
-check_requires <- function(what, requires,
-                           alert = c("error", "warning", "message", "none"),
-                           extra_repos = NULL) {
-  alert <- match.arg(alert)
+set_default_instance <- function(instance_slug) {
+  current_default <- get_default_instance()
 
-  is_available <- map_lgl(requires, requireNamespace, quietly = TRUE)
-
-  msg_fun <- switch(alert,
-    error = cli::cli_abort,
-    warning = cli::cli_warn,
-    message = cli::cli_inform,
-    none = NULL
-  )
-
-  if (!any(is_available) && !is.null(msg_fun)) {
-    missing <- requires[!is_available]
-    missing_str <- paste0("'", paste(missing, collapse = "', '"), "'") # nolint object_usage_linter
-
-    msg <- "{what} requires the {.pkg {missing}} package{?s}"
-
-    if (!is.null(extra_repos)) {
-      msg <- c(
-        msg,
-        "i" = paste0(
-          "Add repositories using {.run options(repos = c(",
-          paste0("'", paste(extra_repos, collapse = "', '"), "'"),
-          ", getOption('repos'))}, then:"
-        )
-      )
-    }
-
-    msg <- c(
-      msg,
-      "i" = paste(
-        "Install {cli::qty(missing)}{?it/them} using",
-        "{.run install.packages(c({missing_str}))}"
-      )
-    )
-
-    msg_fun(msg, call = rlang::caller_env())
+  if (
+    !is.null(current_default) && !is.null(instance_slug) &&
+      !identical(instance_slug, current_default)
+  ) {
+    cli::cli_warn(c(
+      paste(
+        "The default instance has changed",
+        "({.field Old default:} {.val {current_default}},",
+        "{.field New default:} {.val {instance_slug}})"
+      ),
+      "i" = "It is recommended to start a new R session"
+    ))
   }
 
-  invisible(any(is_available))
+  options(LAMINR_DEFAULT_INSTANCE = instance_slug)
+}
+
+#' Get default instance
+#'
+#' Get the slug for the current default LaminDB instance
+#'
+#' @returns The value of the `LAMINR_DEFAULT_INSTANCE` option
+#' @noRd
+get_default_instance <- function() {
+  getOption("LAMINR_DEFAULT_INSTANCE")
+}
+
+#' Get current LaminDB user
+#'
+#' Get the currently logged in LaminDB user
+#'
+#' @returns The handle of the current LaminDB user, or `NULL` invisibly if no
+#'   user is found
+#' @export
+#'
+#' @details
+#' This is done via a system call to `lamin settings` to avoid importing Python
+#' `lamindb`
+get_current_lamin_user <- function() {
+  # Set the default environment if not set
+  reticulate::use_virtualenv("r-lamindb", required = FALSE)
+  if (!reticulate::py_available()) {
+    # Force reticulate to connect to Python
+    py_config <- reticulate::py_config() # nolint object_usage_linter
+  }
+
+  settings <- system2("lamin", "settings", stdout = TRUE)
+
+  is_handle <- grepl("handle:", settings)
+  handle_setting <- settings[is_handle]
+
+  if (length(handle_setting) == 0) {
+    cli::cli_alert_danger("No current user")
+    return(invisible(NULL))
+  }
+
+  handle <- rev(strsplit(handle_setting, " ")[[1]])[1]
+
+  handle
+}
+
+#' Get current LaminDB instance
+#'
+#' Get the currently connected LaminDB instance
+#'
+#' @returns The slug of the current LaminDB instance, or `NULL` invisibly if no
+#'   instance is found
+#' @export
+#'
+#' @details
+#' This is done via a system call to `lamin settings` to avoid importing Python
+#' `lamindb`
+get_current_lamin_instance <- function() {
+  # Set the default environment if not set
+  reticulate::use_virtualenv("r-lamindb", required = FALSE)
+  if (!reticulate::py_available()) {
+    # Force reticulate to connect to Python
+    py_config <- reticulate::py_config() # nolint object_usage_linter
+  }
+
+  settings <- system2("lamin", "settings", stdout = TRUE)
+
+  is_instance <- grepl("Current instance:", settings)
+  instance_setting <- settings[is_instance]
+
+  if (length(instance_setting) == 0) {
+    cli::cli_alert_danger("No current instance")
+    return(invisible(NULL))
+  }
+
+  instance <- rev(strsplit(instance_setting, " ")[[1]])[1]
+
+  instance
 }
 
 #' Check if we are in a knitr notebook
@@ -64,12 +110,12 @@ check_requires <- function(what, requires,
 #'
 #' @noRd
 is_knitr_notebook <- function() {
-  # if knitr is not available, assume that we are not in a notebook
+  # If knitr is not available, assume that we are not in a notebook
   if (!requireNamespace("knitr", quietly = TRUE)) {
     return(FALSE)
   }
 
-  # check if we are in a notebook
+  # Check if we are in a notebook
   !is.null(knitr::opts_knit$get("out.format"))
 }
 
@@ -119,32 +165,5 @@ detect_path <- function() {
     current_path <- R.utils::getRelativePath(current_path)
   }
 
-  return(current_path)
-}
-
-#' Resolve an httr response with error handling
-#'
-#' @param response An httr response object
-#' @param request_type A string describing the request type
-#'
-#' @return The content of the response if successful
-#' @noRd
-process_httr_response <- function(response, request_type) {
-  content <- httr::content(response)
-  if (httr::http_error(response)) {
-    if (is.list(content) && "detail" %in% names(content)) {
-      detail <- content$detail
-      if (is.list(detail)) {
-        detail <- jsonlite::minify(jsonlite::toJSON(content$detail))
-      }
-    } else {
-      detail <- content
-    }
-    cli_abort(c(
-      "Failed to {request_type} with status code {response$status_code}",
-      "i" = "Details: {detail}"
-    ))
-  }
-
-  content
+  current_path
 }

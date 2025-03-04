@@ -37,7 +37,4 @@ gitmoji -i
 
 **Before merge**
 
-- [ ] Update architecture vignette
-- [ ] Update development vignette
-- [ ] Update features in `README`
 - [ ] Update `CHANGELOG`
