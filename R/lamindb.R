@@ -4,9 +4,17 @@
 import_lamindb <- function() {
   py_lamindb <- import_module("lamindb")
 
-  instance_settings <- py_lamindb$setup$settings$instance
-  instance_slug <- paste0(instance_settings$owner, "/", instance_settings$name)
-  set_default_instance(instance_slug)
+  tryCatch(
+    {
+      instance_settings <- py_lamindb$setup$settings$instance
+      instance_slug <- paste0(instance_settings$owner, "/", instance_settings$name)
+      set_default_instance(instance_slug)
+    }, error = function(err) {
+      cli::cli_alert_danger(
+        "No instance is loaded. Call {.code lamin_init()} or {.code lamin_connect()}"
+      )
+    }
+  )
 
   reticulate::register_module_help_handler(
     "lamindb", lamindb_module_help_handler
