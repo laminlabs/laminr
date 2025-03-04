@@ -27,6 +27,8 @@ lamin_connect <- function(instance) {
   }
 
   system2("lamin", paste("connect", instance))
+
+  set_default_instance(instance)
 }
 
 #' Disconnect from a LaminDB instance
@@ -49,6 +51,8 @@ lamin_disconnect <- function() {
   }
 
   system2("lamin", "disconnect")
+
+  set_default_instance(NULL)
 }
 
 #' Log into LaminDB
@@ -121,7 +125,7 @@ lamin_logout <- function() {
   system2("lamin", "logout")
 }
 
-#' Initalise LaminDB
+#' Initialise LaminDB
 #'
 #' Initialise a new LaminDB instance
 #'
@@ -130,6 +134,7 @@ lamin_logout <- function() {
 #' @param db A Postgres database connection URL, use `NULL` for SQLite.
 #' @param modules A vector of modules to include (e.g. "bionty")
 #'
+#' @rdname lamin_init
 #' @export
 #'
 #' @examples
@@ -168,6 +173,38 @@ lamin_init <- function(storage, name = NULL, db = NULL, modules = NULL) {
   }
 
   system2("lamin", args)
+}
+
+#' @param envir An environment passed to [withr::defer()]
+#'
+#' @details
+#' For [lamin_init_temp()], a time stamp is appended to `name` to make sure it
+#' is unique and then a new instance is initialised with [lamin_init()] using a
+#' temporary directory. A [lamin_delete()] call is registered as an exit handler
+#' with [withr::defer()] to clean up the instance when `envir` finishes.
+#'
+#' The [lamin_init_temp()] function is mostly for internal use and in most cases
+#' users will want [lamin_init()].
+#'
+#' @rdname lamin_init
+#' @export
+lamin_init_temp <- function(name, db = NULL, modules = NULL, envir = parent.frame()) {
+  if (is.null(name)) {
+    name <- "laminr-temp"
+  }
+
+  # Add a time stamp to get a unique name
+  timestamp <- format(Sys.time(), "%Y%m%d%H%M%S")
+  name <- paste0(name, "-", timestamp)
+
+  # Create the temporary storage for this instance
+  temp_storage <- file.path(tempdir(), name)
+
+  # Initalise the temporary instance
+  lamin_init(temp_storage, name = name, db = db, modules = modules)
+
+  # Add the clean up handler to the environment
+  withr::defer(lamin_delete(name, force = TRUE), envir = envir)
 }
 
 #' LaminDB delete

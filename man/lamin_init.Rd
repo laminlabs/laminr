@@ -2,9 +2,12 @@
 % Please edit documentation in R/lamin_cli.R
 \name{lamin_init}
 \alias{lamin_init}
-\title{Initalise LaminDB}
+\alias{lamin_init_temp}
+\title{Initialise LaminDB}
 \usage{
 lamin_init(storage, name = NULL, db = NULL, modules = NULL)
+
+lamin_init_temp(name, db = NULL, modules = NULL, envir = parent.frame())
 }
 \arguments{
 \item{storage}{A local directory, AWS S3 bucket or Google Cloud Storage bucket}
@@ -14,9 +17,20 @@ lamin_init(storage, name = NULL, db = NULL, modules = NULL)
 \item{db}{A Postgres database connection URL, use \code{NULL} for SQLite.}
 
 \item{modules}{A vector of modules to include (e.g. "bionty")}
+
+\item{envir}{An environment passed to \code{\link[withr:defer]{withr::defer()}}}
 }
 \description{
 Initialise a new LaminDB instance
+}
+\details{
+For \code{\link[=lamin_init_temp]{lamin_init_temp()}}, a time stamp is appended to \code{name} to make sure it
+is unique and then a new instance is initialised with \code{\link[=lamin_init]{lamin_init()}} using a
+temporary directory. A \code{\link[=lamin_delete]{lamin_delete()}} call is registered as an exit handler
+with \code{\link[withr:defer]{withr::defer()}} to clean up the instance when \code{envir} finishes.
+
+The \code{\link[=lamin_init_temp]{lamin_init_temp()}} function is mostly for internal use and in most cases
+users will want \code{\link[=lamin_init]{lamin_init()}}.
 }
 \examples{
 \dontrun{

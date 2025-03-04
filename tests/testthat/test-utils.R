@@ -1,7 +1,7 @@
 test_that("getting and setting LAMINR_DEFAULT_INSTANCE works", {
-  current_instance <- get_default_instance()
-  current_name <- strsplit(current_instance, "/")[[1]][2]
-  expect_identical(current_name, instance_name)
+  default_instance <- get_default_instance()
+  current_instance <- get_current_lamin_instance()
+  expect_identical(default_instance, current_instance)
 
   op <- expect_warning(set_default_instance("new/instance"))
   withr::defer(suppressWarnings(options(op)))
