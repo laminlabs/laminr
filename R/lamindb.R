@@ -9,7 +9,8 @@ import_lamindb <- function() {
       instance_settings <- py_lamindb$setup$settings$instance
       instance_slug <- paste0(instance_settings$owner, "/", instance_settings$name)
       set_default_instance(instance_slug)
-    }, error = function(err) {
+    },
+    error = function(err) {
       cli::cli_alert_danger(
         "No instance is loaded. Call {.code lamin_init()} or {.code lamin_connect()}"
       )
