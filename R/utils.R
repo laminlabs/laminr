@@ -33,6 +33,74 @@ get_default_instance <- function() {
   getOption("LAMINR_DEFAULT_INSTANCE")
 }
 
+#' Get current LaminDB user
+#'
+#' Get the currently logged in LaminDB user
+#'
+#' @returns The handle of the current LaminDB user, or `NULL` invisibly if no
+#'   user is found
+#' @export
+#'
+#' @details
+#' This is done via a system call to `lamin settings` to avoid importing Python
+#' `lamindb`
+get_current_lamin_user <- function() {
+  # Set the default environment if not set
+  reticulate::use_virtualenv("r-lamindb", required = FALSE)
+  if (!reticulate::py_available()) {
+    # Force reticulate to connect to Python
+    py_config <- reticulate::py_config() # nolint object_usage_linter
+  }
+
+  settings <- system2("lamin", "settings", stdout = TRUE)
+
+  is_handle <- grepl("handle:", settings)
+  handle_setting <- settings[is_handle]
+
+  if (length(handle_setting) == 0) {
+    cli::cli_alert_danger("No current user")
+    return(invisible(NULL))
+  }
+
+  handle <- rev(strsplit(handle_setting, " ")[[1]])[1]
+
+  handle
+}
+
+#' Get current LaminDB instance
+#'
+#' Get the currently connected LaminDB instance
+#'
+#' @returns The slug of the current LaminDB instance, or `NULL` invisibly if no
+#'   instance is found
+#' @export
+#'
+#' @details
+#' This is done via a system call to `lamin settings` to avoid importing Python
+#' `lamindb`
+get_current_lamin_instance <- function() {
+  # Set the default environment if not set
+  reticulate::use_virtualenv("r-lamindb", required = FALSE)
+  if (!reticulate::py_available()) {
+    # Force reticulate to connect to Python
+    py_config <- reticulate::py_config() # nolint object_usage_linter
+  }
+
+  settings <- system2("lamin", "settings", stdout = TRUE)
+
+  is_instance <- grepl("Current instance:", settings)
+  instance_setting <- settings[is_instance]
+
+  if (length(instance_setting) == 0) {
+    cli::cli_alert_danger("No current instance")
+    return(invisible(NULL))
+  }
+
+  instance <- rev(strsplit(instance_setting, " ")[[1]])[1]
+
+  instance
+}
+
 #' Check if we are in a knitr notebook
 #'
 #' @return `TRUE` if we are in a knitr notebook, `FALSE` otherwise
