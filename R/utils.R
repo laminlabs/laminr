@@ -9,7 +9,8 @@
 set_default_instance <- function(instance_slug) {
   current_default <- get_default_instance()
 
-  if (!is.null(current_default) && !identical(instance_slug, current_default)) {
+  if (!is.null(current_default) && !is.null(instance_slug) &&
+      !identical(instance_slug, current_default)) {
     cli::cli_warn(c(
       paste(
         "The default instance has changed",

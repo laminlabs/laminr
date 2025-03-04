@@ -16,6 +16,22 @@ knitr::opts_chunk$set(
 
 This vignette introduces the basic **{laminr}** workflow.
 
+```{r prepare, include = FALSE}
+# Restore the current instance at the end of the vignette
+current_instance <- laminr::get_current_lamin_instance()
+withr::defer(laminr::lamin_connect(current_instance))
+
+# Restore the current user at the end of the vignette
+current_user <- laminr::get_current_lamin_user()
+withr::defer(laminr::lamin_login(current_user))
+
+# Use <laminlabs/lamindata> for this vignette
+laminr::lamin_connect("laminlabs/lamindata")
+
+# Disconnect from this instance at the end of the vignette
+withr::defer(laminr::lamin_disconnect())
+```
+
 # Setup
 
 Install **{laminr}** from CRAN:

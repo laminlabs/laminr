@@ -21,6 +21,14 @@ The equivalent **{laminr}** code is included here, for the related text see the 
 This vignette requires the **bionty** Python package to be available.
 
 ```{r prepare, include = FALSE}
+# Restore the current instance at the end of the vignette
+current_instance <- laminr::get_current_lamin_instance()
+withr::defer(laminr::lamin_connect(current_instance))
+
+# Restore the current user at the end of the vignette
+current_user <- laminr::get_current_lamin_user()
+withr::defer(laminr::lamin_login(current_user))
+
 laminr::lamin_logout() # Use an anonymous user for this vignette
 ```
 
@@ -33,17 +41,14 @@ library(laminr)
 See https://docs.lamin.ai/guide#walkthrough.
 
 ```{r walkthrough}
-lamin_init(
-  name = "lamin-intro",
-  storage = file.path(tempdir(), "lamin-intro"),
-  modules = c("bionty")
-)
+lamin_init_temp(name = "lamin-intro", modules = c("bionty"))
 ```
 
-**NOTE:** We have used a temporary directory for the vignette but normally you would use something like:
+**NOTE:** We have used a `lamin_init_temp()` to create a temporary instance for this vignette but in most cases you should use regular `lamin_init()`
 
-```r
-lamin_init("lamin-intro", modules = c("bionty"))
+```{r disconnect, include = FALSE}
+# Disconnect from this instance at the end of the vignette
+withr::defer(laminr::lamin_disconnect())
 ```
 
 ## Transforms
