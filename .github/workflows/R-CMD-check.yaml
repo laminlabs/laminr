@@ -85,6 +85,12 @@ jobs:
           }
         shell: Rscript {0}
 
+      - name: Print brew info
+        if: runner.os == 'macOS'
+        run: |
+          brew info gdal
+          brew info apache-arrow
+
       - name: Log in to Lamin
         run: |
           reticulate::use_virtualenv("r-lamindb")
