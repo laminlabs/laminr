@@ -29,6 +29,15 @@ file_openers <- list(
 #' @return A [arrow::Dataset]
 #' @noRd
 open_parquet <- function(sources, ...) {
+  # Avoid loading {arrow} on MacOS due to a library conflict issue
+  if (Sys.info()["sysname"] == "Darwin") {
+    cli::cli_inform(c(
+      "x" = "Opening a connection to Parquet files is currently not supported on MacOS",
+      "i" = "Cache the file locally and load it instead"
+    ))
+    return(invisible(NULL))
+  }
+
   check_requires("Opening Parquet datasets", "arrow")
 
   arrow::open_dataset(sources, ...)
