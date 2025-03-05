@@ -60,15 +60,16 @@ load_anndata_zarr <- function(file, ...) {
 #'   not
 #' @noRd
 load_parquet <- function(file, ...) {
-
   # Default to {nanoparquet} if it is available
   if (check_requires("Reading Parquet files", "nanoparquet", alert = "none")) {
     df <- nanoparquet::read_parquet(file, ...)
-  # Else, if not on MacOS, use {arrow} if available
-  } else if (Sys.info()["sysname"] != "Darwin" &&
-        check_requires("Reading Parquet files", "arrow", alert = "none")) {
+    # Else, if not on MacOS, use {arrow} if available
+  } else if (
+    Sys.info()["sysname"] != "Darwin" &&
+      check_requires("Reading Parquet files", "arrow", alert = "none")
+  ) {
     df <- arrow::read_parquet(file, ...)
-  # Otherwise, tell the use to install {nanoparquet}
+    # Otherwise, tell the use to install {nanoparquet}
   } else {
     check_requires("Reading Parquet files", "nanoparquet")
   }
