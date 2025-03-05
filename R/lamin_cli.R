@@ -11,12 +11,18 @@
 #' Running this will set the LaminDB auto-connect option to `True` so you
 #' auto-connect to `instance` when importing Python `lamindb`.
 #'
-#'
 #' @examples
 #' \dontrun{
 #' lamin_connect("laminlabs/cellxgene")
 #' }
 lamin_connect <- function(instance) {
+  if (is.null(instance)) {
+    cli::cli_alert_danger(
+      "{.arg instance} is {.val NULL}, {.code lamin connect} will not be run"
+    )
+    return(invisible(NULL))
+  }
+
   check_default_instance()
 
   # Set the default environment if not set
