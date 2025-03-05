@@ -181,32 +181,34 @@ lamin_init <- function(storage, name = NULL, db = NULL, modules = NULL) {
   system2("lamin", args)
 }
 
+#' @param add_timestamp Whether to append a timestamp to `name` to make it unique
 #' @param envir An environment passed to [withr::defer()]
 #'
 #' @details
-#' For [lamin_init_temp()], a time stamp is appended to `name` to make sure it
-#' is unique and then a new instance is initialised with [lamin_init()] using a
-#' temporary directory. A [lamin_delete()] call is registered as an exit handler
-#' with [withr::defer()] to clean up the instance when `envir` finishes.
+#' For [lamin_init_temp()], a time stamp is appended to `name` (if
+#' `add_timestamp = TRUE`) and then a new instance is initialised with
+#' [lamin_init()] using a temporary directory. A [lamin_delete()] call is
+#' registered as an exit handler with [withr::defer()] to clean up the instance
+#' when `envir` finishes.
 #'
 #' The [lamin_init_temp()] function is mostly for internal use and in most cases
 #' users will want [lamin_init()].
 #'
 #' @rdname lamin_init
 #' @export
-lamin_init_temp <- function(name, db = NULL, modules = NULL, envir = parent.frame()) {
-  if (is.null(name)) {
-    name <- "laminr-temp"
-  }
+lamin_init_temp <- function(name = "laminr-temp", db = NULL, modules = NULL,
+                            add_timestamp = TRUE, envir = parent.frame()) {
 
-  # Add a time stamp to get a unique name
-  timestamp <- format(Sys.time(), "%Y%m%d%H%M%S")
-  name <- paste0(name, "-", timestamp)
+  if (isTRUE(add_timestamp)) {
+    # Add a time stamp to get a unique name
+    timestamp <- format(Sys.time(), "%Y%m%d%H%M%S")
+    name <- paste0(name, "-", timestamp)
+  }
 
   # Create the temporary storage for this instance
   temp_storage <- file.path(tempdir(), name)
 
-  # Initalise the temporary instance
+  # Initialise the temporary instance
   lamin_init(temp_storage, name = name, db = db, modules = modules)
 
   # Add the clean up handler to the environment
