@@ -71,13 +71,13 @@ test_that("load_file with an .h5ad works", {
 ###################### TODO: add anndata_zarr tests ######################
 
 test_that("load_file with a .parquet works", {
-  skip_if_not_installed("arrow")
+  skip_if_not_installed("nanoparquet")
 
   file <- withr::local_file(tempfile(fileext = ".parquet"))
 
   # create a Parquet file
   df <- data.frame(a = 1:3, b = 4:6)
-  arrow::write_parquet(df, file)
+  nanoparquet::write_parquet(df, file)
 
   # load the Parquet file
   loaded_df <- load_file(file)
