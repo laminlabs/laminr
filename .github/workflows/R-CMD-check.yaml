@@ -19,7 +19,7 @@ jobs:
       matrix:
         config:
           - { os: macos-latest, r: "release", python: "3.x", lamin: "devel" }
-          - { os: windows-latest, r: "release", python: "3.x", lamin: "release" }
+          - { os: windows-latest, r: "release", python: "3.x", lamin: "devel" }
           - { os: ubuntu-latest, r: "devel", http-user-agent: "release", python: "3.x", lamin: "devel" }
           - { os: ubuntu-latest, r: "release", python: "3.x", lamin: "devel" }
           - { os: ubuntu-latest, r: "oldrel-1", python: "3.9", lamin: "devel" }
