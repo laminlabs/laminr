@@ -44,7 +44,7 @@ import_lamindb <- function() {
     py_lamindb,
     public = list(
       track = function(transform = NULL, project = NULL, params = NULL, new_run = NULL, path = NULL) {
-        lamindb_track(private, transform, params, new_run, path, log_to_file)
+        lamindb_track(private, transform, project, params, new_run, path)
       },
       finish = function(ignore_non_consecutive = NULL) {
         lamindb_finish(private, ignore_non_consecutive)
