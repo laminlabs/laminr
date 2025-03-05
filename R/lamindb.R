@@ -43,7 +43,7 @@ import_lamindb <- function() {
   wrap_python(
     py_lamindb,
     public = list(
-      track = function(transform = NULL, params = NULL, new_run = NULL, path = NULL, log_to_file = NULL) {
+      track = function(transform = NULL, project = NULL, params = NULL, new_run = NULL, path = NULL) {
         lamindb_track(private, transform, params, new_run, path, log_to_file)
       },
       finish = function(ignore_non_consecutive = NULL) {
@@ -53,7 +53,8 @@ import_lamindb <- function() {
   )
 }
 
-lamindb_track <- function(private, transform = NULL, params = NULL, new_run = NULL, path = NULL, log_to_file = NULL) {
+lamindb_track <- function(private, transform = NULL, project = NULL, params = NULL, new_run = NULL,
+                          path = NULL) {
   if (is.null(path)) {
     path <- detect_path()
     if (is.null(path)) {
@@ -65,10 +66,10 @@ lamindb_track <- function(private, transform = NULL, params = NULL, new_run = NU
 
   private$.py_object$track(
     transform = transform,
+    project = project,
     params = params,
     new_run = new_run,
     path = path,
-    log_to_file = log_to_file
   )
 }
 
