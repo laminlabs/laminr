@@ -1,5 +1,5 @@
 #' @export
-py_to_r.lamindb.models.Artifact <- function(x) {
+py_to_r.lamindb.models.artifact.Artifact <- function(x) { # nolint object_length_linter
   # Avoid "no visible binding for global variable"
   self <- NULL
 
@@ -61,7 +61,7 @@ artifact_open <- function(self, mode, is_run_input, ...) {
   }
 
   # Tell Python to track this artifact
-  py_lamin$core$`_data`$`_track_run_input`(py_object, is_run_input)
+  py_lamin$models$artifact$`_track_run_input`(py_object, is_run_input)
 
   conn
 }

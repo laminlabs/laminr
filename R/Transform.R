@@ -1,5 +1,5 @@
 #' @export
-py_to_r.lamindb.models.Transform <- function(x) {
+py_to_r.lamindb.models.transform.Transform <- function(x) { # nolint object_length_linter
   wrap_python(
     x,
     public = list(

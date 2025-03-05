@@ -1,14 +1,14 @@
 test_that("unwrap_python() works", {
   expect_s3_class(unwrap_python(ln), "python.builtin.module")
 
-  expect_s3_class(unwrap_python(ln$ULabel), "lamindb.models.Registry")
+  expect_s3_class(unwrap_python(ln$ULabel), "lamindb.models.record.Registry")
 
   df <- data.frame(
     Letters = LETTERS[1:5],
     Numbers = 1:5
   )
   artifact <- ln$Artifact$from_df(df, description = "My data frame")
-  expect_s3_class(unwrap_python(artifact), "lamindb.models.Artifact")
+  expect_s3_class(unwrap_python(artifact), "lamindb.models.artifact.Artifact")
 })
 
 test_that("unwrap_args_and_call() works", {
@@ -28,9 +28,9 @@ test_that("unwrap_args_and_call() works", {
       )
     ),
     c(
-      "lamindb.models.Registry",
+      "lamindb.models.record.Registry",
       "python.builtin.module",
-      "lamindb.models.Registry"
+      "lamindb.models.record.Registry"
     )
   )
 })

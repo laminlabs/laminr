@@ -1,5 +1,5 @@
 #' @export
-py_to_r.lamindb.models.Registry <- function(x) {
+py_to_r.lamindb.models.record.Registry <- function(x) {
   # Avoid "no visible binding for global variable"
   self <- NULL
 
@@ -23,7 +23,10 @@ registry_from_df <- function(self, ...) {
     )
   }
 
-  if (!is.null(args$revises) && !inherits(args$revises, "laminr.lamindb.models.Artifact")) {
+  if (
+    !is.null(args$revises) &&
+      !inherits(args$revises, "laminr.lamindb.models.artifact.Artifact")
+  ) {
     revises_class <- class(args$revises)[1] # nolint object_usage_linter
     cli::cli_abort(
       "{.arg revises} must be an {.cls Artifact} but is a {.cls {revises_class}}"
