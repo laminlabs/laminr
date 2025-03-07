@@ -12,13 +12,25 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-# whether or not this code will be used to
-# actually upload results to the LaminDB instance
-# -> testuser1 is a test account that cannot upload results
-submit_eval <- laminr:::.get_user_settings()$handle != "testuser1"
 ```
 
 This vignette introduces the basic **{laminr}** workflow.
+
+```{r prepare, include = FALSE}
+# Restore the current instance at the end of the vignette
+current_instance <- laminr::get_current_lamin_instance()
+withr::defer(laminr::lamin_connect(current_instance))
+
+# Restore the current user at the end of the vignette
+current_user <- laminr::get_current_lamin_user()
+withr::defer(laminr::lamin_login(current_user))
+
+# Use <laminlabs/lamindata> for this vignette
+laminr::lamin_connect("laminlabs/lamindata")
+
+# Disconnect from this instance at the end of the vignette
+withr::defer(laminr::lamin_disconnect())
+```
 
 # Setup
 
@@ -53,38 +65,36 @@ Load **{laminr}** to get started.
 library(laminr)
 ```
 
-Create your default database `db` object for this R session:
+Import `lamindb`.
 
-```{r connect-default}
-db <- connect()
+```{r import-lamindb}
+ln <- import_module("lamindb")
 ```
 
-It is used to manage all datasets and metadata entities.
+```{r submit-eval, include = FALSE}
+# whether or not this code will be used to
+# actually upload results to the LaminDB instance
+# -> testuser1 is a test account that cannot upload results
+submit_eval <- ln$setup$settings$user$handle != "testuser1"
+```
+
+This is equivalent to `import lamindb as ln` in Python.
 
 LaminDB tracks which code is used to create data.
 To track the current source code, run:
 
 ```{r track, eval = submit_eval}
-db$track()
-```
-
-# Connect to other instances
-
-It is possible to connect to any LaminDB instance for reading data.
-Connect to the public CELLxGENE instance:
-
-```{r connect-cellxgene}
-cellxgene <- connect("laminlabs/cellxgene")
-cellxgene
+ln$track()
 ```
 
 # Download a dataset
 
 Artifacts are objects that bundle data and associated metadata.
 An artifact can be any file or folder but is typically a dataset.
+This examples shows how to get an artifact from another instance ("laminlabs/cellxgene").
 
 ```{r get-artifact}
-artifact <- cellxgene$Artifact$get("7dVluLROpalzEh8mNyxk")
+artifact <- ln$Artifact$using("laminlabs/cellxgene")$get("7dVluLROpalzEh8mNyxk")
 artifact
 ```
 
@@ -164,7 +174,7 @@ value_filter <- paste(
 )
 
 # Get the artifact containing the CELLxGENE Census TileDB-SOMA store
-census_artifact <- cellxgene$Artifact$get("FYMewVq5twKMDXVy0001")
+census_artifact <- ln$Artifact$using("laminlabs/cellxgene")$get("FYMewVq5twKMDXVy0001")
 # Open the SOMACollection
 soma_collection <- census_artifact$open()
 # Slice the store to get a SOMADataFrame containing metadata for the cells of interest
@@ -179,19 +189,21 @@ cell_metadata
 
 # Save the results
 
-Save results as new artifacts to the default LaminDB instance.
+Save results as new artifacts to the current LaminDB instance.
 
 ```{r save-results, eval = submit_eval}
 seurat_path <- tempfile(fileext = ".rds")
 saveRDS(seurat_obj, seurat_path)
 
-db$Artifact$from_df(
+ln$Artifact$from_df(
   markers,
+  key = "laminr-datasets/renal-cell-carcinoma-markers.parquet",
   description = "Marker genes for renal cell carcinoma dataset"
 )$save()
 
-db$Artifact$from_path(
+ln$Artifact(
   seurat_path,
+  key = "laminr-datasets/renal-cell-carcinoma.rds",
   description = "Seurat object for renal cell carcinoma dataset"
 )$save()
 ```
@@ -201,7 +213,7 @@ db$Artifact$from_path(
 Mark the analysis run as finished to create a time stamp and upload source code to the hub.
 
 ```{r finish, eval = submit_eval}
-db$finish()
+ln$finish()
 ```
 
 ## Save a notebook report (not needed for `.R` scripts)
@@ -223,7 +235,15 @@ Save a run report of your notebook (`.Rmd` or `.qmd` file) to your instance:
   rmarkdown::render("laminr.Rmd")
   ```
 
-2. Save it to your LaminDB instance using the `lamin` CLI:
+2. Save it to your LaminDB instance:
+
+- Using the `lamin_save()` function in R:
+
+```r
+lamin_save("laminr.Rmd")
+```
+
+- **OR** Using the `lamin` CLI:
 
 ```bash
 lamin save laminr.Rmd
@@ -231,4 +251,6 @@ lamin save laminr.Rmd
 
 # Further reading
 
-For more details about how **{laminr}** works see `vignette("concepts_features", package = "laminr")`.
+For examples of more **{laminr}** features see `vignette("introduction", package = "laminr")`.
+
+To learn more about LaminDB, please refer to the online documentation https://docs.lamin.ai/.

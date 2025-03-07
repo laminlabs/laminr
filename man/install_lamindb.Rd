@@ -8,7 +8,8 @@ install_lamindb(
   ...,
   envname = "r-lamindb",
   extra_packages = NULL,
-  new_env = identical(envname, "r-lamindb")
+  new_env = identical(envname, "r-lamindb"),
+  use = TRUE
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ to install}
 
 \item{new_env}{Whether to remove any existing \code{virtualenv} with the same name
 before creating a new one with the requested packages}
+
+\item{use}{Whether to attempt use the new environment}
 }
 \value{
 \code{NULL}, invisibly

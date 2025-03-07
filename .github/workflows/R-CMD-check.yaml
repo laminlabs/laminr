@@ -12,17 +12,17 @@ jobs:
   R-CMD-check:
     runs-on: ${{ matrix.config.os }}
 
-    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+    name: ${{ matrix.config.os }} (r-${{ matrix.config.r }}, lamin-${{ matrix.config.lamin }})
 
     strategy:
       fail-fast: false
       matrix:
         config:
-          - { os: macos-latest, r: "release", python: "3.x" }
-          - { os: windows-latest, r: "release", python: "3.x" }
-          - { os: ubuntu-latest, r: "devel", http-user-agent: "release", python: "3.x" }
-          - { os: ubuntu-latest, r: "release", python: "3.x" }
-          - { os: ubuntu-latest, r: "oldrel-1", python: "3.9" }
+          - { os: macos-latest, r: "release", python: "3.x", lamin: "release" }
+          - { os: windows-latest, r: "release", python: "3.x", lamin: "release" }
+          - { os: ubuntu-latest, r: "devel", http-user-agent: "release", python: "3.x", lamin: "release" }
+          - { os: ubuntu-latest, r: "release", python: "3.x", lamin: "release" }
+          - { os: ubuntu-latest, r: "oldrel-1", python: "3.9", lamin: "release" }
           - { os: ubuntu-latest, r: "release", http-user-agent: "release", python: "3.x", lamin: "devel" }
           - { os: ubuntu-latest, r: "devel", http-user-agent: "release", python: "3.x", lamin: "devel" }
 
@@ -78,7 +78,7 @@ jobs:
 
       - name: Setup Python environment
         run: |
-          laminr::install_lamindb(extra_packages = c("s3fs"))
+          laminr::install_lamindb(extra_packages = c("bionty"))
           if ("${{ matrix.config.lamin }}" == "devel") {
             reticulate::use_virtualenv("r-lamindb")
             reticulate::py_install("git+https://github.com/laminlabs/lamindb.git")
@@ -101,13 +101,13 @@ jobs:
         run: |
           reticulate::use_virtualenv("r-lamindb")
           reticulate::py_config()
-          reticulate::import("lamindb")
-          laminr::connect()
+          laminr::import_module("lamindb")
         shell: Rscript {0}
 
       - name: Check
         env:
           _R_CHECK_CRAN_INCOMING_REMOTE_: false
+          LAMIN_TEST_VERSION: '${{ matrix.config.lamin }}'
         run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
         shell: Rscript {0}
 

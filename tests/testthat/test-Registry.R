@@ -1,54 +1,29 @@
-skip_if_offline()
-
-test_that("df works", {
-  skip_if_not_logged_in()
-
-  db <- connect("laminlabs/lamindata")
-
-  records <- db$Storage$df()
-
-  expect_s3_class(records, "data.frame")
-  expect_true(all(c("description", "created_at", "id", "uid") %in% colnames(records)))
+test_that("Wrapping a Registry works", {
+  expect_s3_class(ln$ULabel, "laminr.lamindb.models.record.Registry")
 })
 
-test_that("to_string works", {
-  skip_if_not_logged_in()
+test_that("Calling a Registry works", {
+  label <- expect_no_error(ln$ULabel(name = "My label"))
 
-  db <- connect("laminlabs/lamindata")
-
-  str <- db$bionty$Phenotype$to_string()
-
-  expect_type(str, "character")
-
-  regex <- paste0(
-    "Phenotype\\(",
-    "SimpleFields=\\[id, uid,[^\\]*\\], ",
-    "RelationalFields=\\[[^\\]*\\], ",
-    "BiontyFields=\\[[^\\]*\\]",
-    "\\)"
-  )
-
-  expect_match(str, regex)
+  expect_s3_class(label, "lamindb.models.ulabel.ULabel")
 })
 
-test_that("print works", {
-  skip_if_not_logged_in()
-
-  db <- connect("laminlabs/lamindata")
-
-  regex <- paste0(
-    "Phenotype\n",
-    "  Simple fields\n",
-    "    id: AutoField\n",
-    "    uid: CharField\n",
-    ".*",
-    "  Relational fields\n",
-    "    run: Run \\(many-to-one\\)\n",
-    ".*",
-    "  Bionty fields\n",
-    "    source: bionty\\$Source \\(many-to-one\\)\n",
-    ".*"
+test_that("Registry$from_df() works", {
+  df <- data.frame(
+    Letters = LETTERS[1:5],
+    Numbers = 1:5
   )
+  artifact <- expect_no_error(
+    ln$Artifact$from_df(df, description = "My data frame")
+  )
+  expect_s3_class(artifact, "laminr.lamindb.models.artifact.Artifact")
 
-  expect_output(db$bionty$Phenotype$print(style = FALSE), regex)
+  df <- data.frame(
+    Letters = letters[1:5],
+    Numbers = 1:5
+  )
+  artifact <- expect_no_error(
+    ln$Artifact$from_df(df, revises = artifact)
+  )
+  expect_s3_class(artifact, "laminr.lamindb.models.artifact.Artifact")
 })

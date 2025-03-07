@@ -57,7 +57,7 @@ jobs:
 
       - name: Setup Python environment
         run: |
-          laminr::install_lamindb(extra_packages = c("s3fs"))
+          laminr::install_lamindb(extra_packages = c("bionty"))
         shell: Rscript {0}
 
       - name: Log in to Lamin
@@ -76,8 +76,7 @@ jobs:
         run: |
           reticulate::use_virtualenv("r-lamindb")
           reticulate::py_config()
-          reticulate::import("lamindb")
-          laminr::connect()
+          laminr::import_module("lamindb")
         shell: Rscript {0}
 
       - name: Build site
