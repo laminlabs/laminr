@@ -18,7 +18,7 @@ test_that("Importing bionty works", {
     )
   )
 
-  bt <- import_bionty()
+  bt <- import_module("bionty")
 
   expect_s3_class(bt, "python.builtin.module")
 })
@@ -33,7 +33,7 @@ test_that("Importing wetlab works", {
     )
   )
 
-  wl <- import_wetlab()
+  wl <- import_module("wetlab")
 
   expect_s3_class(wl, "python.builtin.module")
 })
@@ -48,7 +48,7 @@ test_that("Importing clinicore works", {
     )
   )
 
-  cc <- import_clinicore()
+  cc <- import_module("clinicore")
 
   expect_s3_class(cc, "python.builtin.module")
 })

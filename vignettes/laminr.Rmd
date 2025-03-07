@@ -68,7 +68,7 @@ library(laminr)
 Import `lamindb`.
 
 ```{r import-lamindb}
-ln <- import_lamindb()
+ln <- import_module("lamindb")
 ```
 
 ```{r submit-eval, include = FALSE}

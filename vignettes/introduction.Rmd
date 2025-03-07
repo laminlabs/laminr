@@ -56,7 +56,7 @@ withr::defer(laminr::lamin_disconnect())
 See https://docs.lamin.ai/guide#transforms.
 
 ```{r transforms}
-ln <- import_lamindb()
+ln <- import_module("lamindb")
 ln$track()
 
 ln$Transform$df()
@@ -96,7 +96,7 @@ artifact$versions$df()
 See https://docs.lamin.ai/guide#labels.
 
 ```{r labels}
-bt <- import_bionty()
+bt <- import_module("bionty")
 
 experiment_type <- ln$ULabel(name = "Experiment", is_type = TRUE)$save()
 candidate_marker_experiment <- ln$ULabel(
@@ -174,7 +174,7 @@ transform$view_lineage()
 
 ```r
 # Example only, not run
-ln <- import_lamindb()
+ln <- import_module("lamindb")
 ln$track()
 ln$finish()
 

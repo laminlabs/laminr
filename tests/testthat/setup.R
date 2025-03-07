@@ -33,6 +33,6 @@ lamin_init_temp(
 )
 
 # Import lamindb so we don't have to do it in every test
-ln <- import_lamindb()
+ln <- import_module("lamindb")
 # Reset the default instance so we can connect to another
 withr::defer(options(LAMINR_DEFAULT_INSTANCE = NULL), testthat::teardown_env())

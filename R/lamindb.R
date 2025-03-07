@@ -1,8 +1,7 @@
-#' @rdname importing
-#' @order 1
-#' @export
 import_lamindb <- function() {
-  py_lamindb <- import_module("lamindb")
+  check_requires("Importing lamindb", "lamindb", language = "Python")
+
+  py_lamindb <- reticulate::import("lamindb")
 
   instance_slug <- NULL
   tryCatch(
