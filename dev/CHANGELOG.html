@@ -19,16 +19,8 @@
 <li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><h6 class="dropdown-header" data-toc-skip>Introduction</h6></li>
-    <li><a class="dropdown-item" href="articles/setup.html">Setting up laminr</a></li>
-    <li><a class="dropdown-item" href="articles/concepts_features.html">Concepts and features</a></li>
-    <li><a class="dropdown-item" href="articles/architecture.html">Package Architecture</a></li>
-    <li><a class="dropdown-item" href="articles/development.html">Development Roadmap</a></li>
-    <li><hr class="dropdown-divider"></li>
-    <li><h6 class="dropdown-header" data-toc-skip>API reference</h6></li>
-    <li><a class="dropdown-item" href="articles/module_core.html">Core module</a></li>
-    <li><a class="dropdown-item" href="articles/module_bionty.html">Bionty module</a></li>
-    <li><a class="dropdown-item" href="articles/module_wetlab.html">Wetlab module</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="articles/setup.html">Setting up laminr</a></li>
+    <li><a class="dropdown-item" href="articles/introduction.html">Introduction guide</a></li>
   </ul></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="search.json"></form></li>
@@ -50,7 +42,7 @@
 
 <div class="section level2">
 <h2 id="minor-changes">MINOR CHANGES<a class="anchor" aria-label="anchor" href="#minor-changes"></a></h2>
-<ul><li>Automatically refresh expired user tokens in <code><a href="reference/connect.html">connect()</a></code> by running <code><a href="reference/lamin_login.html">lamin_login()</a></code> (PR #145)</li>
+<ul><li>Automatically refresh expired user tokens in <code>connect()</code> by running <code><a href="reference/lamin_login.html">lamin_login()</a></code> (PR #145)</li>
 <li>
 <code><a href="reference/lamin_login.html">lamin_login()</a></code> now tries to use a stored user handle when arguments are not set (PR #145)</li>
 </ul></div>
@@ -137,7 +129,7 @@ Currently supported: <code>.csv</code>, <code>.h5ad</code>, <code>.html</code>, 
 <div class="section level2">
 <h2 id="major-changes">MAJOR CHANGES<a class="anchor" aria-label="anchor" href="#major-changes"></a></h2>
 <ul><li>Running <code>connect(slug = NULL)</code> now connects to the default instance that is allowed to create records. The default instance must be changed using the Lamin CLI. (PR #78)</li>
-<li>User setting are stored in a global option the first time <code><a href="reference/connect.html">connect()</a></code> is run (PR #78)</li>
+<li>User setting are stored in a global option the first time <code>connect()</code> is run (PR #78)</li>
 </ul></div>
 <div class="section level2">
 <h2 id="minor-changes-4">MINOR CHANGES<a class="anchor" aria-label="anchor" href="#minor-changes-4"></a></h2>

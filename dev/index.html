@@ -37,16 +37,8 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><h6 class="dropdown-header" data-toc-skip>Introduction</h6></li>
-    <li><a class="dropdown-item" href="articles/setup.html">Setting up laminr</a></li>
-    <li><a class="dropdown-item" href="articles/concepts_features.html">Concepts and features</a></li>
-    <li><a class="dropdown-item" href="articles/architecture.html">Package Architecture</a></li>
-    <li><a class="dropdown-item" href="articles/development.html">Development Roadmap</a></li>
-    <li><hr class="dropdown-divider"></li>
-    <li><h6 class="dropdown-header" data-toc-skip>API reference</h6></li>
-    <li><a class="dropdown-item" href="articles/module_core.html">Core module</a></li>
-    <li><a class="dropdown-item" href="articles/module_bionty.html">Bionty module</a></li>
-    <li><a class="dropdown-item" href="articles/module_wetlab.html">Wetlab module</a></li>
+<li><a class="dropdown-item" href="articles/setup.html">Setting up laminr</a></li>
+    <li><a class="dropdown-item" href="articles/introduction.html">Introduction guide</a></li>
   </ul>
 </li>
       </ul>
@@ -67,24 +59,7 @@
 </h1></div>
 <!-- badges: start -->
 
-<p><strong>{laminr}</strong> is an R client for <a href="https://lamin.ai" class="external-link">LaminDB</a>. If you are new to LaminDB, please read this <a href="https://docs.lamin.ai/introduction" class="external-link">introduction</a>.</p>
-<ul>
-<li>Connect to a LaminDB instance: <code>db &lt;- connect()</code>
-</li>
-<li>Track scripts and notebooks as transforms: <code>db$track()</code>
-</li>
-<li>Get records by UID: <code>artifact &lt;- db$Artifact$get()</code>
-</li>
-<li>Cache artifacts locally: <code>artifact$cache()</code>
-</li>
-<li>Load artifacts into memory for a broad range of storage formats: <code>artifact$load()</code>
-</li>
-<li>Create artifacts from data frames, paths, and <code>AnnData</code> objects: <code>db$Artifact$from_path()</code>
-</li>
-<li>Delete records: <code>artifact$delete()</code>
-</li>
-</ul>
-<p>See the development roadmap for more details (<code><a href="articles/development.html">vignette("development", package = "laminr")</a></code>).</p>
+<p><strong>{laminr}</strong> is an R client for <a href="https://lamin.ai" class="external-link">LaminDB</a>. If you are new to LaminDB, please read this <a href="https://docs.lamin.ai/guide" class="external-link">introduction</a>.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -97,21 +72,6 @@
 <p>Some functionality requires additional packages. To install all of these use:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"laminr"</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p>This will also install these package for the following tasks:</p>
-<ul>
-<li>
-<strong>{anndata}</strong> - Native <code>AnnData</code> support in R</li>
-<li>
-<strong>{nanoparquet}</strong> - Reading <code>.parquet</code> files</li>
-<li>
-<strong>{readr}</strong> - Reading CSV/TSV files</li>
-<li>
-<strong>{reticulate}</strong> - Functionality that requires the Python <code>lamindb</code> package</li>
-<li>
-<strong>{rsvg}</strong> - Reading SVG files</li>
-<li>
-<strong>{s3}</strong> - Fetching datasets from AWS S3</li>
-</ul>
 <p>If you choose not to install all packages now you will be prompted to do so whenever one is required.</p>
 </div>
 </div>
@@ -134,7 +94,7 @@
 </ol>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">laminr</span><span class="fu">::</span><span class="fu"><a href="reference/lamin_connect.html">lamin_connect</a></span><span class="op">(</span><span class="st">"&lt;owner&gt;/&lt;name&gt;"</span><span class="op">)</span></span></code></pre></div>
-<p>See the <a href="https://laminr.lamin.ai/articles/setup.html">setup vignette</a> for more information (<code><a href="articles/setup.html">vignette("setup", package = "laminr")</a></code>).</p>
+<p>See the <a href="https://laminr.lamin.ai/articles/setup.html">setup vignette</a> for more information.</p>
 </div>
 <div class="section level2">
 <h2 id="getting-started">Getting started<a class="anchor" aria-label="anchor" href="#getting-started"></a>
@@ -142,16 +102,11 @@
 <p>The best way to get started with <strong>{laminr}</strong> is to explore the package vignettes (available at <a href="https://laminr.lamin.ai">laminr.lamin.ai</a>):</p>
 <ul>
 <li>
-<strong>Get started</strong>: Learn the basics and explore practical examples (<code><a href="articles/laminr.html">vignette("laminr", package = "laminr")</a></code>).</li>
+<a href="https://laminr.lamin.ai/articles/laminr.html"><strong>Get started</strong></a>: Learn the basics and explore practical examples</li>
 <li>
-<strong>Package Architecture</strong>: Get a better understanding of how <strong>{laminr}</strong> works (<code><a href="articles/architecture.html">vignette("architecture", package = "laminr")</a></code>).</li>
-</ul>
-<p>For information on specific modules and functionalities, check out the following vignettes:</p>
-<ul>
+<a href="https://laminr.lamin.ai/articles/setup.html"><strong>Setting up laminr</strong></a>: Learn set up <strong>{laminr}</strong> and manage Python environments</li>
 <li>
-<strong>Core Module</strong>: Learn about the core registries available in a LaminDB instance (<code><a href="articles/module_core.html">vignette("module_core", package = "laminr")</a></code>).</li>
-<li>
-<strong>Bionty Module</strong>: Explore the bionty module for biology-related entities (<code><a href="articles/module_bionty.html">vignette("module_bionty", package = "laminr")</a></code>).</li>
+<a href="https://laminr.lamin.ai/articles/introduction.html"><strong>Introduction to LaminDB</strong></a>: Code for reproducing the LaminDB introduction guide</li>
 </ul>
 </div>
 </div>
