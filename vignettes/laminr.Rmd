@@ -25,8 +25,8 @@ withr::defer(laminr::lamin_connect(current_instance))
 current_user <- laminr::get_current_lamin_user()
 withr::defer(laminr::lamin_login(current_user))
 
-# Use a temporary instance for this vignette
-laminr::lamin_init_temp(name = "laminr-get-started")
+# Use <laminlabs/lamindata> for this vignette
+laminr::lamin_connect("laminlabs/lamindata")
 
 # Disconnect from this instance at the end of the vignette
 withr::defer(laminr::lamin_disconnect())
