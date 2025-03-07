@@ -25,8 +25,8 @@ withr::defer(laminr::lamin_connect(current_instance))
 current_user <- laminr::get_current_lamin_user()
 withr::defer(laminr::lamin_login(current_user))
 
-# Use <laminlabs/lamindata> for this vignette
-laminr::lamin_connect("laminlabs/lamindata")
+# Use a temporary instance for this vignette
+laminr::lamin_init_temp(name = "laminr-get-started")
 
 # Disconnect from this instance at the end of the vignette
 withr::defer(laminr::lamin_disconnect())
@@ -189,7 +189,7 @@ cell_metadata
 
 # Save the results
 
-Save results as new artifacts to the default LaminDB instance.
+Save results as new artifacts to the current LaminDB instance.
 
 ```{r save-results, eval = submit_eval}
 seurat_path <- tempfile(fileext = ".rds")
@@ -197,11 +197,13 @@ saveRDS(seurat_obj, seurat_path)
 
 ln$Artifact$from_df(
   markers,
+  key = "laminr-datasets/renal-cell-carcinoma-markers.parquet",
   description = "Marker genes for renal cell carcinoma dataset"
 )$save()
 
 ln$Artifact(
   seurat_path,
+  key = "laminr-datasets/renal-cell-carcinoma.rds",
   description = "Seurat object for renal cell carcinoma dataset"
 )$save()
 ```
@@ -233,7 +235,15 @@ Save a run report of your notebook (`.Rmd` or `.qmd` file) to your instance:
   rmarkdown::render("laminr.Rmd")
   ```
 
-2. Save it to your LaminDB instance using the `lamin` CLI:
+2. Save it to your LaminDB instance:
+
+- Using the `lamin_save()` function in R:
+
+```r
+lamin_save("laminr.Rmd")
+```
+
+- **OR** Using the `lamin` CLI:
 
 ```bash
 lamin save laminr.Rmd
@@ -241,4 +251,6 @@ lamin save laminr.Rmd
 
 # Further reading
 
-For more details about how **{laminr}** works see `vignette("concepts_features", package = "laminr")`.
+For examples of more **{laminr}** features see `vignette("introduction", package = "laminr")`.
+
+To learn more about LaminDB, please refer to the online documentation https://docs.lamin.ai/.

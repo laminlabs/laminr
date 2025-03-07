@@ -41,7 +41,7 @@ library(laminr)
 See https://docs.lamin.ai/guide#walkthrough.
 
 ```{r walkthrough}
-lamin_init_temp(name = "lamin-intro", modules = c("bionty"))
+lamin_init_temp(name = "laminr-intro", modules = c("bionty"))
 ```
 
 **NOTE:** We have used a `lamin_init_temp()` to create a temporary instance for this vignette but in most cases you should use regular `lamin_init()`
