@@ -198,7 +198,6 @@ lamin_init <- function(storage, name = NULL, db = NULL, modules = NULL) {
 #' @export
 lamin_init_temp <- function(name = "laminr-temp", db = NULL, modules = NULL,
                             add_timestamp = TRUE, envir = parent.frame()) {
-
   if (isTRUE(add_timestamp)) {
     # Add a time stamp to get a unique name
     timestamp <- format(Sys.time(), "%Y%m%d%H%M%S")

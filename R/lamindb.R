@@ -34,7 +34,7 @@ import_lamindb <- function() {
 
   if (!is.null(instance_slug)) {
     tryCatch(
-      storage <- reticulate::py_repr(py_lamindb$settings$storage),
+      storage <- reticulate::py_repr(py_lamindb$settings$storage), # nolint object_usage_linter
       error = function(err) {
         cli::cli_abort(c(
           paste(
