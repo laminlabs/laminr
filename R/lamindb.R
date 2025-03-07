@@ -4,6 +4,7 @@
 import_lamindb <- function() {
   py_lamindb <- import_module("lamindb")
 
+  instance_slug <- NULL
   tryCatch(
     {
       instance_settings <- py_lamindb$setup$settings$instance
@@ -29,6 +30,25 @@ import_lamindb <- function() {
         ),
         "i" = "Run {.run laminr::install_lamindb()} to update."
       )
+    )
+  }
+
+  if (!is.null(instance_slug)) {
+    tryCatch(
+      storage <- reticulate::py_repr(py_lamindb$settings$storage),
+      error = function(err) {
+        cli::cli_abort(c(
+          paste(
+            "Failed to identify storage for instance {.val {instance_slug}}.",
+            "The directory for this instance may have been deleted."
+          ),
+          "i" = paste(
+            "Restart your R session and use {.code lamin_connect()} to",
+            "connect to another instance"
+          ),
+          "x" = "Error message: {err}"
+        ), call = rlang::caller_env(4))
+      }
     )
   }
 
