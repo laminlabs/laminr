@@ -6,6 +6,7 @@ Please see the updated ["Get started"](https://laminr.lamin.ai/articles/laminr.h
 
 Migration guide:
 
+- **{laminr}** v1.0.0 requires `lamindb>=1.2`. Run `install_lamindb()` to update the default Python environment.
 - Replace `db <- connect()` with `ln <- import_module("lamindb")`. The `ln` object behaves in the same way as the `lamindb` module object in Python and is largely similar to the `db` object in **{laminr}** < v1.
 
 Changes to API:
