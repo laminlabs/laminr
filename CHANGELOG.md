@@ -6,7 +6,7 @@ Please see the updated ["Get started"](https://laminr.lamin.ai/articles/laminr.h
 
 Migration guide:
 
-- Replace `db <- connect()` with `ln <- import_module("lamindb")`, the `ln` object behaves in the same way as the `db` object in laminr < v1
+- Replace `db <- connect()` with `ln <- import_module("lamindb")`. The `ln` object behaves in the same way as the `lamindb` module object in Python and is largely similar to the `db` object in **{laminr}** < v1.
 
 Changes to API:
 
