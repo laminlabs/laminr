@@ -1,5 +1,3 @@
-skip_on_cran()
-
 test_that("Importing a module works", {
   os <- import_module("os")
 

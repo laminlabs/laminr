@@ -1,5 +1,3 @@
-skip_on_cran()
-
 test_that("wrap_python() works", {
   np <- reticulate::import("numpy", convert = FALSE)
   expect_s3_class(wrap_python(np), "laminr.python.builtin.module")
@@ -19,7 +17,8 @@ test_that("wrap_python_callable() works", {
 
   abs_wrapped <- wrap_python_callable(np$abs)
   expect_s3_class(
-    abs_wrapped, c("laminr.numpy.ndarray", "laminr.CallableWrappedPythonObject")
+    abs_wrapped,
+    c("laminr.numpy.ndarray", "laminr.CallableWrappedPythonObject")
   )
 
   expect_equal(py_to_r(abs_wrapped(-1.1)), 1.1)

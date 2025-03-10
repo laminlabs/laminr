@@ -22,44 +22,50 @@ test_that("check_requires() works", {
 })
 
 test_that("check_requires() works with Python packages", {
-  skip_on_cran()
-
   expect_true(
     check_requires("Imported packages", "numpy", language = "Python")
   )
 
   expect_error(
-    check_requires("Missing packages", "a_missing_package", language = "Python"),
+    check_requires(
+      "Missing packages",
+      "a_missing_package",
+      language = "Python"
+    ),
     regexp = "Missing packages requires"
   )
 
   expect_warning(
     check_requires(
-      "Missing packages", "a_missing_package",
-      alert = "warning", language = "Python"
+      "Missing packages",
+      "a_missing_package",
+      alert = "warning",
+      language = "Python"
     ),
     regexp = "Missing packages requires"
   )
 
   expect_message(
     check_requires(
-      "Missing packages", "a_missing_package",
-      alert = "message", language = "Python"
+      "Missing packages",
+      "a_missing_package",
+      alert = "message",
+      language = "Python"
     ),
     regexp = "Missing packages requires"
   )
 
   expect_false(
     check_requires(
-      "Missing packages", "a_missing_package",
-      alert = "none", language = "Python"
+      "Missing packages",
+      "a_missing_package",
+      alert = "none",
+      language = "Python"
     )
   )
 })
 
 test_that("check_default_instance() works", {
-  skip_on_cran()
-
   expect_error(check_default_instance())
 
   expect_warning(check_default_instance(alert = "warning"))
@@ -70,8 +76,6 @@ test_that("check_default_instance() works", {
 })
 
 test_that("check_instance_module()", {
-  skip_on_cran()
-
   expect_true(check_instance_module("bionty"))
 
   expect_error(check_instance_module("missing_module"))

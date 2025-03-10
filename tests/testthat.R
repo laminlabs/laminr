@@ -1,16 +1,24 @@
-# This file is part of the standard setup for testthat.
-# It is recommended that you do not modify it.
-#
-# Where should you do additional test configuration?
-# Learn more about the roles of various files in:
-# * https://r-pkgs.org/testing-design.html#sec-tests-files-overview
-# * https://testthat.r-lib.org/articles/special-files.html
+# approach borrowed from reticulate
+run <- function() {
+  on_cran <- !isTRUE(as.logical(Sys.getenv("NOT_CRAN", "false")))
+  if (on_cran) {
+    message("env var 'NOT_CRAN=true' not defined; Skipping tests on CRAN")
+    return()
+  }
 
-if (!isTRUE(as.logical(Sys.getenv("NOT_CRAN", "false")))) {
-  Sys.setenv("OMP_THREAD_LIMIT" = 2)
+  if (!requireNamespace("testthat", quietly = TRUE)) {
+    message("'testthat' package not available; tests cannot be run")
+    return()
+  }
+
+  options(error = traceback)
+  if (requireNamespace("rlang", quietly = TRUE))
+    options(error = rlang::trace_back)
+
+  library(testthat)
+  library(laminr)
+
+  test_check("laminr")
 }
 
-library(testthat)
-library(laminr)
-
-test_check("laminr")
+run()
