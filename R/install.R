@@ -29,14 +29,18 @@
 #' # Install into a different environment
 #' install_lamindb(envvname = "your-env")
 #' }
-install_lamindb <- function(..., envname = "r-lamindb", extra_packages = NULL,
-                            new_env = identical(envname, "r-lamindb"),
-                            use = TRUE) {
+install_lamindb <- function(
+  ...,
+  envname = "r-lamindb",
+  extra_packages = NULL,
+  new_env = identical(envname, "r-lamindb"),
+  use = TRUE
+) {
   if (new_env && reticulate::virtualenv_exists(envname)) {
     reticulate::virtualenv_remove(envname)
   }
 
-  packages <- unique(c("lamindb>=1.2a2", "ipython", extra_packages))
+  packages <- unique(c("lamindb>=1.2", "ipython", extra_packages))
 
   reticulate::py_install(packages = packages, envname = envname, ...)
 
@@ -53,7 +57,8 @@ install_lamindb <- function(..., envname = "r-lamindb", extra_packages = NULL,
 
   if (isTRUE(use)) {
     tryCatch(
-      switch(env_type,
+      switch(
+        env_type,
         virtualenv = reticulate::use_virtualenv(envname),
         conda = reticulate::use_condaenv(envname)
       ),
