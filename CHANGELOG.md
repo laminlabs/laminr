@@ -1,10 +1,10 @@
 # laminr v1.0.0
 
-LaminR now has feature-parity with LaminDB (PR #146).
+LaminR now has feature parity with LaminDB (PR #146).
 
 Migration guide:
 
-- **{laminr}** v1.0.0 requires `lamindb>=1.2`. Run `install_lamindb()` to update the default Python environment.
+- Run `install_lamindb()`, which will ensure `lamindb >= 1.2` in the Python environment used by `reticulate`.
 - Replace `db <- connect()` with `ln <- import_module("lamindb")` and see the table below. The `ln` object is largely similar to the `db` object in **{laminr}** < v1 and matches `lamindb`'s Python API up to replacing `.` with `$`.
 
 | What | Before | After |
