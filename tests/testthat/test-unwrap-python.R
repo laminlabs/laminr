@@ -1,3 +1,5 @@
+skip_on_cran()
+
 test_that("unwrap_python() works", {
   expect_s3_class(unwrap_python(ln), "python.builtin.module")
 
