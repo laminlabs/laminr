@@ -6,16 +6,15 @@ Please see the updated ["Get started"](https://laminr.lamin.ai/articles/laminr.h
 
 Migration guide:
 
-- Replace `db <- connect()` with `ln <- import_lamindb()`, the `ln` object behaves in essentially the same way like the `db` object before
+- Replace `db <- connect()` with `ln <- import_module("lamindb")`, the `ln` object behaves in the same way as the `db` object in laminr < v1
 
 Changes to API:
 
-  - Add an `import_lamindb()` function used to load the **lamindb** Python module
-  - Add an internal `wrap_python()` function to wrap Python objects while replacing Python methods with R methods as needed
+  - Add an `import_module("lamindb")` function to import **lamindb**
+  - Add an internal `wrap_python()` function to wrap Python objects while replacing Python methods with R methods as needed, leaving most work to `reticulate()`
   - Update the internal `check_requires()` function to handle Python packages
   - Add custom `cache()`/`load()` methods to the `Artifact` class
   - Add custom `track()`/`finish()` methods to the **lamindb** module
-  - Add additional functions for accessing `lamin` CLI commands
 
 Changes to docs:
 
