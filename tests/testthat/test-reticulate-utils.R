@@ -1,3 +1,5 @@
+skip_on_cran()
+
 test_that("py_to_r_nonull() works", {
   pd <- reticulate::import("pandas", convert = FALSE)
 
