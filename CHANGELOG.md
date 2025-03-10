@@ -9,6 +9,14 @@ Migration guide:
 - **{laminr}** v1.0.0 requires `lamindb>=1.2`. Run `install_lamindb()` to update the default Python environment.
 - Replace `db <- connect()` with `ln <- import_module("lamindb")`. The `ln` object behaves in the same way as the `lamindb` module object in Python and is largely similar to the `db` object in **{laminr}** < v1.
 
+| What | Before | After |
+|--------|--------|--------|
+| Connect to the default LaminDB instance | `db <- connect()` | `ln <- import_module("lamindb")` |
+| Start tracking | `db$track()` | `ln$track()` |
+| Get an artifact from another instance | `new_instance <- connect("another/instance"); new_instance$Artifact$get(...)` | `ln$Artifact$using("another/instance")$get(...)` |
+| Create an artifact from a path | `db$Artifact$from_path(path)` | `ln$Artifact(path)` | 
+| Finish tracking | `db$finish()` | `ln$finish()` |
+
 Changes to API:
 
   - Add an `import_module()` function to import Python modules with additional functionality. Use `import_module("lamindb")` to import **lamindb**.
