@@ -1,13 +1,11 @@
 # laminr v1.0.0
 
-This is a major rewrite of the package to offer an interface that has feature-parity with the Python API (PR #146).
-
-Please see the updated ["Get started"](https://laminr.lamin.ai/articles/laminr.html) vignette for more information.
+LaminR now has feature-parity with LaminDB (PR #146).
 
 Migration guide:
 
 - **{laminr}** v1.0.0 requires `lamindb>=1.2`. Run `install_lamindb()` to update the default Python environment.
-- Replace `db <- connect()` with `ln <- import_module("lamindb")`. The `ln` object behaves in the same way as the `lamindb` module object in Python and is largely similar to the `db` object in **{laminr}** < v1.
+- Replace `db <- connect()` with `ln <- import_module("lamindb")` and see the table below. The `ln` object is largely similar to the `db` object in **{laminr}** < v1 and matches `lamindb`'s Python API up to replacing `.` with `$`.
 
 | What | Before | After |
 |--------|--------|--------|
@@ -17,19 +15,20 @@ Migration guide:
 | Create an artifact from a path | `db$Artifact$from_path(path)` | `ln$Artifact(path)` | 
 | Finish tracking | `db$finish()` | `ln$finish()` |
 
-Changes to API:
+See the updated ["Get started"](https://laminr.lamin.ai/articles/laminr.html) vignette for more information.
 
-  - Add an `import_module()` function to import Python modules with additional functionality. Use `import_module("lamindb")` to import **lamindb**.
+User-facing changes:
+
+  - Add an `import_module()` function to import Python modules with additional functionality, e.g., `import_module("lamindb")` for **lamindb**
+  - Add functions for accessing more `lamin` CLI commands
+  - Add a new "Introduction" vignette that replicates the code from the Python **lamindb** introduction guide
+
+Internal changes:
+
   - Add an internal `wrap_python()` function to wrap Python objects while replacing Python methods with R methods as needed, leaving most work to **{reticulate}**
   - Update the internal `check_requires()` function to handle Python packages
   - Add custom `cache()`/`load()` methods to the `Artifact` class
-  - Add custom `track()`/`finish()` methods to the **lamindb** **module**
-  - Add functions for accessing more `lamin` CLI commands
-
-Changes to docs:
-
-  - Update the main "Get started" vignette to reflect the new interface
-  - Add a new "Introduction" vignette that replicates the code from the Python **lamindb** introduction guide
+  - Add custom `track()`/`finish()` methods to the **lamindb** module
 
 # laminr v0.4.1
 
