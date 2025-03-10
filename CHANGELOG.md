@@ -4,16 +4,23 @@ This is a major rewrite of the package to offer an interface that has feature-pa
 
 Please see the updated ["Get started"](https://laminr.lamin.ai/articles/laminr.html) vignette for more information.
 
-## BREAKING CHANGES
+Migration guide:
+
+- Replace `db <- connect()` with `ln <- import_lamindb()`, the `ln` object behaves in essentially the same way like the `db` object before
+
+Changes to API:
 
   - Add an `import_lamindb()` function used to load the **lamindb** Python module
   - Add an internal `wrap_python()` function to wrap Python objects while replacing Python methods with R methods as needed
   - Update the internal `check_requires()` function to handle Python packages
   - Add custom `cache()`/`load()` methods to the `Artifact` class
   - Add custom `track()`/`finish()` methods to the **lamindb** module
+  - Add additional functions for accessing `lamin` CLI commands
+
+Changes to docs:
+
   - Update the main "Get started" vignette to reflect the new interface
   - Add a new "Introduction" vignette that replicates the code from the Python **lamindb** introduction guide
-  - Add additional functions for accessing `lamin` CLI commands
 
 # laminr v0.4.1
 
