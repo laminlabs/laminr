@@ -15,6 +15,10 @@ This is a major rewrite of the package, resulting in many breaking changes but a
   - Add a new "Introduction" vignette that replicates the code from the Python **lamindb** introduction guide
   - Add additional functions for accessing `lamin` CLI commands
 
+## MINOR CHANGES
+
+* Skip tests that require Python on CRAN (PR #153).
+
 # laminr v0.4.1
 
 ## MINOR CHANGES
