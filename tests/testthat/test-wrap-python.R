@@ -1,3 +1,5 @@
+skip_on_cran()
+
 test_that("wrap_python() works", {
   np <- reticulate::import("numpy", convert = FALSE)
   expect_s3_class(wrap_python(np), "laminr.python.builtin.module")

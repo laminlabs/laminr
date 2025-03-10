@@ -22,6 +22,8 @@ test_that("check_requires() works", {
 })
 
 test_that("check_requires() works with Python packages", {
+  skip_on_cran()
+
   expect_true(
     check_requires("Imported packages", "numpy", language = "Python")
   )
@@ -56,6 +58,8 @@ test_that("check_requires() works with Python packages", {
 })
 
 test_that("check_default_instance() works", {
+  skip_on_cran()
+
   expect_error(check_default_instance())
 
   expect_warning(check_default_instance(alert = "warning"))
@@ -66,6 +70,8 @@ test_that("check_default_instance() works", {
 })
 
 test_that("check_instance_module()", {
+  skip_on_cran()
+
   expect_true(check_instance_module("bionty"))
 
   expect_error(check_instance_module("missing_module"))

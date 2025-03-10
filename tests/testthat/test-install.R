@@ -1,3 +1,5 @@
+skip_on_cran()
+
 # Remove the test environment when we are done
 test_install_env <- paste0(
   strsplit(get_current_lamin_instance(), "/")[[1]][2],
