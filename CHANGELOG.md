@@ -1,9 +1,19 @@
-# laminr devel
+# laminr v1.0.0
 
-## MINOR CHANGES
+This is a major rewrite of the package, resulting in many breaking changes but also offering an interface that is much more consistent with the Python API. Please see the updated ["Get started"](https://laminr.lamin.ai/articles/laminr.html) vignette for more information.
 
-- Automatically refresh expired user tokens in `connect()` by running `lamin_login()` (PR #145)
-- `lamin_login()` now tries to use a stored user handle when arguments are not set (PR #145)
+## BREAKING CHANGES
+
+* Refactor **{laminr}** to replace all API calls with **{reticulate}** (PR #146). Notable changes include:
+
+  - Add an `import_module("lamindb")` function used to load the **lamindb** Python module
+  - Add an internal `wrap_python()` function to wrap Python objects while replacing Python methods with R methods as needed
+  - Update the internal `check_requires()` function to handle Python packages
+  - Add custom `cache()`/`load()` methods to the `Artifact` class
+  - Add custom `track()`/`finish()` methods to the **lamindb** module
+  - Update the main "Get started" vignette to reflect the new interface
+  - Add a new "Introduction" vignette that replicates the code from the Python **lamindb** introduction guide
+  - Add additional functions for accessing `lamin` CLI commands
 
 # laminr v0.4.1
 
