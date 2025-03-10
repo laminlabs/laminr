@@ -11,7 +11,7 @@ Migration guide:
 Changes to API:
 
   - Add an `import_module()` function to import Python modules with additional functionality. Use `import_module("lamindb")` to import **lamindb**.
-  - Add an internal `wrap_python()` function to wrap Python objects while replacing Python methods with R methods as needed, leaving most work to `reticulate()`
+  - Add an internal `wrap_python()` function to wrap Python objects while replacing Python methods with R methods as needed, leaving most work to **{reticulate}**
   - Update the internal `check_requires()` function to handle Python packages
   - Add custom `cache()`/`load()` methods to the `Artifact` class
   - Add custom `track()`/`finish()` methods to the **lamindb** module
