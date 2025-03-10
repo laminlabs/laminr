@@ -2,15 +2,11 @@ pandoc: 3.1.11
 pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
-  architecture: architecture.html
-  concepts_features: concepts_features.html
-  development: development.html
+  introduction: introduction.html
   laminr: laminr.html
-  module_bionty: module_bionty.html
-  module_core: module_core.html
-  module_wetlab: module_wetlab.html
   setup: setup.html
-last_built: 2025-01-28T08:30Z
+  welcome: welcome.html
+last_built: 2025-03-10T09:56Z
 urls:
   reference: https://laminr.lamin.ai/reference
   article: https://laminr.lamin.ai/articles

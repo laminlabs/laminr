@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">laminr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.4.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,16 +34,8 @@
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><h6 class="dropdown-header" data-toc-skip>Introduction</h6></li>
-    <li><a class="dropdown-item" href="../articles/setup.html">Setting up laminr</a></li>
-    <li><a class="dropdown-item" href="../articles/concepts_features.html">Concepts and features</a></li>
-    <li><a class="dropdown-item" href="../articles/architecture.html">Package Architecture</a></li>
-    <li><a class="dropdown-item" href="../articles/development.html">Development Roadmap</a></li>
-    <li><hr class="dropdown-divider"></li>
-    <li><h6 class="dropdown-header" data-toc-skip>API reference</h6></li>
-    <li><a class="dropdown-item" href="../articles/module_core.html">Core module</a></li>
-    <li><a class="dropdown-item" href="../articles/module_bionty.html">Bionty module</a></li>
-    <li><a class="dropdown-item" href="../articles/module_wetlab.html">Wetlab module</a></li>
+<li><a class="dropdown-item" href="../articles/setup.html">Setting up laminr</a></li>
+    <li><a class="dropdown-item" href="../articles/introduction.html">Introduction guide</a></li>
   </ul>
 </li>
       </ul>
@@ -68,7 +60,7 @@
       <h1>Setting up laminr</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/laminlabs/laminr/blob/v0.4.1/vignettes/setup.Rmd" class="external-link"><code>vignettes/setup.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/laminlabs/laminr/blob/main/vignettes/setup.Rmd" class="external-link"><code>vignettes/setup.Rmd</code></a></small>
       <div class="d-none name"><code>setup.Rmd</code></div>
     </div>
 
@@ -105,7 +97,7 @@ installed from GitHub using:</p>
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"laminr"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"laminlabs/laminr"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"laminlabs/laminr"</span><span class="op">)</span></span></code></pre></div>
 <p>This version may have bug fixes and new features but could also be
 unstable so is not recommended for most users.</p>
 </div>
@@ -235,8 +227,9 @@ them by giving the user name:</p>
 <div class="section level2">
 <h2 id="setting-a-default-instance">Setting a default instance<a class="anchor" aria-label="anchor" href="#setting-a-default-instance"></a>
 </h2>
-<p>Using <code>connect(slug = NULL)</code> will connect to the current
-default LaminDB instance. The default instance can be set using:</p>
+<p>Using <code>import_module("lamindb")</code> will connect to the
+current default LaminDB instance. The default instance can be set
+using:</p>
 <pre><code><span><span class="fu">laminr</span><span class="fu">::</span><span class="fu"><a href="../reference/lamin_connect.html">lamin_connect</a></span><span class="op">(</span><span class="st">"&lt;owner&gt;/&lt;name&gt;"</span><span class="op">)</span></span></code></pre>
 <p>Note that this must be called before attempting to connect to a
 default instance and cannot be changed once the default instance is
