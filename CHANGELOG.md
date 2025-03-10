@@ -15,11 +15,6 @@ This is a major rewrite of the package, resulting in many breaking changes but a
   - Add a new "Introduction" vignette that replicates the code from the Python **lamindb** introduction guide
   - Add additional functions for accessing `lamin` CLI commands
 
-## MINOR CHANGES
-
-- Automatically refresh expired user tokens in `connect()` by running `lamin_login()` (PR #145).
-- `lamin_login()` now tries to use a stored user handle when arguments are not set (PR #145).
-
 # laminr v0.4.1
 
 ## MINOR CHANGES
