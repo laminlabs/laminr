@@ -1,3 +1,9 @@
+# laminr devel
+
+## MINOR CHANGES
+
+- Update dependencies to fix CRAN issues (PR #156)
+
 # laminr v1.0.0
 
 LaminR now has feature parity with LaminDB (PR #146).
