@@ -24,7 +24,6 @@ Imports:
     R6,
     reticulate,
     rlang,
-    rstudioapi,
     utils,
     withr
 Suggests:
@@ -35,6 +34,7 @@ Suggests:
     nanoparquet,
     quarto,
     readr,
+    rstudioapi,
     rsvg,
     Seurat,
     testthat (>= 3.0.0),
