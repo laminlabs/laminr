@@ -4,7 +4,7 @@ test_that("load_file with a .csv works", {
   file <- withr::local_file(tempfile(fileext = ".csv"))
 
   # create a CSV file
-  df <- tibble::tibble(a = 1L:3L, b = c("a", "b", "c"))
+  df <- data.frame(a = 1L:3L, b = c("a", "b", "c"))
   readr::write_csv(df, file)
 
   # load the CSV file
@@ -23,7 +23,7 @@ test_that("load_file with a .tsv works", {
   file <- withr::local_file(tempfile(fileext = ".tsv"))
 
   # create a TSV file
-  df <- tibble::tibble(a = 1L:3L, b = c("a", "b", "c"))
+  df <- data.frame(a = 1L:3L, b = c("a", "b", "c"))
   readr::write_tsv(df, file)
 
   # load the TSV file

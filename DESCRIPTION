@@ -1,13 +1,14 @@
 Package: laminr
 Title: Client for 'LaminDB'
-Version: 1.0.0
+Version: 1.0.0.9000
 Authors@R: c(
-    person("Robrecht", "Cannoodt", email = "robrecht@data-intuitive.com", role = c("aut", "cre"),
+    person("Robrecht", "Cannoodt", , "robrecht@data-intuitive.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-3641-729X")),
-    person("Luke", "Zappia", email = "luke@data-intuitive.com", role = "aut",
+    person("Luke", "Zappia", , "luke@data-intuitive.com", role = "aut",
            comment = c(ORCID = "0000-0001-7744-8565")),
-    person("Data Intuitive", email = "info@data-intuitive.com", role = "aut"),
-    person("Lamin Labs", email = "open-source@lamin.ai", role = c("aut", "cph")))
+    person("Data Intuitive", , , "info@data-intuitive.com", role = "aut"),
+    person("Lamin Labs", , , "open-source@lamin.ai", role = c("aut", "cph"))
+  )
 Description: Interact with 'LaminDB'. 'LaminDB' is an open-source data
     framework for biology. This package allows you to query and download
     data from 'LaminDB' instances.
@@ -18,28 +19,25 @@ Depends:
     R (>= 4.1.0)
 Imports:
     cli,
+    purrr,
+    R.utils,
+    R6,
     reticulate,
+    rlang,
     utils,
     withr
 Suggests:
     anndata,
     arrow,
-    httr,
     jsonlite,
     knitr,
     nanoparquet,
-    purrr,
     quarto,
-    R.utils,
-    R6,
     readr,
-    rlang,
     rstudioapi,
     rsvg,
-    s3 (>= 1.1.0),
     Seurat,
     testthat (>= 3.0.0),
-    tibble,
     yaml
 VignetteBuilder:
     quarto

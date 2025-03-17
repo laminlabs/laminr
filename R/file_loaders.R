@@ -143,6 +143,7 @@ load_html <- function(file, ...) {
 #' @return A list
 #' @noRd
 load_json <- function(file, ...) {
+  check_requires("Loading JSON files", "jsonlite")
   jsonlite::fromJSON(file, ...)
 }
 
