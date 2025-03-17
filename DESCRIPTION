@@ -36,6 +36,7 @@ Suggests:
     quarto,
     readr,
     rsvg,
+    Seurat,
     testthat (>= 3.0.0),
     yaml
 VignetteBuilder:
