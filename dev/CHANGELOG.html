@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="index.html">laminr</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.4.1.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.0.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,15 +42,54 @@
 
 <div class="section level2">
 <h2 id="minor-changes">MINOR CHANGES<a class="anchor" aria-label="anchor" href="#minor-changes"></a></h2>
-<ul><li>Automatically refresh expired user tokens in <code>connect()</code> by running <code><a href="reference/lamin_login.html">lamin_login()</a></code> (PR #145)</li>
-<li>
-<code><a href="reference/lamin_login.html">lamin_login()</a></code> now tries to use a stored user handle when arguments are not set (PR #145)</li>
+<ul><li>Update dependencies to fix CRAN issues (PR #156)</li>
+</ul></div>
+</div>
+<div class="section level1">
+<h1 id="laminr-v100">laminr v1.0.0<a class="anchor" aria-label="anchor" href="#laminr-v100"></a></h1>
+<p>LaminR now has feature parity with LaminDB (PR #146).</p>
+<p>Migration guide:</p>
+<ul><li>Run <code><a href="reference/install_lamindb.html">install_lamindb()</a></code>, which will ensure <code>lamindb &gt;= 1.2</code> in the Python environment used by <code>reticulate</code>.</li>
+<li>Replace <code>db &lt;- connect()</code> with <code>ln &lt;- import_module("lamindb")</code> and see the table below. The <code>ln</code> object is largely similar to the <code>db</code> object in <strong>{laminr}</strong> &lt; v1 and matches <code>lamindb</code>’s Python API up to replacing <code>.</code> with <code>$</code>.</li>
+</ul><table class="table"><colgroup><col width="33%"><col width="33%"><col width="33%"></colgroup><thead><tr class="header"><th>What</th>
+<th>Before</th>
+<th>After</th>
+</tr></thead><tbody><tr class="odd"><td>Connect to the default LaminDB instance</td>
+<td><code>db &lt;- connect()</code></td>
+<td><code>ln &lt;- import_module("lamindb")</code></td>
+</tr><tr class="even"><td>Start tracking</td>
+<td><code>db$track()</code></td>
+<td><code>ln$track()</code></td>
+</tr><tr class="odd"><td>Get an artifact from another instance</td>
+<td><code>new_instance &lt;- connect("another/instance"); new_instance$Artifact$get(...)</code></td>
+<td><code>ln$Artifact$using("another/instance")$get(...)</code></td>
+</tr><tr class="even"><td>Create an artifact from a path</td>
+<td><code>db$Artifact$from_path(path)</code></td>
+<td><code>ln$Artifact(path)</code></td>
+</tr><tr class="odd"><td>Finish tracking</td>
+<td><code>db$finish()</code></td>
+<td><code>ln$finish()</code></td>
+</tr></tbody></table><p>See the updated <a href="https://laminr.lamin.ai/articles/laminr.html">“Get started”</a> vignette for more information.</p>
+<p>User-facing changes:</p>
+<ul><li>Add an <code><a href="reference/import_module.html">import_module()</a></code> function to import Python modules with additional functionality, e.g., <code>import_module("lamindb")</code> for <strong>lamindb</strong>
+</li>
+<li>Add functions for accessing more <code>lamin</code> CLI commands</li>
+<li>Add a new “Introduction” vignette that replicates the code from the Python <strong>lamindb</strong> introduction guide</li>
+</ul><p>Internal changes:</p>
+<ul><li>Add an internal <code>wrap_python()</code> function to wrap Python objects while replacing Python methods with R methods as needed, leaving most work to <strong>{reticulate}</strong>
+</li>
+<li>Update the internal <code>check_requires()</code> function to handle Python packages</li>
+<li>Add custom <code>cache()</code>/<code><a href="https://rdrr.io/r/base/load.html" class="external-link">load()</a></code> methods to the <code>Artifact</code> class</li>
+<li>Add custom <code>track()</code>/<code>finish()</code> methods to the <strong>lamindb</strong> module</li>
+</ul><div class="section level2">
+<h2 id="minor-changes-1">MINOR CHANGES<a class="anchor" aria-label="anchor" href="#minor-changes-1"></a></h2>
+<ul><li>Skip tests that require Python on CRAN (PR #153).</li>
 </ul></div>
 </div>
 <div class="section level1">
 <h1 id="laminr-v041">laminr v0.4.1<a class="anchor" aria-label="anchor" href="#laminr-v041"></a></h1>
 <div class="section level2">
-<h2 id="minor-changes-1">MINOR CHANGES<a class="anchor" aria-label="anchor" href="#minor-changes-1"></a></h2>
+<h2 id="minor-changes-2">MINOR CHANGES<a class="anchor" aria-label="anchor" href="#minor-changes-2"></a></h2>
 <ul><li>Bump R dependency to &gt;= 4.1.0 to fix note on CRAN (PR #142).</li>
 </ul></div>
 </div>
@@ -62,7 +101,7 @@
 <ul><li>Updates for compatibility with the Python <code>lamindb</code> v1.0 release (PR #136)</li>
 </ul></div>
 <div class="section level2">
-<h2 id="minor-changes-2">MINOR CHANGES<a class="anchor" aria-label="anchor" href="#minor-changes-2"></a></h2>
+<h2 id="minor-changes-3">MINOR CHANGES<a class="anchor" aria-label="anchor" href="#minor-changes-3"></a></h2>
 <ul><li>
 <code>db$track()</code> can now automatically create a transform UID when not supplied (PR #136)</li>
 </ul></div>
@@ -92,7 +131,7 @@
 <li>Interact with TileDB-SOMA stores (PR #117). Add a <code><a href="https://rdrr.io/r/base/connections.html" class="external-link">open()</a></code> method to the <code>Artifact</code> class to connect to TileDB-SOMA stores.</li>
 </ul></div>
 <div class="section level2">
-<h2 id="minor-changes-3">MINOR CHANGES<a class="anchor" aria-label="anchor" href="#minor-changes-3"></a></h2>
+<h2 id="minor-changes-4">MINOR CHANGES<a class="anchor" aria-label="anchor" href="#minor-changes-4"></a></h2>
 <ul><li>Improve UX of <code>db$track()</code> and <code>db$finish()</code> (PR #120).</li>
 </ul></div>
 <div class="section level2">
@@ -132,7 +171,7 @@ Currently supported: <code>.csv</code>, <code>.h5ad</code>, <code>.html</code>, 
 <li>User setting are stored in a global option the first time <code>connect()</code> is run (PR #78)</li>
 </ul></div>
 <div class="section level2">
-<h2 id="minor-changes-4">MINOR CHANGES<a class="anchor" aria-label="anchor" href="#minor-changes-4"></a></h2>
+<h2 id="minor-changes-5">MINOR CHANGES<a class="anchor" aria-label="anchor" href="#minor-changes-5"></a></h2>
 <ul><li>Adjusted argument order in <code>Instance$track()</code> and improved Python error handling (PR #89)</li>
 </ul></div>
 <div class="section level2">
@@ -180,7 +219,7 @@ Currently supported: <code>.csv</code>, <code>.h5ad</code>, <code>.html</code>, 
 <li><p>Allow unauthenticated users to connect to an instance if they ran <code>lamin connect &lt;instance&gt;</code> beforehand (PR #19).</p></li>
 </ul></div>
 <div class="section level2">
-<h2 id="minor-changes-5">MINOR CHANGES<a class="anchor" aria-label="anchor" href="#minor-changes-5"></a></h2>
+<h2 id="minor-changes-6">MINOR CHANGES<a class="anchor" aria-label="anchor" href="#minor-changes-6"></a></h2>
 <ul><li>Do not complain when foreign keys are not found in a record, but also do not complain when they are (PR #13).</li>
 <li>Define a current user and current instance with lamin-cli prior to testing and generating documentation in the CI (PR #23).</li>
 <li>Add progress bars to <code>Artifact$cache()</code> (PR #58)</li>
