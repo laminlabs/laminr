@@ -1,4 +1,4 @@
-# laminr devel
+# laminr v1.0.1
 
 ## MINOR CHANGES
 
