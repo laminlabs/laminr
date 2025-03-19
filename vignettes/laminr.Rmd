@@ -24,9 +24,6 @@ withr::defer(laminr::lamin_connect(current_instance))
 current_user <- laminr::get_current_lamin_user()
 withr::defer(laminr::lamin_login(current_user))
 
-# Use <laminlabs/lamindata> for this vignette
-# laminr::lamin_connect("laminlabs/lamindata")
-
 # Disconnect from this instance at the end of the vignette
 withr::defer(laminr::lamin_disconnect())
 ```
@@ -445,7 +442,7 @@ cell_metadata
 
 Save results as new artifacts to the current LaminDB instance.
 
-```{r save-results, eval = submit_eval}
+```{r save-results}
 seurat_path <- tempfile(fileext = ".rds")
 saveRDS(seurat_obj, seurat_path)
 
@@ -466,7 +463,7 @@ ln$Artifact(
 
 Mark the analysis run as finished to create a time stamp and upload source code to the hub.
 
-```{r finish, eval = submit_eval}
+```{r finish}
 ln$finish()
 ```
 
