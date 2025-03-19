@@ -1,7 +1,14 @@
 url: https://laminr.lamin.ai/
 
 template:
-  bootstrap: 5
+  light-switch: true
+  bslib:
+    version: 5
+    bg: "#fff"
+    fg: "black"
+    primary: "#059669"
+    base_font: {google: "Roboto"}
+  theme: tango
 
 authors:
   Robrecht Cannoodt:
