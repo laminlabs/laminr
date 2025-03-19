@@ -1,3 +1,9 @@
+# laminr devel
+
+## MINOR CHANGES
+
+- Update reticulate dependency to >= 1.38.0
+
 # laminr v1.0.1
 
 ## MINOR CHANGES
