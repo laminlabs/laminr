@@ -1,4 +1,4 @@
-# {laminr}: An R client for LaminDB
+# {laminr}: An R client for LaminDB <a href="https://laminr.lamin.ai/"><img src="man/figures/logo.png" align="right" height="120" alt="laminr website" /></a>
 
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/laminr)](https://CRAN.R-project.org/package=laminr)
