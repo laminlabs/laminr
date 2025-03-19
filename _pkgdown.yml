@@ -20,8 +20,6 @@ navbar:
       menu:
         - text: Setting up laminr
           href: articles/setup.html
-        - text: Introduction guide
-          href: articles/introduction.html
 
 # https://pkgdown.r-lib.org/reference/build_site.html#development-mode
 development:
