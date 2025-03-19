@@ -22,7 +22,7 @@ Imports:
     purrr,
     R.utils,
     R6,
-    reticulate,
+    reticulate (>= 1.38.0),
     rlang,
     utils,
     withr
