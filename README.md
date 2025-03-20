@@ -1,31 +1,33 @@
-# {laminr}: An R client for LaminDB
+# {laminr}: An R client for LaminDB <a href="https://laminr.lamin.ai/"><img src="man/figures/logo.png" align="right" height="120" alt="laminr website" /></a>
 
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/laminr)](https://CRAN.R-project.org/package=laminr)
-[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
+[![CRAN checks](https://badges.cranchecks.info/summary/laminr.svg)](https://cran.r-project.org/web/checks/check_results_laminr.html)
 [![R-CMD-check](https://github.com/laminlabs/laminr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/laminlabs/laminr/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 **{laminr}** is an R client for [LaminDB](https://lamin.ai).
-If you are new to LaminDB, please read this [introduction](https://docs.lamin.ai/guide).
+See the [documentation](https://laminr.lamin.ai/) for how to use **{laminr}**.
+
+For more about LaminDB, please visit [https://docs.lamin.ai](https://docs.lamin.ai).
 
 ## Installation
 
-Get started with **{laminr}** by installing the package from CRAN:
+Install the release version of **{laminr}** from CRAN:
 
 ```r
 install.packages("laminr")
 ```
 
-### Additional packages
-
-Some functionality requires additional packages. To install all of these use:
+Or install the development version from GitHub:
 
 ```r
-install.packages("laminr", dependencies = TRUE)
+if (!requireNamespace("laminr", quietly = TRUE)) {
+  install.packages("remotes")
+}
+remotes::install_github("laminlabs/laminr")
 ```
-
-If you choose not to install all packages now you will be prompted to do so whenever one is required.
 
 ## Setting up
 
@@ -50,11 +52,3 @@ laminr::lamin_connect("<owner>/<name>")
 ```
 
 See the [setup vignette](https://laminr.lamin.ai/articles/setup.html) for more information.
-
-## Getting started
-
-The best way to get started with **{laminr}** is to explore the package vignettes (available at [laminr.lamin.ai](https://laminr.lamin.ai)):
-
-- [**Get started**](https://laminr.lamin.ai/articles/laminr.html): Learn the basics and explore practical examples
-- [**Setting up laminr**](https://laminr.lamin.ai/articles/setup.html): Learn set up **{laminr}** and manage Python environments
-- [**Introduction to LaminDB**](https://laminr.lamin.ai/articles/introduction.html): Code for reproducing the LaminDB introduction guide

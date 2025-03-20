@@ -1,10 +1,5 @@
 ---
-title: "Introduction to LaminDB"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Introduction to LaminDB}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+title: "Introduction"
 ---
 
 ```{r, include = FALSE}
@@ -14,11 +9,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-# Introduction
-
-This vignette reproduces the LaminDB [Introduction guide](https://docs.lamin.ai/guide).
-The equivalent **{laminr}** code is included here, for the related text see the associated links.
-This vignette requires the **bionty** Python package to be available.
 
 ```{r prepare, include = FALSE}
 # Restore the current instance at the end of the vignette
@@ -29,27 +19,73 @@ withr::defer(laminr::lamin_connect(current_instance))
 current_user <- laminr::get_current_lamin_user()
 withr::defer(laminr::lamin_login(current_user))
 
-laminr::lamin_logout() # Use an anonymous user for this vignette
+# Disconnect from this instance at the end of the vignette
+withr::defer(laminr::lamin_disconnect())
 ```
 
-```{r setup}
+This vignette introduces the basic **{laminr}** workflow.
+
+To learn more about LaminDB, please refer to the online documentation https://docs.lamin.ai/.
+
+
+```{r library}
 library(laminr)
 ```
 
-# Walkthrough
+# Setup
 
-See https://docs.lamin.ai/guide#walkthrough.
+Install **{laminr}** from CRAN:
 
-```{r walkthrough}
-lamin_init_temp(name = "laminr-intro", modules = c("bionty"))
+```r
+install.packages("laminr", dependencies = TRUE)
 ```
 
-**NOTE:** We have used a `lamin_init_temp()` to create a temporary instance for this vignette but in most cases you should use regular `lamin_init()`
+Set up the Python environment:
+
+```r
+laminr::install_lamindb()
+```
+
+Set the default LaminDB instance:
+
+```r
+laminr::lamin_connect("<owner>/<name>")
+```
+
+This instance acts as the default instance for everything that follows.
+Any data and tracking information will be added to it.
+
+See `vignette("setup", package = "laminr")` for more details.
+
+For this vignette we use a temporary test instance.
+
+```{r init}
+lamin_init_temp(name = "laminr-intro", modules = c("bionty"))
+```
 
 ```{r disconnect, include = FALSE}
 # Disconnect from this instance at the end of the vignette
 withr::defer(laminr::lamin_disconnect())
 ```
+
+This vignette requires the **bionty** Python package to be available.
+
+# Import
+
+To start working with **{laminr}**, import the **lamindb** module:
+
+```{r import-lamindb}
+ln <- import_module("lamindb")
+```
+
+This is equivalent to `import lamindb as ln` in Python.
+
+# Walkthrough
+
+This section of the vignette reproduces the walkthrough from the LaminDB [Introduction guide](https://docs.lamin.ai/guide).
+The equivalent **{laminr}** code is included here, for the related text see the associated links.
+
+See https://docs.lamin.ai/guide#walkthrough.
 
 ## Transforms
 
@@ -65,6 +101,9 @@ ln$Run$df()
 ```
 
 ## Artifacts
+
+Artifacts are objects that bundle data and associated metadata.
+An artifact can be any file or folder but is typically a dataset.
 
 See https://docs.lamin.ai/guide#artifacts.
 
@@ -160,6 +199,8 @@ ln$Artifact$features$filter(experiment__contains = "marker experiment")$df()
 ```
 
 # Key use cases
+
+This section of reproduces the key use cases from the LaminDB [Introduction guide](https://docs.lamin.ai/guide).
 
 See https://docs.lamin.ai/guide#key-use-cases.
 
@@ -290,46 +331,170 @@ collection$artifacts$all()
 collection$artifacts$df()
 ```
 
-```python
-# This example might be beyond the scope of {laminr}
-from torch.utils.data import DataLoader, WeightedRandomSampler
-dataset = collection.mapped(obs_keys=["perturbation"])
-sampler = WeightedRandomSampler(
-    weights=dataset.get_label_weights("perturbation"), num_samples=len(dataset)
-)
-data_loader = DataLoader(dataset, batch_size=2, sampler=sampler)
-for batch in data_loader:
-    pass
+# Other examples
+
+This section contains some additional examples of using **{laminr}**.
+
+## Download a dataset form another instance
+
+This examples shows how to get an artifact from another instance ("laminlabs/cellxgene").
+
+```{r get-artifact}
+artifact <- ln$Artifact$using("laminlabs/cellxgene")$get("7dVluLROpalzEh8mNyxk")
+artifact
 ```
 
-# Design
+<div class="alert alert-info" role="alert">
+**Tip**
 
-See https://docs.lamin.ai/introduction#design.
+You can view detailed information about this dataset on LaminHub: https://lamin.ai/laminlabs/cellxgene/artifact/7dVluLROpalzEh8mNyxk.
 
-## World model
+You can search and query more CELLxGENE datasets here: https://lamin.ai/laminlabs/cellxgene/artifacts.
+</div>
 
-See https://docs.lamin.ai/introduction#world-model.
+To download the dataset and load it into memory, run:
 
-## Architecture
+```{r load-artifact}
+adata <- artifact$load()
+adata
+```
 
-See https://docs.lamin.ai/introduction#architecture.
+This artifact contains an [`AnnData`](https://anndata.readthedocs.io) object.
 
-## Registry schema & API
+<div class="alert alert-info" role="alert">
+**Tip**
 
-See https://docs.lamin.ai/introduction#registry-schema-api.
+If you prefer a path to a local file or folder, call `path <- artifact$cache()`.
+</div>
 
-## Custom registries
+## Work with the dataset
 
-See https://docs.lamin.ai/introduction#custom-registries.
+Once you have loaded a dataset you can perform any analysis with it as you would normally.
+Here, marker genes are calculated for each of the provided cell type labels using [**{Seurat}**](https://satijalab.org/seurat/).
 
-## Repositories
+```{r create-seurat}
+library(Seurat)
 
-See https://docs.lamin.ai/introduction#repositories.
+# Create a Seurat object
+seurat_obj <- CreateSeuratObject(
+  counts = as(Matrix::t(adata$X), "CsparseMatrix"),
+  meta.data = adata$obs
+)
+# Add gene metadata
+seurat_obj[["RNA"]] <- AddMetaData(
+  GetAssay(seurat_obj), adata$var
+)
+# Set cell identities to the provided cell type annotation
+Idents(seurat_obj) <- "cell_type"
+# Normalise the data
+seurat_obj <- NormalizeData(seurat_obj)
+# Test for marker genes (the output is a data.frame)
+markers <- FindAllMarkers(
+  seurat_obj,
+  features = Features(seurat_obj)[1:100] # Only test a few features for speed
+)
+# Display the marker genes
+knitr::kable(markers)
+# Plot the marker genes
+DotPlot(seurat_obj, features = unique(markers$gene)) +
+  ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, vjust = 0.5))
+```
 
-## Influences
+## Slice a TileDB-SOMA array store
 
-See https://docs.lamin.ai/introduction#influences.
+When artifacts contain TileDB-SOMA array stores they can be opened and sliced using the [**{tiledbsoma}** package](https://single-cell-data.github.io/TileDB-SOMA/index.html).
+
+```{r slice-tiledbsoma, eval = requireNamespace("tiledbsoma", quietly = TRUE)}
+# Set some environment variables to avoid an issue with {tiledbsoma}
+# https://github.com/chanzuckerberg/cellxgene-census/issues/1261
+Sys.setenv(TILEDB_VFS_S3_REGION = "us-west-2")
+Sys.setenv(AWS_DEFAULT_REGION = "us-west-2")
+Sys.setenv(TILEDB_VFS_S3_NO_SIGN_REQUEST = "true")
+
+# Define a filter to select specific cells
+value_filter <- paste(
+  "tissue == 'brain' &&",
+  "cell_type %in% c('microglial cell', 'neuron') &&",
+  "suspension_type == 'cell' &&",
+  "assay == '10x 3\\' v3'"
+)
+
+# Get the artifact containing the CELLxGENE Census TileDB-SOMA store
+census_artifact <- ln$Artifact$using("laminlabs/cellxgene")$get("FYMewVq5twKMDXVy0001")
+# Open the SOMACollection
+soma_collection <- census_artifact$open()
+# Slice the store to get a SOMADataFrame containing metadata for the cells of interest
+cell_metadata <- soma_collection$get("census_data")$get("homo_sapiens")$obs$read(value_filter = value_filter)
+# Concatenate the results to an arrow::Table
+cell_metadata <- cell_metadata$concat()
+# Convert to a data.frame
+cell_metadata <- cell_metadata$to_data_frame()
+
+cell_metadata
+```
+
+## Save the results
+
+Save results as new artifacts to the current LaminDB instance.
+
+```{r save-results}
+seurat_path <- tempfile(fileext = ".rds")
+saveRDS(seurat_obj, seurat_path)
+
+ln$Artifact$from_df(
+  markers,
+  key = "laminr-datasets/renal-cell-carcinoma-markers.parquet",
+  description = "Marker genes for renal cell carcinoma dataset"
+)$save()
+
+ln$Artifact(
+  seurat_path,
+  key = "laminr-datasets/renal-cell-carcinoma.rds",
+  description = "Seurat object for renal cell carcinoma dataset"
+)$save()
+```
+
+# Finish tracking
+
+Mark the analysis run as finished to create a time stamp and upload source code to the hub.
 
 ```{r finish}
 ln$finish()
 ```
+
+## Save a notebook report (not needed for `.R` scripts)
+
+Save a run report of your notebook (`.Rmd` or `.qmd` file) to your instance:
+
+1. Render the notebook to HTML
+
+- In RStudio, click the "Knit" button
+- **OR** From the command line, run:
+
+  ```bash
+  Rscript -e 'rmarkdown::render("introduction.Rmd")'
+  ```
+
+- **OR** Use the `rmarkdown` package in R:
+
+  ```r
+  rmarkdown::render("introduction.Rmd")
+  ```
+
+2. Save it to your LaminDB instance:
+
+- Using the `lamin_save()` function in R:
+
+```r
+lamin_save("introduction.Rmd")
+```
+
+- **OR** Using the `lamin` CLI:
+
+```bash
+lamin save introduction.Rmd
+```
+
+# Design
+
+See https://docs.lamin.ai/introduction#design for more information on the design of LaminDB.

@@ -1,0 +1,12 @@
+---
+title: "Welcome to laminr"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Welcome to laminr}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## **{laminr}** is an R client for [LaminDB](https://lamin.ai).
+
+## For more information about using **{laminr}** please refer to [https://laminr.lamin.ai/](https://laminr.lamin.ai/).

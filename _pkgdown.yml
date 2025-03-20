@@ -1,7 +1,14 @@
 url: https://laminr.lamin.ai/
 
 template:
-  bootstrap: 5
+  light-switch: true
+  bslib:
+    version: 5
+    bg: "#fff"
+    fg: "black"
+    primary: "#059669"
+    base_font: {google: "Roboto"}
+  theme: tango
 
 authors:
   Robrecht Cannoodt:
@@ -14,14 +21,43 @@ authors:
     href: https://lamin.ai
 
 navbar:
+  structure:
+    left:  [intro, introduction, reference, articles, tutorials, news, changelog]
+    right: [search, github, lightswitch]
   components:
+    introduction:
+      text: Introduction
+      href: articles/introduction.html
+    changelog:
+      text: Changelog
+      href: https://docs.lamin.ai/changelog
     articles:
       text: Articles
       menu:
-        - text: Setting up laminr
+        - text: Setting up {laminr}
           href: articles/setup.html
-        - text: Introduction guide
-          href: articles/introduction.html
+
+reference:
+  - title: "Installation"
+    desc: >
+      Functions for installing **{laminr}** and it's Python environments
+    contents:
+    - install_lamindb
+  - title: "Import"
+    desc: >
+      Functions for importing Python modules
+    contents:
+    - import_module
+  - title: "Current instance"
+    desc: >
+      Functions for getting information about the current LaminDB instance
+    contents:
+    - starts_with("get_current_lamin_")
+  - title: "CLI"
+    desc: >
+      Functions for calling the `lamin` Command Line Interface
+    contents:
+    - starts_with("lamin_")
 
 # https://pkgdown.r-lib.org/reference/build_site.html#development-mode
 development:
