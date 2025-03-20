@@ -9,11 +9,6 @@ template:
     primary: "#059669"
     base_font: {google: "Roboto"}
   theme: tango
-  includes:
-    before_title: >
-      <a href="/index.html" style="padding-right: 10px;">
-        <img src="/favicon-96x96.png" width="22">
-      </a>
 
 authors:
   Robrecht Cannoodt:
