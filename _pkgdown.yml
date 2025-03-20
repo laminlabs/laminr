@@ -10,7 +10,7 @@ template:
     base_font: {google: "Roboto"}
   theme: tango
   includes:
-    before_title: |
+    before_title: >
       <a href="/index.html" style="padding-right: 10px;">
         <img src="/favicon-96x96.png" width="22">
       </a>
@@ -41,6 +41,28 @@ navbar:
       menu:
         - text: Setting up laminr
           href: articles/setup.html
+
+reference:
+  - title: "Installation"
+    desc: >
+      Functions for installing **{laminr}** and it's Python environments
+    contents:
+    - install_lamindb
+  - title: "Import"
+    desc: >
+      Functions for importing Python modules
+    contents:
+    - import_module
+  - title: "Current instance"
+    desc: >
+      Functions for getting information about the current LaminDB instance
+    contents:
+    - starts_with("get_current_lamin_")
+  - title: "CLI"
+    desc: >
+      Functions for calling the `lamin` Command Line Interface
+    contents:
+    - starts_with("lamin_")
 
 # https://pkgdown.r-lib.org/reference/build_site.html#development-mode
 development:
