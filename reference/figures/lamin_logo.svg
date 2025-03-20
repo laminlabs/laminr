@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg:svg
+   width="670"
+   height="670"
+   viewBox="0 0 670 670"
+   fill="none"
+   version="1.1"
+   id="svg3"
+   sodipodi:docname="lamin_logo.svg"
+   inkscape:export-filename="lamin_logo.png"
+   inkscape:export-xdpi="34.388062"
+   inkscape:export-ydpi="34.388062"
+   inkscape:version="1.4 (1:1.4+202410161351+e7c3feb100)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <svg:defs
+     id="defs3">
+    <svg:mask
+       maskUnits="userSpaceOnUse"
+       id="mask11">
+      <svg:circle
+         cx="334.5"
+         cy="335.5"
+         r="320.5"
+         fill="#2e8555"
+         id="circle11"
+         style="fill:#ffffff;fill-opacity:1" />
+    </svg:mask>
+  </svg:defs>
+  <sodipodi:namedview
+     id="namedview3"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     inkscape:export-bgcolor="#ffffff00"
+     inkscape:zoom="1.2242446"
+     inkscape:cx="441.90516"
+     inkscape:cy="293.24206"
+     inkscape:window-width="2560"
+     inkscape:window-height="1371"
+     inkscape:window-x="1152"
+     inkscape:window-y="96"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg3" />
+  <script />
+  <svg:circle
+     cx="334.5"
+     cy="335.5"
+     r="320.5"
+     fill="#059669"
+     id="circle1" />
+  <svg:g
+     mask="url(#mask11)"
+     id="g3"
+     style="fill:none;fill-opacity:0">
+    <svg:line
+       x1="205"
+       y1="30"
+       x2="205"
+       y2="636"
+       stroke="white"
+       stroke-width="50"
+       stroke-linecap="round"
+       id="line2"
+       style="fill:none;fill-opacity:0" />
+    <svg:line
+       x1="140"
+       y1="61"
+       x2="140"
+       y2="608"
+       stroke="white"
+       stroke-width="50"
+       stroke-linecap="round"
+       id="line3"
+       style="fill:none;fill-opacity:0" />
+    <svg:path
+       d="M209 538C235.201 525.784 297.431 439.72 403 489C473.18 521.761 503 517 503 517C528.806 517 599.29 510.346 663 433"
+       stroke="white"
+       stroke-width="50"
+       stroke-linecap="round"
+       id="path3"
+       style="fill:#ffffff;fill-opacity:0;stroke:#ffffff;stroke-opacity:1;opacity:1"
+       inkscape:label="path3" />
+  </svg:g>
+</svg:svg>
