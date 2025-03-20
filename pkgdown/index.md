@@ -11,7 +11,7 @@ To get started, read the [introduction](articles/introduction.html).
 
 ::: {.pkgdown-devel}
 <div class="alert alert-primary" role="alert">
-This is the documentation of the development version of **{laminr}**.
+This is the documentation for the development version of **{laminr}**.
 For the release documentation, please go to [https://laminr.lamin.ai/](https://laminr.lamin.ai/).
 </div>
 :::
