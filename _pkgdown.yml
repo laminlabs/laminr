@@ -9,6 +9,11 @@ template:
     primary: "#059669"
     base_font: {google: "Roboto"}
   theme: tango
+  includes:
+    before_title: |
+      <a href="/index.html" style="padding-right: 10px;">
+        <img src="/favicon-96x96.png" width="22">
+      </a>
 
 authors:
   Robrecht Cannoodt:
@@ -21,7 +26,16 @@ authors:
     href: https://lamin.ai
 
 navbar:
+  structure:
+    left:  [intro, introduction, reference, articles, tutorials, news, changelog]
+    right: [search, github, lightswitch]
   components:
+    introduction:
+      text: Introduction
+      href: articles/introduction.html
+    changelog:
+      text: Changelog
+      href: https://docs.lamin.ai/changelog
     articles:
       text: Articles
       menu:
