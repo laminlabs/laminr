@@ -1,3 +1,13 @@
+# laminr devel
+
+## MINOR CHANGES
+
+- Use **{rmarkdown}** instead of **{quarto}** for articles (PR #159)
+
+## DOCUMENTATION
+
+- Update the feel and structure of the documentation webstei (PR #159)
+
 # laminr v1.0.1
 
 ## MINOR CHANGES
