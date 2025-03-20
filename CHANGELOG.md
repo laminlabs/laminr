@@ -6,7 +6,7 @@
 
 ## DOCUMENTATION
 
-- Update the feel and structure of the documentation webstei (PR #159)
+- Update the feel and structure of the documentation website (PR #159)
 
 # laminr v1.0.1
 
