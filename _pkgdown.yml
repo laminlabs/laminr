@@ -34,7 +34,7 @@ navbar:
     articles:
       text: Articles
       menu:
-        - text: Setting up laminr
+        - text: Setting up {laminr}
           href: articles/setup.html
 
 reference:
