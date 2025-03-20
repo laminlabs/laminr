@@ -1,10 +1,5 @@
 ---
-title: "Get started"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Get started}
-  %\VignetteEncoding{UTF-8}
-  %\VignetteEngine{knitr::rmarkdown}
+title: "Introduction"
 ---
 
 ```{r, include = FALSE}
@@ -170,7 +165,7 @@ ln$Artifact
 See https://docs.lamin.ai/guide#query-search.
 
 ```{r query-search}
-transform <- ln$Transform$get(key = "laminr.Rmd")
+transform <- ln$Transform$get(key = "introduction.Rmd")
 
 ln$Artifact$filter(key__startswith = "my_datasets/")$df()
 
@@ -477,13 +472,13 @@ Save a run report of your notebook (`.Rmd` or `.qmd` file) to your instance:
 - **OR** From the command line, run:
 
   ```bash
-  Rscript -e 'rmarkdown::render("laminr.Rmd")'
+  Rscript -e 'rmarkdown::render("introduction.Rmd")'
   ```
 
 - **OR** Use the `rmarkdown` package in R:
 
   ```r
-  rmarkdown::render("laminr.Rmd")
+  rmarkdown::render("introduction.Rmd")
   ```
 
 2. Save it to your LaminDB instance:
@@ -491,13 +486,13 @@ Save a run report of your notebook (`.Rmd` or `.qmd` file) to your instance:
 - Using the `lamin_save()` function in R:
 
 ```r
-lamin_save("laminr.Rmd")
+lamin_save("introduction.Rmd")
 ```
 
 - **OR** Using the `lamin` CLI:
 
 ```bash
-lamin save laminr.Rmd
+lamin save introduction.Rmd
 ```
 
 # Design
