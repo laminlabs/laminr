@@ -1,10 +1,5 @@
 ---
-title: "Setting up laminr"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Setting up laminr}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+title: "Setting up {laminr}"
 ---
 
 ```{r, include = FALSE}
@@ -52,7 +47,7 @@ This version may have bug fixes and new features but could also be unstable so i
 
 # Installing Python **lamindb**
 
-Using **{laminr}** requires that the Python **lamindb** package is available.
+Using **{laminr}** requires the Python **lamindb** package to be available.
 
 ## Using the included Python environment
 
@@ -75,19 +70,12 @@ For example, to add the **bionty** package:
 laminr::install_lamindb(extra_packages = "bionty")
 ```
 
-Python packages providing additional registries that may be used in your instance:
+Example of Python packages providing additional registries that may be used in your instance:
 
-- **bionty** - Basic biological entities, coupled to public ontologies
-- **cellregistry** - A registry for single cells
-- **clinicore** - Basic clinical entities
-- **findrefs** - Store references to studies, reports, papers, blog posts, preprints
-- **omop** - OMOP Common Data Model
-- **ourprojects** - Manage projects and teams
-- **wetlab** - Basic wetlab entities
-
-Other Python packages you may want to install:
-
-- **s3fs** - Accessing artifacts stored on Amazon S3
+- [**bionty**](https://docs.lamin.ai/bionty) - Basic biological entities, coupled to public ontologies
+- [**clinicore**](https://docs.lamin.ai/clinicore) - Basic clinical entities
+- [**omop**](https://omop.lamin.ai/) - OMOP Common Data Model
+- [**wetlab**](https://docs.lamin.ai/wetlab) - Basic wetlab entities
 
 Installing additional Python packages also be useful if you want to use another R package which expects a particular Python module to be installed.
 
@@ -149,4 +137,4 @@ The default instance can be set using:
 laminr::lamin_connect("<owner>/<name>")
 ```
 
-Note that this must be called before attempting to connect to a default instance and cannot be changed once the default instance is connected.
+Note that this must be called before attempting to connect to a default instance and cannot be changed once the default instance is connected without first calling `lamin_disconnect()`.
