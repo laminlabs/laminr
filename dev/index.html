@@ -6,24 +6,32 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Client for LaminDB • laminr</title>
-<script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
+<script src="lightswitch.js"></script><script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/Roboto-0.4.9/font.css" rel="stylesheet">
+<link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Client for LaminDB">
 <meta name="description" content="Interact with LaminDB. LaminDB is an open-source data framework for biology. This package allows you to query and download data from LaminDB instances.">
 <meta property="og:description" content="Interact with LaminDB. LaminDB is an open-source data framework for biology. This package allows you to query and download data from LaminDB instances.">
+<meta property="og:image" content="https://laminr.lamin.ai/logo.png">
 <meta name="robots" content="noindex">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
-    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+    <nav class="navbar navbar-expand-lg fixed-top " aria-label="Site navigation"><div class="container">
 
     <a class="navbar-brand me-2" href="index.html">laminr</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.0.0.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.0.1.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,21 +40,29 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
-<li class="nav-item"><a class="nav-link" href="articles/laminr.html">Get started</a></li>
+<li class="nav-item"><a class="nav-link" href="articles/introduction.html">Introduction</a></li>
 <li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="articles/setup.html">Setting up laminr</a></li>
-    <li><a class="dropdown-item" href="articles/introduction.html">Introduction guide</a></li>
+<li><a class="dropdown-item" href="articles/setup.html">Setting up {laminr}</a></li>
   </ul>
 </li>
+<li class="nav-item"><a class="external-link nav-link" href="https://docs.lamin.ai/changelog">Changelog</a></li>
       </ul>
 <ul class="navbar-nav">
 <li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="search.json">
 </form></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/laminlabs/laminr/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-lightswitch" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" aria-label="Light switch"><span class="fa fa-sun"></span></button>
+  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-lightswitch">
+<li><button class="dropdown-item" data-bs-theme-value="light"><span class="fa fa-sun"></span> Light</button></li>
+    <li><button class="dropdown-item" data-bs-theme-value="dark"><span class="fa fa-moon"></span> Dark</button></li>
+    <li><button class="dropdown-item" data-bs-theme-value="auto"><span class="fa fa-adjust"></span> Auto</button></li>
+  </ul>
+</li>
       </ul>
 </div>
 
@@ -55,59 +71,21 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="laminr-an-r-client-for-lamindb">{laminr}: An R client for LaminDB<a class="anchor" aria-label="anchor" href="#laminr-an-r-client-for-lamindb"></a>
-</h1></div>
+<div class="page-header">
+<img src="logo.png" class="logo" alt=""><h1 id="laminr-an-r-client-for-lamindb-">{laminr}: An R client for LaminDB 
+<a class="anchor" aria-label="anchor" href="#laminr-an-r-client-for-lamindb-"></a>
+</h1>
+</div>
 <!-- badges: start -->
 
-<p><strong>{laminr}</strong> is an R client for <a href="https://lamin.ai" class="external-link">LaminDB</a>. If you are new to LaminDB, please read this <a href="https://docs.lamin.ai/guide" class="external-link">introduction</a>.</p>
-<div class="section level2">
-<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
-</h2>
-<p>Get started with <strong>{laminr}</strong> by installing the package from CRAN:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"laminr"</span><span class="op">)</span></span></code></pre></div>
-<div class="section level3">
-<h3 id="additional-packages">Additional packages<a class="anchor" aria-label="anchor" href="#additional-packages"></a>
-</h3>
-<p>Some functionality requires additional packages. To install all of these use:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"laminr"</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p>If you choose not to install all packages now you will be prompted to do so whenever one is required.</p>
+<p><strong>{laminr}</strong> is an R client for <a href="https://lamin.ai" class="external-link">LaminDB</a>. To get started, read the <a href="articles/introduction.html">introduction</a>.</p>
+<div class="pkgdown-devel">
+<div class="alert alert-primary" role="alert">
+<p>This is the documentation for the development version of <strong>{laminr}</strong>. For the release documentation, please go to <a href="https://laminr.lamin.ai/">https://laminr.lamin.ai/</a>.</p>
 </div>
 </div>
-<div class="section level2">
-<h2 id="setting-up">Setting up<a class="anchor" aria-label="anchor" href="#setting-up"></a>
-</h2>
-<p>Before loading <strong>{laminr}</strong> for the first time you should:</p>
-<ol style="list-style-type: decimal">
-<li>Set up a Python environment</li>
-</ol>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">laminr</span><span class="fu">::</span><span class="fu"><a href="reference/install_lamindb.html">install_lamindb</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<ol start="2" style="list-style-type: decimal">
-<li>Log in</li>
-</ol>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">laminr</span><span class="fu">::</span><span class="fu"><a href="reference/lamin_login.html">lamin_login</a></span><span class="op">(</span>api_key <span class="op">=</span> <span class="st">"your_api_key"</span><span class="op">)</span></span></code></pre></div>
-<ol start="3" style="list-style-type: decimal">
-<li>Set a default instance</li>
-</ol>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">laminr</span><span class="fu">::</span><span class="fu"><a href="reference/lamin_connect.html">lamin_connect</a></span><span class="op">(</span><span class="st">"&lt;owner&gt;/&lt;name&gt;"</span><span class="op">)</span></span></code></pre></div>
-<p>See the <a href="https://laminr.lamin.ai/articles/setup.html">setup vignette</a> for more information.</p>
-</div>
-<div class="section level2">
-<h2 id="getting-started">Getting started<a class="anchor" aria-label="anchor" href="#getting-started"></a>
-</h2>
-<p>The best way to get started with <strong>{laminr}</strong> is to explore the package vignettes (available at <a href="https://laminr.lamin.ai">laminr.lamin.ai</a>):</p>
-<ul>
-<li>
-<a href="https://laminr.lamin.ai/articles/laminr.html"><strong>Get started</strong></a>: Learn the basics and explore practical examples</li>
-<li>
-<a href="https://laminr.lamin.ai/articles/setup.html"><strong>Setting up laminr</strong></a>: Learn set up <strong>{laminr}</strong> and manage Python environments</li>
-<li>
-<a href="https://laminr.lamin.ai/articles/introduction.html"><strong>Introduction to LaminDB</strong></a>: Code for reproducing the LaminDB introduction guide</li>
-</ul>
+<div style="text-align:center;">
+<img src="reference/figures/wheel.svg">
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
