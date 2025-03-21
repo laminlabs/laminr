@@ -2,6 +2,7 @@
 
 ## MINOR CHANGES
 
+- Update reticulate dependency to >= 1.38.0 (PR #158)
 - Use **{rmarkdown}** instead of **{quarto}** for articles (PR #159)
 
 ## DOCUMENTATION
