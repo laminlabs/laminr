@@ -23,9 +23,9 @@ withr::defer(laminr::lamin_login(current_user))
 withr::defer(laminr::lamin_disconnect())
 ```
 
-This vignette introduces the basic **{laminr}** workflow.
+This vignette introduces the **{laminr}** workflow.
 
-To learn more about LaminDB, please refer to the online documentation https://docs.lamin.ai/.
+To learn more about LaminDB, see [docs.lamin.ai](https://docs.lamin.ai).
 
 
 ```{r library}
@@ -40,10 +40,10 @@ Install **{laminr}** from CRAN:
 install.packages("laminr", dependencies = TRUE)
 ```
 
-Set up the Python environment:
+Install the underlying Python packages LaminDB and Bionty:
 
 ```r
-laminr::install_lamindb()
+laminr::install_lamindb(extra_packages = c("bionty"))
 ```
 
 Set the default LaminDB instance:
@@ -55,20 +55,16 @@ laminr::lamin_connect("<owner>/<name>")
 This instance acts as the default instance for everything that follows.
 Any data and tracking information will be added to it.
 
-See `vignette("setup", package = "laminr")` for more details.
-
-For this vignette we use a temporary test instance.
+If you don't have access to an instance, create a local test instance.
 
 ```{r init}
-lamin_init_temp(name = "laminr-intro", modules = c("bionty"))
+lamin_init(name = "laminr-intro", modules = c("bionty"))
 ```
 
 ```{r disconnect, include = FALSE}
 # Disconnect from this instance at the end of the vignette
 withr::defer(laminr::lamin_disconnect())
 ```
-
-This vignette requires the **bionty** Python package to be available.
 
 # Import
 
