@@ -1,4 +1,4 @@
-# {laminr}: An R client for LaminDB <a href="index.html"><img src="man/figures/logo.png" align="right" height="120" alt="laminr website" /></a>
+# {laminr}: An R client for LaminDB
 
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/laminr)](https://CRAN.R-project.org/package=laminr)
@@ -16,4 +16,4 @@ For the release documentation, please go to [https://laminr.lamin.ai/](https://l
 </div>
 :::
 
-<div style="text-align:center;"><img src="man/figures/wheel.svg" /></div>
+<img src="https://lamin-site-assets.s3.amazonaws.com/.lamindb/BunYmHkyFLITlM5MYQck.svg" width="300px" style="background: transparent">
