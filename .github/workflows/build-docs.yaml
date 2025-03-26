@@ -78,10 +78,13 @@ jobs:
           laminr::import_module("lamindb")
         shell: Rscript {0}
 
+      - name: Prepare tests for main docs
+        run: |
+          reticulate::use_virtualenv("r-lamindb")
+          laminr::lamin_init_temp(name = "test-docs",)
+      
       - name: Run tests for main docs
-        run: 
-          lamin init --storage ./test-docs
-          Rscript test-docs/quickstart.R
+        run: Rscript test-docs/quickstart.R
 
       - name: Build LaminR docs
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
