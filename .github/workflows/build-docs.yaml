@@ -78,10 +78,12 @@ jobs:
           laminr::import_module("lamindb")
         shell: Rscript {0}
 
-      - name: Test docs
-        run: Rscript test-docs/quickstart.R
+      - name: Run tests for main docs
+        run: 
+          lamin init --storage ./test-docs
+          Rscript test-docs/quickstart.R
 
-      - name: Build site
+      - name: Build LaminR docs
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
         shell: Rscript {0}
 
