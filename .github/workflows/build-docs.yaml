@@ -103,7 +103,7 @@ jobs:
           accountId: 472bdad691b4483dea759eadb37110bd
           command: pages deploy docs --project-name=laminr
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-      - uses: edumserrano/find-create-or-update-comment@v2
+      - uses: edumserrano/find-create-or-update-comment@v3
         if: github.event_name == 'pull_request'
         with:
           issue-number: ${{ github.event.pull_request.number }}
