@@ -364,27 +364,6 @@ cell_metadata <- cell_metadata$to_data_frame()
 cell_metadata
 ```
 
-## Save the results
-
-Save results as new artifacts to the current LaminDB instance.
-
-```{r save-results}
-seurat_path <- tempfile(fileext = ".rds")
-saveRDS(seurat_obj, seurat_path)
-
-ln$Artifact$from_df(
-  markers,
-  key = "laminr-datasets/renal-cell-carcinoma-markers.parquet",
-  description = "Marker genes for renal cell carcinoma dataset"
-)$save()
-
-ln$Artifact(
-  seurat_path,
-  key = "laminr-datasets/renal-cell-carcinoma.rds",
-  description = "Seurat object for renal cell carcinoma dataset"
-)$save()
-```
-
 # Finish tracking
 
 Mark the analysis run as finished to create a time stamp and upload source code to the hub.
