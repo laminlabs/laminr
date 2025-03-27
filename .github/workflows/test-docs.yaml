@@ -94,14 +94,10 @@ jobs:
       - name: Run tests for main docs
         run: Rscript test-docs/r-quickstart.R
       
-      - name: Install laminci
-        run: pip install laminci@git+https://github.com/laminlabs/laminci
-
-      - name: Upload scripts
+      - name: Upload docs
         run: |
-          from laminci import upload_docs_artifact
-          upload_docs_artifact(aws=True, docs_dir="./test-docs")
-        shell: python {0}
+          pip install laminci@git+https://github.com/laminlabs/laminci
+          laminci upload-docs --dir ./test-docs
 
       - name: Build LaminR docs
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
