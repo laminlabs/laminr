@@ -1,3 +1,6 @@
+library(reticulate)
+options(reticulate.traceback = TRUE)
+
 library(laminr)
 ln <- import_module("lamindb")  # instantiate the central object of the API
 
