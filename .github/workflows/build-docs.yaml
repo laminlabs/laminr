@@ -85,7 +85,7 @@ jobs:
         shell: Rscript {0}
 
       - name: Run tests for main docs
-        run: Rscript docs/r-quickstart.R
+        run: Rscript test-docs/r-quickstart.R
       
       - name: Install laminci
         run: pip install laminci
