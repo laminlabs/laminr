@@ -58,7 +58,7 @@ Any data and tracking information will be added to it.
 If you don't have access to an instance, create a local test instance.
 
 ```{r init}
-lamin_init_temp(name = "laminr-intro", modules = c("bionty"))
+lamin_init(storage = "./laminr-intro", modules = c("bionty"))
 ```
 
 ```{r disconnect, include = FALSE}
