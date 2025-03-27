@@ -81,7 +81,7 @@ jobs:
       - name: Prepare tests for main docs
         run: |
           reticulate::use_virtualenv("r-lamindb")
-          laminr::lamin_init_temp(name = "test-docs",)
+          laminr::lamin_init_temp(name = "test-docs")
       
       - name: Run tests for main docs
         run: Rscript test-docs/quickstart.R
