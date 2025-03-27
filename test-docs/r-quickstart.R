@@ -7,9 +7,11 @@ ln <- import_module("lamindb")  # instantiate the central object of the API
 # Access inputs
 
 ln$track()  # track your run of a notebook or script
+reticulate::py_last_error()
 artifact <- ln$Artifact$using("laminlabs/cellxgene")$get("7dVluLROpalzEh8m")  # https://lamin.ai/laminlabs/cellxgene/artifact/7dVluLROpalzEh8m
+reticulate::py_last_error()
 adata <- artifact$load()  # load the artifact into memory or sync to cache via filepath <- artifact$cache()
-
+reticulate::py_last_error()
 # Your transformation
 
 library(Seurat)  # find marker genes with Seurat
