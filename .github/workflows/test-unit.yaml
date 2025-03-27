@@ -6,8 +6,6 @@ on:
   repository_dispatch:
     types: [build]
 
-name: R-CMD-check.yaml
-
 permissions: read-all
 
 jobs:
