@@ -58,7 +58,7 @@ Any data and tracking information will be added to it.
 If you don't have access to an instance, create a local test instance.
 
 ```{r init}
-lamin_init_temp(name = "laminr-intro", modules = c("bionty"))
+lamin_init(storage = "./laminr-intro", modules = c("bionty"))
 ```
 
 ```{r disconnect, include = FALSE}
@@ -329,72 +329,7 @@ collection$artifacts$df()
 
 # Other examples
 
-This section contains some additional examples of using **{laminr}**.
 
-## Download a dataset form another instance
-
-This examples shows how to get an artifact from another instance ("laminlabs/cellxgene").
-
-```{r get-artifact}
-artifact <- ln$Artifact$using("laminlabs/cellxgene")$get("7dVluLROpalzEh8mNyxk")
-artifact
-```
-
-<div class="alert alert-info" role="alert">
-**Tip**
-
-You can view detailed information about this dataset on LaminHub: https://lamin.ai/laminlabs/cellxgene/artifact/7dVluLROpalzEh8mNyxk.
-
-You can search and query more CELLxGENE datasets here: https://lamin.ai/laminlabs/cellxgene/artifacts.
-</div>
-
-To download the dataset and load it into memory, run:
-
-```{r load-artifact}
-adata <- artifact$load()
-adata
-```
-
-This artifact contains an [`AnnData`](https://anndata.readthedocs.io) object.
-
-<div class="alert alert-info" role="alert">
-**Tip**
-
-If you prefer a path to a local file or folder, call `path <- artifact$cache()`.
-</div>
-
-## Work with the dataset
-
-Once you have loaded a dataset you can perform any analysis with it as you would normally.
-Here, marker genes are calculated for each of the provided cell type labels using [**{Seurat}**](https://satijalab.org/seurat/).
-
-```{r create-seurat}
-library(Seurat)
-
-# Create a Seurat object
-seurat_obj <- CreateSeuratObject(
-  counts = as(Matrix::t(adata$X), "CsparseMatrix"),
-  meta.data = adata$obs
-)
-# Add gene metadata
-seurat_obj[["RNA"]] <- AddMetaData(
-  GetAssay(seurat_obj), adata$var
-)
-# Set cell identities to the provided cell type annotation
-Idents(seurat_obj) <- "cell_type"
-# Normalise the data
-seurat_obj <- NormalizeData(seurat_obj)
-# Test for marker genes (the output is a data.frame)
-markers <- FindAllMarkers(
-  seurat_obj,
-  features = Features(seurat_obj)[1:100] # Only test a few features for speed
-)
-# Display the marker genes
-knitr::kable(markers)
-# Plot the marker genes
-DotPlot(seurat_obj, features = unique(markers$gene)) +
-  ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, vjust = 0.5))
-```
 
 ## Slice a TileDB-SOMA array store
 
@@ -427,27 +362,6 @@ cell_metadata <- cell_metadata$concat()
 cell_metadata <- cell_metadata$to_data_frame()
 
 cell_metadata
-```
-
-## Save the results
-
-Save results as new artifacts to the current LaminDB instance.
-
-```{r save-results}
-seurat_path <- tempfile(fileext = ".rds")
-saveRDS(seurat_obj, seurat_path)
-
-ln$Artifact$from_df(
-  markers,
-  key = "laminr-datasets/renal-cell-carcinoma-markers.parquet",
-  description = "Marker genes for renal cell carcinoma dataset"
-)$save()
-
-ln$Artifact(
-  seurat_path,
-  key = "laminr-datasets/renal-cell-carcinoma.rds",
-  description = "Seurat object for renal cell carcinoma dataset"
-)$save()
 ```
 
 # Finish tracking
