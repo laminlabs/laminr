@@ -81,14 +81,14 @@ jobs:
       - name: Prepare tests for main docs
         run: |
           reticulate::use_virtualenv("r-lamindb")
-          laminr::lamin_init(storage = "./test-docs")
+          laminr::lamin_init(storage = "./test-docs", modules = c("bionty"))
         shell: Rscript {0}
 
       - name: Run tests for main docs
         run: Rscript test-docs/r-quickstart.R
       
       - name: Install laminci
-        run: pip install laminci
+        run: pip install laminci@git+https://github.com/laminlabs/laminci
 
       - name: Upload scripts
         run: |
