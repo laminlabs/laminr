@@ -93,7 +93,7 @@ jobs:
       - name: Upload scripts
         run: |
           from laminci import upload_docs_artifact
-          upload_docs_artifact(aws=True)
+          upload_docs_artifact(aws=True, docs_dir="./test-docs")
         shell: python {0}
 
       - name: Build LaminR docs
