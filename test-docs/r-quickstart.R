@@ -1,17 +1,35 @@
 library(reticulate)
 options(reticulate.traceback = TRUE)
 
+# Set up error handling to display full traceback
+options(error = function() {
+  cat("\n\n--- FULL PYTHON TRACEBACK ---\n")
+  print(reticulate::py_last_error())
+  cat("\n--- END TRACEBACK ---\n")
+})
+
 library(laminr)
-ln <- import_module("lamindb")  # instantiate the central object of the API
 
 # Access inputs
 
-ln$track()  # track your run of a notebook or script
-reticulate::py_last_error()
-artifact <- ln$Artifact$using("laminlabs/cellxgene")$get("7dVluLROpalzEh8m")  # https://lamin.ai/laminlabs/cellxgene/artifact/7dVluLROpalzEh8m
-reticulate::py_last_error()
-adata <- artifact$load()  # load the artifact into memory or sync to cache via filepath <- artifact$cache()
-reticulate::py_last_error()
+# Wrap each operation in a tryCatch to see where the error occurs
+tryCatch({
+  ln <- import_module("lamindb")
+  cat("Successfully imported lamindb\n")
+  
+  ln$track()
+  cat("Successfully tracked run\n")
+  
+  artifact <- ln$Artifact$using("laminlabs/cellxgene")$get("7dVluLROpalzEh8m")
+  cat("Successfully retrieved artifact\n")
+  
+  adata <- artifact$load()
+  cat("Successfully loaded artifact\n")
+}, error = function(e) {
+  cat("\nError occurred:", conditionMessage(e), "\n")
+  cat("Python traceback:\n")
+  print(reticulate::py_last_error())
+})
 # Your transformation
 
 library(Seurat)  # find marker genes with Seurat
