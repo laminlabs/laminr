@@ -1,3 +1,5 @@
+name: test-unit
+
 on:
   push:
     branches: [main]
@@ -6,7 +8,6 @@ on:
   repository_dispatch:
     types: [build]
 
-permissions: read-all
 
 jobs:
   R-CMD-check:
