@@ -1,12 +1,13 @@
+name: test-unit
+
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
+  repository_dispatch:
+    types: [build]
 
-name: R-CMD-check.yaml
-
-permissions: read-all
 
 jobs:
   R-CMD-check:
@@ -18,13 +19,9 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - { os: macos-latest, r: "release", python: "3.x", lamin: "release" }
-          - { os: windows-latest, r: "release", python: "3.x", lamin: "release" }
-          - { os: ubuntu-latest, r: "devel", http-user-agent: "release", python: "3.x", lamin: "release" }
-          - { os: ubuntu-latest, r: "release", python: "3.x", lamin: "release" }
-          - { os: ubuntu-latest, r: "oldrel-1", python: "3.9", lamin: "release" }
-          - { os: ubuntu-latest, r: "release", http-user-agent: "release", python: "3.x", lamin: "devel" }
-          - { os: ubuntu-latest, r: "devel", http-user-agent: "release", python: "3.x", lamin: "devel" }
+          - { os: ubuntu-latest, r: "release", python: "3.x"}        
+          - { os: windows-latest, r: "release", python: "3.x"}
+          - { os: ubuntu-latest, r: "devel", http-user-agent: "release", python: "3.x"}
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -79,7 +76,7 @@ jobs:
       - name: Setup Python environment
         run: |
           laminr::install_lamindb(extra_packages = c("bionty"))
-          if ("${{ matrix.config.lamin }}" == "devel") {
+          if ("${{ github.event_name }}" == "repository_dispatch") {
             reticulate::use_virtualenv("r-lamindb")
             reticulate::py_install("git+https://github.com/laminlabs/lamindb.git")
           }
@@ -117,3 +114,20 @@ jobs:
         with:
           name: ${{ runner.os }}-r${{ matrix.config.r }}-results
           path: check
+
+      - uses: voxmedia/github-action-slack-notify-build@v1
+        if: ${{ success() && github.event_name == 'repository_dispatch' }}
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_GITHUB_ACTION }}
+        with:
+          channel_id: C05FDBBFJ1F
+          status: SUCCESS
+          color: good
+      - uses: voxmedia/github-action-slack-notify-build@v1
+        if: ${{ failure() && github.event_name == 'repository_dispatch' }}
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_GITHUB_ACTION }}
+        with:
+          channel_id: C05FDBBFJ1F
+          status: FAILURE
+          color: danger
