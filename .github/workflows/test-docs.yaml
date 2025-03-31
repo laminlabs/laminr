@@ -23,9 +23,6 @@ jobs:
     env:
       LAMIN_API_KEY: ${{ secrets.LAMIN_API_KEY_TESTUSER1 }}
 
-    permissions:
-      contents: write
-
     steps:
       - uses: actions/checkout@v4
 
@@ -124,16 +121,15 @@ jobs:
           accountId: 472bdad691b4483dea759eadb37110bd
           command: pages deploy docs --project-name=laminr
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-      # does not work on laminr yet -- works everywhere else
-      # - uses: edumserrano/find-create-or-update-comment@v2
-      #   if: github.event_name == 'pull_request'
-      #   with:
-      #     issue-number: ${{ github.event.pull_request.number }}
-      #     body-includes: "Deployment URL"
-      #     comment-author: "github-actions[bot]"
-      #     body: |
-      #       Deployment URL: ${{ steps.cloudflare.outputs.deployment-url }}
-      #     edit-mode: replace
+      - uses: edumserrano/find-create-or-update-comment@v2
+        if: github.event_name == 'pull_request'
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body-includes: "Deployment URL"
+          comment-author: "github-actions[bot]"
+          body: |
+            Deployment URL: ${{ steps.cloudflare.outputs.deployment-url }}
+          edit-mode: replace
 
       - uses: voxmedia/github-action-slack-notify-build@v1
         if: ${{ success() && github.event_name == 'repository_dispatch' }}
