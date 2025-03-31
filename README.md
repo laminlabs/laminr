@@ -7,6 +7,4 @@
 [![R-CMD-check](https://github.com/laminlabs/laminr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/laminlabs/laminr/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-**{laminr}** is an R client for [LaminDB](https://docs.lamin.ai).
-
-Read the [docs](https://laminr.lamin.ai/).
+Read the [docs](https://docs.lamin.ai).
