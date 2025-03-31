@@ -23,9 +23,6 @@ jobs:
     env:
       LAMIN_API_KEY: ${{ secrets.LAMIN_API_KEY_TESTUSER1 }}
 
-    permissions:
-      contents: write
-
     steps:
       - uses: actions/checkout@v4
 
