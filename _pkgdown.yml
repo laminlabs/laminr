@@ -59,6 +59,3 @@ reference:
     contents:
     - starts_with("lamin_")
 
-# https://pkgdown.r-lib.org/reference/build_site.html#development-mode
-development:
-  mode: auto
