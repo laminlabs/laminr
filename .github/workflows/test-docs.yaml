@@ -131,7 +131,7 @@ jobs:
             Deployment URL: ${{ steps.cloudflare.outputs.deployment-url }}
           edit-mode: replace
 
-      - uses: voxmedia/github-action-slack-notify-build@v1
+      - uses: voxmedia/github-action-slack-notify-build@v2
         if: ${{ success() && github.event_name == 'repository_dispatch' }}
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_GITHUB_ACTION }}
@@ -139,7 +139,7 @@ jobs:
           channel_id: C05FDBBFJ1F
           status: SUCCESS
           color: good
-      - uses: voxmedia/github-action-slack-notify-build@v1
+      - uses: voxmedia/github-action-slack-notify-build@v2
         if: ${{ failure() && github.event_name == 'repository_dispatch' }}
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_GITHUB_ACTION }}
