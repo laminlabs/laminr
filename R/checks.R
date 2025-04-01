@@ -70,16 +70,22 @@ check_requires <- function(what, requires,
 #'
 #' Check if a default LaminDB instance has already been set
 #'
+#' @param instance A LaminDB instance slug. If this matches the current instance
+#'   no alert will be issued.
 #' @param alert The type of alert message to give
 #'
 #' @returns Whether to not there is a current default instance, invisibly
 #' @noRd
-check_default_instance <- function(alert = c("error", "warning", "message", "none")) {
+check_default_instance <- function(instance = NULL, alert = c("error", "warning", "message", "none")) {
   alert <- match.arg(alert)
   current_default <- get_default_instance()
   check <- !is.null(current_default)
-  msg_fun <- get_message_fun(alert)
 
+  if (check && !is.null(instance)) {
+    check <- !identical(instance, current_default)
+  }
+
+  msg_fun <- get_message_fun(alert)
   if (check && !is.null(msg_fun)) {
     advice <- switch(alert,
       error = c(

@@ -23,7 +23,7 @@ lamin_connect <- function(instance) {
     return(invisible(NULL))
   }
 
-  check_default_instance()
+  check_default_instance(instance)
 
   # Set the default environment if not set
   reticulate::use_virtualenv("r-lamindb", required = FALSE)
