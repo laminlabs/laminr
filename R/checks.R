@@ -81,7 +81,7 @@ check_default_instance <- function(instance = NULL, alert = c("error", "warning"
   current_default <- get_default_instance()
   check <- !is.null(current_default)
 
-  if (check && !is.null(instance)) {
+  if (check && identical(instance, current_default)) {
     return(invisible(TRUE))
   }
 
