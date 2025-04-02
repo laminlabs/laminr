@@ -19,11 +19,13 @@ Depends:
     R (>= 4.1.0)
 Imports:
     cli,
+    pak,
     purrr,
     R.utils,
     R6,
     reticulate (>= 1.38.0),
     rlang,
+    sessioninfo,
     utils,
     withr
 Suggests:

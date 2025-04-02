@@ -93,6 +93,21 @@ lamindb_track <- function(private, transform = NULL, project = NULL, params = NU
 }
 
 lamindb_finish <- function(private, ignore_non_consecutive = NULL) {
+
+  run <- private$.py_object$context$run
+  if (!is.null(run)) {
+    session <- sessioninfo::session_info()
+    settings <- private$.py_object$settings
+    lockfile_path <- file.path(
+      settings$cache_dir,
+      paste0("run_env_r_session_", run$uid, ".txt")
+    )
+    pak::lockfile_create(
+      pkg = session$packages$package,
+      lockfile = lockfile_path
+    )
+  }
+
   tryCatch(
     private$.py_object$finish(
       ignore_non_consecutive = ignore_non_consecutive
