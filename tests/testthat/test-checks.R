@@ -75,6 +75,10 @@ test_that("check_default_instance() works", {
   expect_true(check_default_instance(alert = "none"))
 })
 
+test_that("check_default_instance() works with provided instance", {
+  expect_true(check_default_instance(get_current_lamin_instance()))
+})
+
 test_that("check_instance_module()", {
   expect_true(check_instance_module("bionty"))
 

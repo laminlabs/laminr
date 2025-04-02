@@ -23,7 +23,12 @@ lamin_connect <- function(instance) {
     return(invisible(NULL))
   }
 
-  check_default_instance()
+  check <- check_default_instance(instance)
+
+  if (isTRUE(check)) {
+    cli::cli_alert("Already connected to {instance}")
+    return(invisible(NULL))
+  }
 
   # Set the default environment if not set
   reticulate::use_virtualenv("r-lamindb", required = FALSE)
