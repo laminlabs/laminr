@@ -98,13 +98,15 @@ lamindb_finish <- function(private, ignore_non_consecutive = NULL) {
   if (!is.null(run)) {
     session <- sessioninfo::session_info()
     settings <- private$.py_object$settings
-    lockfile_path <- file.path(
-      settings$cache_dir,
-      paste0("run_env_r_session_", run$uid, ".txt")
-    )
+    run_dir <- file.path(settings$cache_dir, paste0("run_", run$uid))
+
+    if (!dir.exists(run_dir)) {
+      dir.create(run_dir)
+    }
+
     pak::lockfile_create(
       pkg = session$packages$package,
-      lockfile = lockfile_path
+      lockfile = file.path(run_dir, "r_pak_lockfile.json")
     )
   }
 
