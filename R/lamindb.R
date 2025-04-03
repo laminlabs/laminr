@@ -116,7 +116,7 @@ lamindb_finish <- function(private, ignore_non_consecutive = NULL) {
 
     withr::with_options(list(repos = unique(c(pkg_repos, getOption("repos")))), {
       pak::lockfile_create(
-        pkg = session$packages$package,
+        pkg = pkgs,
         lockfile = file.path(run_dir, "r_pak_lockfile.json")
       )
     })
