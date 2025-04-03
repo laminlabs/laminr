@@ -98,7 +98,14 @@ lamindb_finish <- function(private, ignore_non_consecutive = NULL) {
   if (!is.null(run)) {
     session <- sessioninfo::session_info()
     settings <- private$.py_object$settings
-    run_dir <- file.path(settings$cache_dir, paste0("run_", run$uid))
+
+    env_dir <- file.path(settings$cache_dir, "environments")
+
+    if (!dir.exists(env_dir)) {
+      dir.create(env_dir)
+    }
+
+    run_dir <- file.path(env_dir, paste0("run_", run$uid))
 
     if (!dir.exists(run_dir)) {
       dir.create(run_dir)
