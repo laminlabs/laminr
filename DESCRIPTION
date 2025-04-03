@@ -25,7 +25,6 @@ Imports:
     R6,
     reticulate (>= 1.38.0),
     rlang,
-    sessioninfo,
     utils,
     withr
 Suggests:

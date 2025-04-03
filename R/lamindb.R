@@ -96,7 +96,7 @@ lamindb_finish <- function(private, ignore_non_consecutive = NULL) {
 
   run <- private$.py_object$context$run
   if (!is.null(run)) {
-    session <- sessioninfo::session_info()
+
     settings <- private$.py_object$settings
 
     env_dir <- file.path(settings$cache_dir, "environments")
@@ -111,10 +111,15 @@ lamindb_finish <- function(private, ignore_non_consecutive = NULL) {
       dir.create(run_dir)
     }
 
-    pak::lockfile_create(
-      pkg = session$packages$package,
-      lockfile = file.path(run_dir, "r_pak_lockfile.json")
-    )
+    pkgs <- get_loaded_packages()
+    pkg_repos <- get_package_repositories(pkgs)
+
+    withr::with_options(list(repos = unique(c(pkg_repos, getOption("repos")))), {
+      pak::lockfile_create(
+        pkg = session$packages$package,
+        lockfile = file.path(run_dir, "r_pak_lockfile.json")
+      )
+    })
   }
 
   tryCatch(
