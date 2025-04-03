@@ -16,7 +16,7 @@ py_to_r.lamindb.models.artifact.Artifact <- function(x) { # nolint object_length
         artifact_open(self, mode = mode, is_run_input = is_run_input, ...)
       },
       view_lineage = function(with_children = TRUE, return_graph = FALSE) {
-        view_lineage(
+        view_lineage_graph( # nolint object_usage_linter
           self, with_children = with_children, return_graph = return_graph
         )
       }

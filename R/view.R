@@ -1,4 +1,4 @@
-view_lineage <- function(artifact, with_children = TRUE, return_graph = FALSE) {
+view_lineage_graph <- function(artifact, with_children = TRUE, return_graph = FALSE) {
   py_artifact <- unwrap_python(artifact)
 
   graph <- py_artifact$view_lineage(
@@ -12,7 +12,7 @@ view_lineage <- function(artifact, with_children = TRUE, return_graph = FALSE) {
   if (interactive()) {
     image_file <- graph$render(directory = tempdir(), format = "svg")
 
-    if (is_rstudio()) {
+    if (is_rstudio()) { # nolint object_usage_linter
       rstudioapi::viewer(image_file)
     } else {
       utils::browseURL(image_file)

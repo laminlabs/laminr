@@ -1,12 +1,12 @@
 find_active_file <- function(arg = file, call = parent.frame()) {
-  if (!is_rstudio()) {
+  if (!is_rstudio()) { # nolint object_usage_linter
     cli_abort("Argument {.arg {arg}} is missing, with no default", call = call)
   }
   normalizePath(rstudioapi::getSourceEditorContext()$path)
 }
 
 save_active_file <- function(file = find_active_file()) {
-  if (is_rstudio()) {
+  if (is_rstudio()) { # nolint object_usage_linter
     if (rstudioapi::hasFun("documentSaveAll")) {
       rstudioapi::documentSaveAll()
     }
