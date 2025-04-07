@@ -44,7 +44,7 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::pkgdown, local::.
+          extra-packages: any::pkgdown, any::Rd2md, local::.
           needs: website
           quarto-version: pre-release
 
@@ -90,7 +90,12 @@ jobs:
 
       - name: Run tests for main docs
         run: Rscript test-docs/r-quickstart.R
-      
+
+      - name: Render markdown manual
+        run: |
+          Rd2md::render_refman(output_file = "test-docs/manual.md")
+        shell: Rscript {0}
+
       - name: Upload docs
         run: |
           pip install laminci@git+https://github.com/laminlabs/laminci
