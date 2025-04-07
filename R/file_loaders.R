@@ -171,7 +171,11 @@ load_image <- function(file, ...) {
 
   # If interactive, show the image
   if (interactive()) {
-    return(utils::browseURL(file, ...))
+    if (is_rstudio()) { # nolint object_usage_linter
+      return(rstudioapi::viewer(file))
+    } else {
+      return(utils::browseURL(file, ...))
+    }
   }
 
   file
