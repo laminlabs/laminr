@@ -1,7 +1,5 @@
-import_lamindb <- function() {
+wrap_lamindb <- function(py_lamindb) {
   check_requires("Importing lamindb", "lamindb", language = "Python")
-
-  py_lamindb <- reticulate::import("lamindb")
 
   instance_slug <- NULL
   tryCatch(
