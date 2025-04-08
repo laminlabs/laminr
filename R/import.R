@@ -1,25 +1,25 @@
 #' Import Python modules
 #'
-#' This function can be used to import LaminDB Python modules with additional
-#' checks and nicer error messages.
+#' This function can be used to import **LaminDB** Python modules with
+#' additional checks and nicer error messages.
 #'
 #' @param module The name of the Python module to import
-#' @param options A vector of optional dependencies for the module that is being
-#'   imported
+#' @inheritDotParams require_module
 #'
 #' @returns An object representing a Python package
 #' @export
 #'
 #' @details
-#' If another Python environment is not found (see <https://rstudio.github.io/reticulate/articles/versions.html>),
-#' Python dependencies will be set using [reticulate::py_require()] before
-#' importing the module. The `options` argument is only applicable the first
-#' time a module is imported and will result in a warning if a requirement for
-#' that module has already been set. Setting `options = c("opt1", "opt2")`
-#' results in `module[opt1,opt2]`.
+#' Python dependencies are set using [require_module()] before importing
+#' the module and used to create an ephemeral environment unless another
+#' environment is found (see `vignette("versions", package = "reticulate")`).
 #'
-#' @seealso [reticulate::py_require()] and `vignette("versions", package = "reticulate")`
-#'   for details on setting the Python environment
+#' @seealso
+#'
+#' - [require_module()] and [reticulate::py_require()] for defining Python
+#'   dependencies
+#' - `vignette("versions", package = "reticulate")` for setting the Python
+#'  environment to use (or online [here](https://rstudio.github.io/reticulate/articles/versions.html))
 #'
 #' @examples
 #' \dontrun{
@@ -37,13 +37,13 @@
 #' # Import any Python module
 #' np <- import_module("numpy")
 #' }
-import_module <- function(module, options = NULL) {
+import_module <- function(module, ...) {
   registry_modules <- c("bionty", "wetlab", "clinicore", "cellregistry", "omop")
   if (module %in% registry_modules) {
     check_instance_module(module)
   }
 
-  require_module(module, options = options)
+  require_module(module, ...)
   check_requires(paste("Importing", module), module, language = "Python")
 
   py_module <- tryCatch(
