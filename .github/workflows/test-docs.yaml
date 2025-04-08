@@ -58,11 +58,6 @@ jobs:
           }
         shell: Rscript {0}
 
-      - name: Setup Python environment
-        run: |
-          laminr::install_lamindb(extra_packages = c("bionty"))
-        shell: Rscript {0}
-
       - name: Log in to Lamin
         run: |
           reticulate::use_virtualenv("r-lamindb")
@@ -90,7 +85,7 @@ jobs:
 
       - name: Run tests for main docs
         run: Rscript test-docs/r-quickstart.R
-      
+
       - name: Upload docs
         run: |
           pip install laminci@git+https://github.com/laminlabs/laminci
