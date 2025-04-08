@@ -38,16 +38,12 @@ navbar:
           href: articles/setup.html
 
 reference:
-  - title: "Installation"
+  - title: "Python modules"
     desc: >
-      Functions for installing **{laminr}** and it's Python environments
-    contents:
-    - install_lamindb
-  - title: "Import"
-    desc: >
-      Functions for importing Python modules
+      Functions for managing and import Python modules
     contents:
     - import_module
+    - require_module
   - title: "Current instance"
     desc: >
       Functions for getting information about the current LaminDB instance

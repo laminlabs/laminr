@@ -20,12 +20,9 @@ wrap_lamindb <- function(py_lamindb) {
   min_version <- "1.2"
   if (utils::compareVersion(min_version, lamin_version_clean) == 1) {
     cli::cli_abort(
-      c(
-        paste(
-          "This version of {.pkg laminr} requires Python {.pkg lamindb} >= v{min_version}.",
-          "You have {.pkg lamindb} v{lamin_version}."
-        ),
-        "i" = "Run {.run laminr::install_lamindb()} to update."
+      paste(
+        "This version of {.pkg laminr} requires Python {.pkg lamindb} >= v{min_version}.",
+        "You have {.pkg lamindb} v{lamin_version}."
       )
     )
   }
