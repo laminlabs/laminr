@@ -73,3 +73,29 @@ install_lamindb <- function(
 
   invisible(NULL)
 }
+
+require_module <- function(module, options = NULL, python_version = NULL) {
+  if (length(module) > 1) {
+    cli::cli_abort("Only one module can be required at a time")
+  }
+
+  requirement <- module
+  if (!is.null(options)) {
+    requirement <- paste0(requirement, "[", paste0(options, collapse = ","), "]")
+  }
+
+  if (reticulate::py_available()) {
+    current_requirements <- reticulate::py_require()
+    # Only require the module if it is not already required
+    # Use startsWith to match packages with versions or options
+    if (!any(startsWith(current_requirements$packages, module))) {
+      reticulate::py_require(requirement, python_version = python_version)
+    }
+  } else {
+    reticulate::py_require(requirement, python_version = python_version)
+  }
+}
+
+require_lamindb <- function() {
+  require_module("lamindb>=1.2", python_version = ">=3.10,<3.14")
+}
