@@ -22,6 +22,7 @@ jobs:
 
     env:
       LAMIN_API_KEY: ${{ secrets.LAMIN_API_KEY_TESTUSER1 }}
+      LAMIN_TEST_VERSION: ${{ github.event_name == "repository_dispatch" && "release" || "devel" }}
 
     steps:
       - uses: actions/checkout@v4
@@ -61,6 +62,13 @@ jobs:
       - name: Setup Python environment
         run: |
           laminr::install_lamindb(extra_packages = c("bionty"))
+          if (Sys.getenv("LAMIN_TEST_VERSION") == "devel") {
+            reticulate::use_virtualenv("r-lamindb")
+            reticulate::py_install("git+https://github.com/laminlabs/lamindb.git")
+          }
+          message("LAMIN_TEST_VERSION: ", Sys.getenv("LAMIN_TEST_VERSION"))
+          reticulate::py_config()
+          message("lamindb version: ", reticulate::py_get_attr(reticulate::import("lamindb"), "__version__"))
         shell: Rscript {0}
 
       - name: Log in to Lamin
@@ -90,7 +98,7 @@ jobs:
 
       - name: Run tests for main docs
         run: Rscript test-docs/r-quickstart.R
-      
+
       - name: Upload docs
         run: |
           pip install laminci@git+https://github.com/laminlabs/laminci
