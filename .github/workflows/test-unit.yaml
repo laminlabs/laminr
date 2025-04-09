@@ -19,7 +19,7 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - { os: ubuntu-latest, r: "release", python: "3.x"}        
+          - { os: ubuntu-latest, r: "release", python: "3.x"}
           - { os: windows-latest, r: "release", python: "3.x"}
           - { os: ubuntu-latest, r: "devel", http-user-agent: "release", python: "3.x"}
 
@@ -27,6 +27,7 @@ jobs:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
       LAMIN_API_KEY: ${{ secrets.LAMIN_API_KEY_TESTUSER1 }}
+      LAMIN_TEST_VERSION: ${{ github.event_name == "repository_dispatch" && "release" || "devel" }}
 
     steps:
       - uses: actions/checkout@v4
@@ -76,10 +77,13 @@ jobs:
       - name: Setup Python environment
         run: |
           laminr::install_lamindb(extra_packages = c("bionty"))
-          if ("${{ github.event_name }}" == "repository_dispatch") {
+          if (Sys.getenv("LAMIN_TEST_VERSION") == "devel") {
             reticulate::use_virtualenv("r-lamindb")
             reticulate::py_install("git+https://github.com/laminlabs/lamindb.git")
           }
+          message("LAMIN_TEST_VERSION: ", Sys.getenv("LAMIN_TEST_VERSION"))
+          reticulate::py_config()
+          message("lamindb version: ", reticulate::py_get_attr(reticulate::import("lamindb"), "__version__"))
         shell: Rscript {0}
 
       - name: Log in to Lamin
@@ -104,7 +108,6 @@ jobs:
       - name: Check
         env:
           _R_CHECK_CRAN_INCOMING_REMOTE_: false
-          LAMIN_TEST_VERSION: '${{ matrix.config.lamin }}'
         run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
         shell: Rscript {0}
 
