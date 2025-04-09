@@ -60,26 +60,22 @@ jobs:
 
       - name: Log in to Lamin
         run: |
-          reticulate::use_virtualenv("r-lamindb")
           laminr::lamin_login()
         shell: Rscript {0}
 
       - name: Set lamindata as default instance
         run: |
-          reticulate::use_virtualenv("r-lamindb")
           laminr::lamin_connect("laminlabs/lamindata")
         shell: Rscript {0}
 
       - name: Check whether we can import lamindb and connect to the default instance
         run: |
-          reticulate::use_virtualenv("r-lamindb")
           reticulate::py_config()
           laminr::import_module("lamindb")
         shell: Rscript {0}
 
       - name: Prepare tests for main docs
         run: |
-          reticulate::use_virtualenv("r-lamindb")
           laminr::lamin_init(storage = "./test-docs", modules = c("bionty"))
         shell: Rscript {0}
 
