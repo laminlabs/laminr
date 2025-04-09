@@ -22,7 +22,7 @@ jobs:
 
     env:
       LAMIN_API_KEY: ${{ secrets.LAMIN_API_KEY_TESTUSER1 }}
-      LAMIN_TEST_VERSION: ${{ github.event_name == "repository_dispatch" && "release" || "devel" }}
+      LAMIN_TEST_VERSION: ${{ github.event_name == 'repository_dispatch' && 'release' || 'devel' }}
 
     steps:
       - uses: actions/checkout@v4
