@@ -54,4 +54,8 @@ reference:
       Functions for calling the `lamin` Command Line Interface
     contents:
     - starts_with("lamin_")
-
+  - title: "Deprecated functions"
+    desc: >
+      Functions that should no longer be used
+    contents:
+    - install_lamindb
