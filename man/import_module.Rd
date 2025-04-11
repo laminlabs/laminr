@@ -4,29 +4,57 @@
 \alias{import_module}
 \title{Import Python modules}
 \usage{
-import_module(module)
+import_module(module, ...)
 }
 \arguments{
 \item{module}{The name of the Python module to import}
+
+\item{...}{
+  Arguments passed on to \code{\link[=require_module]{require_module}}
+  \describe{
+    \item{\code{options}}{A vector of defined optional dependencies for the module that
+is being required}
+    \item{\code{version}}{A string specifying the version of the module to require}
+    \item{\code{source}}{A source for the module requirement, for example
+\verb{git+https://github.com/owner/module.git}}
+    \item{\code{python_version}}{A string defining the Python version to require. Passed
+to \code{\link[reticulate:py_require]{reticulate::py_require()}}}
+  }}
 }
 \value{
 An object representing a Python package
 }
 \description{
-This function can be used to import LaminDB Python modules with additional
-checks and nicer error messages.
+This function can be used to import \strong{LaminDB} Python modules with
+additional checks and nicer error messages.
+}
+\details{
+Python dependencies are set using \code{\link[=require_module]{require_module()}} before importing
+the module and used to create an ephemeral environment unless another
+environment is found (see \code{vignette("versions", package = "reticulate")}).
 }
 \examples{
 \dontrun{
 # Import lamindb to start interacting with an instance
 ln <- import_module("lamindb")
 
+# Import lamindb with optional dependencies
+ln <- import_module("lamindb", options = c("bionty", "wetlab"))
+
 # Import other LaminDB modules
 bt <- import_module("bionty")
 wl <- import_module("wetlab")
-cc <- import_module("clincore")
+cc <- import_module("clinicore")
 
 # Import any Python module
 np <- import_module("numpy")
+}
+}
+\seealso{
+\itemize{
+\item \code{\link[=require_module]{require_module()}} and \code{\link[reticulate:py_require]{reticulate::py_require()}} for defining Python
+dependencies
+\item \code{vignette("versions", package = "reticulate")} for setting the Python
+environment to use (or online \href{https://rstudio.github.io/reticulate/articles/versions.html}{here})
 }
 }

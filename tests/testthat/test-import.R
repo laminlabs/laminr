@@ -1,7 +1,13 @@
 test_that("Importing a module works", {
-  os <- import_module("os")
+  numpy <- import_module("numpy")
 
-  expect_s3_class(os, "python.builtin.module")
+  expect_s3_class(numpy, "python.builtin.module")
+})
+
+test_that("Importing a non-required module works", {
+  scipy <- import_module("scipy")
+
+  expect_s3_class(scipy, "python.builtin.module")
 })
 
 test_that("Importing lamindb works", {

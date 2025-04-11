@@ -30,15 +30,22 @@ before creating a new one with the requested packages}
 \code{NULL}, invisibly
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+
+This function is deprecated and is replaced by a system which automatically
+installs packages as needed. See \code{\link[=import_module]{import_module()}}, \code{\link[=require_module]{require_module()}} and
+\code{\link[reticulate:py_require]{reticulate::py_require()}} for details.
+
 Create a Python environment containing \strong{lamindb} or install \strong{lamindb}
 into an existing environment.
 }
-\details{
-See \code{vignette("setup", package = "laminr")} for further details on setting up
-a Python environment
-}
 \examples{
 \dontrun{
+# Using import_module() will automatically install packages
+ln <- import_module("lamindb")
+
+# Create a Python environment with lamindb
+# This approach is deprecated
 install_lamindb()
 
 # Add additional packages to the environment
@@ -48,3 +55,4 @@ install_lamindb(extra_packages = c("bionty", "wetlab"))
 install_lamindb(envvname = "your-env")
 }
 }
+\keyword{internal}
