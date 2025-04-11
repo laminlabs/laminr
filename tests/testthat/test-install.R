@@ -23,8 +23,10 @@ test_that("install_lamindb() works with extra packages", {
   )
 })
 
+# nolint start commented_code_linter
 # Recommended to have something like
 # test_that("add_two is deprecated", {
 #   expect_snapshot(install_lamindb(envname = test_install_env, use = FALSE))
 # })
 # But the output is likely not stable enough to work
+# nolint end commented_code_linter

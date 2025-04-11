@@ -88,10 +88,8 @@ lamindb_track <- function(private, transform = NULL, project = NULL, params = NU
 }
 
 lamindb_finish <- function(private, ignore_non_consecutive = NULL) {
-
   run <- private$.py_object$context$run
   if (!is.null(run)) {
-
     settings <- private$.py_object$settings
 
     env_dir <- file.path(settings$cache_dir, "environments")

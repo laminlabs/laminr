@@ -43,8 +43,7 @@ install_lamindb <- function(
     envname = "r-lamindb",
     extra_packages = NULL,
     new_env = identical(envname, "r-lamindb"),
-    use = TRUE
-) {
+    use = TRUE) {
   lifecycle::deprecate_warn(
     "1.1.0",
     "install_lamindb()",
@@ -74,8 +73,7 @@ install_lamindb <- function(
 
   if (isTRUE(use)) {
     tryCatch(
-      switch(
-        env_type,
+      switch(env_type,
         virtualenv = reticulate::use_virtualenv(envname),
         conda = reticulate::use_condaenv(envname)
       ),
