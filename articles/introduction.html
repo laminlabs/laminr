@@ -130,23 +130,23 @@ related text see the associated links.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ln</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/import_module.html">import_module</a></span><span class="op">(</span><span class="st">"lamindb"</span><span class="op">)</span></span>
 <span><span class="va">ln</span><span class="op">$</span><span class="fu">track</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #55FF55;">→</span> created Transform('fFqSLCzfPR3y0000'), started new Run('gFnVLAHL...') at 2025-04-07 11:34:13 UTC</span></span>
+<span><span class="co">#&gt; <span style="color: #55FF55;">→</span> created Transform('XIpitVQZxCT00000'), started new Run('1e5MfBkM...') at 2025-04-13 19:04:55 UTC</span></span>
 <span></span>
 <span><span class="va">ln</span><span class="op">$</span><span class="va">Transform</span><span class="op">$</span><span class="fu">df</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                uid              key      description     type source_code hash</span></span>
-<span><span class="co">#&gt; 1 fFqSLCzfPR3y0000 introduction.Rmd introduction.Rmd notebook        &lt;NA&gt; &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 1 XIpitVQZxCT00000 introduction.Rmd introduction.Rmd notebook        &lt;NA&gt; &lt;NA&gt;</span></span>
 <span><span class="co">#&gt;   reference reference_type space_id _template_id version is_latest</span></span>
 <span><span class="co">#&gt; 1      &lt;NA&gt;           &lt;NA&gt;        1         &lt;NA&gt;    &lt;NA&gt;      TRUE</span></span>
 <span><span class="co">#&gt;            created_at created_by_id _aux _branch_code</span></span>
-<span><span class="co">#&gt; 1 2025-04-07 11:34:13             1 &lt;NA&gt;            1</span></span>
+<span><span class="co">#&gt; 1 2025-04-13 19:04:55             1 &lt;NA&gt;            1</span></span>
 <span></span>
 <span><span class="va">ln</span><span class="op">$</span><span class="va">Run</span><span class="op">$</span><span class="fu">df</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                    uid name          started_at finished_at reference</span></span>
-<span><span class="co">#&gt; 1 gFnVLAHLmNQ3h9N7LNwI &lt;NA&gt; 2025-04-07 11:34:13        &lt;NA&gt;      &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 1 1e5MfBkM0wX0jhScCtMS &lt;NA&gt; 2025-04-13 19:04:55        &lt;NA&gt;      &lt;NA&gt;</span></span>
 <span><span class="co">#&gt;   reference_type _is_consecutive _status_code space_id transform_id report_id</span></span>
 <span><span class="co">#&gt; 1           &lt;NA&gt;            &lt;NA&gt;            0        1            1      &lt;NA&gt;</span></span>
 <span><span class="co">#&gt;   _logfile_id environment_id initiated_by_run_id          created_at</span></span>
-<span><span class="co">#&gt; 1        &lt;NA&gt;           &lt;NA&gt;                &lt;NA&gt; 2025-04-07 11:34:13</span></span>
+<span><span class="co">#&gt; 1        &lt;NA&gt;           &lt;NA&gt;                &lt;NA&gt; 2025-04-13 19:04:55</span></span>
 <span><span class="co">#&gt;   created_by_id _aux _branch_code</span></span>
 <span><span class="co">#&gt; 1             1 &lt;NA&gt;            1</span></span></code></pre></div>
 </div>
@@ -176,20 +176,20 @@ artifact can be any file or folder but is typically a dataset.</p>
 <span><span class="va">artifact</span><span class="op">$</span><span class="fu">describe</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="font-weight: bold;">Artifact</span><span style="font-weight: bold; font-weight: 100;"> .parquet/DataFrame</span></span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">└── </span><span style="color: #55FFFF; font-weight: bold;">General</span></span></span>
-<span><span class="co">#&gt; <span style="font-weight: 100;">    ├── </span>.uid = 'Q3dgy9yok1Uuclsb0000'</span></span>
+<span><span class="co">#&gt; <span style="font-weight: 100;">    ├── </span>.uid = '3tn0cBtSDDcrOctZ0000'</span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">    ├── </span>.key = 'my_datasets/rnaseq1.parquet'</span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">    ├── </span>.size = 8530</span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">    ├── </span>.hash = 'hDTNFwEPy7pY1EKnOHog2A'</span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">    ├── </span>.n_observations = 3</span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">    ├── </span>.path = </span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">    │   /home/runner/work/laminr/laminr/vignettes/articles/laminr-intro</span>/.lamindb</span></span>
-<span><span class="co">#&gt; <span style="font-weight: 100;">    │   </span>/Q3dgy9yok1Uuclsb0000.parquet</span></span>
+<span><span class="co">#&gt; <span style="font-weight: 100;">    │   </span>/3tn0cBtSDDcrOctZ0000.parquet</span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">    ├── </span>.created_by = testuser1 (Test User1)</span></span>
-<span><span class="co">#&gt; <span style="font-weight: 100;">    ├── </span>.created_at = <span style="font-weight: 100;">2025-04-07 11:34:14</span></span></span>
+<span><span class="co">#&gt; <span style="font-weight: 100;">    ├── </span>.created_at = <span style="font-weight: 100;">2025-04-13 19:04:56</span></span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">    └── </span><span style="color: #00BBBB;">.transform = 'introduction.Rmd'</span></span></span>
 <span></span>
 <span><span class="va">artifact</span><span class="op">$</span><span class="fu">cache</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "/home/runner/work/laminr/laminr/vignettes/articles/laminr-intro/.lamindb/Q3dgy9yok1Uuclsb0000.parquet"</span></span>
+<span><span class="co">#&gt; [1] "/home/runner/work/laminr/laminr/vignettes/articles/laminr-intro/.lamindb/3tn0cBtSDDcrOctZ0000.parquet"</span></span>
 <span></span>
 <span><span class="va">dataset</span> <span class="op">&lt;-</span> <span class="va">artifact</span><span class="op">$</span><span class="fu">open</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">dataset</span><span class="op">)</span></span>
@@ -227,8 +227,8 @@ artifact can be any file or folder but is typically a dataset.</p>
 <span><span class="co">#&gt; <span style="color: #55FF55;">→</span> creating new artifact version for key='my_datasets/rnaseq1.parquet' (storage: '/home/runner/work/laminr/laminr/vignettes/articles/laminr-intro')</span></span>
 <span><span class="va">artifact</span><span class="op">$</span><span class="va">versions</span><span class="op">$</span><span class="fu">df</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                    uid                         key description   suffix    kind</span></span>
-<span><span class="co">#&gt; 1 Q3dgy9yok1Uuclsb0000 my_datasets/rnaseq1.parquet        &lt;NA&gt; .parquet dataset</span></span>
-<span><span class="co">#&gt; 2 Q3dgy9yok1Uuclsb0001 my_datasets/rnaseq1.parquet        &lt;NA&gt; .parquet dataset</span></span>
+<span><span class="co">#&gt; 1 3tn0cBtSDDcrOctZ0000 my_datasets/rnaseq1.parquet        &lt;NA&gt; .parquet dataset</span></span>
+<span><span class="co">#&gt; 2 3tn0cBtSDDcrOctZ0001 my_datasets/rnaseq1.parquet        &lt;NA&gt; .parquet dataset</span></span>
 <span><span class="co">#&gt;       otype size                   hash n_files n_observations _hash_type</span></span>
 <span><span class="co">#&gt; 1 DataFrame 8530 hDTNFwEPy7pY1EKnOHog2A    &lt;NA&gt;              3        md5</span></span>
 <span><span class="co">#&gt; 2 DataFrame 8530 RVElCjRCfyOAxbLNDEAMOg    &lt;NA&gt;              3        md5</span></span>
@@ -236,8 +236,8 @@ artifact can be any file or folder but is typically a dataset.</p>
 <span><span class="co">#&gt; 1            TRUE               FALSE        1          1      &lt;NA&gt;    &lt;NA&gt;</span></span>
 <span><span class="co">#&gt; 2            TRUE               FALSE        1          1      &lt;NA&gt;    &lt;NA&gt;</span></span>
 <span><span class="co">#&gt;   is_latest run_id          created_at created_by_id _aux _branch_code</span></span>
-<span><span class="co">#&gt; 1     FALSE      1 2025-04-07 11:34:14             1 &lt;NA&gt;            1</span></span>
-<span><span class="co">#&gt; 2      TRUE      1 2025-04-07 11:34:15             1 &lt;NA&gt;            1</span></span></code></pre></div>
+<span><span class="co">#&gt; 1     FALSE      1 2025-04-13 19:04:56             1 &lt;NA&gt;            1</span></span>
+<span><span class="co">#&gt; 2      TRUE      1 2025-04-13 19:04:57             1 &lt;NA&gt;            1</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="labels">Labels<a class="anchor" aria-label="anchor" href="#labels"></a>
@@ -259,16 +259,16 @@ artifact can be any file or folder but is typically a dataset.</p>
 <span><span class="va">artifact</span><span class="op">$</span><span class="fu">describe</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="font-weight: bold;">Artifact</span><span style="font-weight: bold; font-weight: 100;"> .parquet/DataFrame</span></span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">├── </span><span style="color: #55FFFF; font-weight: bold;">General</span></span></span>
-<span><span class="co">#&gt; <span style="font-weight: 100;">│   ├── </span>.uid = 'Q3dgy9yok1Uuclsb0001'</span></span>
+<span><span class="co">#&gt; <span style="font-weight: 100;">│   ├── </span>.uid = '3tn0cBtSDDcrOctZ0001'</span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   ├── </span>.key = 'my_datasets/rnaseq1.parquet'</span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   ├── </span>.size = 8530</span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   ├── </span>.hash = 'RVElCjRCfyOAxbLNDEAMOg'</span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   ├── </span>.n_observations = 3</span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   ├── </span>.path = </span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   │   /home/runner/work/laminr/laminr/vignettes/articles/laminr-intro</span>/.lamindb</span></span>
-<span><span class="co">#&gt; <span style="font-weight: 100;">│   │   </span>/Q3dgy9yok1Uuclsb0001.parquet</span></span>
+<span><span class="co">#&gt; <span style="font-weight: 100;">│   │   </span>/3tn0cBtSDDcrOctZ0001.parquet</span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   ├── </span>.created_by = testuser1 (Test User1)</span></span>
-<span><span class="co">#&gt; <span style="font-weight: 100;">│   ├── </span>.created_at = <span style="font-weight: 100;">2025-04-07 11:34:15</span></span></span>
+<span><span class="co">#&gt; <span style="font-weight: 100;">│   ├── </span>.created_at = <span style="font-weight: 100;">2025-04-13 19:04:57</span></span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   └── </span><span style="color: #00BBBB;">.transform = 'introduction.Rmd'</span></span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">└── </span><span style="color: #FFFF55; font-weight: bold;">Labels</span></span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">    └── </span>.cell_types        <span style="font-weight: 100;"> bionty.CellType   </span> effector T cell                  </span></span>
@@ -281,11 +281,11 @@ artifact can be any file or folder but is typically a dataset.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ln</span><span class="op">$</span><span class="va">ULabel</span><span class="op">$</span><span class="fu">df</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt;        uid                        name is_type description reference</span></span>
-<span><span class="co">#&gt; 2 Su0Niv0T Candidate marker experiment   FALSE        &lt;NA&gt;      &lt;NA&gt;</span></span>
-<span><span class="co">#&gt; 1 x8GIqLSm                  Experiment    TRUE        &lt;NA&gt;      &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 2 tLBoJeuW Candidate marker experiment   FALSE        &lt;NA&gt;      &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 1 GM0w3ZOq                  Experiment    TRUE        &lt;NA&gt;      &lt;NA&gt;</span></span>
 <span><span class="co">#&gt;   reference_type space_id type_id run_id          created_at created_by_id _aux</span></span>
-<span><span class="co">#&gt; 2           &lt;NA&gt;        1       1      1 2025-04-07 11:34:15             1 &lt;NA&gt;</span></span>
-<span><span class="co">#&gt; 1           &lt;NA&gt;        1     NaN      1 2025-04-07 11:34:15             1 &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 2           &lt;NA&gt;        1       1      1 2025-04-13 19:04:57             1 &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 1           &lt;NA&gt;        1     NaN      1 2025-04-13 19:04:57             1 &lt;NA&gt;</span></span>
 <span><span class="co">#&gt;   _branch_code</span></span>
 <span><span class="co">#&gt; 2            1</span></span>
 <span><span class="co">#&gt; 1            1</span></span>
@@ -344,8 +344,8 @@ artifact can be any file or folder but is typically a dataset.</p>
 <span></span>
 <span><span class="va">ln</span><span class="op">$</span><span class="va">Artifact</span><span class="op">$</span><span class="fu">filter</span><span class="op">(</span>key__startswith <span class="op">=</span> <span class="st">"my_datasets/"</span><span class="op">)</span><span class="op">$</span><span class="fu">df</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                    uid                         key description   suffix    kind</span></span>
-<span><span class="co">#&gt; 1 Q3dgy9yok1Uuclsb0000 my_datasets/rnaseq1.parquet        &lt;NA&gt; .parquet dataset</span></span>
-<span><span class="co">#&gt; 2 Q3dgy9yok1Uuclsb0001 my_datasets/rnaseq1.parquet        &lt;NA&gt; .parquet dataset</span></span>
+<span><span class="co">#&gt; 1 3tn0cBtSDDcrOctZ0000 my_datasets/rnaseq1.parquet        &lt;NA&gt; .parquet dataset</span></span>
+<span><span class="co">#&gt; 2 3tn0cBtSDDcrOctZ0001 my_datasets/rnaseq1.parquet        &lt;NA&gt; .parquet dataset</span></span>
 <span><span class="co">#&gt;       otype size                   hash n_files n_observations _hash_type</span></span>
 <span><span class="co">#&gt; 1 DataFrame 8530 hDTNFwEPy7pY1EKnOHog2A    &lt;NA&gt;              3        md5</span></span>
 <span><span class="co">#&gt; 2 DataFrame 8530 RVElCjRCfyOAxbLNDEAMOg    &lt;NA&gt;              3        md5</span></span>
@@ -353,8 +353,8 @@ artifact can be any file or folder but is typically a dataset.</p>
 <span><span class="co">#&gt; 1            TRUE               FALSE        1          1      &lt;NA&gt;    &lt;NA&gt;</span></span>
 <span><span class="co">#&gt; 2            TRUE               FALSE        1          1      &lt;NA&gt;    &lt;NA&gt;</span></span>
 <span><span class="co">#&gt;   is_latest run_id          created_at created_by_id _aux _branch_code</span></span>
-<span><span class="co">#&gt; 1     FALSE      1 2025-04-07 11:34:14             1 &lt;NA&gt;            1</span></span>
-<span><span class="co">#&gt; 2      TRUE      1 2025-04-07 11:34:15             1 &lt;NA&gt;            1</span></span>
+<span><span class="co">#&gt; 1     FALSE      1 2025-04-13 19:04:56             1 &lt;NA&gt;            1</span></span>
+<span><span class="co">#&gt; 2      TRUE      1 2025-04-13 19:04:57             1 &lt;NA&gt;            1</span></span>
 <span></span>
 <span><span class="va">artifacts</span> <span class="op">&lt;-</span> <span class="va">ln</span><span class="op">$</span><span class="va">Artifact</span><span class="op">$</span><span class="fu">filter</span><span class="op">(</span>transform <span class="op">=</span> <span class="va">transform</span><span class="op">)</span><span class="op">$</span><span class="fu">all</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
@@ -364,11 +364,11 @@ artifact can be any file or folder but is typically a dataset.</p>
 <span></span>
 <span><span class="va">ln</span><span class="op">$</span><span class="va">Transform</span><span class="op">$</span><span class="fu">search</span><span class="op">(</span><span class="st">"intro"</span><span class="op">)</span><span class="op">$</span><span class="fu">df</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                uid              key      description     type source_code hash</span></span>
-<span><span class="co">#&gt; 1 fFqSLCzfPR3y0000 introduction.Rmd introduction.Rmd notebook        &lt;NA&gt; &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 1 XIpitVQZxCT00000 introduction.Rmd introduction.Rmd notebook        &lt;NA&gt; &lt;NA&gt;</span></span>
 <span><span class="co">#&gt;   reference reference_type space_id _template_id version is_latest</span></span>
 <span><span class="co">#&gt; 1      &lt;NA&gt;           &lt;NA&gt;        1         &lt;NA&gt;    &lt;NA&gt;      TRUE</span></span>
 <span><span class="co">#&gt;            created_at created_by_id _aux _branch_code</span></span>
-<span><span class="co">#&gt; 1 2025-04-07 11:34:13             1 &lt;NA&gt;            1</span></span>
+<span><span class="co">#&gt; 1 2025-04-13 19:04:55             1 &lt;NA&gt;            1</span></span>
 <span><span class="va">ulabels</span> <span class="op">&lt;-</span> <span class="va">ln</span><span class="op">$</span><span class="va">ULabel</span><span class="op">$</span><span class="fu">lookup</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">cell_types</span> <span class="op">&lt;-</span> <span class="va">bt</span><span class="op">$</span><span class="va">CellType</span><span class="op">$</span><span class="fu">lookup</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -378,10 +378,10 @@ artifact can be any file or folder but is typically a dataset.</p>
 <p>See <a href="https://docs.lamin.ai/guide#features" class="external-link uri">https://docs.lamin.ai/guide#features</a>.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ln</span><span class="op">$</span><span class="fu">Feature</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"temperature"</span>, dtype <span class="op">=</span> <span class="st">"float"</span><span class="op">)</span><span class="op">$</span><span class="fu">save</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Feature(uid='9JLyu3L1y7as', name='temperature', dtype='float', array_rank=0, array_size=0, space_id=1, created_by_id=1, run_id=1, created_at=2025-04-07 11:34:17 UTC)</span></span>
+<span><span class="co">#&gt; Feature(uid='EeHT7EFqvV7a', name='temperature', dtype='float', array_rank=0, array_size=0, space_id=1, created_by_id=1, run_id=1, created_at=2025-04-13 19:04:59 UTC)</span></span>
 <span></span>
 <span><span class="va">ln</span><span class="op">$</span><span class="fu">Feature</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"experiment"</span>, dtype <span class="op">=</span> <span class="va">ln</span><span class="op">$</span><span class="va">ULabel</span><span class="op">)</span><span class="op">$</span><span class="fu">save</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Feature(uid='2VSaKqnaKQPq', name='experiment', dtype='cat[ULabel]', array_rank=0, array_size=0, space_id=1, created_by_id=1, run_id=1, created_at=2025-04-07 11:34:17 UTC)</span></span>
+<span><span class="co">#&gt; Feature(uid='kVKcCw89prmo', name='experiment', dtype='cat[ULabel]', array_rank=0, array_size=0, space_id=1, created_by_id=1, run_id=1, created_at=2025-04-13 19:04:59 UTC)</span></span>
 <span></span>
 <span><span class="va">artifact</span><span class="op">$</span><span class="va">features</span><span class="op">$</span><span class="fu">add_values</span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"temperature"</span> <span class="op">=</span> <span class="fl">21.6</span>, <span class="st">"experiment"</span> <span class="op">=</span> <span class="st">"Candidate marker experiment"</span><span class="op">)</span></span>
@@ -390,16 +390,16 @@ artifact can be any file or folder but is typically a dataset.</p>
 <span><span class="va">artifact</span><span class="op">$</span><span class="fu">describe</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="font-weight: bold;">Artifact</span><span style="font-weight: bold; font-weight: 100;"> .parquet/DataFrame</span></span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">├── </span><span style="color: #55FFFF; font-weight: bold;">General</span></span></span>
-<span><span class="co">#&gt; <span style="font-weight: 100;">│   ├── </span>.uid = 'Q3dgy9yok1Uuclsb0001'</span></span>
+<span><span class="co">#&gt; <span style="font-weight: 100;">│   ├── </span>.uid = '3tn0cBtSDDcrOctZ0001'</span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   ├── </span>.key = 'my_datasets/rnaseq1.parquet'</span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   ├── </span>.size = 8530</span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   ├── </span>.hash = 'RVElCjRCfyOAxbLNDEAMOg'</span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   ├── </span>.n_observations = 3</span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   ├── </span>.path = </span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   │   /home/runner/work/laminr/laminr/vignettes/articles/laminr-intro</span>/.lamindb</span></span>
-<span><span class="co">#&gt; <span style="font-weight: 100;">│   │   </span>/Q3dgy9yok1Uuclsb0001.parquet</span></span>
+<span><span class="co">#&gt; <span style="font-weight: 100;">│   │   </span>/3tn0cBtSDDcrOctZ0001.parquet</span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   ├── </span>.created_by = testuser1 (Test User1)</span></span>
-<span><span class="co">#&gt; <span style="font-weight: 100;">│   ├── </span>.created_at = <span style="font-weight: 100;">2025-04-07 11:34:15</span></span></span>
+<span><span class="co">#&gt; <span style="font-weight: 100;">│   ├── </span>.created_at = <span style="font-weight: 100;">2025-04-13 19:04:57</span></span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   └── </span><span style="color: #00BBBB;">.transform = 'introduction.Rmd'</span></span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">├── </span><span style="color: #FF5555; font-weight: bold;">Linked features</span></span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   └── </span>experiment         <span style="font-weight: 100;"> cat[ULabel]       </span> Candidate marker experiment      </span></span>
@@ -410,13 +410,13 @@ artifact can be any file or folder but is typically a dataset.</p>
 <span></span>
 <span><span class="va">ln</span><span class="op">$</span><span class="va">Artifact</span><span class="op">$</span><span class="va">features</span><span class="op">$</span><span class="fu">filter</span><span class="op">(</span>experiment__contains <span class="op">=</span> <span class="st">"marker experiment"</span><span class="op">)</span><span class="op">$</span><span class="fu">df</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                    uid                         key description   suffix    kind</span></span>
-<span><span class="co">#&gt; 2 Q3dgy9yok1Uuclsb0001 my_datasets/rnaseq1.parquet        &lt;NA&gt; .parquet dataset</span></span>
+<span><span class="co">#&gt; 2 3tn0cBtSDDcrOctZ0001 my_datasets/rnaseq1.parquet        &lt;NA&gt; .parquet dataset</span></span>
 <span><span class="co">#&gt;       otype size                   hash n_files n_observations _hash_type</span></span>
 <span><span class="co">#&gt; 2 DataFrame 8530 RVElCjRCfyOAxbLNDEAMOg    &lt;NA&gt;              3        md5</span></span>
 <span><span class="co">#&gt;   _key_is_virtual _overwrite_versions space_id storage_id schema_id version</span></span>
 <span><span class="co">#&gt; 2            TRUE               FALSE        1          1      &lt;NA&gt;    &lt;NA&gt;</span></span>
 <span><span class="co">#&gt;   is_latest run_id          created_at created_by_id _aux _branch_code</span></span>
-<span><span class="co">#&gt; 2      TRUE      1 2025-04-07 11:34:15             1 &lt;NA&gt;            1</span></span></code></pre></div>
+<span><span class="co">#&gt; 2      TRUE      1 2025-04-13 19:04:57             1 &lt;NA&gt;            1</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -448,9 +448,9 @@ artifact can be any file or folder but is typically a dataset.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">perturbation_type</span> <span class="op">&lt;-</span> <span class="va">ln</span><span class="op">$</span><span class="fu">ULabel</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Perturbation"</span>, is_type <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">$</span><span class="fu">save</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">ln</span><span class="op">$</span><span class="fu">ULabel</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"DMSO"</span>, type <span class="op">=</span> <span class="va">perturbation_type</span><span class="op">)</span><span class="op">$</span><span class="fu">save</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ULabel(uid='6HEbX640', name='DMSO', is_type=False, space_id=1, created_by_id=1, run_id=1, type_id=3, created_at=2025-04-07 11:34:17 UTC)</span></span>
+<span><span class="co">#&gt; ULabel(uid='EX0jTbq4', name='DMSO', is_type=False, space_id=1, created_by_id=1, run_id=1, type_id=3, created_at=2025-04-13 19:04:59 UTC)</span></span>
 <span><span class="va">ln</span><span class="op">$</span><span class="fu">ULabel</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"IFNG"</span>, type <span class="op">=</span> <span class="va">perturbation_type</span><span class="op">)</span><span class="op">$</span><span class="fu">save</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ULabel(uid='al6kvAtl', name='IFNG', is_type=False, space_id=1, created_by_id=1, run_id=1, type_id=3, created_at=2025-04-07 11:34:17 UTC)</span></span>
+<span><span class="co">#&gt; ULabel(uid='8ghj240m', name='IFNG', is_type=False, space_id=1, created_by_id=1, run_id=1, type_id=3, created_at=2025-04-13 19:05:00 UTC)</span></span>
 <span></span>
 <span><span class="co"># Load Python built ins to get access to dtypes</span></span>
 <span><span class="va">py_builtins</span> <span class="op">&lt;-</span> <span class="fu">reticulate</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/reticulate/reference/import.html" class="external-link">import_builtins</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -469,27 +469,27 @@ artifact can be any file or folder but is typically a dataset.</p>
 <span><span class="va">curator</span> <span class="op">&lt;-</span> <span class="va">ln</span><span class="op">$</span><span class="va">curators</span><span class="op">$</span><span class="fu">DataFrameCurator</span><span class="op">(</span><span class="va">df</span>, <span class="va">schema</span><span class="op">)</span></span>
 <span><span class="va">artifact</span> <span class="op">&lt;-</span> <span class="va">curator</span><span class="op">$</span><span class="fu">save_artifact</span><span class="op">(</span>key <span class="op">=</span> <span class="st">"my_curated_dataset.parquet"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #55FF55;">✓</span> "perturbation" is validated against <span style="font-style: italic;">ULabel.name</span></span></span>
-<span><span class="co">#&gt; <span style="color: #55FF55;">→</span> returning existing artifact with same hash: Artifact(uid='Q3dgy9yok1Uuclsb0001', is_latest=True, key='my_datasets/rnaseq1.parquet', suffix='.parquet', kind='dataset', otype='DataFrame', size=8530, hash='RVElCjRCfyOAxbLNDEAMOg', n_observations=3, space_id=1, storage_id=1, run_id=1, created_by_id=1, created_at=2025-04-07 11:34:15 UTC); to track this artifact as an input, use: ln.Artifact.get()</span></span>
+<span><span class="co">#&gt; <span style="color: #55FF55;">→</span> returning existing artifact with same hash: Artifact(uid='3tn0cBtSDDcrOctZ0001', is_latest=True, key='my_datasets/rnaseq1.parquet', suffix='.parquet', kind='dataset', otype='DataFrame', size=8530, hash='RVElCjRCfyOAxbLNDEAMOg', n_observations=3, space_id=1, storage_id=1, run_id=1, created_by_id=1, created_at=2025-04-13 19:04:57 UTC); to track this artifact as an input, use: ln.Artifact.get()</span></span>
 <span><span class="co">#&gt; <span style="color: #FFFF55;">!</span> key my_datasets/rnaseq1.parquet on existing artifact differs from passed key my_curated_dataset.parquet</span></span>
 <span><span class="co">#&gt; <span style="color: #55FF55;">✓</span> <span style="color: #55FF55; font-weight: bold;">4 unique terms</span> (36.40%) are validated for <span style="font-style: italic;">name</span></span></span>
 <span><span class="co">#&gt; <span style="color: #FFFF55;">!</span> <span style="color: #FFFF55; font-weight: bold;">7 unique terms</span> (63.60%) are not validated for <span style="font-style: italic;">name</span>: <span style="color: #FFFF55; font-weight: bold;">'sample_note', 'cell_type_by_expert', 'cell_type_by_model', 'assay_oid', 'concentration', 'treatment_time_h', 'donor'</span></span></span>
 <span><span class="co">#&gt; <span style="color: #55FF55;">✓</span> loaded <span style="color: #55FF55; font-weight: bold;">4 Feature records</span> matching <span style="font-style: italic;">name</span>: <span style="color: #55FF55; font-weight: bold;">'ENSG00000153563', 'ENSG00000010610', 'ENSG00000170458', 'perturbation'</span></span></span>
 <span><span class="co">#&gt; <span style="color: #FFFF55;">!</span> <span style="color: #FF5555; font-weight: bold;">did not create</span> Feature records for <span style="color: #FFFF55; font-weight: bold;">7 non-validated</span> <span style="font-style: italic;">names</span>: <span style="color: #FFFF55; font-weight: bold;">'assay_oid', 'cell_type_by_expert', 'cell_type_by_model', 'concentration', 'donor', 'sample_note', 'treatment_time_h'</span></span></span>
-<span><span class="co">#&gt; <span style="color: #55FF55;">→</span> returning existing schema with same hash: Schema(uid='anyCXdQt5yZfzYOjzdHH', name='My DataFrame schema', n=4, itype='Feature', is_type=False, hash='Wj32No5I4aB6ETal2smSxw', minimal_set=True, ordered_set=False, maximal_set=False, space_id=1, created_by_id=1, run_id=1, created_at=2025-04-07 11:34:18 UTC)</span></span>
+<span><span class="co">#&gt; <span style="color: #55FF55;">→</span> returning existing schema with same hash: Schema(uid='X0ijfzr2jUcmBJPmunhJ', name='My DataFrame schema', n=4, itype='Feature', is_type=False, hash='IFQqbXLOTkSYuVygH4-LXg', minimal_set=True, ordered_set=False, maximal_set=False, space_id=1, created_by_id=1, run_id=1, created_at=2025-04-13 19:05:00 UTC)</span></span>
 <span><span class="co">#&gt; <span style="color: #FFFF55;">!</span> updated otype from None to DataFrame</span></span>
 <span><span class="va">artifact</span><span class="op">$</span><span class="fu">describe</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="font-weight: bold;">Artifact</span><span style="font-weight: bold; font-weight: 100;"> .parquet/DataFrame</span></span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">├── </span><span style="color: #55FFFF; font-weight: bold;">General</span></span></span>
-<span><span class="co">#&gt; <span style="font-weight: 100;">│   ├── </span>.uid = 'Q3dgy9yok1Uuclsb0001'</span></span>
+<span><span class="co">#&gt; <span style="font-weight: 100;">│   ├── </span>.uid = '3tn0cBtSDDcrOctZ0001'</span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   ├── </span>.key = 'my_datasets/rnaseq1.parquet'</span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   ├── </span>.size = 8530</span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   ├── </span>.hash = 'RVElCjRCfyOAxbLNDEAMOg'</span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   ├── </span>.n_observations = 3</span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   ├── </span>.path = </span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   │   /home/runner/work/laminr/laminr/vignettes/articles/laminr-intro</span>/.lamindb</span></span>
-<span><span class="co">#&gt; <span style="font-weight: 100;">│   │   </span>/Q3dgy9yok1Uuclsb0001.parquet</span></span>
+<span><span class="co">#&gt; <span style="font-weight: 100;">│   │   </span>/3tn0cBtSDDcrOctZ0001.parquet</span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   ├── </span>.created_by = testuser1 (Test User1)</span></span>
-<span><span class="co">#&gt; <span style="font-weight: 100;">│   ├── </span>.created_at = <span style="font-weight: 100;">2025-04-07 11:34:15</span></span></span>
+<span><span class="co">#&gt; <span style="font-weight: 100;">│   ├── </span>.created_at = <span style="font-weight: 100;">2025-04-13 19:04:57</span></span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   └── </span><span style="color: #00BBBB;">.transform = 'introduction.Rmd'</span></span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">├── </span><span style="color: #FF55FF; font-weight: bold;">Dataset features</span><span style="font-weight: 100;">/</span><span style="font-weight: bold; font-weight: 100;">.feature_sets</span></span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   └── </span><span style="color: #FF55FF; font-weight: bold;">columns</span><span style="font-weight: bold; font-weight: 100;"> • </span><span style="color: #BBBBBB; font-weight: bold;">4</span><span style="font-weight: bold;">         </span><span style="color: #BBBBBB; font-weight: bold;">[Feature]</span><span style="font-weight: bold;">                                           </span></span></span>
@@ -504,7 +504,7 @@ artifact can be any file or folder but is typically a dataset.</p>
 <span><span class="co">#&gt; <span style="font-weight: 100;">    └── </span>.cell_types        <span style="font-weight: 100;"> bionty.CellType   </span> effector T cell                  </span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">        </span>.ulabels           <span style="font-weight: 100;"> ULabel            </span> Candidate marker experiment, DMS…</span></span>
 <span><span class="va">ln</span><span class="op">$</span><span class="va">Artifact</span><span class="op">$</span><span class="fu">get</span><span class="op">(</span>ulabels__name <span class="op">=</span> <span class="st">"IFNG"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Artifact(uid='Q3dgy9yok1Uuclsb0001', is_latest=True, key='my_datasets/rnaseq1.parquet', suffix='.parquet', kind='dataset', otype='DataFrame', size=8530, hash='RVElCjRCfyOAxbLNDEAMOg', n_observations=3, space_id=1, storage_id=1, run_id=1, schema_id=1, created_by_id=1, created_at=2025-04-07 11:34:15 UTC)</span></span>
+<span><span class="co">#&gt; Artifact(uid='3tn0cBtSDDcrOctZ0001', is_latest=True, key='my_datasets/rnaseq1.parquet', suffix='.parquet', kind='dataset', otype='DataFrame', size=8530, hash='RVElCjRCfyOAxbLNDEAMOg', n_observations=3, space_id=1, storage_id=1, run_id=1, schema_id=1, created_by_id=1, created_at=2025-04-13 19:04:57 UTC)</span></span>
 <span></span>
 <span><span class="va">curator</span> <span class="op">&lt;-</span> <span class="va">ln</span><span class="op">$</span><span class="va">curators</span><span class="op">$</span><span class="fu">DataFrameCurator</span><span class="op">(</span><span class="va">df_typo</span>, <span class="va">schema</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch</a></span><span class="op">(</span></span>
@@ -570,30 +570,29 @@ artifact can be any file or folder but is typically a dataset.</p>
 <span>  obs <span class="op">=</span> <span class="va">df</span><span class="op">[</span>, <span class="st">"perturbation"</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span></span>
 <span><span class="op">)</span></span>
 <span><span class="va">curator</span> <span class="op">&lt;-</span> <span class="va">ln</span><span class="op">$</span><span class="va">curators</span><span class="op">$</span><span class="fu">AnnDataCurator</span><span class="op">(</span><span class="va">adata</span>, <span class="va">anndata_schema</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #55FF55;">✓</span> created <span style="color: #FF55FF; font-weight: bold;">1 Organism record from Bionty</span> matching <span style="font-style: italic;">name</span>: <span style="color: #FF55FF; font-weight: bold;">'human'</span></span></span>
 <span><span class="co">#&gt; <span style="color: #5555FF;">•</span> saving validated records of 'columns'</span></span>
 <span><span class="co">#&gt; <span style="color: #55FF55;">✓</span> added 3 records <span style="color: #55FF55; font-weight: bold;">from public</span> with <span style="font-style: italic;">Gene.ensembl_gene_id</span> for "columns": 'ENSG00000010610', 'ENSG00000153563', 'ENSG00000170458'</span></span>
 <span><span class="va">artifact</span> <span class="op">&lt;-</span> <span class="va">curator</span><span class="op">$</span><span class="fu">save_artifact</span><span class="op">(</span>description <span class="op">=</span> <span class="st">"my RNA-seq"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #55FF55;">✓</span> "perturbation" is validated against <span style="font-style: italic;">ULabel.name</span></span></span>
-<span><span class="co">#&gt; <span style="color: #55FFFF;">•</span> path content will be copied to default storage upon `save()` with key `None` ('.lamindb/3HXDBdg8MxRsKTlg0000.h5ad')</span></span>
-<span><span class="co">#&gt; <span style="color: #55FF55;">✓</span> storing artifact '3HXDBdg8MxRsKTlg0000' at '/home/runner/work/laminr/laminr/vignettes/articles/laminr-intro/.lamindb/3HXDBdg8MxRsKTlg0000.h5ad'</span></span>
+<span><span class="co">#&gt; <span style="color: #55FFFF;">•</span> path content will be copied to default storage upon `save()` with key `None` ('.lamindb/iFOoLyoJanTG93dO0000.h5ad')</span></span>
+<span><span class="co">#&gt; <span style="color: #55FF55;">✓</span> storing artifact 'iFOoLyoJanTG93dO0000' at '/home/runner/work/laminr/laminr/vignettes/articles/laminr-intro/.lamindb/iFOoLyoJanTG93dO0000.h5ad'</span></span>
 <span><span class="co">#&gt; <span style="color: #55FF55;">✓</span> <span style="color: #55FF55; font-weight: bold;">3 unique terms</span> (100.00%) are validated for <span style="font-style: italic;">ensembl_gene_id</span></span></span>
 <span><span class="co">#&gt; <span style="color: #55FF55;">✓</span> <span style="color: #55FF55; font-weight: bold;">1 unique term</span> (100.00%) is validated for <span style="font-style: italic;">name</span></span></span>
-<span><span class="co">#&gt; <span style="color: #55FF55;">→</span> returning existing schema with same hash: Schema(uid='ev9BnzwcaG8uoUdz5uPz', name='my_obs_schema', n=1, itype='Feature', is_type=False, hash='ELzKeWx4rgC5FKaVtvH-9Q', minimal_set=True, ordered_set=False, maximal_set=False, space_id=1, created_by_id=1, run_id=1, created_at=2025-04-07 11:34:19 UTC)</span></span>
+<span><span class="co">#&gt; <span style="color: #55FF55;">→</span> returning existing schema with same hash: Schema(uid='VFlxC6lKzqS5O5XvecSs', name='my_obs_schema', n=1, itype='Feature', is_type=False, hash='B_DQ8SFoEeAD34RdlQ8PhQ', minimal_set=True, ordered_set=False, maximal_set=False, space_id=1, created_by_id=1, run_id=1, created_at=2025-04-13 19:05:01 UTC)</span></span>
 <span><span class="co">#&gt; <span style="color: #FFFF55;">!</span> updated otype from None to DataFrame</span></span>
 <span><span class="co">#&gt; <span style="color: #55FF55;">✓</span> saved 1 feature set for slot: 'var'</span></span>
 <span><span class="va">artifact</span><span class="op">$</span><span class="fu">describe</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="font-weight: bold;">Artifact</span><span style="font-weight: bold; font-weight: 100;"> .h5ad/AnnData</span></span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">├── </span><span style="color: #55FFFF; font-weight: bold;">General</span></span></span>
-<span><span class="co">#&gt; <span style="font-weight: 100;">│   ├── </span>.uid = '3HXDBdg8MxRsKTlg0000'</span></span>
+<span><span class="co">#&gt; <span style="font-weight: 100;">│   ├── </span>.uid = 'iFOoLyoJanTG93dO0000'</span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   ├── </span>.size = 19240</span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   ├── </span>.hash = 'gO44MDqttaaKNyBLVM-zzA'</span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   ├── </span>.n_observations = 3</span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   ├── </span>.path = </span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   │   /home/runner/work/laminr/laminr/vignettes/articles/laminr-intro</span>/.lamindb</span></span>
-<span><span class="co">#&gt; <span style="font-weight: 100;">│   │   </span>/3HXDBdg8MxRsKTlg0000.h5ad</span></span>
+<span><span class="co">#&gt; <span style="font-weight: 100;">│   │   </span>/iFOoLyoJanTG93dO0000.h5ad</span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   ├── </span>.created_by = testuser1 (Test User1)</span></span>
-<span><span class="co">#&gt; <span style="font-weight: 100;">│   ├── </span>.created_at = <span style="font-weight: 100;">2025-04-07 11:34:21</span></span></span>
+<span><span class="co">#&gt; <span style="font-weight: 100;">│   ├── </span>.created_at = <span style="font-weight: 100;">2025-04-13 19:05:03</span></span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   └── </span><span style="color: #00BBBB;">.transform = 'introduction.Rmd'</span></span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">├── </span><span style="color: #FF55FF; font-weight: bold;">Dataset features</span><span style="font-weight: 100;">/</span><span style="font-weight: bold; font-weight: 100;">.feature_sets</span></span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   ├── </span><span style="color: #FF55FF; font-weight: bold;">var</span><span style="font-weight: bold; font-weight: 100;"> • </span><span style="color: #BBBBBB; font-weight: bold;">3</span><span style="font-weight: bold;">             </span><span style="color: #BBBBBB; font-weight: bold;">[bionty.Gene]</span><span style="font-weight: bold;">                                       </span></span></span>
@@ -609,13 +608,13 @@ artifact can be any file or folder but is typically a dataset.</p>
 <span><span class="va">feature_sets</span> <span class="op">&lt;-</span> <span class="va">ln</span><span class="op">$</span><span class="va">FeatureSet</span><span class="op">$</span><span class="fu">filter</span><span class="op">(</span>genes <span class="op">=</span> <span class="va">genes</span><span class="op">$</span><span class="va">cd8a</span><span class="op">)</span><span class="op">$</span><span class="fu">all</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">ln</span><span class="op">$</span><span class="va">Artifact</span><span class="op">$</span><span class="fu">filter</span><span class="op">(</span>feature_sets__in <span class="op">=</span> <span class="va">feature_sets</span><span class="op">)</span><span class="op">$</span><span class="fu">df</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                    uid  key description suffix    kind   otype  size</span></span>
-<span><span class="co">#&gt; 3 3HXDBdg8MxRsKTlg0000 &lt;NA&gt;  my RNA-seq  .h5ad dataset AnnData 19240</span></span>
+<span><span class="co">#&gt; 3 iFOoLyoJanTG93dO0000 &lt;NA&gt;  my RNA-seq  .h5ad dataset AnnData 19240</span></span>
 <span><span class="co">#&gt;                     hash n_files n_observations _hash_type _key_is_virtual</span></span>
 <span><span class="co">#&gt; 3 gO44MDqttaaKNyBLVM-zzA    &lt;NA&gt;              3        md5            TRUE</span></span>
 <span><span class="co">#&gt;   _overwrite_versions space_id storage_id schema_id version is_latest run_id</span></span>
 <span><span class="co">#&gt; 3               FALSE        1          1         4    &lt;NA&gt;      TRUE      1</span></span>
 <span><span class="co">#&gt;            created_at created_by_id _aux _branch_code</span></span>
-<span><span class="co">#&gt; 3 2025-04-07 11:34:21             1 &lt;NA&gt;            1</span></span>
+<span><span class="co">#&gt; 3 2025-04-13 19:05:03             1 &lt;NA&gt;            1</span></span>
 <span></span>
 <span><span class="va">neuron</span> <span class="op">&lt;-</span> <span class="va">bt</span><span class="op">$</span><span class="va">CellType</span><span class="op">$</span><span class="fu">from_source</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"neuron"</span><span class="op">)</span><span class="op">$</span><span class="fu">save</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #55FF55;">✓</span> created <span style="color: #FF55FF; font-weight: bold;">1 CellType record from Bionty</span> matching <span style="font-style: italic;">name</span>: <span style="color: #FF55FF; font-weight: bold;">'neuron'</span></span></span>
@@ -642,10 +641,10 @@ artifact can be any file or folder but is typically a dataset.</p>
 <span><span class="va">artifact2</span> <span class="op">&lt;-</span> <span class="va">curator</span><span class="op">$</span><span class="fu">save_artifact</span><span class="op">(</span>key <span class="op">=</span> <span class="st">"my_datasets/my_rnaseq2.h5ad"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #55FF55;">✓</span> "perturbation" is validated against <span style="font-style: italic;">ULabel.name</span></span></span>
 <span><span class="co">#&gt; <span style="color: #55FFFF;">•</span> path content will be copied to default storage upon `save()` with key 'my_datasets/my_rnaseq2.h5ad'</span></span>
-<span><span class="co">#&gt; <span style="color: #55FF55;">✓</span> storing artifact 'Dhb8smPQGadISDIP0000' at '/home/runner/work/laminr/laminr/vignettes/articles/laminr-intro/.lamindb/Dhb8smPQGadISDIP0000.h5ad'</span></span>
+<span><span class="co">#&gt; <span style="color: #55FF55;">✓</span> storing artifact 'kQwxsPTWsKQHvuye0000' at '/home/runner/work/laminr/laminr/vignettes/articles/laminr-intro/.lamindb/kQwxsPTWsKQHvuye0000.h5ad'</span></span>
 <span><span class="co">#&gt; <span style="color: #55FF55;">✓</span> <span style="color: #55FF55; font-weight: bold;">3 unique terms</span> (100.00%) are validated for <span style="font-style: italic;">ensembl_gene_id</span></span></span>
 <span><span class="co">#&gt; <span style="color: #55FF55;">✓</span> <span style="color: #55FF55; font-weight: bold;">1 unique term</span> (100.00%) is validated for <span style="font-style: italic;">name</span></span></span>
-<span><span class="co">#&gt; <span style="color: #55FF55;">→</span> returning existing schema with same hash: Schema(uid='ev9BnzwcaG8uoUdz5uPz', name='my_obs_schema', n=1, itype='Feature', is_type=False, hash='ELzKeWx4rgC5FKaVtvH-9Q', minimal_set=True, ordered_set=False, maximal_set=False, space_id=1, created_by_id=1, run_id=1, created_at=2025-04-07 11:34:19 UTC)</span></span>
+<span><span class="co">#&gt; <span style="color: #55FF55;">→</span> returning existing schema with same hash: Schema(uid='VFlxC6lKzqS5O5XvecSs', name='my_obs_schema', n=1, itype='Feature', is_type=False, hash='B_DQ8SFoEeAD34RdlQ8PhQ', minimal_set=True, ordered_set=False, maximal_set=False, space_id=1, created_by_id=1, run_id=1, created_at=2025-04-13 19:05:01 UTC)</span></span>
 <span><span class="co">#&gt; <span style="color: #FFFF55;">!</span> updated otype from None to DataFrame</span></span>
 <span><span class="co">#&gt; <span style="color: #55FF55;">✓</span> saved 1 feature set for slot: 'var'</span></span>
 <span></span>
@@ -656,11 +655,11 @@ artifact can be any file or folder but is typically a dataset.</p>
 <span><span class="va">collection</span><span class="op">$</span><span class="fu">describe</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="font-weight: bold;">Collection</span><span style="font-weight: bold; font-weight: 100;"> </span></span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">└── </span><span style="color: #55FFFF; font-weight: bold;">General</span></span></span>
-<span><span class="co">#&gt; <span style="font-weight: 100;">    ├── </span>.uid = 'P1g9vekkwk22Kk4V0000'</span></span>
+<span><span class="co">#&gt; <span style="font-weight: 100;">    ├── </span>.uid = 'utOEbuYeFXS19ET80000'</span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">    ├── </span>.key = 'my-RNA-seq-collection'</span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">    ├── </span>.hash = 'DbgO9hDdS-KOydwDZDLp3g'</span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">    ├── </span>.created_by = testuser1 (Test User1)</span></span>
-<span><span class="co">#&gt; <span style="font-weight: 100;">    ├── </span>.created_at = <span style="font-weight: 100;">2025-04-07 11:34:25</span></span></span>
+<span><span class="co">#&gt; <span style="font-weight: 100;">    ├── </span>.created_at = <span style="font-weight: 100;">2025-04-13 19:05:07</span></span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">    └── </span><span style="color: #00BBBB;">.transform = 'introduction.Rmd'</span></span></span>
 <span><span class="va">collection</span><span class="op">$</span><span class="fu">view_lineage</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #BB0000;">✖</span> `view_lineage()` is not yet implemented. Please view the lineage in the web interface.</span></span>
@@ -669,11 +668,11 @@ artifact can be any file or folder but is typically a dataset.</p>
 <span><span class="co">#&gt; AnnData object with n_obs × n_vars = 6 × 4</span></span>
 <span><span class="co">#&gt;     obs: 'perturbation', 'artifact_uid'</span></span>
 <span><span class="va">collection</span><span class="op">$</span><span class="va">artifacts</span><span class="op">$</span><span class="fu">all</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; &lt;QuerySet [Artifact(uid='3HXDBdg8MxRsKTlg0000', is_latest=True, description='my RNA-seq', suffix='.h5ad', kind='dataset', otype='AnnData', size=19240, hash='gO44MDqttaaKNyBLVM-zzA', n_observations=3, space_id=1, storage_id=1, run_id=1, schema_id=4, created_by_id=1, created_at=2025-04-07 11:34:21 UTC), Artifact(uid='Dhb8smPQGadISDIP0000', is_latest=True, key='my_datasets/my_rnaseq2.h5ad', suffix='.h5ad', kind='dataset', otype='AnnData', size=19240, hash='Ti7bcnIOlk0fIt2TFW_VAw', n_observations=3, space_id=1, storage_id=1, run_id=1, schema_id=4, created_by_id=1, created_at=2025-04-07 11:34:24 UTC)]&gt;</span></span>
+<span><span class="co">#&gt; &lt;QuerySet [Artifact(uid='iFOoLyoJanTG93dO0000', is_latest=True, description='my RNA-seq', suffix='.h5ad', kind='dataset', otype='AnnData', size=19240, hash='gO44MDqttaaKNyBLVM-zzA', n_observations=3, space_id=1, storage_id=1, run_id=1, schema_id=4, created_by_id=1, created_at=2025-04-13 19:05:03 UTC), Artifact(uid='kQwxsPTWsKQHvuye0000', is_latest=True, key='my_datasets/my_rnaseq2.h5ad', suffix='.h5ad', kind='dataset', otype='AnnData', size=19240, hash='Ti7bcnIOlk0fIt2TFW_VAw', n_observations=3, space_id=1, storage_id=1, run_id=1, schema_id=4, created_by_id=1, created_at=2025-04-13 19:05:06 UTC)]&gt;</span></span>
 <span><span class="va">collection</span><span class="op">$</span><span class="va">artifacts</span><span class="op">$</span><span class="fu">df</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                    uid                         key description suffix    kind</span></span>
-<span><span class="co">#&gt; 3 3HXDBdg8MxRsKTlg0000                        &lt;NA&gt;  my RNA-seq  .h5ad dataset</span></span>
-<span><span class="co">#&gt; 4 Dhb8smPQGadISDIP0000 my_datasets/my_rnaseq2.h5ad        &lt;NA&gt;  .h5ad dataset</span></span>
+<span><span class="co">#&gt; 3 iFOoLyoJanTG93dO0000                        &lt;NA&gt;  my RNA-seq  .h5ad dataset</span></span>
+<span><span class="co">#&gt; 4 kQwxsPTWsKQHvuye0000 my_datasets/my_rnaseq2.h5ad        &lt;NA&gt;  .h5ad dataset</span></span>
 <span><span class="co">#&gt;     otype  size                   hash n_files n_observations _hash_type</span></span>
 <span><span class="co">#&gt; 3 AnnData 19240 gO44MDqttaaKNyBLVM-zzA    &lt;NA&gt;              3        md5</span></span>
 <span><span class="co">#&gt; 4 AnnData 19240 Ti7bcnIOlk0fIt2TFW_VAw    &lt;NA&gt;              3        md5</span></span>
@@ -681,8 +680,8 @@ artifact can be any file or folder but is typically a dataset.</p>
 <span><span class="co">#&gt; 3            TRUE               FALSE        1          1         4    &lt;NA&gt;</span></span>
 <span><span class="co">#&gt; 4            TRUE               FALSE        1          1         4    &lt;NA&gt;</span></span>
 <span><span class="co">#&gt;   is_latest run_id          created_at created_by_id _aux _branch_code</span></span>
-<span><span class="co">#&gt; 3      TRUE      1 2025-04-07 11:34:21             1 &lt;NA&gt;            1</span></span>
-<span><span class="co">#&gt; 4      TRUE      1 2025-04-07 11:34:24             1 &lt;NA&gt;            1</span></span></code></pre></div>
+<span><span class="co">#&gt; 3      TRUE      1 2025-04-13 19:05:03             1 &lt;NA&gt;            1</span></span>
+<span><span class="co">#&gt; 4      TRUE      1 2025-04-13 19:05:06             1 &lt;NA&gt;            1</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -754,17 +753,13 @@ package</a>.</p>
 source code to the hub.</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ln</span><span class="op">$</span><span class="fu">finish</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Creating lockfile <span style="color: #0000BB;">/home/runner/.cache/lamindb/environments/run_gFnVLAHLmNQ3h9</span>…</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Creating lockfile <span style="color: #0000BB;">/home/runner/.cache/lamindb/environments/run_1e5MfBkM0wX0jh</span>…</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Loading metadata database</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Loading metadata database ... done</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Updated metadata database: 2.36 MB in 4 files.</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Creating lockfile <span style="color: #0000BB;">/home/runner/.cache/lamindb/environments/run_gFnVLAHLmNQ3h9</span>…<span style="color: #00BBBB;">ℹ</span> source packages are missing from RSPM: Could not resolve host: RSPM</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Creating lockfile <span style="color: #0000BB;">/home/runner/.cache/lamindb/environments/run_gFnVLAHLmNQ3h9</span>…<span style="color: #00BBBB;">ℹ</span> Updating metadata database</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Updating metadata database ... done</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Creating lockfile <span style="color: #0000BB;">/home/runner/.cache/lamindb/environments/run_gFnVLAHLmNQ3h9</span>…<span style="color: #00BB00;">✔</span> Created lockfile <span style="color: #0000BB;">/home/runner/.cache/lamindb/environments/run_gFnVLAHLmNQ3h9N</span>…</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Creating lockfile <span style="color: #0000BB;">/home/runner/.cache/lamindb/environments/run_1e5MfBkM0wX0jh</span>…<span style="color: #00BB00;">✔</span> Created lockfile <span style="color: #0000BB;">/home/runner/.cache/lamindb/environments/run_1e5MfBkM0wX0jhS</span>…</span></span>
 <span><span class="co">#&gt; <span style="color: #FFFF55;">!</span> no html report found; to attach one, create an .html export for your .Rmd file and then run: lamin save introduction.Rmd</span></span>
-<span><span class="co">#&gt; <span style="color: #55FF55;">→</span> finished Run('gFnVLAHL') after 47s at 2025-04-07 11:35:00 UTC</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #55FF55;">→</span> finished Run('1e5MfBkM') after 48s at 2025-04-13 19:05:44 UTC</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="save-a-notebook-report-not-needed-for--r-scripts">Save a notebook report (not needed for <code>.R</code> scripts)<a class="anchor" aria-label="anchor" href="#save-a-notebook-report-not-needed-for--r-scripts"></a>
 </h3>
