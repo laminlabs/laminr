@@ -77,8 +77,8 @@ wrap_python <- function(obj, public = list(), active = list(), private = list())
 
       # Build a function that accesses the correct variable in the Python object
       fun_src <- paste0(
-        "function() {\n",
-        "  py_to_r(private$.py_object[['", .name, "']])",
+        "function(value) {\n",
+        "  get_or_set_python_slot(private$.py_object, '", .name, "', value)",
         "\n}"
       )
 
@@ -141,4 +141,12 @@ wrap_python_callable <- function(obj, call = NULL, public = list(), active = lis
     wrapped = wrapped,
     class = c(class(wrapped)[1], "laminr.CallableWrappedPythonObject")
   )
+}
+
+get_or_set_python_slot <- function(py_object, slot, value) {
+  if (missing(value)) {
+    py_to_r(py_object[[slot]])
+  } else {
+    py_object[[slot]] <- r_to_py(value)
+  }
 }
