@@ -20,7 +20,7 @@ current_user <- laminr::get_current_lamin_user()
 laminr::lamin_logout()
 withr::defer(laminr::lamin_login(current_user))
 
-# Set up a temporary test instance 
+# Set up a temporary test instance
 laminr::lamin_init_temp(name = "laminr-intro", modules = c("bionty"))
 
 # Disconnect from this instance at the end of the vignette
@@ -107,8 +107,10 @@ artifact$transform
 artifact$run
 
 artifact$view_lineage()
+```
 
-# ln$finish()  # mark run as finished, save execution report & source code
+```r
+ln$finish()  # mark run as finished, save execution report & source code
 ```
 
 ## Manage versioning
@@ -135,7 +137,7 @@ artifact_v1 <- ln$Artifact$from_df(df, description = "Just a description")$save(
 # below revises artifact_v1
 df_updated <- df
 df_updated[1, 1] <- 10
-artifact_v2 = ln$Artifact$from_df(df_updated, revises = artifact_v1)$save()
+artifact_v2 <- ln$Artifact$from_df(df_updated, revises = artifact_v1)$save()
 ```
 
 ## Manage files & folders
@@ -158,7 +160,7 @@ artifact$cache()
 
 ```{r manage-files-update}
 artifact_update <- ln$Artifact$from_df(df, key = "my_datasets/rnaseq-update.parquet")$save()
-artifact_update$description = "My new description"  # change description
+artifact_update$description <- "My new description"  # change description
 artifact_update$save()  # save the change to the database
 artifact_update$delete()  # move to trash
 artifact_update$delete(permanent = TRUE)  # permanently delete
@@ -178,7 +180,8 @@ ln$view()
 # get a single record (here the current notebook)
 transform <- ln$Transform$get(key = "introduction.Rmd")
 
-# get a set of records by filtering for a directory (LaminDB treats directories like AWS S3, as the prefix of the storage key)
+# get a set of records by filtering for a directory (LaminDB treats directories
+# like AWS S3, as the prefix of the storage key)
 ln$Artifact$filter(key__startswith = "my_datasets/")$df()
 
 # query all artifacts ingested from a transform
@@ -205,8 +208,8 @@ See https://docs.lamin.ai/introduction#features-labels
 
 ```{r features}
 # create & save a typed label
-experiment_type = ln$ULabel(name="InVitroStudy", is_type = TRUE)$save()
-my_experiment = ln$ULabel(name="My experiment", type = experiment_type)$save()
+experiment_type <- ln$ULabel(name = "InVitroStudy", is_type = TRUE)$save()
+my_experiment <- ln$ULabel(name = "My experiment", type = experiment_type)$save()
 
 # annotate the artifact with a label
 artifact$ulabels$add(my_experiment)
@@ -214,7 +217,7 @@ artifact$ulabels$add(my_experiment)
 # describe the artifact
 artifact$describe()
 
-ln$Artifact$filter(ulabels=my_experiment)$df()
+ln$Artifact$filter(ulabels = my_experiment)$df()
 
 bt <- import_module("bionty")
 
@@ -289,7 +292,7 @@ See https://docs.lamin.ai/introduction#manage-biological-registries
 ```{r registries}
 bt <- import_module("bionty")
 
-cell_types = bt$CellType$public()
+cell_types <- bt$CellType$public()
 cell_types
 
 cell_types$search("gamma-delta T cell") |> head(2)
@@ -326,7 +329,7 @@ feature_sets <- ln$Schema$filter(genes = genes$cd8a)$all()
 ln$Artifact$filter(feature_sets__in = feature_sets)$df()
 
 # create an ontology-coupled cell type record and save it
-neuron = bt$CellType$from_source(name = "neuron")$save()
+neuron <- bt$CellType$from_source(name = "neuron")$save()
 
 # create a record to track a new cell state
 new_cell_state <- bt$CellType(
@@ -351,19 +354,24 @@ adata <- ad$AnnData(df2[, 1:3], obs = df2[, 4:ncol(df2)])
 curator <- ln$curators$AnnDataCurator(adata, anndata_schema)
 artifact2 <- curator$save_artifact(key = "my_datasets/my_rnaseq2.h5ad")
 
-collection = ln$Collection(list(artifact, artifact2), key = "my-RNA-seq-collection")$save()
+collection <- ln$Collection(list(artifact, artifact2), key = "my-RNA-seq-collection")$save()
 collection$describe()
 collection$view_lineage()
 
 # if it's small enough, you can load the entire collection into memory as if it was one
 collection$load()
 
-# typically, it's too big, hence, open it for streaming (if the backend allows it)
-# collection.open()
+# typically, it's too big, hence, open it for streaming (if the backend allows it):  collection.open()
 
 # or iterate over its artifacts
 collection$artifacts$all()
 
 # or look at a DataFrame listing the artifacts
 collection$artifacts$df()
+```
+
+# Finish
+
+```{r finish}
+ln$finish()
 ```
