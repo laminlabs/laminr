@@ -1,5 +1,9 @@
 # laminr devel
 
+## NEW FUNCTIONALITY
+
+- Allow setting of object slots (PR #188)
+
 ## MINOR CHANGES
 
 - Update reticulate dependency to >= 1.38.0 (PR #158)
@@ -8,6 +12,7 @@
 ## DOCUMENTATION
 
 - Update the feel and structure of the documentation website (PR #159)
+- Update the content of the introduction article to match the main documentation site (PR #188)
 
 # laminr v1.0.1
 
