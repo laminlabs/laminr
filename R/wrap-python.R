@@ -143,6 +143,17 @@ wrap_python_callable <- function(obj, call = NULL, public = list(), active = lis
   )
 }
 
+#' Get or set Python slot
+#'
+#' Get or set the value for a slot of a Python object
+#'
+#' @param py_object The Python object to get or set
+#' @param slot The slot to get or set
+#' @param value The value to set `slot` to
+#'
+#' @returns If `value` is missing, the current value of `slot`, otherwise, the
+#'   results of setting `slot`
+#' @noRd
 get_or_set_python_slot <- function(py_object, slot, value) {
   if (missing(value)) {
     py_to_r(py_object[[slot]])
