@@ -156,8 +156,17 @@ wrap_python_callable <- function(obj, call = NULL, public = list(), active = lis
 #' @noRd
 get_or_set_python_slot <- function(py_object, slot, value) {
   if (missing(value)) {
-    py_to_r(py_object[[slot]])
-  } else {
-    py_object[[slot]] <- r_to_py(value)
+    return(py_to_r(py_object[[slot]]))
   }
+
+  tryCatch(
+    py_object[[slot]] <- r_to_py(value),
+    error = function(err) {
+      cli::cli_abort(c(
+        "Failed to set slot {.field {slot}} of {.cls {class(py_object)[1]}} object",
+        "x" = "Error message: {err}",
+        "i" = "Run {.run reticulate::py_last_error()} for details"
+      ))
+    }
+  )
 }
