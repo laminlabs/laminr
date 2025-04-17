@@ -83,18 +83,28 @@ ln$Run$df()
 
 See https://docs.lamin.ai/introduction#manage-artifacts
 
-## Manage Dataframes
+## Create an artifact
 
-See https://docs.lamin.ai/introduction#manage-dataframes
+See https://docs.lamin.ai/introduction#create-an-artifact
 
-```{r manage-artifacts}
+```{r create-artifact}
 df <- ln$core$datasets$small_dataset1(otype = "DataFrame", with_typo = TRUE)
 df
 
-artifact <- ln$Artifact$from_df(df, key = "my_datasets/rnaseq1.parquet")$save()
-artifact$describe()
+artifact <- ln$Artifact$from_df(df, key = "my_datasets/rnaseq1.parquet")$save()  # create & save
+artifact$describe()  # describe
+```
+
+## Access artifacts
+
+See https://docs.lamin.ai/introduction#access-artifacts
+
+```{r access-artifacts}
+artifact <- ln$Artifact$get(key = "my_datasets/rnaseq1.parquet")
 
 artifact$load()
+
+artifact$cache()
 ```
 
 ## Trace data lineage
@@ -113,103 +123,13 @@ artifact$view_lineage()
 ln$finish()  # mark run as finished, save execution report & source code
 ```
 
-## Manage versioning
+## Annotate an artifact
 
-See https://docs.lamin.ai/introduction#manage-versioning
+See https://docs.lamin.ai/introduction#annotate-an-artifact
 
-```{r manage-versioing}
-# keep the dataframe with a typo around - we'll need it later
-df_typo <- df
-
-# fix the "IFNJ" typo
-levels(df$perturbation) <- c("DMSO", "IFNG")
-df["sample2", "perturbation"] <- "IFNG"
-
-# create a new version
-artifact <- ln$Artifact$from_df(df, key = "my_datasets/rnaseq1.parquet")$save()
-
-# see all versions of an artifact
-artifact$versions$df()
-```
-
-```{r manage-versioning-revises}
-artifact_v1 <- ln$Artifact$from_df(df, description = "Just a description")$save()
-# below revises artifact_v1
-df_updated <- df
-df_updated[1, 1] <- 10
-artifact_v2 <- ln$Artifact$from_df(df_updated, revises = artifact_v1)$save()
-```
-
-## Manage files & folders
-
-See https://docs.lamin.ai/introduction#manage-files-folders
-
-```{r manage-files}
-# we use anon=True here in case no aws credentials are configured
-ln$UPath("s3://lamindata/iris_studies", anon = TRUE)$view_tree()
-
-artifact <- ln$Artifact("s3://lamindata/iris_studies/study0_raw_images")$save()
-artifact
-
-artifact$path
-
-ln$Storage$df()
-
-artifact$cache()
-```
-
-```{r manage-files-update}
-artifact_update <- ln$Artifact$from_df(df, key = "my_datasets/rnaseq-update.parquet")$save()
-artifact_update$description <- "My new description"  # change description
-artifact_update$save()  # save the change to the database
-artifact_update$delete()  # move to trash
-artifact_update$delete(permanent = TRUE)  # permanently delete
-```
-
-# Query & search registries
-
-See https://docs.lamin.ai/introduction#query-search-registries
-
-```{r query}
-ln$Artifact$df()
-
-ln$Artifact
-
-ln$view()
-
-# get a single record (here the current notebook)
-transform <- ln$Transform$get(key = "introduction.Rmd")
-
-# get a set of records by filtering for a directory (LaminDB treats directories
-# like AWS S3, as the prefix of the storage key)
-ln$Artifact$filter(key__startswith = "my_datasets/")$df()
-
-# query all artifacts ingested from a transform
-artifacts <- ln$Artifact$filter(transform = transform)$all()
-
-# query all artifacts ingested from a notebook with "intro" in the title
-artifacts <- ln$Artifact$filter(
-  transform__description__icontains = "intro"
-)$all()
-
-# search artifacts
-ln$Artifact$search("iris")$df()
-
-# search transforms
-ln$Transform$search("intro")$df()
-
-# look up records with auto-complete
-ulabels <- ln$ULabel$lookup()
-```
-
-# Features & labels
-
-See https://docs.lamin.ai/introduction#features-labels
-
-```{r features}
-# create & save a typed label
-experiment_type <- ln$ULabel(name = "InVitroStudy", is_type = TRUE)$save()
-my_experiment <- ln$ULabel(name = "My experiment", type = experiment_type)$save()
+```{r annotate-artifact}
+# create a label
+my_experiment <- ln$ULabel(name="My experiment")$save()
 
 # annotate the artifact with a label
 artifact$ulabels$add(my_experiment)
@@ -230,6 +150,8 @@ artifact$cell_types$add(cell_type)
 # describe the artifact
 artifact$describe()
 
+ln$Artifact$filter(cell_types = cell_type)$df()
+
 # define the "temperature" & "experiment" features
 ln$Feature(name = "temperature", dtype = "float")$save()
 ln$Feature(name = "experiment", dtype = ln$ULabel)$save()
@@ -241,48 +163,129 @@ artifact$features$add_values(
 
 # describe the artifact
 artifact$describe()
+
+ln$Artifact$filter(temperature = 21.6)$df()
 ```
 
-# Curate datasets
+## Validate an artifact
 
-See https://docs.lamin.ai/introduction#curate-datasets
+See https://docs.lamin.ai/introduction#validate-an-artifact
 
-```{r curate}
-# define valid labels
-perturbation_type <- ln$ULabel(name = "Perturbation", is_type = TRUE)$save()
-ln$ULabel(name = "DMSO", type = perturbation_type)$save()
-ln$ULabel(name = "IFNG", type = perturbation_type)$save()
+```{r validate-artifact}
+bt <- import_module("bionty")  # <-- use bionty to access registries with imported public ontologies
 
-# define the schema
-schema <- ln$Schema(
-  name = "My DataFrame schema",
-  features = list(
-    ln$Feature(name = "perturbation", dtype = ln$ULabel)$save(),
-    ln$Feature(name = "cell_type_by_model", dtype = bt$CellType)$save()
-  )
-)$save()
+# define a few more valid labels
+ln$ULabel(name = "DMSO")$save()
+ln$ULabel(name = "IFNG")$save()
 
-# create a curator
-curator <- ln$curators$DataFrameCurator(df, schema)
+# define a few more valid features
+ln$Feature(name = "perturbation", dtype = ln$ULabel)$save()
+ln$Feature(name = "cell_type_by_model", dtype = bt$CellType)$save()
+ln$Feature(name = "cell_type_by_expert", dtype = bt$CellType)$save()
+ln$Feature(name = "assay_oid", dtype = bt$ExperimentalFactor$ontology_id)$save()
+ln$Feature(name = "donor", dtype = "str", nullable = TRUE)$save()
+ln$Feature(name = "concentration", dtype = "str")$save()
+ln$Feature(name = "treatment_time_h", dtype = "num", coerce_dtype = TRUE)$save()
 
-# save curated artifact
-artifact <- curator$save_artifact(key = "my_curated_dataset.parquet")  # calls .validate()
+# define a schema that merely enforces a feature identifier type
+schema <- ln$Schema(itype = ln$Feature)$save()
 
-# see the parsed annotations
+testthat::expect_error(
+artifact <- ln$Artifact$from_df(
+  df, key = "my_datasets/rnaseq1.parquet", schema = schema
+)
+)
+```
+
+## Make a new version of an artifact
+
+See https://docs.lamin.ai/introduction#make-a-new-version-of-an-artifact
+
+```{r version-artifact}
+# fix the "IFNJ" typo
+levels(df$perturbation) <- c("DMSO", "IFNG")
+df["sample2", "perturbation"] <- "IFNG"
+
+# create a new version
+artifact <- ln$Artifact$from_df(df, key = "my_datasets/rnaseq1.parquet", schema = schema)$save()
+
+# see the annotations
 artifact$describe()
 
-# query for a ulabel that was parsed from the dataset
-ln$Artifact$get(ulabels__name = "IFNG")
+# simplest way to check that artifact was validated
+artifact$schema
 
-curator <- ln$curators$DataFrameCurator(df_typo, schema)
+# see all versions of an artifact
+artifact$versions$df()
+```
 
-# validate the dataset
-tryCatch(
-  curator$validate(),
-  error = function(err) {
-    cat(conditionMessage(err))
-  }
-)
+```{r version-artifact-revises}
+artifact_v1 <- ln$Artifact$from_df(df, description = "Just a description")$save()
+# below revises artifact_v1
+df_updated <- df
+df_updated[1, 1] <- 10
+artifact_v2 <- ln$Artifact$from_df(df_updated, revises = artifact_v1)$save()
+```
+
+# Query & search registries
+
+See https://docs.lamin.ai/introduction#query-search-registries
+
+```{r query}
+ln$Artifact$df()
+
+ln$Artifact$df(features = TRUE)
+
+ln$Artifact
+
+ln$view()
+
+# get a single record (here the current notebook)
+transform <- ln$Transform$get(key = "introduction.Rmd")
+
+# get a set of records by filtering for a directory (LaminDB treats directories like AWS S3, as the prefix of the storage key)
+ln$Artifact$filter(key__startswith = "my_datasets/")$df()
+
+# query all artifacts ingested from a transform
+artifacts <- ln$Artifact$filter(transform = transform)$all()
+
+# query all artifacts ingested from a notebook with "intro" in the title
+artifacts <- ln$Artifact$filter(
+  transform__description__icontains = "intro"
+)$all()
+
+# search artifacts
+ln$Artifact$search("iris")$df()
+
+# search transforms
+ln$Transform$search("intro")$df()
+
+# look up records with auto-complete
+ulabels <- ln$ULabel$lookup()
+```
+
+# Manage files & folders
+
+See https://docs.lamin.ai/introduction#manage-files-folders
+
+```{r manage-files}
+# we use anon=True here in case no aws credentials are configured
+ln$UPath("s3://lamindata/iris_studies", anon = TRUE)$view_tree()
+
+artifact <- ln$Artifact("s3://lamindata/iris_studies/study0_raw_images")$save()
+artifact
+
+artifact$path
+
+ln$Storage$df()
+```
+
+```{r manage-files-update}
+artifact_update <- ln$Artifact$from_df(df, key = "my_datasets/rnaseq-update.parquet")$save()
+artifact_update$description <- "My new description"  # change description
+artifact_update$save()  # save the change to the database
+artifact_update$delete()  # move to trash
+artifact_update$delete(permanent = TRUE)  # permanently delete
 ```
 
 # Manage biological registries
@@ -343,6 +346,37 @@ new_cell_state$parents$add(neuron)
 new_cell_state$view_parents(distance = 2)
 ```
 
+# Manage AnnData objects
+
+See https://docs.lamin.ai/introduction#manage-anndata-objects
+
+```{r manage-anndata}
+# define var schema
+var_schema <- ln$Schema(itype = bt$Gene$ensembl_gene_id, dtype = "int")$save()
+
+# define composite schema
+anndata_schema <- ln$Schema(
+    otype = "AnnData", components = list("obs" = schema, "var" = var_schema)
+)$save()
+
+ad <- import_module("anndata")
+
+# store the dataset as an AnnData object to distinguish data from metadata
+adata <- ad$AnnData(df[, 1:3], obs = df$iloc[, 4:ncol(df)])
+
+# save curated artifact
+artifact <- ln$Artifact$from_anndata(
+    adata, key = "my_datasets/my_rnaseq1.h5ad", schema = anndata_schema
+)$save()
+artifact$describe()
+
+# query for all feature sets that contain CD8A
+feature_sets <- ln$Schema$filter(genes__symbol = "CD8A")$all()
+
+# query for all artifacts linked to these feature sets
+ln$Artifact$filter(feature_sets__in = feature_sets)$df()
+```
+
 # Scale learning
 
 See https://docs.lamin.ai/introduction#scale-learning
@@ -351,17 +385,21 @@ See https://docs.lamin.ai/introduction#scale-learning
 # a new dataset
 df2 <- ln$core$datasets$small_dataset2(otype = "DataFrame")
 adata <- ad$AnnData(df2[, 1:3], obs = df2[, 4:ncol(df2)])
-curator <- ln$curators$AnnDataCurator(adata, anndata_schema)
-artifact2 <- curator$save_artifact(key = "my_datasets/my_rnaseq2.h5ad")
+artifact2 = ln$Artifact$from_anndata(
+    adata, key = "my_datasets/my_rnaseq2.h5ad", schema = anndata_schema
+)$save()
 
-collection <- ln$Collection(list(artifact, artifact2), key = "my-RNA-seq-collection")$save()
+collection <- ln$Collection(
+  list(artifact, artifact2), key = "my-RNA-seq-collection"
+)$save()
 collection$describe()
 collection$view_lineage()
 
 # if it's small enough, you can load the entire collection into memory as if it was one
 collection$load()
 
-# typically, it's too big, hence, open it for streaming (if the backend allows it):  collection.open()
+# typically, it's too big, hence, open it for streaming (if the backend allows it)
+# collection.open()
 
 # or iterate over its artifacts
 collection$artifacts$all()
