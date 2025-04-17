@@ -77,8 +77,8 @@ wrap_python <- function(obj, public = list(), active = list(), private = list())
 
       # Build a function that accesses the correct variable in the Python object
       fun_src <- paste0(
-        "function() {\n",
-        "  py_to_r(private$.py_object[['", .name, "']])",
+        "function(value) {\n",
+        "  get_or_set_python_slot(private$.py_object, '", .name, "', value)",
         "\n}"
       )
 
@@ -140,5 +140,33 @@ wrap_python_callable <- function(obj, call = NULL, public = list(), active = lis
     wrapped$call,
     wrapped = wrapped,
     class = c(class(wrapped)[1], "laminr.CallableWrappedPythonObject")
+  )
+}
+
+#' Get or set Python slot
+#'
+#' Get or set the value for a slot of a Python object
+#'
+#' @param py_object The Python object to get or set
+#' @param slot The slot to get or set
+#' @param value The value to set `slot` to
+#'
+#' @returns If `value` is missing, the current value of `slot`, otherwise, the
+#'   results of setting `slot`
+#' @noRd
+get_or_set_python_slot <- function(py_object, slot, value) {
+  if (missing(value)) {
+    return(py_to_r(py_object[[slot]]))
+  }
+
+  tryCatch(
+    py_object[[slot]] <- r_to_py(value),
+    error = function(err) {
+      cli::cli_abort(c(
+        "Failed to set slot {.field {slot}} of {.cls {class(py_object)[1]}} object",
+        "x" = "Error message: {err}",
+        "i" = "Run {.run reticulate::py_last_error()} for details"
+      ))
+    }
   )
 }
