@@ -220,6 +220,7 @@ lamin_init_temp <- function(name = "laminr-temp", db = NULL, modules = NULL,
 
   # Add the clean up handler to the environment
   withr::defer(lamin_delete(name, force = TRUE), envir = envir)
+  withr::defer(unlink(temp_storage, recursive = TRUE, force = TRUE), envir = envir)
 }
 
 #' LaminDB delete
