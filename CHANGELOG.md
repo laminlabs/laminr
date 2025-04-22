@@ -3,6 +3,7 @@
 ## NEW FEATURES
 
 - Add tracking of the R environment using **{pak}** lockfiles (PR #179)
+- Allow setting of object slots (PR #188)
 
 ## MINOR CHANGES
 
@@ -13,11 +14,14 @@
 
 - Fix an issue that was preventing `lamin_connect()` from being run multiple 
   times with the same instance (PR #176)
+- Properly clear and delete temporary instances created using `lamin_init_temp()` (PR #189)
 
 ## DOCUMENTATION
 
 - Update the feel and structure of the documentation website (PR #159, PR #160,
   PR #161, PR #163, PR #172, PR #175)
+- Update the content of the introduction article to match the main documentation site (PR #188)
+- Update the welcome vignette to point to the main LaminDB documentation website (PR #190)
 
 # laminr v1.0.1
 
