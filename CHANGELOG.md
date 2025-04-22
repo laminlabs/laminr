@@ -1,13 +1,23 @@
 # laminr devel
 
+## NEW FUNCTIONALITY
+
+- Allow setting of object slots (PR #188)
+
 ## MINOR CHANGES
 
 - Update reticulate dependency to >= 1.38.0 (PR #158)
 - Use **{rmarkdown}** instead of **{quarto}** for articles (PR #159)
 
+## BUG FIXES
+
+- Properly clear and delete temporary instances created using `lamin_init_temp()` (PR #189)
+
 ## DOCUMENTATION
 
 - Update the feel and structure of the documentation website (PR #159)
+- Update the content of the introduction article to match the main documentation site (PR #188)
+- Update the welcome vignette to point to the main LaminDB documentation website (PR #190)
 
 # laminr v1.0.1
 

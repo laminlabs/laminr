@@ -49,7 +49,7 @@ check_requires <- function(what, requires,
     install_msg <- if (language == "R") {
       "{.run install.packages(c({missing_str}))}"
     } else {
-      "{.run install_lamindb(extra_packages = c({missing_str}))}"
+      "{.run require_module(c({missing_str}))}"
     }
 
     msg <- c(
