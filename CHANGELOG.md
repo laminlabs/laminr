@@ -12,6 +12,7 @@
 ## DOCUMENTATION
 
 - Update the feel and structure of the documentation website (PR #159)
+- Update the welcome vignette to point to the main LaminDB documentation website (PR #190)
 
 # laminr v1.0.1
 
