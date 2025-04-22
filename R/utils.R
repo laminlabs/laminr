@@ -48,8 +48,7 @@ get_default_instance <- function() {
 #' This is done via a system call to `lamin settings` to avoid importing Python
 #' `lamindb`
 get_current_lamin_user <- function() {
-  # Set the default environment if not set
-  reticulate::use_virtualenv("r-lamindb", required = FALSE)
+  require_lamindb()
   if (!reticulate::py_available()) {
     # Force reticulate to connect to Python
     py_config <- reticulate::py_config() # nolint object_usage_linter
@@ -82,8 +81,7 @@ get_current_lamin_user <- function() {
 #' This is done via a system call to `lamin settings` to avoid importing Python
 #' `lamindb`
 get_current_lamin_instance <- function() {
-  # Set the default environment if not set
-  reticulate::use_virtualenv("r-lamindb", required = FALSE)
+  require_lamindb()
   if (!reticulate::py_available()) {
     # Force reticulate to connect to Python
     py_config <- reticulate::py_config() # nolint object_usage_linter

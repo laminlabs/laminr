@@ -1,7 +1,5 @@
-import_lamindb <- function() {
+wrap_lamindb <- function(py_lamindb) {
   check_requires("Importing lamindb", "lamindb", language = "Python")
-
-  py_lamindb <- reticulate::import("lamindb")
 
   instance_slug <- NULL
   tryCatch(
@@ -22,12 +20,9 @@ import_lamindb <- function() {
   min_version <- "1.2"
   if (utils::compareVersion(min_version, lamin_version_clean) == 1) {
     cli::cli_abort(
-      c(
-        paste(
-          "This version of {.pkg laminr} requires Python {.pkg lamindb} >= v{min_version}.",
-          "You have {.pkg lamindb} v{lamin_version}."
-        ),
-        "i" = "Run {.run laminr::install_lamindb()} to update."
+      paste(
+        "This version of {.pkg laminr} requires Python {.pkg lamindb} >= v{min_version}.",
+        "You have {.pkg lamindb} v{lamin_version}."
       )
     )
   }
@@ -93,6 +88,33 @@ lamindb_track <- function(private, transform = NULL, project = NULL, params = NU
 }
 
 lamindb_finish <- function(private, ignore_non_consecutive = NULL) {
+  run <- private$.py_object$context$run
+  if (!is.null(run)) {
+    settings <- private$.py_object$settings
+
+    env_dir <- file.path(settings$cache_dir, "environments")
+
+    if (!dir.exists(env_dir)) {
+      dir.create(env_dir)
+    }
+
+    run_dir <- file.path(env_dir, paste0("run_", run$uid))
+
+    if (!dir.exists(run_dir)) {
+      dir.create(run_dir)
+    }
+
+    pkgs <- get_loaded_packages()
+    pkg_repos <- get_package_repositories(pkgs)
+
+    withr::with_options(list(repos = unique(c(pkg_repos, getOption("repos")))), {
+      pak::lockfile_create(
+        pkg = pkgs,
+        lockfile = file.path(run_dir, "r_pak_lockfile.json")
+      )
+    })
+  }
+
   tryCatch(
     private$.py_object$finish(
       ignore_non_consecutive = ignore_non_consecutive

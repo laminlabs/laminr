@@ -19,7 +19,7 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - { os: ubuntu-latest, r: "release", python: "3.x"}        
+          - { os: ubuntu-latest, r: "release", python: "3.x"}
           - { os: windows-latest, r: "release", python: "3.x"}
           - { os: ubuntu-latest, r: "devel", http-user-agent: "release", python: "3.x"}
 
@@ -73,30 +73,18 @@ jobs:
           reticulate::install_python(version = "3.12")
         shell: Rscript {0}
 
-      - name: Setup Python environment
-        run: |
-          laminr::install_lamindb(extra_packages = c("bionty"))
-          if ("${{ github.event_name }}" == "repository_dispatch") {
-            reticulate::use_virtualenv("r-lamindb")
-            reticulate::py_install("git+https://github.com/laminlabs/lamindb.git")
-          }
-        shell: Rscript {0}
-
       - name: Log in to Lamin
         run: |
-          reticulate::use_virtualenv("r-lamindb")
           laminr::lamin_login()
         shell: Rscript {0}
 
       - name: Set lamindata as default instance
         run: |
-          reticulate::use_virtualenv("r-lamindb")
           laminr::lamin_connect("laminlabs/lamindata")
         shell: Rscript {0}
 
       - name: Check whether we can import lamindb and connect to the default instance
         run: |
-          reticulate::use_virtualenv("r-lamindb")
           reticulate::py_config()
           laminr::import_module("lamindb")
         shell: Rscript {0}

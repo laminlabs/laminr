@@ -23,10 +23,14 @@ lamin_connect <- function(instance) {
     return(invisible(NULL))
   }
 
-  check_default_instance()
+  check <- check_default_instance(instance)
 
-  # Set the default environment if not set
-  reticulate::use_virtualenv("r-lamindb", required = FALSE)
+  if (isTRUE(check)) {
+    cli::cli_alert("Already connected to {instance}")
+    return(invisible(NULL))
+  }
+
+  require_lamindb()
   if (!reticulate::py_available()) {
     # Force reticulate to connect to Python
     py_config <- reticulate::py_config() # nolint object_usage_linter
@@ -49,8 +53,7 @@ lamin_connect <- function(instance) {
 #' lamin_disconnect()
 #' }
 lamin_disconnect <- function() {
-  # Set the default environment if not set
-  reticulate::use_virtualenv("r-lamindb", required = FALSE)
+  require_lamindb()
   if (!reticulate::py_available()) {
     # Force reticulate to connect to Python
     py_config <- reticulate::py_config() # nolint object_usage_linter
@@ -83,7 +86,7 @@ lamin_disconnect <- function() {
 lamin_login <- function(user = NULL, api_key = NULL) {
   check_default_instance()
 
-  reticulate::use_virtualenv("r-lamindb", required = FALSE)
+  require_lamindb()
   ln <- reticulate::import("lamindb")
   handle <- ln$setup$settings$user$handle
 
@@ -121,8 +124,7 @@ lamin_login <- function(user = NULL, api_key = NULL) {
 lamin_logout <- function() {
   check_default_instance()
 
-  # Set the default environment if not set
-  reticulate::use_virtualenv("r-lamindb", required = FALSE)
+  require_lamindb()
   if (!reticulate::py_available()) {
     # Force reticulate to connect to Python
     py_config <- reticulate::py_config() # nolint object_usage_linter
@@ -148,8 +150,14 @@ lamin_logout <- function() {
 #' lamin_init("mydata", modules = c("bionty", "wetlab"))
 #' }
 lamin_init <- function(storage, name = NULL, db = NULL, modules = NULL) {
-  # Set the default environment if not set
-  reticulate::use_virtualenv("r-lamindb", required = FALSE)
+  require_lamindb()
+
+  if (!is.null(modules)) {
+    for (module in modules) {
+      require_module(module)
+    }
+  }
+
   if (!reticulate::py_available()) {
     # Force reticulate to connect to Python
     py_config <- reticulate::py_config() # nolint object_usage_linter
@@ -212,6 +220,7 @@ lamin_init_temp <- function(name = "laminr-temp", db = NULL, modules = NULL,
 
   # Add the clean up handler to the environment
   withr::defer(lamin_delete(name, force = TRUE), envir = envir)
+  withr::defer(unlink(temp_storage, recursive = TRUE, force = TRUE), envir = envir)
 }
 
 #' LaminDB delete
@@ -229,7 +238,7 @@ lamin_init_temp <- function(name = "laminr-temp", db = NULL, modules = NULL,
 #' lamin_delete("to-delete")
 #' }
 lamin_delete <- function(instance, force = FALSE) {
-  reticulate::use_virtualenv("r-lamindb", required = FALSE)
+  require_lamindb()
   ln_setup <- reticulate::import("lamindb_setup")
 
   # Use lamindb_setup to resolve owner/name from instance
@@ -275,7 +284,7 @@ lamin_delete <- function(instance, force = FALSE) {
 #' }
 lamin_save <- function(filepath, key = NULL, description = NULL, registry = NULL) {
   # Set the default environment if not set
-  reticulate::use_virtualenv("r-lamindb", required = FALSE)
+  require_lamindb()
   if (!reticulate::py_available()) {
     # Force reticulate to connect to Python
     py_config <- reticulate::py_config() # nolint object_usage_linter
