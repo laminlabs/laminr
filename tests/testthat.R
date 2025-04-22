@@ -12,8 +12,9 @@ run <- function() {
   }
 
   options(error = traceback)
-  if (requireNamespace("rlang", quietly = TRUE))
+  if (requireNamespace("rlang", quietly = TRUE)) {
     options(error = rlang::trace_back)
+  }
 
   library(testthat)
   library(laminr)

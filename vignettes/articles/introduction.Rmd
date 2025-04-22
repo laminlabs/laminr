@@ -40,12 +40,6 @@ Install **{laminr}** from CRAN:
 install.packages("laminr", dependencies = TRUE)
 ```
 
-Install the underlying Python packages LaminDB and Bionty:
-
-```r
-laminr::install_lamindb(extra_packages = c("bionty"))
-```
-
 Set the default LaminDB instance:
 
 ```r
@@ -58,7 +52,7 @@ Any data and tracking information will be added to it.
 If you don't have access to an instance, create a local test instance.
 
 ```{r init}
-lamin_init(storage = "./laminr-intro", modules = c("bionty"))
+lamin_init_temp("laminr-intro", modules = c("bionty"))
 ```
 
 ```{r disconnect, include = FALSE}
