@@ -6,18 +6,12 @@ py_to_r.lamindb.models.artifact.Artifact <- function(x) { # nolint object_length
   wrap_python(
     x,
     public = list(
-      cache = function(is_run_input = NULL) {
-        artifact_cache(self, is_run_input = is_run_input)
-      },
-      load = function(is_run_input = NULL, ...) {
-        artifact_load(self, is_run_input = is_run_input, ...)
-      },
+      cache = make_py_function_wrapper("artifact_cache", x$cache, self = TRUE),
+      load = make_py_function_wrapper("artifact_load", x$load, self = TRUE),
       open = function(mode = "r", is_run_input = NULL, ...) {
         artifact_open(self, mode = mode, is_run_input = is_run_input, ...)
       },
-      view_lineage = function(with_children = TRUE) {
-        view_lineage()
-      }
+      view_lineage = make_py_function_wrapper("view_lineage", x$view_lineage, self = FALSE)
     )
   )
 }
@@ -29,8 +23,8 @@ artifact_cache <- function(self, ...) {
   cache_path$path
 }
 
-artifact_load <- function(self, is_run_input, ...) {
-  file_path <- self$cache(is_run_input = is_run_input)
+artifact_load <- function(self, ...) {
+  file_path <- self$cache(...)
   suffix <- self$suffix
 
   load_file(file_path, suffix, ...)
