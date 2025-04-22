@@ -5,6 +5,10 @@
 - Update reticulate dependency to >= 1.38.0 (PR #158)
 - Use **{rmarkdown}** instead of **{quarto}** for articles (PR #159)
 
+## BUG FIXES
+
+- Properly clear and delete temporary instances created using `lamin_init_temp()` (PR #189)
+
 ## DOCUMENTATION
 
 - Update the feel and structure of the documentation website (PR #159)
