@@ -91,7 +91,7 @@ See https://docs.lamin.ai/introduction#create-an-artifact
 df <- ln$core$datasets$small_dataset1(otype = "DataFrame", with_typo = TRUE)
 df
 
-artifact <- ln$Artifact$from_df(df, key = "my_datasets/rnaseq1.parquet")$save()  # create & save
+artifact <- ln$Artifact$from_df(df, key = "my_datasets/rnaseq1.parquet")$save()  # create and save
 artifact$describe()  # describe
 ```
 
@@ -129,7 +129,7 @@ See https://docs.lamin.ai/introduction#annotate-an-artifact
 
 ```{r annotate-artifact}
 # create a label
-my_experiment <- ln$ULabel(name="My experiment")$save()
+my_experiment <- ln$ULabel(name = "My experiment")$save()
 
 # annotate the artifact with a label
 artifact$ulabels$add(my_experiment)
@@ -191,9 +191,9 @@ ln$Feature(name = "treatment_time_h", dtype = "num", coerce_dtype = TRUE)$save()
 schema <- ln$Schema(itype = ln$Feature)$save()
 
 testthat::expect_error(
-artifact <- ln$Artifact$from_df(
-  df, key = "my_datasets/rnaseq1.parquet", schema = schema
-)
+  artifact <- ln$Artifact$from_df(
+    df, key = "my_datasets/rnaseq1.parquet", schema = schema
+  )
 )
 ```
 
@@ -243,7 +243,8 @@ ln$view()
 # get a single record (here the current notebook)
 transform <- ln$Transform$get(key = "introduction.Rmd")
 
-# get a set of records by filtering for a directory (LaminDB treats directories like AWS S3, as the prefix of the storage key)
+# get a set of records by filtering for a directory (LaminDB treats directories
+# like AWS S3, as the prefix of the storage key)
 ln$Artifact$filter(key__startswith = "my_datasets/")$df()
 
 # query all artifacts ingested from a transform
@@ -356,7 +357,7 @@ var_schema <- ln$Schema(itype = bt$Gene$ensembl_gene_id, dtype = "int")$save()
 
 # define composite schema
 anndata_schema <- ln$Schema(
-    otype = "AnnData", components = list("obs" = schema, "var" = var_schema)
+  otype = "AnnData", components = list("obs" = schema, "var" = var_schema)
 )$save()
 
 ad <- import_module("anndata")
@@ -366,7 +367,7 @@ adata <- ad$AnnData(df[, 1:3], obs = df$iloc[, 4:ncol(df)])
 
 # save curated artifact
 artifact <- ln$Artifact$from_anndata(
-    adata, key = "my_datasets/my_rnaseq1.h5ad", schema = anndata_schema
+  adata, key = "my_datasets/my_rnaseq1.h5ad", schema = anndata_schema
 )$save()
 artifact$describe()
 
@@ -385,8 +386,8 @@ See https://docs.lamin.ai/introduction#scale-learning
 # a new dataset
 df2 <- ln$core$datasets$small_dataset2(otype = "DataFrame")
 adata <- ad$AnnData(df2[, 1:3], obs = df2[, 4:ncol(df2)])
-artifact2 = ln$Artifact$from_anndata(
-    adata, key = "my_datasets/my_rnaseq2.h5ad", schema = anndata_schema
+artifact2 <- ln$Artifact$from_anndata(
+  adata, key = "my_datasets/my_rnaseq2.h5ad", schema = anndata_schema
 )$save()
 
 collection <- ln$Collection(
@@ -399,7 +400,7 @@ collection$view_lineage()
 collection$load()
 
 # typically, it's too big, hence, open it for streaming (if the backend allows it)
-# collection.open()
+# collection.open() # nolint
 
 # or iterate over its artifacts
 collection$artifacts$all()
