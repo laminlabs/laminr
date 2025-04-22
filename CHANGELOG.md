@@ -3,6 +3,7 @@
 ## NEW FUNCTIONALITY
 
 - Allow setting of object slots (PR #188)
+- Enable the `view_lineage()` functionality to properly display lineage graphs (PR #180)
 
 ## MINOR CHANGES
 
