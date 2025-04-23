@@ -57,9 +57,9 @@ wrap_python <- function(obj, public = list(), active = list(), private = list())
         next
       }
 
-      public[[.name]] <- make_py_function_wrapper(
+      public[[.name]] <- make_wrapper_function(
         paste0("private$.py_object[['", .name, "']]"),
-        value,
+        get_py_arguments(value),
         after_string = "py_to_r_nonull()"
       )
     } else {
@@ -166,167 +166,88 @@ get_or_set_python_slot <- function(py_object, slot, value) {
   )
 }
 
-#' Get Python arguments
+#' Make a wrapper function
 #'
-#' Get a list of arguments for a Python function
-#'
-#' @param py_func The Python function to get arguments for
-#'
-#' @details
-#' Arguments are found using the Python `inspect` function. If an arguments does
-#' not have a default then the string "__NODEFAULT__" is returned for use by
-#' other functions. This is to differentiate from arguments with a default value
-#' of `NULL` or `NA`. Variable keyword arguments (e.g. `**kwargs`) and variable
-#' positional arguments (e.g. `*args`) are given a default of `...`.
-#'
-#' @returns A named list where names are arguments and values and default values
-#' @noRd
-get_py_arguments <- function(py_func) {
-  py_builtins <- reticulate::import_builtins()
-  py_inspect <- reticulate::import("inspect")
-
-  signature <- py_inspect$signature(py_func)
-  params <- py_builtins$dict(signature$parameters)
-
-  names(params)[names(params) == "function"] <- "func"
-
-  lapply(params, function(.param) {
-    default <- .param$default
-
-    if (default == .param$empty) {
-      default <- "__NODEFAULT__"
-    }
-
-    if (.param$kind == .param$VAR_KEYWORD) {
-      default <- "..."
-    }
-
-    if (.param$kind == .param$VAR_POSITIONAL) {
-      default <- "..."
-    }
-
-    # Replace complex defaults with ...
-    if (inherits(default, "python.builtin.type")) {
-      default <- "..."
-    }
-
-    default
-  })
-}
-
-#' Make argument defaults string
-#'
-#' Make a string mapping arguments of a Python function to their default values,
-#' e.g. `a, b, c = 1, d = "D", e = NA, f = NULL, ...`
-#'
-#' @param arguments A named list mapping arguments to their default values
-#'
-#' @returns A string describing arguments and default values
-#' @noRd
-make_argument_defaults_string <- function(arguments) {
-  lapply(names(arguments), function(.argument) {
-    default <- arguments[[.argument]]
-
-    if (is.null(default)) {
-      default <- "NULL"
-    } else {
-      # If the default is "..." replace it with literal `...` and no name
-      if (default == "...") {
-        return("...")
-      }
-
-      # The "__NODEFAULT__" string indicates a named arguments with no default
-      if (default == "__NODEFAULT__") {
-        return(.argument)
-      }
-
-      # Quote string default values
-      if (is.character(default)) {
-        default <- paste0("'", default, "'")
-        check <- try(eval(parse(text = default)), silent = TRUE)
-        if (inherits(check, "try-error")) {
-          cli::cli_warn(
-            "Failed to parse default string for argument {.arg { .argument}}, using {.val ''} instead"
-          )
-          default <- "''"
-        }
-      }
-
-      # Python needs integer defaults to be kept as integers
-      if (is.numeric(default) && (as.integer(default) == default)) {
-        default <- paste0(as.integer(default), "L")
-      }
-    }
-
-    paste(.argument, "=", default)
-  }) |>
-    unique() |>
-    paste(collapse = ", ")
-}
-
-#' Make arguments usage string
-#'
-#' Make a string mapping arguments of a Python function to R variables,
-#' e.g. `a = a, b = b, c = c, d = d, e = e, f = f, ...`
-#'
-#' @param arguments A named list mapping arguments to their default values
-#'
-#' @returns A string describing argument usage
-#' @noRd
-make_argument_usage_string <- function(arguments) {
-  lapply(names(arguments), function(.argument) {
-    default <- arguments[[.argument]]
-
-    # If the default is "..." replace it with literal `...` and no name
-    if (!is.null(default) && default == "...") {
-      return("...")
-    }
-
-    paste(.argument, "=", .argument)
-  }) |>
-    unique() |>
-    paste(collapse = ", ")
-}
-
-#' Make Python function wrapper
-#'
-#' Make a wrapper function for a function call that inherits arguments from a
-#' Python function
+#' Make a wrapper function for a function call with given arguments
 #'
 #' @param func_string A string giving the function to call inside the wrapper
-#' @param py_func The Python function get inherit arguments from
-#' @param self Whether to include `self` in the argument list. This is useful
-#'  for wrapping class methods.
+#' @param args A named list mapping arguments to their default values
+#' @param ignore_defaults A vector of argument names to ignore when creating the
+#'  wrapper function signature
 #' @param after_string If not `NULL`, the results of the function call will be
 #'  piped into this
 #'
 #' @details
-#' For a Python function with signature `def func(a, b=1, **kwargs)`, the result
-#' is:
+#' For function string `"func"` with
+#' `args = list(a = "_NODEFAULT_, b = 1, **kwargs = "...")`, the result is:
 #'
 #' ```r
 #' function(a, b = 1, ...) {
-#'   func(a, b = b, ...)
+#'   func(a = a, b = b, ...)
 #' }
 #' ```
 #'
-#' @returns A wrapper function around `func_string` that inherits arguments from
-#'   `py_func`
+#' @returns A wrapper function around `func_string` that inherits `args`
 #' @noRd
-make_py_function_wrapper <- function(func_string, py_func, self = FALSE,
+make_wrapper_function <- function(func_string, args, ignore_defaults = NULL,
                                      after_string = NULL) {
-  py_args <- get_py_arguments(py_func)
-  defaults_string <- make_argument_defaults_string(py_args)
-  usage_string <- make_argument_usage_string(py_args)
+  defaults_string <- make_argument_defaults_string(args[!(names(args) %in% ignore_defaults)])
+  usage_string <- make_argument_usage_string(args)
 
-  self_string <- ifelse(self, "self, ", "")
   after_string <- ifelse(is.null(after_string), "", paste(" |>", after_string))
 
   fun_src <- paste0(
     "function(", defaults_string, ") {\n",
-    "  ", func_string, "(", self_string, usage_string, ")", after_string, "\n",
+    "  ", func_string, "(", usage_string, ")", after_string, "\n",
     "}\n"
   )
 
   eval(parse(text = fun_src))
+}
+
+#' Wrap with Python arguments
+#'
+#' Make a wrapper around an R function that inserts Python arguments into `...`
+#'
+#' @param func The R function to wrap
+#' @param py_func The Python function to insert arguments from
+#' @param ignore_defaults A vector of argument names to ignore when creating the
+#'   wrapper function signature. By default, `self` and `private` are ignored
+#'   from the wrapper function but still included in the function call for use
+#'   in creating `R6` methods.
+#'
+#' @details
+#' Arguments from `py_func` are inserted into the `...` argument of `func` so
+#' `func` must have a `...` argument.
+#'
+#' For an R function with signature `r_fun <- function(c, d = 2, ..., e = NULL)`
+#' and a Python function with signature `def func(a, b=1, **kwargs)`, the result
+#' is:
+#'
+#' ```r
+#' function(c, d = 2, a, b = 1, ..., e = NULL) {
+#'   r_fun(c = c, d = d, a = a, b = b, ..., e = e)
+#' }
+#' ```
+#'
+#' @returns A wrapper function around `func` that inserts arguments from
+#'   `py_func`
+#' @noRd
+wrap_with_py_arguments <- function(func, py_func, ignore_defaults = c("self", "private")) {
+  func_name <- deparse(substitute(func))
+  func_args <- get_r_arguments(func)
+
+  if (!("..." %in% names(func_args))) {
+    cli::cli_abort(
+      "The {.fun {func_name}} function is missing a '...' argument to insert arguments into"
+    )
+  }
+
+  py_args <- get_py_arguments(py_func)
+
+  args_split <- split_at(func_args, which(names(func_args) == "..."))
+
+  args <- c(args_split$head, py_args, args_split$tail)
+
+  make_wrapper_function(func_name, args, ignore_defaults = ignore_defaults)
 }

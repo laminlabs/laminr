@@ -6,7 +6,7 @@ py_to_r.lamindb.models.record.Registry <- function(x) {
   wrap_python_callable(
     x,
     public = list(
-      from_df = make_py_function_wrapper("registry_from_df", x$from_df, self = TRUE)
+      from_df = wrap_with_py_arguments(registry_from_df, x$from_df)
     )
   )
 }

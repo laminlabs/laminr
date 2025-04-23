@@ -165,3 +165,37 @@ detect_path <- function() {
 
   current_path
 }
+
+#' Split at
+#'
+#' Split a vector at a given position
+#'
+#' @param x The vector to split
+#' @param pos The position to split at
+#'
+#' @details
+#' If `head` or `tail` will be empty they are replaced by an empty object of the
+#' same class as `x`
+#'
+#' @returns A list with three elements: `head` (everything before `pos`),
+#'   `middle` (the element at `pos`), and `tail` (everything after `pos`)
+#' @noRd
+split_at <- function(x, pos) {
+  if (pos <= 1) {
+    head <- new(class(x))
+  } else {
+    head <- x[seq(1, pos - 1)]
+  }
+
+  if (pos >= length(x)) {
+    tail <- new(class(x))
+  } else {
+    tail <- x[seq(pos + 1, length(x))]
+  }
+
+  list(
+    head = head,
+    middle = x[pos],
+    tail = tail
+  )
+}

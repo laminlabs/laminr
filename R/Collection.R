@@ -3,7 +3,7 @@ py_to_r.lamindb.models.collection.Collection <- function(x) { # nolint object_le
   wrap_python(
     x,
     public = list(
-      view_lineage = make_py_function_wrapper("view_lineage", x$view_lineage, self = FALSE)
+      view_lineage = wrap_with_py_arguments(view_lineage, x$view_lineage)
     )
   )
 }
