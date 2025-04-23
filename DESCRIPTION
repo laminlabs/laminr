@@ -33,6 +33,7 @@ Suggests:
     arrow,
     jsonlite,
     knitr,
+    magick,
     nanoparquet,
     readr,
     rmarkdown,
