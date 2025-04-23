@@ -245,9 +245,13 @@ wrap_with_py_arguments <- function(func, py_func, ignore_defaults = c("self", "p
 
   py_args <- get_py_arguments(py_func)
 
-  args_split <- split_at(func_args, which(names(func_args) == "..."))
+  insert_pos <- which(names(func_args) == "...")
 
-  args <- c(args_split$head, py_args, args_split$tail)
+  args <- c(
+    head(func_args, insert_pos - 1),
+    py_args,
+    tail(func_args, length(func_args) - insert_pos)
+  )
 
   make_wrapper_function(func_name, args, ignore_defaults = ignore_defaults)
 }
