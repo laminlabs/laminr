@@ -6,6 +6,7 @@
 #' @importFrom cli cli_abort cli_warn cli_inform
 #' @importFrom lifecycle deprecated
 #' @importFrom reticulate py_to_r r_to_py
+#' @importFrom stats na.omit
 #' @importFrom utils .DollarNames
 ## usethis namespace: end
 NULL
