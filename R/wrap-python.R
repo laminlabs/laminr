@@ -190,7 +190,7 @@ get_or_set_python_slot <- function(py_object, slot, value) {
 #' @returns A wrapper function around `func_string` that inherits `args`
 #' @noRd
 make_wrapper_function <- function(func_string, args, ignore_defaults = NULL,
-                                     after_string = NULL) {
+                                  after_string = NULL) {
   defaults_string <- make_argument_defaults_string(args[!(names(args) %in% ignore_defaults)])
   usage_string <- make_argument_usage_string(args)
 
