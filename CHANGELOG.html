@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="index.html">laminr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1.9001</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,8 +47,9 @@
 <div id="laminr-devel" class="section level1">
 
 <div class="section level2">
-<h2 id="new-functionality">NEW FUNCTIONALITY<a class="anchor" aria-label="anchor" href="#new-functionality"></a></h2>
-<ul><li>Allow setting of object slots (PR #188)</li>
+<h2 id="new-features">NEW FEATURES<a class="anchor" aria-label="anchor" href="#new-features"></a></h2>
+<ul><li>Add tracking of the R environment using <strong>{pak}</strong> lockfiles (PR #179)</li>
+<li>Allow setting of object slots (PR #188)</li>
 <li>Enable the <code>view_lineage()</code> functionality to properly display lineage graphs (PR #180)</li>
 </ul></div>
 <div class="section level2">
@@ -58,11 +59,12 @@
 </ul></div>
 <div class="section level2">
 <h2 id="bug-fixes">BUG FIXES<a class="anchor" aria-label="anchor" href="#bug-fixes"></a></h2>
-<ul><li>Properly clear and delete temporary instances created using <code><a href="reference/lamin_init.html">lamin_init_temp()</a></code> (PR #189)</li>
+<ul><li>Fix an issue that was preventing <code><a href="reference/lamin_connect.html">lamin_connect()</a></code> from being run multiple times with the same instance (PR #176)</li>
+<li>Properly clear and delete temporary instances created using <code><a href="reference/lamin_init.html">lamin_init_temp()</a></code> (PR #189)</li>
 </ul></div>
 <div class="section level2">
 <h2 id="documentation">DOCUMENTATION<a class="anchor" aria-label="anchor" href="#documentation"></a></h2>
-<ul><li>Update the feel and structure of the documentation website (PR #159)</li>
+<ul><li>Update the feel and structure of the documentation website (PR #159, PR #160, PR #161, PR #163, PR #172, PR #175)</li>
 <li>Update the content of the introduction article to match the main documentation site (PR #188)</li>
 <li>Update the welcome vignette to point to the main LaminDB documentation website (PR #190)</li>
 </ul></div>
@@ -139,7 +141,7 @@
 <h1 id="laminr-v031">laminr v0.3.1<a class="anchor" aria-label="anchor" href="#laminr-v031"></a></h1>
 <p>This release improves the UX for setting up the Python environment and adds functions to allow access to CLI functionality from R.</p>
 <div class="section level2">
-<h2 id="new-functionality-1">NEW FUNCTIONALITY<a class="anchor" aria-label="anchor" href="#new-functionality-1"></a></h2>
+<h2 id="new-functionality">NEW FUNCTIONALITY<a class="anchor" aria-label="anchor" href="#new-functionality"></a></h2>
 <ul><li>Add a <code><a href="reference/install_lamindb.html">install_lamindb()</a></code> function to help with setting up the default Python environment (PR #129).</li>
 <li>Add <code><a href="reference/lamin_login.html">lamin_login()</a></code> and <code><a href="reference/lamin_connect.html">lamin_connect()</a></code> functions to allow access to CLI functionality from R (PR #129).</li>
 </ul></div>
@@ -155,7 +157,7 @@
 <li>Support for interacting with TileDB-SOMA / CELLxGENE Census</li>
 <li>Improved UX for tracking and finishing runs</li>
 </ul><div class="section level2">
-<h2 id="new-functionality-2">NEW FUNCTIONALITY<a class="anchor" aria-label="anchor" href="#new-functionality-2"></a></h2>
+<h2 id="new-functionality-1">NEW FUNCTIONALITY<a class="anchor" aria-label="anchor" href="#new-functionality-1"></a></h2>
 <ul><li>Allow tracking of artifacts loaded for non-default instances (PR #124).</li>
 <li>Interact with TileDB-SOMA stores (PR #117). Add a <code><a href="https://rdrr.io/r/base/connections.html" class="external-link">open()</a></code> method to the <code>Artifact</code> class to connect to TileDB-SOMA stores.</li>
 </ul></div>
@@ -183,7 +185,7 @@
 <h1 id="laminr-v020">laminr v0.2.0<a class="anchor" aria-label="anchor" href="#laminr-v020"></a></h1>
 <p>This release adds support for creating new artifacts in a LaminDB instance.</p>
 <div class="section level2">
-<h2 id="new-functionality-3">NEW FUNCTIONALITY<a class="anchor" aria-label="anchor" href="#new-functionality-3"></a></h2>
+<h2 id="new-functionality-2">NEW FUNCTIONALITY<a class="anchor" aria-label="anchor" href="#new-functionality-2"></a></h2>
 <ul><li>Add support for more loaders (PR #81).<br>
 Currently supported: <code>.csv</code>, <code>.h5ad</code>, <code>.html</code>, <code>.jpg</code>, <code>.json</code>, <code>.parquet</code>, <code>.png</code>, <code>.rds</code>, <code>.svg</code>, <code>.tsv</code>, <code>.yaml</code>.<br></li>
 <li>Add a <code>from_df()</code> method to the <code>Registry</code> class to create new artifacts from data frames (PR #78)</li>
@@ -228,7 +230,7 @@ Currently supported: <code>.csv</code>, <code>.h5ad</code>, <code>.html</code>, 
 <li>Load AnnData artifact</li>
 </ul><p>For more information, please visit the <a href="https://laminr.lamin.ai">package website</a>.</p>
 <div class="section level2">
-<h2 id="new-functionality-4">NEW FUNCTIONALITY<a class="anchor" aria-label="anchor" href="#new-functionality-4"></a></h2>
+<h2 id="new-functionality-3">NEW FUNCTIONALITY<a class="anchor" aria-label="anchor" href="#new-functionality-3"></a></h2>
 <ul><li>Query instance settings from Lamin Hub (PR #8).</li>
 <li>Read user settings from env file created by lamin Python package (PR #2, PR #8).</li>
 <li>Add <code>to_string()</code> and <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> methods to the <code>Record</code> class and (incomplete) <code>describe()</code> method to the <code>Artifact()</code> class (PR #22).</li>
