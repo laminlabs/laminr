@@ -1,8 +1,10 @@
 # laminr devel
 
-## NEW FUNCTIONALITY
+## NEW FEATURES
 
+- Add tracking of the R environment using **{pak}** lockfiles (PR #179)
 - Allow setting of object slots (PR #188)
+- Enable the `view_lineage()` functionality to properly display lineage graphs (PR #180)
 
 ## MINOR CHANGES
 
@@ -11,11 +13,14 @@
 
 ## BUG FIXES
 
+- Fix an issue that was preventing `lamin_connect()` from being run multiple 
+  times with the same instance (PR #176)
 - Properly clear and delete temporary instances created using `lamin_init_temp()` (PR #189)
 
 ## DOCUMENTATION
 
-- Update the feel and structure of the documentation website (PR #159)
+- Update the feel and structure of the documentation website (PR #159, PR #160,
+  PR #161, PR #163, PR #172, PR #175)
 - Update the content of the introduction article to match the main documentation site (PR #188)
 - Update the welcome vignette to point to the main LaminDB documentation website (PR #190)
 
@@ -91,7 +96,6 @@ This release improves the UX for setting up the Python environment and adds func
 ## DOCUMENTATION
 
 - Add a set up vignette and update other documentation with instructions for how to set up a Python environment (PR #129).
-
 
 # laminr v0.3.0
 

@@ -11,7 +11,7 @@ py_to_r.lamindb.models.artifact.Artifact <- function(x) { # nolint object_length
       open = function(mode = "r", is_run_input = NULL, ...) {
         artifact_open(self, mode = mode, is_run_input = is_run_input, ...)
       },
-      view_lineage = wrap_with_py_arguments(view_lineage, x$view_lineage)
+      view_lineage = wrap_with_py_arguments(view_lineage_graph, x$view_lineage)
     )
   )
 }
