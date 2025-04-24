@@ -17,3 +17,5 @@
 ^CRAN-SUBMISSION$
 ^cran-comments\.md$
 ^vignettes/articles$
+^\.ipynb_checkpoints$
+^test-docs$
