@@ -1,9 +1,11 @@
-view_lineage_graph <- function(artifact, with_children = TRUE, return_graph = FALSE) {
-  py_artifact <- unwrap_python(artifact)
+view_lineage_graph <- function(self, ...) {
+  py_object <- unwrap_python(self)
+  args <- list(...)
 
-  graph <- py_artifact$view_lineage(
-    with_children = with_children, return_graph = TRUE
-  )
+  return_graph <- args$return_graph
+  args$return_graph <- TRUE
+
+  graph <- unwrap_args_and_call(py_object$view_lineage, args)
 
   if (return_graph) {
     return(graph)
