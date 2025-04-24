@@ -50,47 +50,38 @@ wrap_lamindb <- function(py_lamindb) {
     "lamindb", lamindb_module_help_handler
   )
 
-  # Avoid "no visible binding for global variable"
-  self <- NULL # nolint object_usage_linter
-  private <- NULL # nolint object_usage_linter
-
   wrap_python(
     py_lamindb,
     public = list(
-      track = function(transform = NULL, project = NULL, params = NULL, new_run = NULL, path = NULL) {
-        lamindb_track(private, transform, project, params, new_run, path)
-      },
-      finish = function(ignore_non_consecutive = NULL) {
-        lamindb_finish(private, ignore_non_consecutive)
-      }
+      track = wrap_with_py_arguments(lamindb_track, py_lamindb$track),
+      finish = wrap_with_py_arguments(lamindb_finish, py_lamindb$finish)
     )
   )
 }
 
-lamindb_track <- function(private, transform = NULL, project = NULL, params = NULL, new_run = NULL,
-                          path = NULL) {
-  if (is.null(path)) {
+lamindb_track <- function(self, ...) {
+  args <- list(...)
+
+  if (is.null(args$path)) {
     path <- detect_path()
     if (is.null(path)) {
       cli::cli_abort(
         "Failed to detect the path to track. Please set the {.arg path} argument."
       )
     }
+    args$path <- path
   }
 
-  private$.py_object$track(
-    transform = transform,
-    project = project,
-    params = params,
-    new_run = new_run,
-    path = path,
-  )
+  py_object <- unwrap_python(self)
+  unwrap_args_and_call(py_object$track, args)
 }
 
-lamindb_finish <- function(private, ignore_non_consecutive = NULL) {
-  run <- private$.py_object$context$run
+lamindb_finish <- function(self, ...) {
+  py_object <- unwrap_python(self)
+
+  run <- py_object$context$run
   if (!is.null(run)) {
-    settings <- private$.py_object$settings
+    settings <- py_object$settings
 
     env_dir <- file.path(settings$cache_dir, "environments")
 
@@ -116,9 +107,7 @@ lamindb_finish <- function(private, ignore_non_consecutive = NULL) {
   }
 
   tryCatch(
-    private$.py_object$finish(
-      ignore_non_consecutive = ignore_non_consecutive
-    ),
+    unwrap_args_and_call(py_object$finish, list(...)),
     error = function(err) {
       py_err <- reticulate::py_last_error()
       if (py_err$type != "NotebookNotSaved") {

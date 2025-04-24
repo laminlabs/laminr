@@ -1,15 +1,13 @@
 #' @export
 py_to_r.lamindb.models.record.Registry <- function(x) {
-  # Avoid "no visible binding for global variable"
-  self <- NULL
-
   wrap_python_callable(
     x,
     public = list(
-      from_df = function(df, key = NULL, description = NULL, run = NULL, revises = NULL, ...) {
-        registry_from_df(self, df = df, key = key, description = description, run = run, revises = revises, ...)
+      from_df = if ("from_df" %in% names(x)) {
+        wrap_with_py_arguments(registry_from_df, x$from_df)
       }
-    )
+    ) |>
+      purrr::compact()
   )
 }
 

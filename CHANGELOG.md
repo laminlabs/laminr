@@ -10,6 +10,8 @@
 
 - Update reticulate dependency to >= 1.38.0 (PR #158)
 - Use **{rmarkdown}** instead of **{quarto}** for articles (PR #159)
+- Improve inheritance of arguments when wrapping and overwriting Python
+  functions (PR #191)
 
 ## BUG FIXES
 
