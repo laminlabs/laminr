@@ -57,16 +57,11 @@ wrap_python <- function(obj, public = list(), active = list(), private = list())
         next
       }
 
-      # Build a wrapper function that calls the Python function
-      fun_src <- paste(
-        "function(...) {\n",
-        paste0("  py_fun <- private$.py_object[['", .name, "']]\n"),
-        "  py_to_r_nonull(unwrap_args_and_call(py_fun, list(...)))\n",
-        "}",
-        collapse = "\n"
+      public[[.name]] <- make_wrapper_function(
+        paste0("private$.py_object[['", .name, "']]"),
+        get_py_arguments(value),
+        after_string = "py_to_r_nonull()"
       )
-
-      public[[.name]] <- eval(parse(text = fun_src))
     } else {
       # Class variables are stored as active bindings
 
@@ -77,8 +72,8 @@ wrap_python <- function(obj, public = list(), active = list(), private = list())
 
       # Build a function that accesses the correct variable in the Python object
       fun_src <- paste0(
-        "function() {\n",
-        "  py_to_r(private$.py_object[['", .name, "']])",
+        "function(value) {\n",
+        "  get_or_set_python_slot(private$.py_object, '", .name, "', value)",
         "\n}"
       )
 
@@ -141,4 +136,122 @@ wrap_python_callable <- function(obj, call = NULL, public = list(), active = lis
     wrapped = wrapped,
     class = c(class(wrapped)[1], "laminr.CallableWrappedPythonObject")
   )
+}
+
+#' Get or set Python slot
+#'
+#' Get or set the value for a slot of a Python object
+#'
+#' @param py_object The Python object to get or set
+#' @param slot The slot to get or set
+#' @param value The value to set `slot` to
+#'
+#' @returns If `value` is missing, the current value of `slot`, otherwise, the
+#'   results of setting `slot`
+#' @noRd
+get_or_set_python_slot <- function(py_object, slot, value) {
+  if (missing(value)) {
+    return(py_to_r(py_object[[slot]]))
+  }
+
+  tryCatch(
+    py_object[[slot]] <- r_to_py(value),
+    error = function(err) {
+      cli::cli_abort(c(
+        "Failed to set slot {.field {slot}} of {.cls {class(py_object)[1]}} object",
+        "x" = "Error message: {err}",
+        "i" = "Run {.run reticulate::py_last_error()} for details"
+      ))
+    }
+  )
+}
+
+#' Make a wrapper function
+#'
+#' Make a wrapper function for a function call with given arguments
+#'
+#' @param func_string A string giving the function to call inside the wrapper
+#' @param args A named list mapping arguments to their default values
+#' @param ignore_defaults A vector of argument names to ignore when creating the
+#'  wrapper function signature
+#' @param after_string If not `NULL`, the results of the function call will be
+#'  piped into this
+#'
+#' @details
+#' For function string `"func"` with
+#' `args = list(a = "_NODEFAULT_, b = 1, **kwargs = "...")`, the result is:
+#'
+#' ```r
+#' function(a, b = 1, ...) {
+#'   func(a = a, b = b, ...)
+#' }
+#' ```
+#'
+#' @returns A wrapper function around `func_string` that inherits `args`
+#' @noRd
+make_wrapper_function <- function(func_string, args, ignore_defaults = NULL,
+                                  after_string = NULL) {
+  defaults_string <- make_argument_defaults_string(args[!(names(args) %in% ignore_defaults)])
+  usage_string <- make_argument_usage_string(args)
+
+  after_string <- ifelse(is.null(after_string), "", paste(" |>", after_string))
+
+  fun_src <- paste0(
+    "function(", defaults_string, ") {\n",
+    "  ", func_string, "(", usage_string, ")", after_string, "\n",
+    "}\n"
+  )
+
+  eval(parse(text = fun_src))
+}
+
+#' Wrap with Python arguments
+#'
+#' Make a wrapper around an R function that inserts Python arguments into `...`
+#'
+#' @param func The R function to wrap
+#' @param py_func The Python function to insert arguments from
+#' @param ignore_defaults A vector of argument names to ignore when creating the
+#'   wrapper function signature. By default, `self` and `private` are ignored
+#'   from the wrapper function but still included in the function call for use
+#'   in creating `R6` methods.
+#'
+#' @details
+#' Arguments from `py_func` are inserted into the `...` argument of `func` so
+#' `func` must have a `...` argument.
+#'
+#' For an R function with signature `r_fun <- function(c, d = 2, ..., e = NULL)`
+#' and a Python function with signature `def func(a, b=1, **kwargs)`, the result
+#' is:
+#'
+#' ```r
+#' function(c, d = 2, a, b = 1, ..., e = NULL) {
+#'   r_fun(c = c, d = d, a = a, b = b, ..., e = e)
+#' }
+#' ```
+#'
+#' @returns A wrapper function around `func` that inserts arguments from
+#'   `py_func`
+#' @noRd
+wrap_with_py_arguments <- function(func, py_func, ignore_defaults = c("self", "private")) {
+  func_name <- deparse(substitute(func))
+  func_args <- get_r_arguments(func)
+
+  if (!("..." %in% names(func_args))) {
+    cli::cli_abort(
+      "The {.fun {func_name}} function is missing a '...' argument to insert arguments into"
+    )
+  }
+
+  py_args <- get_py_arguments(py_func)
+
+  insert_pos <- which(names(func_args) == "...")
+
+  args <- c(
+    head(func_args, insert_pos - 1),
+    py_args,
+    tail(func_args, length(func_args) - insert_pos)
+  )
+
+  make_wrapper_function(func_name, args, ignore_defaults = ignore_defaults)
 }

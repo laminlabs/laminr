@@ -6,18 +6,12 @@ py_to_r.lamindb.models.artifact.Artifact <- function(x) { # nolint object_length
   wrap_python(
     x,
     public = list(
-      cache = function(is_run_input = NULL) {
-        artifact_cache(self, is_run_input = is_run_input)
-      },
-      load = function(is_run_input = NULL, ...) {
-        artifact_load(self, is_run_input = is_run_input, ...)
-      },
+      cache = wrap_with_py_arguments(artifact_cache, x$cache),
+      load = wrap_with_py_arguments(artifact_load, x$load),
       open = function(mode = "r", is_run_input = NULL, ...) {
         artifact_open(self, mode = mode, is_run_input = is_run_input, ...)
       },
-      view_lineage = function(with_children = TRUE) {
-        view_lineage()
-      }
+      view_lineage = wrap_with_py_arguments(view_lineage_graph, x$view_lineage)
     )
   )
 }
@@ -29,11 +23,18 @@ artifact_cache <- function(self, ...) {
   cache_path$path
 }
 
-artifact_load <- function(self, is_run_input, ...) {
-  file_path <- self$cache(is_run_input = is_run_input)
-  suffix <- self$suffix
+artifact_load <- function(self, ..., .reader_args = NULL) {
+  if (is.null(.reader_args)) {
+    .reader_args <- list(
+      file = self$cache(...),
+      suffix = self$suffix
+    )
+  } else {
+    .reader_args[["file"]] <- self$cache(...)
+    .reader_args[["suffix"]] <- self$suffix
+  }
 
-  load_file(file_path, suffix, ...)
+  do.call(load_file, .reader_args)
 }
 
 artifact_open <- function(self, mode, is_run_input, ...) {
