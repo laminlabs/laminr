@@ -18,7 +18,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Robrecht Cannoodt \email{robrecht@data-intuitive.com} (\href{https://orcid.org/0000-0003-3641-729X}{ORCID})
+\strong{Maintainer}: Robrecht Cannoodt \email{robrecht@lamin.ai} (\href{https://orcid.org/0000-0003-3641-729X}{ORCID})
 
 Authors:
 \itemize{
