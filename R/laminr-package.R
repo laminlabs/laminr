@@ -7,6 +7,6 @@
 #' @importFrom lifecycle deprecated
 #' @importFrom reticulate py_to_r r_to_py
 #' @importFrom stats na.omit
-#' @importFrom utils .DollarNames
+#' @importFrom utils .DollarNames head tail
 ## usethis namespace: end
 NULL
