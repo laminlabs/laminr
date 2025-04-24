@@ -1,4 +1,4 @@
-# laminr devel
+# laminr v1.1.0
 
 ## NEW FEATURES
 
