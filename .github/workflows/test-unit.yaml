@@ -13,7 +13,7 @@ jobs:
   R-CMD-check:
     runs-on: ${{ matrix.config.os }}
 
-    name: ${{ matrix.config.os }} (r-${{ matrix.config.r }}, lamin-${{ matrix.config.lamin }})
+    name: ${{ matrix.config.os }} (r-${{ matrix.config.r }}, lamin-${{ env.LAMIN_TEST_VERSION }})
 
     strategy:
       fail-fast: false
@@ -23,7 +23,7 @@ jobs:
           - { os: macos-latest, r: "release", python: "3.x"}
           - { os: windows-latest, r: "release", python: "3.x"}
           - { os: ubuntu-latest, r: "devel", http-user-agent: "release", python: "3.x"}
-          - { os: ubuntu-latest, r: "oldrel-1", python: "3.10", lamin: "release" }
+          - { os: ubuntu-latest, r: "oldrel-1", python: "3.10"}
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
