@@ -25,7 +25,8 @@ jobs:
       LAMIN_TEST_VERSION: ${{ github.event_name == 'repository_dispatch' && 'release' || 'devel' }}
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Install dependencies
         run: |
@@ -41,11 +42,6 @@ jobs:
 
       - name: Set up Pandoc
         uses: r-lib/actions/setup-pandoc@v2
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.x"
 
       - name: Set up R
         uses: r-lib/actions/setup-r@v2
