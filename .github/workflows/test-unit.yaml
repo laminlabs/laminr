@@ -13,65 +13,43 @@ jobs:
   R-CMD-check:
     runs-on: ${{ matrix.config.os }}
 
-    name: ${{ matrix.config.os }} (r-${{ matrix.config.r }}, lamin-${{ matrix.config.lamin }})
+    name: ${{ matrix.config.os }} (r-${{ matrix.config.r }})
 
     strategy:
       fail-fast: false
       matrix:
         config:
-          - { os: ubuntu-latest, r: "release", python: "3.x"}
-          - { os: windows-latest, r: "release", python: "3.x"}
-          - { os: ubuntu-latest, r: "devel", http-user-agent: "release", python: "3.x"}
+          - { os: ubuntu-latest, r: "release"}
+          - { os: macos-latest, r: "release"}
+          - { os: windows-latest, r: "release"}
+          - { os: ubuntu-latest, r: "devel", http-user-agent: "release"}
+          - { os: ubuntu-latest, r: "oldrel-1"}
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
       LAMIN_API_KEY: ${{ secrets.LAMIN_API_KEY_TESTUSER1 }}
+      LAMIN_TEST_VERSION: ${{ github.event_name == 'repository_dispatch' && 'release' || 'devel' }}
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - uses: r-lib/actions/setup-pandoc@v2
+      - name: Setup Pandoc
+        uses: r-lib/actions/setup-pandoc@v2
 
-      - uses: actions/setup-python@v5
-        with:
-          python-version: ${{ matrix.config.python }}
-
-      - uses: r-lib/actions/setup-r@v2
+      - name: Setup R
+        uses: r-lib/actions/setup-r@v2
         with:
           r-version: ${{ matrix.config.r }}
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
 
-      # manually installing openblas as a workaround for issue
-      # https://github.com/laminlabs/laminr/issues/57
-      - name: Install OpenBLAS on macOS
-        if: runner.os == 'macOS'
-        run: |
-          brew install openblas
-          OPENBLAS=$(brew --prefix openblas)
-          echo "LDFLAGS=-L$OPENBLAS/lib" >> $GITHUB_ENV
-          echo "CPPFLAGS=-I$OPENBLAS/include" >> $GITHUB_ENV
-
-      - uses: r-lib/actions/setup-r-dependencies@v2
+      - name: Install R dependencies
+        uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::rcmdcheck, local::.
           needs: check
-
-      - name: Install {tiledbsoma}
-        if: runner.os == 'Linux'
-        run: |
-          options(repos = c("https://chanzuckerberg.r-universe.dev", getOption("repos")))
-          pak::pkg_install("tiledbsoma")
-        shell: Rscript {0}
-
-      - name: Install Python 3.12 on macOS/Windows
-        # lamindb currently supports python>=3.10,<3.13 and 3.13 is installed
-        # macOS also previously required 3.12 to install scipy 1.13 from a wheel
-        if: runner.os == 'macOS' || runner.os == 'Windows'
-        run: |
-          reticulate::install_python(version = "3.12")
-        shell: Rscript {0}
 
       - name: Log in to Lamin
         run: |
@@ -85,14 +63,15 @@ jobs:
 
       - name: Check whether we can import lamindb and connect to the default instance
         run: |
-          reticulate::py_config()
           laminr::import_module("lamindb")
+          message("LAMIN_TEST_VERSION: ", Sys.getenv("LAMIN_TEST_VERSION"))
+          reticulate::py_config()
+          message("lamindb version: ", reticulate::py_get_attr(reticulate::import("lamindb"), "__version__"))
         shell: Rscript {0}
 
       - name: Check
         env:
           _R_CHECK_CRAN_INCOMING_REMOTE_: false
-          LAMIN_TEST_VERSION: '${{ matrix.config.lamin }}'
         run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
         shell: Rscript {0}
 
@@ -103,7 +82,8 @@ jobs:
           name: ${{ runner.os }}-r${{ matrix.config.r }}-results
           path: check
 
-      - uses: voxmedia/github-action-slack-notify-build@v1
+      - name: Notify Slack dispatch success
+        uses: voxmedia/github-action-slack-notify-build@v1
         if: ${{ success() && github.event_name == 'repository_dispatch' }}
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_GITHUB_ACTION }}
@@ -111,7 +91,9 @@ jobs:
           channel_id: C05FDBBFJ1F
           status: SUCCESS
           color: good
-      - uses: voxmedia/github-action-slack-notify-build@v1
+
+      - name: Notify Slack dispatch failure
+        uses: voxmedia/github-action-slack-notify-build@v1
         if: ${{ failure() && github.event_name == 'repository_dispatch' }}
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_GITHUB_ACTION }}
