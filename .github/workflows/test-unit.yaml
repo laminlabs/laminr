@@ -42,16 +42,6 @@ jobs:
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
 
-      # manually installing openblas as a workaround for issue
-      # https://github.com/laminlabs/laminr/issues/57
-      - name: Install OpenBLAS on macOS
-        if: runner.os == 'macOS'
-        run: |
-          brew install openblas
-          OPENBLAS=$(brew --prefix openblas)
-          echo "LDFLAGS=-L$OPENBLAS/lib" >> $GITHUB_ENV
-          echo "CPPFLAGS=-I$OPENBLAS/include" >> $GITHUB_ENV
-
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::rcmdcheck, local::.
