@@ -32,17 +32,21 @@ jobs:
       LAMIN_TEST_VERSION: ${{ github.event_name == 'repository_dispatch' && 'release' || 'devel' }}
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - uses: r-lib/actions/setup-pandoc@v2
+      - name: Setup Pandoc
+        uses: r-lib/actions/setup-pandoc@v2
 
-      - uses: r-lib/actions/setup-r@v2
+      - name: Setup R
+        uses: r-lib/actions/setup-r@v2
         with:
           r-version: ${{ matrix.config.r }}
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
 
-      - uses: r-lib/actions/setup-r-dependencies@v2
+      - name: Install R dependencies
+        uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::rcmdcheck, local::.
           needs: check
@@ -78,7 +82,8 @@ jobs:
           name: ${{ runner.os }}-r${{ matrix.config.r }}-results
           path: check
 
-      - uses: voxmedia/github-action-slack-notify-build@v1
+      - name: Notify Slack dispatch success
+        uses: voxmedia/github-action-slack-notify-build@v1
         if: ${{ success() && github.event_name == 'repository_dispatch' }}
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_GITHUB_ACTION }}
@@ -86,7 +91,9 @@ jobs:
           channel_id: C05FDBBFJ1F
           status: SUCCESS
           color: good
-      - uses: voxmedia/github-action-slack-notify-build@v1
+
+      - name: Notify Slack dispatch failure
+        uses: voxmedia/github-action-slack-notify-build@v1
         if: ${{ failure() && github.event_name == 'repository_dispatch' }}
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_GITHUB_ACTION }}
