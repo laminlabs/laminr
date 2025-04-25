@@ -13,8 +13,6 @@ jobs:
   R-CMD-check:
     runs-on: ${{ matrix.config.os }}
 
-    name: ${{ matrix.config.os }} (r-${{ matrix.config.r }}, lamin-${{ env.LAMIN_TEST_VERSION }})
-
     strategy:
       fail-fast: false
       matrix:
@@ -30,6 +28,8 @@ jobs:
       R_KEEP_PKG_SOURCE: yes
       LAMIN_API_KEY: ${{ secrets.LAMIN_API_KEY_TESTUSER1 }}
       LAMIN_TEST_VERSION: ${{ github.event_name == 'repository_dispatch' && 'release' || 'devel' }}
+
+    name: ${{ matrix.config.os }} (r-${{ matrix.config.r }}, lamin-${{ env.LAMIN_TEST_VERSION }})
 
     steps:
       - uses: actions/checkout@v4
