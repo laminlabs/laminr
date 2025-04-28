@@ -71,16 +71,16 @@ jobs:
           message("LAMINR_LAMINDB_VERSION: ", Sys.getenv("LAMINR_LAMINDB_VERSION"))
           message("LAMINR_LAMINDB_OPTIONS: ", Sys.getenv("LAMINR_LAMINDB_OPTIONS"))
           laminr:::require_lamindb()
-          message("--- PYTHON REQUIREMENTS ---")
+          cat("--- PYTHON REQUIREMENTS ---")
           reticulate::py_require()
-          message("--- PYTHON CONFIG ---")
+          cat("--- PYTHON CONFIG ---")
           reticulate::py_config()
-          message("--- PYTHON PACKAGES ---")
+          cat("--- PYTHON PACKAGES ---")
           reticulate::py_list_packages()
-          message("--- LAMIN PACKAGE VERSIONS ---")
+          cat("--- LAMIN PACKAGE VERSIONS ---")
           for (module in c("lamindb", "lamin_cli", "lamin_utils", "lamindb_setup")) {
-            verison <- reticulate::py_get_attr(reticulate::import("lamindb"), "__version__")
-            message(module, ": ", version)
+            version <- reticulate::py_get_attr(reticulate::import("lamindb"), "__version__")
+            cat(module, ": ", version)
           }
         shell: Rscript {0}
 
