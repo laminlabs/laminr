@@ -71,15 +71,26 @@ jobs:
           message("LAMINR_LAMINDB_VERSION: ", Sys.getenv("LAMINR_LAMINDB_VERSION"))
           message("LAMINR_LAMINDB_OPTIONS: ", Sys.getenv("LAMINR_LAMINDB_OPTIONS"))
           laminr:::require_lamindb()
+          message("--- PYTHON REQUIREMENTS ---")
           reticulate::py_require()
+          message("--- PYTHON CONFIG ---")
           reticulate::py_config()
+          message("--- PYTHON PACKAGES ---")
           reticulate::py_list_packages()
+          message("--- LAMIN PACKAGE VERSIONS ---")
+          for (module in c("lamindb", "lamin_cli", "lamin_utils", "lamindb_setup")) {
+            verison <- reticulate::py_get_attr(reticulate::import("lamindb"), "__version__")
+            message(module, ": ", version)
+          }
         shell: Rscript {0}
 
       - name: Login and set lamindata as default instance
         run: |
           laminr::lamin_login()
           laminr::lamin_connect("laminlabs/lamindata")
+          if (laminr::get_current_lamin_instance() != "laminlabs/lamindata") {
+            stop("Not connected to lamindata")
+          }
         shell: Rscript {0}
 
       - name: Prepare tests for main docs
