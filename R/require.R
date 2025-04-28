@@ -77,6 +77,61 @@ require_module <- function(module, options = NULL, version = NULL,
   reticulate::py_require(requirement, python_version = python_version)
 }
 
+#' Require lamindb
+#'
+#' Require the lamindb Python module
+#'
+#' @noRd
+#'
+#' @details
+#' Functions requiring the `lamindb` Python module should make sure this is
+#' called before attempting to use it (either directly, or via
+#' `import_module()`).
 require_lamindb <- function() {
-  require_module("lamindb", version = ">=1.2", python_version = ">=3.10,<3.14")
+  if (reticulate::py_available() && reticulate::py_module_available("lamindb")) {
+    return(invisible(NULL))
+  }
+
+  laminr_lamindb_version <- trimws(tolower(Sys.getenv("LAMINR_LAMINDB_VERSION")))
+  laminr_lamindb_options <- Sys.getenv("LAMINR_LAMINDB_OPTIONS")
+  if (laminr_lamindb_options != "") {
+    laminr_lamindb_options <- trimws(unlist(strsplit(laminr_lamindb_options, ",")))
+    cli::cli_alert_info(
+      "Requiring {.pkg lamindb} options {.val {laminr_lamindb_options}}"
+    )
+  } else {
+    laminr_lamindb_options <- NULL
+  }
+
+  if (laminr_lamindb_version %in% c("release", "latest", "")) {
+    require_module(
+      "lamindb",
+      options = laminr_lamindb_options,
+      version = ">=1.2",
+      python_version = ">=3.10,<3.14"
+    )
+  } else if (laminr_lamindb_version %in% c("github", "devel")) {
+    require_module(
+      "lamindb",
+      options = laminr_lamindb_options,
+      source = "git+https://github.com/laminlabs/lamindb.git"
+    )
+    cli::cli_alert_info("Requiring the development version of {.pkg lamindb}")
+  } else {
+    # Remove leading v from version string
+    laminr_lamindb_version <- gsub("^v", "", laminr_lamindb_version)
+    # Assume an exact version if string starts with a number
+    if (grepl("^[0-9]", laminr_lamindb_version)) {
+      laminr_lamindb_version <- paste0("==", laminr_lamindb_version)
+    }
+
+    require_module(
+      "lamindb",
+      options = laminr_lamindb_options,
+      version = laminr_lamindb_version
+    )
+    cli::cli_alert_info(
+      "Requiring {.pkg lamindb} version {.val {laminr_lamindb_version}}"
+    )
+  }
 }
