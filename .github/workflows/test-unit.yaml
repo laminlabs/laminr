@@ -65,8 +65,8 @@ jobs:
           reticulate::py_list_packages()
           cat("--- LAMIN PACKAGE VERSIONS ---")
           for (module in c("lamindb", "lamin_cli", "lamin_utils", "lamindb_setup")) {
-            version <- reticulate::py_get_attr(reticulate::import("lamindb"), "__version__")
-            cat(module, ": ", version)
+            version <- reticulate::py_get_attr(reticulate::import(module), "__version__")
+            cat(module, "\t", reticulate::py_to_r(version), "\n")
           }
         shell: Rscript {0}
 
