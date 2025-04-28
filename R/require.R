@@ -111,6 +111,20 @@ require_lamindb <- function() {
       python_version = ">=3.10,<3.14"
     )
   } else if (laminr_lamindb_version %in% c("github", "devel")) {
+    # Also require devel versions of other lamin packages
+    require_module(
+      "lamindb_setup",
+      options = "aws",
+      source = "git+https://github.com/laminlabs/lamindb-setup.git"
+    )
+    require_module(
+      "lamin_utils",
+      source = "git+https://github.com/laminlabs/lamin-utils.git"
+    )
+    require_module(
+      "lamin_cli",
+      source = "git+https://github.com/laminlabs/lamin-cli.git"
+    )
     require_module(
       "lamindb",
       options = laminr_lamindb_options,
