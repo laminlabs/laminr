@@ -29,7 +29,8 @@ jobs:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
       LAMIN_API_KEY: ${{ secrets.LAMIN_API_KEY_TESTUSER1 }}
-      LAMIN_TEST_VERSION: ${{ github.event_name == 'repository_dispatch' && 'release' || 'devel' }}
+      LAMINR_LAMINDB_VERSION: ${{ github.event_name == 'repository_dispatch' && 'release' || 'devel' }}
+      LAMINR_LAMINDB_OPTIONS: 'bionty'
 
     steps:
       - name: Checkout
@@ -51,22 +52,20 @@ jobs:
           extra-packages: any::rcmdcheck, local::.
           needs: check
 
-      - name: Log in to Lamin
+      - name: Check lamindb requirements
+        run: |
+          message("LAMINR_LAMINDB_VERSION: ", Sys.getenv("LAMINR_LAMINDB_VERSION"))
+          message("LAMINR_LAMINDB_OPTIONS: ", Sys.getenv("LAMINR_LAMINDB_OPTIONS"))
+          laminr:::require_lamindb()
+          reticulate::py_require()
+          reticulate::py_config()
+          reticulate::py_list_packages()
+        shell: Rscript {0}
+
+      - name: Login and set lamindata as default instance
         run: |
           laminr::lamin_login()
-        shell: Rscript {0}
-
-      - name: Set lamindata as default instance
-        run: |
           laminr::lamin_connect("laminlabs/lamindata")
-        shell: Rscript {0}
-
-      - name: Check whether we can import lamindb and connect to the default instance
-        run: |
-          laminr::import_module("lamindb")
-          message("LAMIN_TEST_VERSION: ", Sys.getenv("LAMIN_TEST_VERSION"))
-          reticulate::py_config()
-          message("lamindb version: ", reticulate::py_get_attr(reticulate::import("lamindb"), "__version__"))
         shell: Rscript {0}
 
       - name: Check
