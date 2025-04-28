@@ -22,7 +22,8 @@ jobs:
 
     env:
       LAMIN_API_KEY: ${{ secrets.LAMIN_API_KEY_TESTUSER1 }}
-      LAMIN_TEST_VERSION: ${{ github.event_name == 'repository_dispatch' && 'release' || 'devel' }}
+      LAMINR_LAMINDB_VERSION: ${{ github.event_name == 'repository_dispatch' && 'release' || 'devel' }}
+      LAMINR_LAMINDB_OPTIONS: 'bionty'
 
     steps:
       - name: Checkout
@@ -65,22 +66,31 @@ jobs:
           }
         shell: Rscript {0}
 
-      - name: Log in to Lamin
+      - name: Check lamindb requirements
+        run: |
+          message("LAMINR_LAMINDB_VERSION: ", Sys.getenv("LAMINR_LAMINDB_VERSION"))
+          message("LAMINR_LAMINDB_OPTIONS: ", Sys.getenv("LAMINR_LAMINDB_OPTIONS"))
+          laminr:::require_lamindb()
+          cli::rule(center = "PYTHON REQUIREMENTS", width = 84)
+          reticulate::py_require()
+          cli::rule(center = "PYTHON CONFIG", width = 84)
+          reticulate::py_config()
+          cli::rule(center = "PYTHON PACKAGES", width = 84)
+          reticulate::py_list_packages()
+          cli::rule(center = "LAMIN PACKAGE VERSIONS", width = 84)
+          for (module in c("lamindb", "lamin_cli", "lamin_utils", "lamindb_setup")) {
+            version <- reticulate::py_get_attr(reticulate::import(module), "__version__")
+            cat(module, "\t", reticulate::py_to_r(version), "\n")
+          }
+        shell: Rscript {0}
+
+      - name: Login and set lamindata as default instance
         run: |
           laminr::lamin_login()
-        shell: Rscript {0}
-
-      - name: Set lamindata as default instance
-        run: |
           laminr::lamin_connect("laminlabs/lamindata")
-        shell: Rscript {0}
-
-      - name: Check whether we can import lamindb and connect to the default instance
-        run: |
-          laminr::import_module("lamindb")
-          message("LAMIN_TEST_VERSION: ", Sys.getenv("LAMIN_TEST_VERSION"))
-          reticulate::py_config()
-          message("lamindb version: ", reticulate::py_get_attr(reticulate::import("lamindb"), "__version__"))
+          if (laminr::get_current_lamin_instance() != "laminlabs/lamindata") {
+            stop("Not connected to lamindata")
+          }
         shell: Rscript {0}
 
       - name: Prepare tests for main docs

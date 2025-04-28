@@ -14,6 +14,9 @@
 #' the module and used to create an ephemeral environment unless another
 #' environment is found (see `vignette("versions", package = "reticulate")`).
 #'
+#' Requirements for the `lamindb` module can be controlled using environment
+#' variables differently, see <https://docs.lamin.ai/setup-laminr> for details.
+#'
 #' @seealso
 #'
 #' - [require_module()] and [reticulate::py_require()] for defining Python
@@ -43,7 +46,11 @@ import_module <- function(module, ...) {
     check_instance_module(module)
   }
 
-  require_module(module, ...)
+  if (module == "lamindb") {
+    require_lamindb()
+  } else {
+    require_module(module, ...)
+  }
   check_requires(paste("Importing", module), module, language = "Python")
 
   py_module <- tryCatch(
