@@ -6,6 +6,7 @@ wrap_lamindb <- function(py_lamindb) {
     {
       instance_settings <- py_lamindb$setup$settings$instance
       instance_slug <- paste0(instance_settings$owner, "/", instance_settings$name)
+      py_lamindb$connect()
       set_default_instance(instance_slug)
     },
     error = function(err) {
