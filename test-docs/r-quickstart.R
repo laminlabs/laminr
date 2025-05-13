@@ -1,6 +1,7 @@
 library(laminr)
 ln <- import_module("lamindb")  # instantiate the central object of the API
-bt <- import_module("bionty") 
+ln_setup <- reticulate::import("lamindb_setup")
+message("instance modules:", ln_setup$settings$instance$modules)
 
 # Access inputs -------------------------------------------
 
