@@ -101,8 +101,10 @@ jobs:
           message("instance modules: ", reticulate::import("lamindb_setup")$settings$instance$modules)
         shell: Rscript {0}
 
-      - name: Run tests for main docs
-        run: Rscript test-docs/r-quickstart.R
+      - name: Run tests for main docs   
+        run: |
+          Rscript -e "library(reticulate); print(py_config()); if('bionty' %in% py_list_packages()$package) { cat('bionty version:', py_get_attr(import('bionty'), '__version__'), '\n') }"
+          Rscript test-docs/r-quickstart.R
 
       - name: Render markdown manual
         run: |
