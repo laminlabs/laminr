@@ -1,4 +1,5 @@
 library(laminr)
+laminr::lamin_connect("testuser1/test-docs")
 ln <- import_module("lamindb")  # instantiate the central object of the API
 ln_setup <- reticulate::import("lamindb_setup")
 message("instance modules:", ln_setup$settings$instance$modules)
