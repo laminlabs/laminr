@@ -86,6 +86,10 @@ jobs:
       - name: Prepare tests for main docs
         run: |
           laminr::lamin_init(storage = "./test-docs", modules = c("bionty"))
+          laminr::import_module("lamindb")
+          reticulate::py_config()
+          message("instance modules: ", reticulate::import("lamindb_setup")$settings$instance$modules)
+          message("bionty version: ", reticulate::py_get_attr(reticulate::import("bionty"), "__version__"))
         shell: Rscript {0}
 
       - name: Check whether we can import bionty and are now connected to the new instance
