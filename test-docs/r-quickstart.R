@@ -1,5 +1,6 @@
 library(laminr)
 ln <- import_module("lamindb")  # instantiate the central object of the API
+bt <- import_module("bionty") 
 
 # Access inputs -------------------------------------------
 
