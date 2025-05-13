@@ -97,6 +97,7 @@ jobs:
           laminr::import_module("lamindb")
           message("instance modules: ", reticulate::import("lamindb_setup")$settings$instance$modules)
           message("instance modules: ", reticulate::import("django.apps")$apps$get_app_configs())
+          message("import bionty: ", reticulate::import("bionty"))
           laminr::import_module("bionty")
           reticulate::py_config()
           message("bionty version: ", reticulate::py_get_attr(reticulate::import("bionty"), "__version__"))
