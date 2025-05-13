@@ -78,16 +78,21 @@ jobs:
       - name: Check whether we can import lamindb and connect to the default instance
         run: |
           laminr::import_module("lamindb")
-          laminr::import_module("bionty")
           message("LAMIN_TEST_VERSION: ", Sys.getenv("LAMIN_TEST_VERSION"))
           reticulate::py_config()
           message("lamindb version: ", reticulate::py_get_attr(reticulate::import("lamindb"), "__version__"))
-          message("bionty version: ", reticulate::py_get_attr(reticulate::import("bionty"), "__version__"))
         shell: Rscript {0}
 
       - name: Prepare tests for main docs
         run: |
           laminr::lamin_init(storage = "./test-docs", modules = c("bionty"))
+        shell: Rscript {0}
+
+      - name: Check whether we can import bionty
+        run: |
+          laminr::import_module("bionty")
+          reticulate::py_config()
+          message("bionty version: ", reticulate::py_get_attr(reticulate::import("bionty"), "__version__"))
         shell: Rscript {0}
 
       - name: Run tests for main docs
