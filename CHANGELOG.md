@@ -1,3 +1,9 @@
+# laminr v1.1.1
+
+## BUG FIXES
+
+- Surround pak lockfile creation with try-catch to avoid breaking the finish process (PR #198).
+
 # laminr v1.1.0
 
 ## NEW FEATURES
