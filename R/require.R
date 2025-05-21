@@ -74,6 +74,8 @@ require_module <- function(module, options = NULL, version = NULL,
     requirement <- paste(requirement, "@", source)
   }
 
+  cli::cli_alert_info("Requiring {.pkg {requirement}}")
+
   reticulate::py_require(requirement, python_version = python_version)
 }
 
