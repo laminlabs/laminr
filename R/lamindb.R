@@ -10,6 +10,7 @@ wrap_lamindb <- function(py_lamindb) {
         "/",
         instance_settings$name
       )
+
       set_default_instance(instance_slug)
     },
     error = function(err) {
@@ -32,6 +33,13 @@ wrap_lamindb <- function(py_lamindb) {
   }
 
   if (!is.null(instance_slug)) {
+    # Make sure instance modules are required
+    py_builtins <- reticulate::import_builtins()
+    instance_modules <- py_builtins$list(instance_settings$modules)
+    for (module in instance_modules) {
+      require_module(module)
+    }
+
     tryCatch(
       storage <- reticulate::py_repr(py_lamindb$settings$storage), # nolint object_usage_linter
       error = function(err) {
