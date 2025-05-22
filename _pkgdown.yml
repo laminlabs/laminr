@@ -54,6 +54,11 @@ reference:
       Functions for calling the `lamin` Command Line Interface
     contents:
     - starts_with("lamin_")
+  - title: "Debugging"
+    desc: >
+      Functions to help with debugging
+    contents:
+    - laminr_sitrep
   - title: "Deprecated functions"
     desc: >
       Functions that should no longer be used
