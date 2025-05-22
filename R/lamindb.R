@@ -36,9 +36,12 @@ wrap_lamindb <- function(py_lamindb) {
     # Make sure instance modules are required
     py_builtins <- reticulate::import_builtins()
     instance_modules <- py_builtins$list(instance_settings$modules)
-    for (module in instance_modules) {
-      require_module(module)
-    }
+    check_requires(
+      cli::format_inline("Using the {.val {instance_slug}} instance"),
+      instance_modules,
+      language = "Python",
+      alert = "warning"
+    )
 
     tryCatch(
       storage <- reticulate::py_repr(py_lamindb$settings$storage), # nolint object_usage_linter

@@ -49,7 +49,14 @@ check_requires <- function(what, requires,
     install_msg <- if (language == "R") {
       "{.run install.packages(c({missing_str}))}"
     } else {
-      "{.run require_module(c({missing_str}))}"
+      paste0(
+        "{.run ",
+        paste(
+          paste0("require_module('", missing, "')"),
+          collapse = "; "
+        ),
+        "}"
+      )
     }
 
     msg <- c(
