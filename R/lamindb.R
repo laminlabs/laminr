@@ -37,10 +37,11 @@ wrap_lamindb <- function(py_lamindb) {
     py_builtins <- reticulate::import_builtins()
     instance_modules <- py_builtins$list(instance_settings$modules)
     check_requires(
-      cli::format_inline("Using the {.val {instance_slug}} instance"),
+      cli::format_inline("Some functionality in the {.val {instance_slug}} instance"),
       instance_modules,
       language = "Python",
-      alert = "warning"
+      alert = "message",
+      info = c("!" = "This should be done {.emph before} connecting to any instance")
     )
 
     tryCatch(

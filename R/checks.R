@@ -11,14 +11,16 @@
 #'   "Python"
 #' @param extra_repos Additional repositories that are required to install the
 #'   checked packages (only for R)
-#' @param check_fun The
+#' @param info A vector of additional information appended to the message
+#'   formatted with [cli::cli_bullets()]
 #'
 #' @return Invisibly, Boolean whether or not all packages are available or
 #'   raises an error if any are missing and `type = "error"`
 #' @noRd
 check_requires <- function(what, requires,
                            alert = c("error", "warning", "message", "none"),
-                           language = c("R", "Python"), extra_repos = NULL) {
+                           language = c("R", "Python"), extra_repos = NULL,
+                           info  = NULL) {
   language <- match.arg(language)
 
   is_available <- if (language == "R") {
@@ -66,6 +68,10 @@ check_requires <- function(what, requires,
         install_msg
       )
     )
+
+    if (!is.null(info)) {
+      msg <- c(msg, info)
+    }
 
     msg_fun(msg, call = rlang::caller_env())
   }
