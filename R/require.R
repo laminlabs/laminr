@@ -86,10 +86,5 @@ require_module <- function(module, options = NULL, version = NULL,
 }
 
 require_lamindb <- function() {
-  require_module(
-    "lamindb",
-    version = ">=1.2",
-    options = "bionty",
-    python_version = ">=3.10,<3.14"
-  )
+  require_module("lamindb", version = ">=1.2", python_version = ">=3.10,<3.14")
 }

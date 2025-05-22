@@ -90,7 +90,9 @@ jobs:
 
       - name: Run quickstart for main docs
         run: |
-          Rscript test-docs/r-quickstart.R
+          laminr::require_module("bionty")
+          source("test-docs/r-quickstart.R")
+        shell: Rscript {0}
 
       - name: Upload main docs
         run: |
