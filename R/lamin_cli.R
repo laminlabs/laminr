@@ -26,7 +26,7 @@ lamin_connect <- function(instance) {
   check <- check_default_instance(instance)
 
   if (isTRUE(check)) {
-    cli::cli_alert("Already connected to {instance}")
+    cli::cli_alert("Already connected to {.val {instance}}")
     return(invisible(NULL))
   }
 

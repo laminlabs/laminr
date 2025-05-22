@@ -43,7 +43,11 @@ import_module <- function(module, ...) {
     check_instance_module(module)
   }
 
-  require_module(module, ...)
+  if (module == "lamindb") {
+    require_lamindb()
+  } else {
+    require_module(module, ...)
+  }
   check_requires(paste("Importing", module), module, language = "Python")
 
   py_module <- tryCatch(

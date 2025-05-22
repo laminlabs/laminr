@@ -74,11 +74,22 @@ require_module <- function(module, options = NULL, version = NULL,
     requirement <- paste(requirement, "@", source)
   }
 
-  cli::cli_alert_info("Requiring {.pkg {requirement}}")
+  if (!is.null(python_version)) {
+    cli::cli_alert_info(
+      "Requiring {.pkg {requirement}} with Python version {.pkg {python_version}}"
+    )
+  } else {
+    cli::cli_alert_info("Requiring {.pkg {requirement}}")
+  }
 
   reticulate::py_require(requirement, python_version = python_version)
 }
 
 require_lamindb <- function() {
-  require_module("lamindb", version = ">=1.2", python_version = ">=3.10,<3.14")
+  require_module(
+    "lamindb",
+    version = ">=1.2",
+    options = "bionty",
+    python_version = ">=3.10,<3.14"
+  )
 }
