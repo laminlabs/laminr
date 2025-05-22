@@ -37,14 +37,14 @@ laminr_sitrep <- function() {
         }
       }
     ) |>
-      purrr::set_names(py_modules)
+      rlang::set_names(py_modules)
 
     modules_bullets <- ifelse(
       py_versions == "",
       paste0("{.pkg ", names(py_versions), "}"),
       paste0("{.pkg ", names(py_versions), "} v", py_versions)
     ) |>
-      setNames(ifelse(py_versions == "", "x", "v"))
+      rlang::set_names(ifelse(py_versions == "", "x", "v"))
   }
 
   cli::cli_h1("{.pkg laminr} status")

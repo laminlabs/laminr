@@ -30,13 +30,19 @@ lamin_connect <- function(instance) {
     return(invisible(NULL))
   }
 
-  require_lamindb()
-  if (!reticulate::py_available()) {
-    # Force reticulate to connect to Python
+  system_fun <- function(instance) {
+    require_lamindb(silent = TRUE)
     py_config <- reticulate::py_config() # nolint object_usage_linter
+
+    system2("lamin", paste("connect", instance))
   }
 
-  system2("lamin", paste("connect", instance))
+  callr::r(
+    system_fun,
+    args = list(instance = instance),
+    show = TRUE,
+    package = "laminr"
+  )
 
   set_default_instance(instance)
 }
@@ -53,13 +59,14 @@ lamin_connect <- function(instance) {
 #' lamin_disconnect()
 #' }
 lamin_disconnect <- function() {
-  require_lamindb()
-  if (!reticulate::py_available()) {
-    # Force reticulate to connect to Python
+  system_fun <- function() {
+    require_lamindb(silent = TRUE)
     py_config <- reticulate::py_config() # nolint object_usage_linter
+
+    system2("lamin", "disconnect")
   }
 
-  system2("lamin", "disconnect")
+  callr::r(system_fun, show = TRUE, package = "laminr")
 
   set_default_instance(NULL)
 }
@@ -86,34 +93,44 @@ lamin_disconnect <- function() {
 lamin_login <- function(user = NULL, api_key = NULL) {
   check_default_instance()
 
-  require_lamindb()
-  ln <- reticulate::import("lamindb")
-  handle <- ln$setup$settings$user$handle
+  system_fun <- function(user, api_key) {
+    require_lamindb()
+    ln <- reticulate::import("lamindb")
+    handle <- ln$setup$settings$user$handle
 
-  if (!is.null(user)) {
-    # If user is provided run `lamin login <user>`
-    cli::cli_alert_info("Using provided user {.val {user}}")
-    system2("lamin", paste("login", user))
-  } else if (!is.null(api_key)) {
-    # If api_key is provided, run `lamin login` with the LAMIN_API_KEY env var
-    cli::cli_alert_info("Using provided API key")
-    withr::with_envvar(c("LAMIN_API_KEY" = api_key), {
+    if (!is.null(user)) {
+      # If user is provided run `lamin login <user>`
+      cli::cli_alert_info("Using provided user {.val {user}}")
+      system2("lamin", paste("login", user))
+    } else if (!is.null(api_key)) {
+      # If api_key is provided, run `lamin login` with the LAMIN_API_KEY env var
+      cli::cli_alert_info("Using provided API key")
+      withr::with_envvar(c("LAMIN_API_KEY" = api_key), {
+        system2("lamin", "login")
+      })
+    } else if (!is.null(handle) && handle != "anonymous") {
+      # If there is a stored user handle run `lamin login <handle>`
+      cli::cli_alert_info("Using stored user handle {.val {handle}}")
+      system2("lamin", paste("login", handle))
+    } else if (Sys.getenv("LAMIN_API_KEY") != "") {
+      # If the LAMIN_API_KEY env var is already set run `lamin login`
+      cli::cli_alert_info("Using {.field LAMIN_API_KEY} environment variable")
       system2("lamin", "login")
-    })
-  } else if (!is.null(handle) && handle != "anonymous") {
-    # If there is a stored user handle run `lamin login <handle>`
-    cli::cli_alert_info("Using stored user handle {.val {handle}}")
-    system2("lamin", paste("login", handle))
-  } else if (Sys.getenv("LAMIN_API_KEY") != "") {
-    # If the LAMIN_API_KEY env var is already set run `lamin login`
-    cli::cli_alert_info("Using {.field LAMIN_API_KEY} environment variable")
-    system2("lamin", "login")
-  } else {
-    # Fail to log in
-    cli::cli_abort(
-      "Unable to log in. Please provide {.arg user} or {.arg api_key}."
-    )
+    } else {
+      # Fail to log in
+      cli::cli_abort(
+        "Unable to log in. Please provide {.arg user} or {.arg api_key}."
+      )
+    }
   }
+
+  callr::r(
+    system_fun,
+    args = list(user = user, api_key = api_key),
+    show = TRUE,
+    package = "laminr"
+  ) |>
+    invisible()
 }
 
 #' Log out of LaminDB
@@ -124,13 +141,15 @@ lamin_login <- function(user = NULL, api_key = NULL) {
 lamin_logout <- function() {
   check_default_instance()
 
-  require_lamindb()
-  if (!reticulate::py_available()) {
-    # Force reticulate to connect to Python
+  system_fun <- function() {
+    require_lamindb(silent = TRUE)
     py_config <- reticulate::py_config() # nolint object_usage_linter
+
+    system2("lamin", "logout")
   }
 
-  system2("lamin", "logout")
+  callr::r(system_fun, show = TRUE, package = "laminr") |>
+    invisible()
 }
 
 #' Initialise LaminDB
@@ -150,43 +169,49 @@ lamin_logout <- function() {
 #' lamin_init("mydata", modules = c("bionty", "wetlab"))
 #' }
 lamin_init <- function(storage, name = NULL, db = NULL, modules = NULL) {
-  require_lamindb()
+  system_fun <- function(storage, name, db, modules) {
+    require_lamindb()
 
-  if (!is.null(modules)) {
-    for (module in modules) {
-      require_module(module)
+    if (!is.null(modules)) {
+      for (module in modules) {
+        require_module(module)
+      }
     }
-  }
-
-  if (!reticulate::py_available()) {
-    # Force reticulate to connect to Python
     py_config <- reticulate::py_config() # nolint object_usage_linter
+
+    if (!is.null(modules)) {
+      check_requires(
+        "Initalising a database with these modules", modules,
+        language = "Python"
+      )
+    }
+
+    args <- paste("init --storage", storage)
+
+    if (!is.null(name)) {
+      args <- c(args, paste("--name", name))
+    }
+
+    if (!is.null(db)) {
+      args <- c(args, paste("--db", name))
+    }
+
+    if (!is.null(modules)) {
+      args <- c(
+        args, paste("--modules", paste(modules, collapse = ","))
+      )
+    }
+
+    system2("lamin", args)
   }
 
-  if (!is.null(modules)) {
-    check_requires(
-      "Initalising a database with these modules", modules,
-      language = "Python"
-    )
-  }
-
-  args <- paste("init --storage", storage)
-
-  if (!is.null(name)) {
-    args <- c(args, paste("--name", name))
-  }
-
-  if (!is.null(db)) {
-    args <- c(args, paste("--db", name))
-  }
-
-  if (!is.null(modules)) {
-    args <- c(
-      args, paste("--modules", paste(modules, collapse = ","))
-    )
-  }
-
-  system2("lamin", args)
+  callr::r(
+    system_fun,
+    args = list(storage = storage, name = name, db = db, modules = modules),
+    show = TRUE,
+    package = "laminr"
+  ) |>
+    invisible()
 }
 
 #' @param add_timestamp Whether to append a timestamp to `name` to make it unique
@@ -238,27 +263,36 @@ lamin_init_temp <- function(name = "laminr-temp", db = NULL, modules = NULL,
 #' lamin_delete("to-delete")
 #' }
 lamin_delete <- function(instance, force = FALSE) {
-  require_lamindb()
-  ln_setup <- reticulate::import("lamindb_setup")
-
-  # Use lamindb_setup to resolve owner/name from instance
-  owner_name <- ln_setup$`_connect_instance`$get_owner_name_from_identifier(instance)
-  slug <- paste0(owner_name[[1]], "/", owner_name[[2]])
-
   # Python prompts don't work so need to prompt in R
   if (!isTRUE(force)) {
     confirm <- prompt_yes_no(
-      "Are you sure you want to delete instance {.val {slug}}?"
+      "Are you sure you want to delete instance {.val {instance}}?"
     )
     if (isFALSE(confirm)) {
-      cli::cli_alert_danger("Instance {.val {slug}} will not be deleted")
+      cli::cli_alert_danger("Instance {.val {instance}} will not be deleted")
       return(invisible(NULL))
     }
   }
 
-  # Always force here to avoid Python prompt
-  args <- paste("delete --force", slug)
-  system2("lamin", args)
+  system_fun <- function(instance) {
+    require_lamindb()
+    ln_setup <- reticulate::import("lamindb_setup")
+
+    # Use lamindb_setup to resolve owner/name from instance
+    owner_name <- ln_setup$`_connect_instance`$get_owner_name_from_identifier(instance)
+    slug <- paste0(owner_name[[1]], "/", owner_name[[2]])
+
+    # Always force here to avoid Python prompt
+    system2("lamin", paste("delete --force", slug))
+  }
+
+  callr::r(
+    system_fun,
+    args = list(instance = instance),
+    show = TRUE,
+    package = "laminr"
+  ) |>
+    invisible()
 }
 
 #' Save to a LaminDB instance
@@ -283,13 +317,6 @@ lamin_delete <- function(instance, force = FALSE) {
 #' lamin_save(my_file)
 #' }
 lamin_save <- function(filepath, key = NULL, description = NULL, registry = NULL) {
-  # Set the default environment if not set
-  require_lamindb()
-  if (!reticulate::py_available()) {
-    # Force reticulate to connect to Python
-    py_config <- reticulate::py_config() # nolint object_usage_linter
-  }
-
   args <- "save"
 
   if (!is.null(key)) {
@@ -308,5 +335,18 @@ lamin_save <- function(filepath, key = NULL, description = NULL, registry = NULL
 
   args <- c(args, filepath)
 
-  system2("lamin", args)
+  system_fun <- function(system_args) {
+    require_lamindb()
+    py_config <- reticulate::py_config() # nolint object_usage_linter
+
+    system2("lamin", args)
+  }
+
+  callr::r(
+    system_fun,
+    args = list(system_args = args),
+    show = TRUE,
+    package = "laminr"
+  ) |>
+    invisible()
 }
