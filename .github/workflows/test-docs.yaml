@@ -101,6 +101,7 @@ jobs:
 
       - name: Build LaminR docs
         run: |
+          options(error = laminr::laminr_sitrep)
           laminr::lamin_connect("laminlabs/lamindata")
           pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
         shell: Rscript {0}
