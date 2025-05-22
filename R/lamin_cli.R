@@ -350,3 +350,69 @@ lamin_save <- function(filepath, key = NULL, description = NULL, registry = NULL
   ) |>
     invisible()
 }
+
+#' Lamin settings
+#'
+#' Get the current LaminDB settings by calling `lamin settings` on the command
+#' line
+#'
+#' @returns A list of the current LaminDB settings
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' lamin_settings()
+#' }
+lamin_settings <- function() {
+  system_fun <- function() {
+    require_lamindb(silent = TRUE)
+    py_config <- reticulate::py_config() # nolint object_usage_linter
+
+    system2("lamin", "settings", stdout = TRUE)
+  }
+
+  settings_vector <- callr::r(system_fun, show = TRUE, package = "laminr")
+
+  settings <- list()
+  current_parent <- NULL
+
+  for (setting in settings_vector) {
+    is_nested <- grepl("^- ", setting)
+
+    parts <- strsplit(setting, ":", 2)[[1]]
+    field <- trimws(parts[1])
+    value <- trimws(parts[2])
+
+    if (value == "True") {
+      value == TRUE
+    }
+
+    if (value == "False") {
+      value == FALSE
+    }
+
+    # Turn {'item1', 'item2'} into a vector
+    if (grepl("\\{.*\\}", value)) {
+      value <- gsub(".*\\{(.*?)\\}.*", "\\1", value)
+      value <- strsplit(value, ",")[[1]]
+      value <- trimws(value)
+      value <- gsub("^['\"]|['\"]$", "", value)
+    }
+
+    if (is_nested) {
+      field <- sub("^- ", "", field)
+      settings[[current_parent]][[field]] <- value
+    } else {
+      current_parent <- field
+      settings[[current_parent]] <- list(value = value)
+    }
+  }
+
+  purrr::map(settings, function(.setting) {
+    if (length(.setting) == 1) {
+      .setting[[1]]
+    } else {
+      .setting
+    }
+  })
+}
