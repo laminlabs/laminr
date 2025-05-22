@@ -11,6 +11,7 @@
 #'   `git+https://github.com/owner/module.git`
 #' @param python_version A string defining the Python version to require. Passed
 #'   to [reticulate::py_require()]
+#' @param silent Whether to suppress the message showing what has been required
 #'
 #' @returns The result of [reticulate::py_require]
 #' @export
@@ -49,7 +50,8 @@
 #' require_module("lamindb", python_version = "3.12")
 #' }
 require_module <- function(module, options = NULL, version = NULL,
-                           source = NULL, python_version = NULL) {
+                           source = NULL, python_version = NULL,
+                           silent = FALSE) {
   if (length(module) > 1) {
     cli::cli_abort("Only one module can be required at a time")
   }
@@ -74,17 +76,22 @@ require_module <- function(module, options = NULL, version = NULL,
     requirement <- paste(requirement, "@", source)
   }
 
-  if (!is.null(python_version)) {
-    cli::cli_alert_info(
-      "Requiring {.pkg {requirement}} with Python version {.pkg {python_version}}"
-    )
-  } else {
-    cli::cli_alert_info("Requiring {.pkg {requirement}}")
+  if (!isTRUE(silent)) {
+    msg <- "Requiring {.pkg {requirement}}"
+    if (!is.null(python_version)) {
+      msg <- paste(msg, "with Python version {.pkg {python_version}}")
+    }
+    cli::cli_alert_info(msg)
   }
 
   reticulate::py_require(requirement, python_version = python_version)
 }
 
-require_lamindb <- function() {
-  require_module("lamindb", version = ">=1.2", python_version = ">=3.10,<3.14")
+require_lamindb <- function(silent = FALSE) {
+  require_module(
+    "lamindb",
+    version = ">=1.2",
+    python_version = ">=3.10,<3.14",
+    silent = silent
+  )
 }

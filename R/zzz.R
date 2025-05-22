@@ -1,3 +1,3 @@
 .onLoad <- function(libname, pkgname) {
-  require_lamindb()
+  require_lamindb(silent = TRUE)
 }
