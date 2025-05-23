@@ -94,6 +94,11 @@ jobs:
           source("test-docs/r-quickstart.R")
         shell: Rscript {0}
 
+      - name: Render markdown manual
+        run: |
+          Rd2md::render_refman(output_file = "test-docs/manual.md")
+        shell: Rscript {0}
+
       - name: Upload main docs
         run: |
           pip install laminci@git+https://github.com/laminlabs/laminci
@@ -103,11 +108,6 @@ jobs:
         run: |
           laminr::lamin_connect("laminlabs/lamindata")
           pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
-        shell: Rscript {0}
-
-      - name: Render markdown manual
-        run: |
-          Rd2md::render_refman(output_file = "test-docs/manual.md")
         shell: Rscript {0}
 
       - name: Create built site artifact
