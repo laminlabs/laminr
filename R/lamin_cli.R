@@ -42,9 +42,8 @@ lamin_connect <- function(instance) {
     args = list(instance = instance),
     show = TRUE,
     package = "laminr"
-  )
-
-  set_default_instance(instance)
+  ) |>
+    invisible()
 }
 
 #' Disconnect from a LaminDB instance
