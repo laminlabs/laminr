@@ -1,8 +1,35 @@
+# Developement version
+
+## BREAKING CHANGES
+
+## NEW FEATURES
+
+- Add a `lamin_settings()` function that returns information from `lamin settings` (PR #201)
+- Add a `laminr_status()` function that prints information useful for debugging (PR #201)
+
+## MAJOR CHANGES
+
+- Isolate functions that made CLI calls so they do not interfere with the main session/environment (PR #201)
+- Require instance modules before importing `lamindb` so they should be available (PR #201)
+
+## MINOR CHANGES
+
+- Add an alert if an instance module is not available with importing `lamindb` (PR #201)
+- Add a status message to `require_module()`, can be suppressed with `silent = TRUE` (PR #201)
+
+## BUG FIXES
+
+## TESTING
+
+- Tidy and reorganise test GitHub actions (PR #201)
+
+## DOCUMENTATION
+
 # laminr v1.1.1
 
 ## BUG FIXES
 
-- Surround pak lockfile creation with try-catch to avoid breaking the finish process (PR #198).
+- Surround pak lockfile creation with try-catch to avoid breaking the finish process (PR #198)
 
 # laminr v1.1.0
 

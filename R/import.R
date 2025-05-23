@@ -43,7 +43,12 @@ import_module <- function(module, ...) {
     check_instance_module(module)
   }
 
-  require_module(module, ...)
+  if (module == "lamindb") {
+    settings <- lamin_settings()
+    init_lamindb_connection(settings)
+  } else {
+    require_module(module, ...)
+  }
   check_requires(paste("Importing", module), module, language = "Python")
 
   py_module <- tryCatch(
@@ -61,7 +66,7 @@ import_module <- function(module, ...) {
   )
 
   if (module == "lamindb") {
-    wrap_lamindb(py_module)
+    wrap_lamindb(py_module, settings)
   } else {
     py_module
   }

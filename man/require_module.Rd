@@ -9,7 +9,8 @@ require_module(
   options = NULL,
   version = NULL,
   source = NULL,
-  python_version = NULL
+  python_version = NULL,
+  silent = FALSE
 )
 }
 \arguments{
@@ -25,6 +26,8 @@ is being required}
 
 \item{python_version}{A string defining the Python version to require. Passed
 to \code{\link[reticulate:py_require]{reticulate::py_require()}}}
+
+\item{silent}{Whether to suppress the message showing what has been required}
 }
 \value{
 The result of \link[reticulate:py_require]{reticulate::py_require}

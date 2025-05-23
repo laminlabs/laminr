@@ -19,6 +19,7 @@ is being required}
 \verb{git+https://github.com/owner/module.git}}
     \item{\code{python_version}}{A string defining the Python version to require. Passed
 to \code{\link[reticulate:py_require]{reticulate::py_require()}}}
+    \item{\code{silent}}{Whether to suppress the message showing what has been required}
   }}
 }
 \value{

@@ -9,7 +9,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-
 ```{r prepare, include = FALSE}
 # Restore the current instance at the end of the vignette
 current_instance <- laminr::get_current_lamin_instance()
