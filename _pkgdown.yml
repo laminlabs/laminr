@@ -58,7 +58,7 @@ reference:
     desc: >
       Functions to help with debugging
     contents:
-    - laminr_sitrep
+    - laminr_status
   - title: "Deprecated functions"
     desc: >
       Functions that should no longer be used

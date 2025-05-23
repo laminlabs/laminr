@@ -1,4 +1,4 @@
-#' laminr situation report
+#' laminr status
 #'
 #' Overview of the current status of the laminr package and its dependencies.
 #' Can be useful for debugging.
@@ -8,13 +8,13 @@
 #'
 #' @details
 #' Provides information that can be useful for debugging. To run the function
-#' when an error occurs set `options(error = laminr::laminr_sitrep)`. Note that
+#' when an error occurs set `options(error = laminr::laminr_status)`. Note that
 #' this should be used with some caution as it will print the status whenever
 #' any error occurs.
 #'
 #' @examples
-#' laminr_sitrep()
-laminr_sitrep <- function() {
+#' laminr_status()
+laminr_status <- function() {
   default_instance <- get_default_instance()
 
   if (!is.null(default_instance)) {

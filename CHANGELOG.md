@@ -5,7 +5,7 @@
 ## NEW FEATURES
 
 - Add a `lamin_settings()` function that returns information from `lamin settings` (PR #201)
-- Add a `laminr_sitrep()` function that prints information useful for debugging (PR #201)
+- Add a `laminr_status()` function that prints information useful for debugging (PR #201)
 
 ## MAJOR CHANGES
 

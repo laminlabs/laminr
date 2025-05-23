@@ -65,7 +65,7 @@ jobs:
         run: |
           laminr::import_module("lamindb")
           message("LAMIN_TEST_VERSION: ", Sys.getenv("LAMIN_TEST_VERSION"))
-          laminr::laminr_sitrep()
+          laminr::laminr_status()
           reticulate::py_config()
         shell: Rscript {0}
 
