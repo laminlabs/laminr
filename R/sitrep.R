@@ -18,8 +18,10 @@ laminr_sitrep <- function() {
   default_instance <- get_default_instance()
 
   if (!is.null(default_instance)) {
+    # nolint start: object_usage_linter
     user <- get_current_lamin_user()
     instance <- suppressMessages(get_current_lamin_instance())
+    # nolint end: object_usage_linter
   }
 
   py_available <- reticulate::py_available()

@@ -20,7 +20,7 @@
 check_requires <- function(what, requires,
                            alert = c("error", "warning", "message", "none"),
                            language = c("R", "Python"), extra_repos = NULL,
-                           info  = NULL) {
+                           info = NULL) {
   language <- match.arg(language)
 
   is_available <- if (language == "R") {
