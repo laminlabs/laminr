@@ -377,6 +377,11 @@ lamin_settings <- function() {
   current_parent <- NULL
 
   for (setting in settings_vector) {
+    # Skip lines that aren't settings
+    if (!grepl(":", setting)) {
+      next
+    }
+
     is_nested <- grepl("^- ", setting)
 
     parts <- strsplit(setting, ":", 2)[[1]]
@@ -384,11 +389,11 @@ lamin_settings <- function() {
     value <- trimws(parts[2])
 
     if (value == "True") {
-      value == TRUE
+      value <- TRUE
     }
 
     if (value == "False") {
-      value == FALSE
+      value <- FALSE
     }
 
     # Turn {'item1', 'item2'} into a vector

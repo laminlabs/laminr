@@ -45,26 +45,16 @@ get_default_instance <- function() {
 #' @export
 #'
 #' @details
-#' This is done via a system call to `lamin settings` to avoid importing Python
-#' `lamindb`
+#' This is done via [lamin_settings()] to avoid importing Python `lamindb`
 get_current_lamin_user <- function() {
-  require_lamindb()
-  if (!reticulate::py_available()) {
-    # Force reticulate to connect to Python
-    py_config <- reticulate::py_config() # nolint object_usage_linter
-  }
+  settings <- lamin_settings()
 
-  settings <- system2("lamin", "settings", stdout = TRUE)
+  handle <- settings[["Current user"]]$handle
 
-  is_handle <- grepl("handle:", settings)
-  handle_setting <- settings[is_handle]
-
-  if (length(handle_setting) == 0) {
+  if (is.null(handle)) {
     cli::cli_alert_danger("No current user")
     return(invisible(NULL))
   }
-
-  handle <- rev(strsplit(handle_setting, " ")[[1]])[1]
 
   handle
 }
@@ -78,28 +68,18 @@ get_current_lamin_user <- function() {
 #' @export
 #'
 #' @details
-#' This is done via a system call to `lamin settings` to avoid importing Python
-#' `lamindb`
+#' This is done via a [lamin_settings()] to avoid importing Python `lamindb`
 get_current_lamin_instance <- function() {
-  require_lamindb()
-  if (!reticulate::py_available()) {
-    # Force reticulate to connect to Python
-    py_config <- reticulate::py_config() # nolint object_usage_linter
-  }
+  settings <- lamin_settings()
 
-  settings <- system2("lamin", "settings", stdout = TRUE)
+  instance_slug <- settings[["Current instance"]]$value
 
-  is_instance <- grepl("Current instance:", settings)
-  instance_setting <- settings[is_instance]
-
-  if (length(instance_setting) == 0) {
+  if (is.null(instance_slug)) {
     cli::cli_alert_danger("No current instance")
     return(invisible(NULL))
   }
 
-  instance <- rev(strsplit(instance_setting, " ")[[1]])[1]
-
-  instance
+  instance_slug
 }
 
 #' Check if we are in a knitr notebook
