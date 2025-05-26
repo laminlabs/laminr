@@ -19,6 +19,8 @@
 
 ## BUG FIXES
 
+- Handle missing setting values in `lamin_settings()` (PR #202)
+
 ## TESTING
 
 - Tidy and reorganise test GitHub actions (PR #201)
