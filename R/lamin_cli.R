@@ -93,7 +93,7 @@ lamin_login <- function(user = NULL, api_key = NULL) {
   check_default_instance()
 
   system_fun <- function(user, api_key) {
-    require_lamindb()
+    require_lamindb(silent = TRUE)
     ln <- reticulate::import("lamindb")
     handle <- ln$setup$settings$user$handle
 
@@ -169,11 +169,11 @@ lamin_logout <- function() {
 #' }
 lamin_init <- function(storage, name = NULL, db = NULL, modules = NULL) {
   system_fun <- function(storage, name, db, modules) {
-    require_lamindb()
+    require_lamindb(silent = TRUE)
 
     if (!is.null(modules)) {
       for (module in modules) {
-        require_module(module)
+        require_module(module, silent = TRUE)
       }
     }
     py_config <- reticulate::py_config() # nolint object_usage_linter
@@ -274,7 +274,7 @@ lamin_delete <- function(instance, force = FALSE) {
   }
 
   system_fun <- function(instance) {
-    require_lamindb()
+    require_lamindb(silent = TRUE)
     ln_setup <- reticulate::import("lamindb_setup")
 
     # Use lamindb_setup to resolve owner/name from instance
@@ -335,7 +335,7 @@ lamin_save <- function(filepath, key = NULL, description = NULL, registry = NULL
   args <- c(args, filepath)
 
   system_fun <- function(system_args) {
-    require_lamindb()
+    require_lamindb(silent = TRUE)
     py_config <- reticulate::py_config() # nolint object_usage_linter
 
     system2("lamin", args)
