@@ -387,6 +387,11 @@ lamin_settings <- function() {
     field <- trimws(parts[1])
     value <- trimws(parts[2])
 
+    # Skip empty values
+    if (value == "None" || value == "set()") {
+      next
+    }
+
     if (value == "True") {
       value <- TRUE
     }
