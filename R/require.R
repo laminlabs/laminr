@@ -91,6 +91,8 @@ require_module <- function(module, options = NULL, version = NULL,
 #'
 #' Require the lamindb Python module
 #'
+#' @param silent Whether to suppress messages showing what has been required
+#'
 #' @noRd
 #'
 #' @details
@@ -106,7 +108,7 @@ require_lamindb <- function(silent = FALSE) {
   laminr_lamindb_options <- Sys.getenv("LAMINR_LAMINDB_OPTIONS")
   if (laminr_lamindb_options != "") {
     laminr_lamindb_options <- trimws(unlist(strsplit(laminr_lamindb_options, ",")))
-    if (!isFALSE(silent)) {
+    if (!isTRUE(silent)) {
       cli::cli_alert_info(
         "Requiring {.pkg lamindb} options {.val {laminr_lamindb_options}}"
       )
@@ -124,7 +126,7 @@ require_lamindb <- function(silent = FALSE) {
       silent = silent
     )
   } else if (laminr_lamindb_version %in% c("github", "devel")) {
-    if (!isFALSE(silent)) {
+    if (!isTRUE(silent)) {
       cli::cli_alert_info(
         "Requiring the development version of {.pkg lamindb}"
       )
@@ -161,7 +163,7 @@ require_lamindb <- function(silent = FALSE) {
       laminr_lamindb_version <- paste0("==", laminr_lamindb_version)
     }
 
-    if (!isFALSE(silent)) {
+    if (!isTRUE(silent)) {
       cli::cli_alert_info(
         "Requiring {.pkg lamindb} version {.val {laminr_lamindb_version}}"
       )
