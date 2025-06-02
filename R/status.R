@@ -27,7 +27,18 @@ laminr_status <- function() {
   py_available <- reticulate::py_available()
 
   if (py_available) {
-    py_modules <- c("lamindb", "bionty", "wetlab", "clinicore", "cellregistry", "omop")
+    py_modules <- c(
+      "lamindb",
+      "lamin_cli",
+      "lamin_utils",
+      "lamindb_setup",
+      "bionty",
+      "wetlab",
+      "clinicore",
+      "cellregistry",
+      "omop"
+    )
+
     py_versions <- purrr::map_chr(
       py_modules,
       function(.module) {
