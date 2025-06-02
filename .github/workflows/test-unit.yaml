@@ -74,9 +74,14 @@ jobs:
         run: |
           laminr::lamin_login()
           laminr::lamin_connect("laminlabs/lamindata")
-          if (laminr::get_current_lamin_instance() != "laminlabs/lamindata") {
-            stop("Not connected to lamindata")
-          }
+        shell: Rscript {0}
+
+      - name: Check whether we can import lamindb and connect to the default instance
+        run: |
+          laminr::import_module("lamindb")
+          message("LAMIN_TEST_VERSION: ", Sys.getenv("LAMIN_TEST_VERSION"))
+          laminr::laminr_status()
+          reticulate::py_config()
         shell: Rscript {0}
 
       - name: Check

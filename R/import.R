@@ -47,7 +47,8 @@ import_module <- function(module, ...) {
   }
 
   if (module == "lamindb") {
-    require_lamindb()
+    settings <- lamin_settings()
+    init_lamindb_connection(settings)
   } else {
     require_module(module, ...)
   }
@@ -68,7 +69,7 @@ import_module <- function(module, ...) {
   )
 
   if (module == "lamindb") {
-    wrap_lamindb(py_module)
+    wrap_lamindb(py_module, settings)
   } else {
     py_module
   }

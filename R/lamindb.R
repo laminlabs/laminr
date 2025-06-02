@@ -1,21 +1,4 @@
-wrap_lamindb <- function(py_lamindb) {
-  check_requires("Importing lamindb", "lamindb", language = "Python")
-
-  instance_slug <- NULL
-  tryCatch(
-    {
-      instance_settings <- py_lamindb$setup$settings$instance
-      instance_slug <- paste0(instance_settings$owner, "/", instance_settings$name)
-      py_lamindb$connect()
-      set_default_instance(instance_slug)
-    },
-    error = function(err) {
-      cli::cli_alert_danger(
-        "No instance is loaded. Call {.code lamin_init()} or {.code lamin_connect()}"
-      )
-    }
-  )
-
+wrap_lamindb <- function(py_lamindb, settings) {
   lamin_version <- reticulate::py_get_attr(py_lamindb, "__version__")
   lamin_version_clean <- sub("([a-zA-Z].*)", "", lamin_version) # Remove pre-release versions, e.g. 1.0a5 -> 1.0
   min_version <- "1.2"
@@ -28,27 +11,42 @@ wrap_lamindb <- function(py_lamindb) {
     )
   }
 
+  instance_slug <- settings[["Current instance"]]$value
   if (!is.null(instance_slug)) {
+    # Warn if instance modules are not available
+    instance_modules <- settings[["Current instance"]]$modules
+    check_requires(
+      cli::format_inline("Some functionality in the {.val {instance_slug}} instance"),
+      instance_modules,
+      language = "Python",
+      alert = "message",
+      info = c("!" = "This should be done {.emph before} connecting to any instance")
+    )
+
     tryCatch(
       storage <- reticulate::py_repr(py_lamindb$settings$storage), # nolint object_usage_linter
       error = function(err) {
-        cli::cli_abort(c(
-          paste(
-            "Failed to identify storage for instance {.val {instance_slug}}.",
-            "The directory for this instance may have been deleted."
+        cli::cli_abort(
+          c(
+            paste(
+              "Failed to identify storage for instance {.val {instance_slug}}.",
+              "The directory for this instance may have been deleted."
+            ),
+            "i" = paste(
+              "Restart your R session and use {.code lamin_connect()} to",
+              "connect to another instance"
+            ),
+            "x" = "Error message: {err}"
           ),
-          "i" = paste(
-            "Restart your R session and use {.code lamin_connect()} to",
-            "connect to another instance"
-          ),
-          "x" = "Error message: {err}"
-        ), call = rlang::caller_env(4))
+          call = rlang::caller_env(4)
+        )
       }
     )
   }
 
   reticulate::register_module_help_handler(
-    "lamindb", lamindb_module_help_handler
+    "lamindb",
+    lamindb_module_help_handler
   )
 
   wrap_python(
@@ -99,12 +97,26 @@ lamindb_finish <- function(self, ...) {
     pkgs <- get_loaded_packages()
     pkg_repos <- get_package_repositories(pkgs)
 
-    withr::with_options(list(repos = unique(c(pkg_repos, getOption("repos")))), {
-      pak::lockfile_create(
-        pkg = pkgs,
-        lockfile = file.path(run_dir, "r_pak_lockfile.json")
-      )
-    })
+    tryCatch(
+      withr::with_options(
+        list(repos = unique(c(pkg_repos, getOption("repos")))),
+        {
+          pak::lockfile_create(
+            pkg = pkgs,
+            lockfile = file.path(run_dir, "r_pak_lockfile.json")
+          )
+        }
+      ),
+      error = function(err) {
+        cli::cli_warn(
+          c(
+            "Failed to create the lockfile for the run using pak.",
+            "i" = "Please reach out via GitHub or Slack if you need help.",
+            "x" = "Error message: {err}"
+          )
+        )
+      }
+    )
   }
 
   tryCatch(
@@ -122,4 +134,36 @@ lamindb_finish <- function(self, ...) {
       cli::cli_inform(paste("NotebookNotSaved: {message}"))
     }
   )
+}
+
+#' Initialise lamindb connection
+#'
+#' Performs setup in prepration for connecting to a lamindb instance that must
+#' be done _before_ importing the Python `lamimdb` module.
+#'
+#' @param settings A list of LaminDB settings returned by [lamin_settings()]
+#'
+#' @returns NULL, invisibly
+#' @noRd
+init_lamindb_connection <- function(settings) {
+  require_lamindb()
+
+  instance_slug <- settings[["Current instance"]]$value
+  if (is.null(instance_slug)) {
+    cli::cli_abort(
+      "No instance is loaded. Call {.code lamin_init()} or {.code lamin_connect()}"
+    )
+    return(invisible(NULL))
+  }
+
+  if (is.null(get_default_instance())) {
+    instance_modules <- settings[["Current instance"]]$modules
+    for (module in instance_modules) {
+      require_module(module)
+    }
+
+    set_default_instance(instance_slug)
+  }
+
+  invisible()
 }

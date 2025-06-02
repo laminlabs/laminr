@@ -88,17 +88,22 @@ jobs:
         run: |
           laminr::lamin_login()
           laminr::lamin_connect("laminlabs/lamindata")
-          if (laminr::get_current_lamin_instance() != "laminlabs/lamindata") {
-            stop("Not connected to lamindata")
-          }
         shell: Rscript {0}
 
-      - name: Prepare tests for main docs
+      - name: Check whether we can import lamindb and connect to the default instance
+        run: |
+          laminr::import_module("lamindb")
+          message("LAMIN_TEST_VERSION: ", Sys.getenv("LAMIN_TEST_VERSION"))
+          laminr::laminr_status()
+          reticulate::py_config()
+        shell: Rscript {0}
+
+      - name: Create a test instance for main docs
         run: |
           laminr::lamin_init(storage = "./test-docs", modules = c("bionty"))
         shell: Rscript {0}
 
-      - name: Run tests for main docs
+      - name: Run quickstart for main docs
         run: Rscript test-docs/r-quickstart.R
 
       - name: Render markdown manual
@@ -106,13 +111,15 @@ jobs:
           Rd2md::render_refman(output_file = "test-docs/manual.md")
         shell: Rscript {0}
 
-      - name: Upload docs
+      - name: Upload main docs
         run: |
           pip install laminci@git+https://github.com/laminlabs/laminci
           laminci upload-docs --dir ./test-docs
 
       - name: Build LaminR docs
-        run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
+        run: |
+          laminr::lamin_connect("laminlabs/lamindata")
+          pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
         shell: Rscript {0}
 
       - name: Create built site artifact
