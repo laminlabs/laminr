@@ -66,36 +66,18 @@ jobs:
           }
         shell: Rscript {0}
 
-      - name: Check lamindb requirements
-        run: |
-          message("LAMINR_LAMINDB_VERSION: ", Sys.getenv("LAMINR_LAMINDB_VERSION"))
-          message("LAMINR_LAMINDB_OPTIONS: ", Sys.getenv("LAMINR_LAMINDB_OPTIONS"))
-          laminr:::require_lamindb()
-          cli::rule(center = "PYTHON REQUIREMENTS", width = 84)
-          reticulate::py_require()
-          cli::rule(center = "PYTHON CONFIG", width = 84)
-          reticulate::py_config()
-          cli::rule(center = "PYTHON PACKAGES", width = 84)
-          reticulate::py_list_packages()
-          cli::rule(center = "LAMIN PACKAGE VERSIONS", width = 84)
-          for (module in c("lamindb", "lamin_cli", "lamin_utils", "lamindb_setup")) {
-            version <- reticulate::py_get_attr(reticulate::import(module), "__version__")
-            cat(module, "\t", reticulate::py_to_r(version), "\n")
-          }
-        shell: Rscript {0}
-
       - name: Login and set lamindata as default instance
         run: |
           laminr::lamin_login()
           laminr::lamin_connect("laminlabs/lamindata")
         shell: Rscript {0}
 
-      - name: Check whether we can import lamindb and connect to the default instance
+      - name: Check environment
         run: |
           laminr::import_module("lamindb")
-          message("LAMIN_TEST_VERSION: ", Sys.getenv("LAMIN_TEST_VERSION"))
           laminr::laminr_status()
           reticulate::py_config()
+          reticulate::py_list_packages()
         shell: Rscript {0}
 
       - name: Create a test instance for main docs
