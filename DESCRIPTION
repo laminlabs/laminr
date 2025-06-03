@@ -35,7 +35,6 @@ Suggests:
     jsonlite,
     knitr,
     magick,
-    nanoparquet,
     readr,
     rmarkdown,
     rstudioapi,
