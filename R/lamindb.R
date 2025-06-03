@@ -51,6 +51,15 @@ wrap_lamindb <- function(py_lamindb, settings) {
 
   wrap_python(
     py_lamindb,
+    active = list(
+      core = function(value) {
+        if (missing(value)) {
+          wrap_core(unwrap_python(self)$core)
+        } else {
+          cli::cli_abort("The {.field core} slot is read-only.")
+        }
+      }
+    ),
     public = list(
       track = wrap_with_py_arguments(lamindb_track, py_lamindb$track),
       finish = wrap_with_py_arguments(lamindb_finish, py_lamindb$finish)
