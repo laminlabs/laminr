@@ -89,6 +89,31 @@ test_that("load_file with a .parquet works", {
   expect_equal(loaded_df, df)
 })
 
+test_that("reading/writing small_dataset1 as a .parquet works", {
+  skip_if_not_installed("arrow")
+
+  file <- withr::local_file(tempfile(fileext = ".parquet"))
+
+  df <- ln$core$datasets$small_dataset1()
+
+  expect_no_error(arrow::write_parquet(df, file))
+
+  expect_no_error(loaded_df <- load_file(file))
+
+  # create a Parquet file
+  df <- data.frame(a = 1:3, b = 4:6)
+  arrow::write_parquet(df, file)
+
+  # load the Parquet file
+  loaded_df <- load_file(file)
+
+  # ignore class differences
+  class(loaded_df) <- class(df)
+
+  # check that the data frame is the same
+  expect_equal(loaded_df, df)
+})
+
 ###################### TODO: add load_fcs tests ######################
 
 ###################### TODO: add load_h5mu tests ######################
