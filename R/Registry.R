@@ -44,17 +44,7 @@ registry_from_df <- function(self, ...) {
     )
   }
 
-  list_columns <- which(purrr::map_lgl(args$df, is.list))
-  for (list_idx in list_columns) {
-    args$df[[list_idx]] <- purrr::map(args$df[[list_idx]], function(.item) {
-      if (is.atomic(.item) && length(.item) == 1) {
-        as.list(.item)
-      }
-      else {
-        .item
-      }
-    })
-  }
+  args$df <- standardise_list_columns(args$df)
 
   py_object <- unwrap_python(self)
   unwrap_args_and_call(py_object$from_df, args)
