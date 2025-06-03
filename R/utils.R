@@ -171,8 +171,7 @@ standardise_list_columns <- function(df) {
     df[[list_idx]] <- purrr::map(df[[list_idx]], function(.item) {
       if (is.atomic(.item) && length(.item) == 1) {
         as.list(.item)
-      }
-      else {
+      } else {
         .item
       }
     })

@@ -12,7 +12,9 @@ py_to_r.lamindb.models.record.Registry <- function(x) {
 }
 
 #' @export
+# nolint start: object_length_linter
 py_to_r.lamindb.models.sqlrecord.Registry <- function(x) {
+  # nolint end: object_length_linter
   wrap_python_callable(
     x,
     public = list(
