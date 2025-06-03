@@ -11,6 +11,19 @@ py_to_r.lamindb.models.record.Registry <- function(x) {
   )
 }
 
+#' @export
+py_to_r.lamindb.models.sqlrecord.Registry <- function(x) {
+  wrap_python_callable(
+    x,
+    public = list(
+      from_df = if ("from_df" %in% names(x)) {
+        wrap_with_py_arguments(registry_from_df, x$from_df)
+      }
+    ) |>
+      purrr::compact()
+  )
+}
+
 registry_from_df <- function(self, ...) {
   args <- list(...)
 
