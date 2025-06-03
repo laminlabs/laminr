@@ -292,7 +292,7 @@ artifact_update$delete(permanent = TRUE)  # permanently delete
 
 See https://docs.lamin.ai/introduction#manage-biological-registries
 
-```{r registries}
+```{r manage-registries}
 bt <- import_module("bionty")
 
 cell_types <- bt$CellType$public()
@@ -311,25 +311,8 @@ var_schema <- ln$Schema(
 anndata_schema <- ln$Schema(
   name = "my_anndata_schema",
   otype = "AnnData",
-  components = list("obs" = schema, "var" = var_schema)
+  slots = list("obs" = schema, "var.T" = var_schema)
 )$save()
-
-ad <- import_module("anndata")
-
-# store the dataset as an AnnData object to distinguish data from metadata
-adata <- ad$AnnData(df[, 1:3], obs = df[, 4:ncol(df)])
-
-# save curated artifact
-curator <- ln$curators$AnnDataCurator(adata, anndata_schema)
-artifact <- curator$save_artifact(key = "my_datasets/my_rnaseq1.h5ad")
-artifact$describe()
-
-# get a lookup object for human genes
-genes <- bt$Gene$filter(organism__name = "human")$lookup()
-# query for all feature sets that contain CD8A
-feature_sets <- ln$Schema$filter(genes = genes$cd8a)$all()
-# write the query
-ln$Artifact$filter(feature_sets__in = feature_sets)$df()
 
 # create an ontology-coupled cell type record and save it
 neuron <- bt$CellType$from_source(name = "neuron")$save()
@@ -362,7 +345,7 @@ anndata_schema <- ln$Schema(
 ad <- import_module("anndata")
 
 # store the dataset as an AnnData object to distinguish data from metadata
-adata <- ad$AnnData(df[, 1:3], obs = df$iloc[, 4:ncol(df)])
+adata <- ad$AnnData(df[, 1:3], obs = df$iloc[, 4:(ncol(df) - 1)])
 
 # save curated artifact
 artifact <- ln$Artifact$from_anndata(
@@ -384,7 +367,7 @@ See https://docs.lamin.ai/introduction#scale-learning
 ```{r scale}
 # a new dataset
 df2 <- ln$core$datasets$small_dataset2(otype = "DataFrame")
-adata <- ad$AnnData(df2[, 1:3], obs = df2[, 4:ncol(df2)])
+adata <- ad$AnnData(df2[, 1:3], obs = df2[, 4:(ncol(df2) - 1)])
 artifact2 <- ln$Artifact$from_anndata(
   adata, key = "my_datasets/my_rnaseq2.h5ad", schema = anndata_schema
 )$save()
