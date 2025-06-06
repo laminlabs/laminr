@@ -150,3 +150,32 @@ detect_path <- function() {
 
   current_path
 }
+
+#' Standardise list columns
+#'
+#' Standardise list columns in a data frame
+#'
+#' @param df The data frame to standardise
+#'
+#' @returns A data frame with standardised list columns
+#' @noRd
+#'
+#' @details
+#' If there are any list columns in `df` any atomic values in them of length 1
+#' are converted to a list of length 1. This is to make sure they are converted
+#' to Python as lists of length 1, rather than scalars as `arrow` cannot handle
+#' mixed list columns.
+standardise_list_columns <- function(df) {
+  list_columns <- which(purrr::map_lgl(df, is.list))
+  for (list_idx in list_columns) {
+    df[[list_idx]] <- purrr::map(df[[list_idx]], function(.item) {
+      if (is.atomic(.item) && length(.item) == 1) {
+        as.list(.item)
+      } else {
+        .item
+      }
+    })
+  }
+
+  df
+}

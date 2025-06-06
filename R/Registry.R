@@ -11,6 +11,21 @@ py_to_r.lamindb.models.record.Registry <- function(x) {
   )
 }
 
+#' @export
+# nolint start: object_length_linter
+py_to_r.lamindb.models.sqlrecord.Registry <- function(x) {
+  # nolint end: object_length_linter
+  wrap_python_callable(
+    x,
+    public = list(
+      from_df = if ("from_df" %in% names(x)) {
+        wrap_with_py_arguments(registry_from_df, x$from_df)
+      }
+    ) |>
+      purrr::compact()
+  )
+}
+
 registry_from_df <- function(self, ...) {
   args <- list(...)
 
@@ -30,6 +45,8 @@ registry_from_df <- function(self, ...) {
       "{.arg revises} must be an {.cls Artifact} but is a {.cls {revises_class}}"
     )
   }
+
+  args$df <- standardise_list_columns(args$df)
 
   py_object <- unwrap_python(self)
   unwrap_args_and_call(py_object$from_df, args)

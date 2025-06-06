@@ -16,16 +16,21 @@
 
 - Add an alert if an instance module is not available with importing `lamindb` (PR #201)
 - Add a status message to `require_module()`, can be suppressed with `silent = TRUE` (PR #201)
+- Add wrapping for the `lamindb.models.sqlrecord.Registry` class (PR #203)
+- Remove **{nanoparquet}** as a suggested dependency, loading Parquet files now requires **{arrow}** (PR #203)
 
 ## BUG FIXES
 
 - Handle missing setting values in `lamin_settings()` (PR #202)
+- Handle list columns when creating artifacts from data frames (PR #203)
 
 ## TESTING
 
 - Tidy and reorganise test GitHub actions (PR #201)
 
 ## DOCUMENTATION
+
+- Port updates to the introduction vignette from the main documentation site (PR #203)
 
 # laminr v1.1.1
 
