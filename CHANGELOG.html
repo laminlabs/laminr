@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="index.html">laminr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.1.9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.1.9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,10 +63,13 @@
 <h2 id="minor-changes">MINOR CHANGES<a class="anchor" aria-label="anchor" href="#minor-changes"></a></h2>
 <ul><li>Add an alert if an instance module is not available with importing <code>lamindb</code> (PR #201)</li>
 <li>Add a status message to <code><a href="reference/require_module.html">require_module()</a></code>, can be suppressed with <code>silent = TRUE</code> (PR #201)</li>
+<li>Add wrapping for the <code>lamindb.models.sqlrecord.Registry</code> class (PR #203)</li>
+<li>Remove <strong>{nanoparquet}</strong> as a suggested dependency, loading Parquet files now requires <strong>{arrow}</strong> (PR #203)</li>
 </ul></div>
 <div class="section level2">
 <h2 id="bug-fixes">BUG FIXES<a class="anchor" aria-label="anchor" href="#bug-fixes"></a></h2>
 <ul><li>Handle missing setting values in <code><a href="reference/lamin_settings.html">lamin_settings()</a></code> (PR #202)</li>
+<li>Handle list columns when creating artifacts from data frames (PR #203)</li>
 </ul></div>
 <div class="section level2">
 <h2 id="testing">TESTING<a class="anchor" aria-label="anchor" href="#testing"></a></h2>
@@ -74,7 +77,8 @@
 </ul></div>
 <div class="section level2">
 <h2 id="documentation">DOCUMENTATION<a class="anchor" aria-label="anchor" href="#documentation"></a></h2>
-</div>
+<ul><li>Port updates to the introduction vignette from the main documentation site (PR #203)</li>
+</ul></div>
 </div>
 <div class="section level1">
 <h1 id="laminr-v111">laminr v1.1.1<a class="anchor" aria-label="anchor" href="#laminr-v111"></a></h1>
