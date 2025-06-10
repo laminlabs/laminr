@@ -10,7 +10,7 @@ if (isTRUE(as.logical(Sys.getenv("NOT_CRAN", "false")))) {
       "LAMINR_LAMINDB_OPTIONS" = "bionty" # Always include bionty for tests
     ),
     {
-      require_lamind
+      require_lamindb()
       reticulate::py_config()
     }
   )
