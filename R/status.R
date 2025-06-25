@@ -27,7 +27,18 @@ laminr_status <- function() {
   py_available <- reticulate::py_available()
 
   if (py_available) {
-    py_modules <- c("lamindb", "bionty", "wetlab", "clinicore", "cellregistry", "omop")
+    py_modules <- c(
+      "lamindb",
+      "lamin_cli",
+      "lamin_utils",
+      "lamindb_setup",
+      "bionty",
+      "wetlab",
+      "clinicore",
+      "cellregistry",
+      "omop"
+    )
+
     py_versions <- purrr::map_chr(
       py_modules,
       function(.module) {
@@ -49,20 +60,39 @@ laminr_status <- function() {
       rlang::set_names(ifelse(py_versions == "", "x", "v"))
   }
 
-  cli::cli_h1("{.pkg laminr} status")
-  cli::cli_text("{.field Version}: {.val {packageVersion('laminr')}}")
+  cli::cli_h1("{.pkg laminr} {.val {packageVersion('laminr')}}")
 
+  env_vars <- Sys.getenv(
+    c(
+      "LAMINR_LAMINDB_VERSION",
+      "LAMINR_LAMINDB_OPTIONS"
+    ),
+    unset = NA
+  ) |>
+    na.omit()
+
+  if (length(env_vars) > 0) {
+    cli::cli_h2("Environment Variables")
+    cli::cli_bullets(
+      lapply(names(env_vars), function(var) {
+        paste0("{.envvar ", var, "}: {.val ", env_vars[[var]], "}")
+      })
+    )
+  }
+
+  cli::cli_h2("Instance")
   if (!is.null(default_instance)) {
     cli::cli_text("{.field User}: {.val {user}}")
     cli::cli_text("{.field Instance}: {.val {instance}}")
   } else {
-    cli::cli_alert_danger("Not currently connected to an instance")
+    cli::cli_alert_danger("Not connected to an instance")
   }
 
   if (py_available) {
     cli::cli_h2("Python {.pkg {reticulate::py_config()$version_string}}")
     cli::cli_bullets(modules_bullets)
   } else {
+    cli::cli_h2("Python")
     cli::cli_alert_danger("Python not available")
   }
 }
