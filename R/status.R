@@ -19,8 +19,9 @@ laminr_status <- function() {
 
   if (!is.null(default_instance)) {
     # nolint start: object_usage_linter
-    user <- get_current_lamin_user()
-    instance <- suppressMessages(get_current_lamin_instance())
+    settings <- get_lamin_settings()
+    user <- settings$user$handle
+    instance <- settings$instance$slug
     # nolint end: object_usage_linter
   }
 

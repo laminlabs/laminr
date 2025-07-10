@@ -55,6 +55,12 @@ py_settings_to_list <- function(py_obj) {
     return(NULL)
   }
 
+  # Convert Python sets to lists
+  if (inherits(py_obj, "python.builtin.set")) {
+    py_builtins <- reticulate::import_builtins()
+    return(reticulate::py_to_r(py_builtins$list(py_obj)))
+  }
+
   # If not a settings object, just return the class
   py_class <- class(py_obj)
   if (!grepl("^lamindb.*Settings$", py_class[1])) {

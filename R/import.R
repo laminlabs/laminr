@@ -47,7 +47,7 @@ import_module <- function(module, ...) {
   }
 
   if (module == "lamindb") {
-    settings <- lamin_settings()
+    settings <- get_lamin_settings()
     init_lamindb_connection(settings)
   } else {
     require_module(module, ...)

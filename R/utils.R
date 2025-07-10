@@ -43,7 +43,9 @@ get_default_instance <- function() {
 #' @returns A list of the current LaminDB settings
 #' @export
 #'
-#' @noRd
+#' @details
+#' This is done using [callr::r()] to avoid importing Python `lamindb` in the
+#' global environment
 get_lamin_settings <- function() {
   call_fun <- function() {
     require_lamindb(silent = TRUE)
@@ -64,11 +66,11 @@ get_lamin_settings <- function() {
 #' @export
 #'
 #' @details
-#' This is done via [lamin_settings()] to avoid importing Python `lamindb`
+#' This is done via [get_lamin_settings()] to avoid importing Python `lamindb`
 get_current_lamin_user <- function() {
-  settings <- lamin_settings()
+  settings <- get_lamin_settings()
 
-  handle <- settings[["Current user"]]$handle
+  handle <- settings$user$handle
 
   if (is.null(handle)) {
     cli::cli_alert_danger("No current user")
@@ -87,11 +89,11 @@ get_current_lamin_user <- function() {
 #' @export
 #'
 #' @details
-#' This is done via a [lamin_settings()] to avoid importing Python `lamindb`
+#' This is done via a [get_lamin_settings()] to avoid importing Python `lamindb`
 get_current_lamin_instance <- function() {
-  settings <- lamin_settings()
+  settings <- get_lamin_settings()
 
-  instance_slug <- settings[["Current instance"]]$value
+  instance_slug <- settings$instance$slug
 
   if (is.null(instance_slug)) {
     cli::cli_alert_danger("No current instance")

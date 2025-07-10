@@ -11,10 +11,10 @@ wrap_lamindb <- function(py_lamindb, settings) {
     )
   }
 
-  instance_slug <- settings[["Current instance"]]$value
+  instance_slug <- settings$instance$slug
   if (!is.null(instance_slug)) {
     # Warn if instance modules are not available
-    instance_modules <- settings[["Current instance"]]$modules
+    instance_modules <- settings$instance$modules
     check_requires(
       cli::format_inline("Some functionality in the {.val {instance_slug}} instance"),
       instance_modules,
@@ -138,7 +138,7 @@ lamindb_finish <- function(self, ...) {
 
 #' Initialise lamindb connection
 #'
-#' Performs setup in prepration for connecting to a lamindb instance that must
+#' Performs setup in preparation for connecting to a lamindb instance that must
 #' be done _before_ importing the Python `lamimdb` module.
 #'
 #' @param settings A list of LaminDB settings returned by [lamin_settings()]
@@ -148,7 +148,7 @@ lamindb_finish <- function(self, ...) {
 init_lamindb_connection <- function(settings) {
   require_lamindb()
 
-  instance_slug <- settings[["Current instance"]]$value
+  instance_slug <- settings$instance$slug
   if (is.null(instance_slug)) {
     cli::cli_abort(
       "No instance is loaded. Call {.code lamin_init()} or {.code lamin_connect()}"
@@ -157,7 +157,7 @@ init_lamindb_connection <- function(settings) {
   }
 
   if (is.null(get_default_instance())) {
-    instance_modules <- settings[["Current instance"]]$modules
+    instance_modules <- settings$instance$modules
     for (module in instance_modules) {
       require_module(module)
     }
