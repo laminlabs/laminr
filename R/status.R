@@ -36,7 +36,10 @@ laminr_status <- function() {
       "wetlab",
       "clinicore",
       "cellregistry",
-      "omop"
+      "omop",
+      "scipy",
+      "numpy",
+      "pandas"
     )
 
     py_versions <- purrr::map_chr(

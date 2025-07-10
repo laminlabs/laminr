@@ -104,6 +104,9 @@ require_lamindb <- function(silent = FALSE) {
     return(invisible(NULL))
   }
 
+  # Minimal scipy requirement to avoid trying to compile scipy 1.6
+  require_module("scipy", version = ">=1.7", silent = TRUE)
+
   laminr_lamindb_version <- trimws(tolower(Sys.getenv("LAMINR_LAMINDB_VERSION")))
   laminr_lamindb_options <- Sys.getenv("LAMINR_LAMINDB_OPTIONS")
   if (laminr_lamindb_options != "") {
