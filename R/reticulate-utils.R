@@ -40,13 +40,11 @@ suppress_future_warning <- function(expr) {
 #'
 #' @param py_obj The Python Lamin settings object to convert
 #'
-#' @returns
-#' @export
-#'
-#' @examples
+#' @returns A list containing the Python settings
+#' @noRd
 py_settings_to_list <- function(py_obj) {
   # If not a Python object, just return
-  if (!is(py_obj, "python.builtin.object")) {
+  if (!inherits(py_obj, "python.builtin.object")) {
     return(py_obj)
   }
 
