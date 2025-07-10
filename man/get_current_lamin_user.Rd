@@ -14,5 +14,6 @@ user is found
 Get the currently logged in LaminDB user
 }
 \details{
-This is done via \code{\link[=get_lamin_settings]{get_lamin_settings()}} to avoid importing Python \code{lamindb}
+This is done via \code{\link[=get_current_lamin_settings]{get_current_lamin_settings()}} to avoid importing Python
+\code{lamindb}
 }

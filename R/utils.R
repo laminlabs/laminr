@@ -36,7 +36,7 @@ get_default_instance <- function() {
   getOption("LAMINR_DEFAULT_INSTANCE")
 }
 
-#' Get Lamin settings
+#' Get current LaminDB settings
 #'
 #' Get the current LaminDB settings as an R list
 #'
@@ -46,7 +46,7 @@ get_default_instance <- function() {
 #' @details
 #' This is done using [callr::r()] to avoid importing Python `lamindb` in the
 #' global environment
-get_lamin_settings <- function() {
+get_current_lamin_settings <- function() {
   call_fun <- function() {
     require_lamindb(silent = TRUE)
     py_ln <- reticulate::import("lamindb")
@@ -66,9 +66,10 @@ get_lamin_settings <- function() {
 #' @export
 #'
 #' @details
-#' This is done via [get_lamin_settings()] to avoid importing Python `lamindb`
+#' This is done via [get_current_lamin_settings()] to avoid importing Python
+#' `lamindb`
 get_current_lamin_user <- function() {
-  settings <- get_lamin_settings()
+  settings <- get_current_lamin_settings()
 
   handle <- settings$user$handle
 
@@ -89,9 +90,10 @@ get_current_lamin_user <- function() {
 #' @export
 #'
 #' @details
-#' This is done via a [get_lamin_settings()] to avoid importing Python `lamindb`
+#' This is done via a [get_current_lamin_settings()] to avoid importing Python
+#' `lamindb`
 get_current_lamin_instance <- function() {
-  settings <- get_lamin_settings()
+  settings <- get_current_lamin_settings()
 
   instance_slug <- settings$instance$slug
 
