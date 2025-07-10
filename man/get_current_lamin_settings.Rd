@@ -4,7 +4,11 @@
 \alias{get_current_lamin_settings}
 \title{Get current LaminDB settings}
 \usage{
-get_current_lamin_settings()
+get_current_lamin_settings(minimal = FALSE)
+}
+\arguments{
+\item{minimal}{If \code{TRUE}, quickly extract a minimal list of important
+settings instead of converting the complete settings object}
 }
 \value{
 A list of the current LaminDB settings

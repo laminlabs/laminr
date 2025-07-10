@@ -40,21 +40,39 @@ get_default_instance <- function() {
 #'
 #' Get the current LaminDB settings as an R list
 #'
+#' @param minimal If `TRUE`, quickly extract a minimal list of important
+#'  settings instead of converting the complete settings object
+#'
 #' @returns A list of the current LaminDB settings
 #' @export
 #'
 #' @details
 #' This is done using [callr::r()] to avoid importing Python `lamindb` in the
 #' global environment
-get_current_lamin_settings <- function() {
-  call_fun <- function() {
+get_current_lamin_settings <- function(minimal = FALSE) {
+  call_fun <- function(minimal) {
     require_lamindb(silent = TRUE)
     py_ln <- reticulate::import("lamindb")
 
-    py_settings_to_list(py_ln$setup$settings)
+    py_settings <- py_ln$setup$settings
+
+    if (minimal) {
+      py_builtins <- reticulate::import_builtins()
+      list(
+        instance = list(
+          slug = py_settings$instance$slug,
+          modules = py_builtins$list(py_settings$instance$modules)
+        ),
+        user = list(
+          handle = py_settings$user$handle
+        )
+      )
+    } else {
+      py_settings_to_list(py_settings)
+    }
   }
 
-  callr::r(call_fun, package = "laminr")
+  callr::r(call_fun, args = list(minimal = minimal), package = "laminr")
 }
 
 #' Get current LaminDB user
@@ -69,7 +87,7 @@ get_current_lamin_settings <- function() {
 #' This is done via [get_current_lamin_settings()] to avoid importing Python
 #' `lamindb`
 get_current_lamin_user <- function() {
-  settings <- get_current_lamin_settings()
+  settings <- get_current_lamin_settings(minimal = TRUE)
 
   handle <- settings$user$handle
 
@@ -93,7 +111,7 @@ get_current_lamin_user <- function() {
 #' This is done via a [get_current_lamin_settings()] to avoid importing Python
 #' `lamindb`
 get_current_lamin_instance <- function() {
-  settings <- get_current_lamin_settings()
+  settings <- get_current_lamin_settings(minimal = TRUE)
 
   instance_slug <- settings$instance$slug
 

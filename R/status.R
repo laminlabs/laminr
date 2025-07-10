@@ -19,7 +19,7 @@ laminr_status <- function() {
 
   if (!is.null(default_instance)) {
     # nolint start: object_usage_linter
-    settings <- get_current_lamin_settings()
+    settings <- get_current_lamin_settings(minimal = TRUE)
     user <- settings$user$handle
     instance <- settings$instance$slug
     # nolint end: object_usage_linter
