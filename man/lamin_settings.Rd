@@ -6,11 +6,8 @@
 \usage{
 lamin_settings()
 }
-\value{
-A list of the current LaminDB settings
-}
 \description{
-Get the current LaminDB settings by calling \verb{lamin settings} on the command
+Print the current LaminDB settings by calling \verb{lamin settings} on the command
 line
 }
 \examples{
