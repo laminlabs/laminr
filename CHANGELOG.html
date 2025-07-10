@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="index.html">laminr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.1.9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.1.9004</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,8 +51,9 @@
 </div>
 <div class="section level2">
 <h2 id="new-features">NEW FEATURES<a class="anchor" aria-label="anchor" href="#new-features"></a></h2>
-<ul><li>Add a <code><a href="reference/lamin_settings.html">lamin_settings()</a></code> function that returns information from <code>lamin settings</code> (PR #201)</li>
+<ul><li>Add a <code><a href="reference/lamin_settings.html">lamin_settings()</a></code> function that displays information from running <code>lamin settings</code> (PR #201)</li>
 <li>Add a <code><a href="reference/laminr_status.html">laminr_status()</a></code> function that prints information useful for debugging (PR #201)</li>
+<li>Add a <code><a href="reference/get_current_lamin_settings.html">get_current_lamin_settings()</a></code> function that returns the current LaminDB settings as an R list (PR #210, fixes #207)</li>
 <li>Add <code>LAMINR_LAMINDB_VERSION</code> and <code>LAMINR_LAMINDB_OPTIONS</code> environment variables to control the version of Python <strong>lamindb</strong> that is installed (PR #194)</li>
 </ul></div>
 <div class="section level2">
@@ -62,10 +63,12 @@
 </ul></div>
 <div class="section level2">
 <h2 id="minor-changes">MINOR CHANGES<a class="anchor" aria-label="anchor" href="#minor-changes"></a></h2>
-<ul><li>Add an alert if an instance module is not available with importing <code>lamindb</code> (PR #201)</li>
+<ul><li>Add an alert if an instance module is not available with importing <strong>lamindb</strong> (PR #201)</li>
 <li>Add a status message to <code><a href="reference/require_module.html">require_module()</a></code>, can be suppressed with <code>silent = TRUE</code> (PR #201)</li>
 <li>Add wrapping for the <code>lamindb.models.sqlrecord.Registry</code> class (PR #203)</li>
 <li>Remove <strong>{nanoparquet}</strong> as a suggested dependency, loading Parquet files now requires <strong>{arrow}</strong> (PR #203)</li>
+<li>Increase <strong>{reticulate}</strong> dependency to <code>&gt;=1.41.0</code> to make sure the <code>py_require()</code> functionality is available (PR #208)</li>
+<li>Add a minimal requirement for <code>scipy&gt;=1.7</code> to avoid an issue where <strong>{reticulate}</strong> attempted and failed to install <code>scipy==1.6</code> (PR #209, fixes #206)</li>
 </ul></div>
 <div class="section level2">
 <h2 id="bug-fixes">BUG FIXES<a class="anchor" aria-label="anchor" href="#bug-fixes"></a></h2>
