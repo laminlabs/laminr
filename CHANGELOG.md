@@ -20,6 +20,7 @@
 - Add wrapping for the `lamindb.models.sqlrecord.Registry` class (PR #203)
 - Remove **{nanoparquet}** as a suggested dependency, loading Parquet files now requires **{arrow}** (PR #203)
 - Increase **{reticulate}** dependency to `>=1.41.0` to make sure the `py_require()` functionality is available (PR #208)
+- Add a minimal requirement for `scipy>=1.7` to avoid an issue where **{reticulate}** attempted and failed to install `scipy==1.6` (PR #209, fixes #206)
 
 ## BUG FIXES
 
