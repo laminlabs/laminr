@@ -36,6 +36,25 @@ get_default_instance <- function() {
   getOption("LAMINR_DEFAULT_INSTANCE")
 }
 
+#' Get Lamin settings
+#'
+#' Get the current LaminDB settings as an R list
+#'
+#' @returns A list of the current LaminDB settings
+#' @export
+#'
+#' @noRd
+get_lamin_settings <- function() {
+  call_fun <- function() {
+    require_lamindb(silent = TRUE)
+    py_ln <- reticulate::import("lamindb")
+
+    py_settings_to_list(py_ln$setup$settings)
+  }
+
+  callr::r(call_fun, package = "laminr")
+}
+
 #' Get current LaminDB user
 #'
 #' Get the currently logged in LaminDB user

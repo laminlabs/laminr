@@ -35,3 +35,45 @@ suppress_future_warning <- function(expr) {
     eval(expr)
   })
 }
+
+#' Convert a Lamin settings object to a list
+#'
+#' @param py_obj The Python Lamin settings object to convert
+#'
+#' @returns
+#' @export
+#'
+#' @examples
+py_settings_to_list <- function(py_obj) {
+  # If not a Python object, just return
+  if (!is(py_obj, "python.builtin.object")) {
+    return(py_obj)
+  }
+
+  # Return NULL for Python methods
+  if (inherits(py_obj, "python.builtin.method")) {
+    return(NULL)
+  }
+
+  # If not a settings object, just return the class
+  py_class <- class(py_obj)
+  if (!grepl("^lamindb.*Settings$", py_class[1])) {
+    return(py_class)
+  }
+
+  # Recursively convert items in the settings object
+  purrr::map(names(py_obj), function(.name) {
+    # Try to extract the item, if it fails return the error message
+    value <- tryCatch(
+      suppress_future_warning(reticulate::py_to_r(py_obj[[.name]])),
+      error = function(err) {
+        paste("ERROR:", as.character(err))
+      }
+    )
+
+    py_settings_to_list(value)
+  }) |>
+    purrr::set_names(names(py_obj)) |>
+    # Remove NULL values to avoid empty entries for methods
+    purrr::compact()
+}
