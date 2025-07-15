@@ -1,5 +1,4 @@
-library(laminr)
-ln <- import_module("lamindb")  # instantiate the central object of the API
+ln <- laminr::import_module("lamindb")  # instantiate the central object of the API
 
 # Access inputs -------------------------------------------
 
