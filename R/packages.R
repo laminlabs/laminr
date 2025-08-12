@@ -78,7 +78,7 @@ get_package_sources <- function(packages) {
       return("pkgload")
     }
 
-    return(NA_character_)
+    return(NA_character_) # nolint: return_linter
   }, otherwise = "Unknown")) |>
     purrr::set_names(packages)
 }
