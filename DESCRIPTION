@@ -21,7 +21,6 @@ Imports:
     callr,
     cli,
     lifecycle,
-    pak,
     purrr,
     R.utils,
     R6,
