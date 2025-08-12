@@ -94,23 +94,17 @@ lamindb_finish <- function(self, ...) {
       dir.create(run_dir)
     }
 
-    pkgs <- get_loaded_packages()
-    pkg_repos <- get_package_repositories(pkgs)
+    r_environment_file <- file.path(run_dir, "r_environment.txt")
 
     tryCatch(
-      withr::with_options(
-        list(repos = unique(c(pkg_repos, getOption("repos")))),
-        {
-          pak::lockfile_create(
-            pkg = pkgs,
-            lockfile = file.path(run_dir, "r_pak_lockfile.json")
-          )
-        }
-      ),
+      {
+        r_environment <- get_r_environment()
+        writeLines(r_environment, r_environment_file)
+      },
       error = function(err) {
         cli::cli_warn(
           c(
-            "Failed to create the lockfile for the run using pak.",
+            "Failed to write the R environment file",
             "i" = "Please reach out via GitHub or Slack if you need help.",
             "x" = "Error message: {err}"
           )
