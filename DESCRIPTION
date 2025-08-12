@@ -21,11 +21,13 @@ Imports:
     callr,
     cli,
     lifecycle,
+    pkgload,
     purrr,
     R.utils,
     R6,
     reticulate (>= 1.41.0),
     rlang,
+    sessioninfo,
     utils,
     withr
 Suggests:
