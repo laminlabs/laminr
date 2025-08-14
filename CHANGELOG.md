@@ -13,6 +13,7 @@
 
 - Isolate functions that made CLI calls so they do not interfere with the main session/environment (PR #201)
 - Require instance modules before importing `lamindb` so they should be available (PR #201)
+- Save a simplified R environment file when `ln$finish()` is called instead of a **{pak}** lockfile (PR #213, related to #195, #205)
 
 ## MINOR CHANGES
 
