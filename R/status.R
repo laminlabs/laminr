@@ -17,7 +17,7 @@
 #' laminr_status()
 laminr_status <- function() {
   status_list <- list(
-    version = packageVersion('laminr')
+    version = packageVersion("laminr")
   )
 
   env_vars <- Sys.getenv(
