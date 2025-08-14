@@ -37,6 +37,7 @@
 ## DOCUMENTATION
 
 - Port updates to the introduction vignette from the main documentation site (PR #203)
+- Use `laminr::import_module("lamindb")` in quickstart (PR #204)
 
 # laminr v1.1.1
 
