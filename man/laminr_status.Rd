@@ -7,7 +7,7 @@
 laminr_status()
 }
 \value{
-Prints details of the current laminr status
+A \code{laminr_status} object
 }
 \description{
 Overview of the current status of the laminr package and its dependencies.
@@ -15,7 +15,8 @@ Can be useful for debugging.
 }
 \details{
 Provides information that can be useful for debugging. To run the function
-when an error occurs set \code{options(error = laminr::laminr_status)}. Note that
+when an error occurs set
+\verb{options(error = error = \\() \{print(laminr::laminr_status()))}. Note that
 this should be used with some caution as it will print the status whenever
 any error occurs.
 }
