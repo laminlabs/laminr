@@ -9,7 +9,7 @@
 #' @details
 #' Provides information that can be useful for debugging. To run the function
 #' when an error occurs set
-#' `options(error = error = \() {print(laminr::laminr_status()))`. Note that
+#' `options(error = function() { print(laminr::laminr_status() })`. Note that
 #' this should be used with some caution as it will print the status whenever
 #' any error occurs.
 #'
