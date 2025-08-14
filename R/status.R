@@ -8,7 +8,7 @@
 #'
 #' @details
 #' Provides information that can be useful for debugging. To run the function
-#' when an error occurs set
+#' when an error occurs, set
 #' `options(error = function() { print(laminr::laminr_status() })`. Note that
 #' this should be used with some caution as it will print the status whenever
 #' any error occurs.
@@ -102,6 +102,11 @@ format.laminr_status <- function(x, ...) {
     if (!is.null(x$settings)) {
       cli::cli_text("{.field User}: {.val {x$settings$user}}")
       cli::cli_text("{.field Instance}: {.val {x$settings$instance}}")
+      cli::cli_text()
+      cli::cli_bullets(c(
+        "i" = "To change the instance, use {.code lamin_connect()}",
+        "i" = "Run {.run lamin_settings()} to see the full CLI settings information"
+      ))
     } else {
       cli::cli_alert_danger("Not connected to an instance")
     }
@@ -117,6 +122,11 @@ format.laminr_status <- function(x, ...) {
       ) |>
         rlang::set_names(ifelse(modules$available, "v", "x")) |>
         cli::cli_bullets()
+
+      cli::cli_text()
+      cli::cli_bullets(c(
+        "i" = "Run {.run reticulate::py_config()} and {.run reticulate::py_require()} for more information"
+      ))
     } else {
       cli::cli_h2("Python")
       cli::cli_alert_danger("Python not available")
