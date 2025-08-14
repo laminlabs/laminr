@@ -5,7 +5,8 @@
 ## NEW FEATURES
 
 - Add a `lamin_settings()` function that displays information from running `lamin settings` (PR #201)
-- Add a `laminr_status()` function that prints information useful for debugging (PR #201)
+- Add a `laminr_status()` function that returns a `laminr_status` object with information useful for debugging.
+  This has pretty print output. (PRs #201, #215)
 - Add a `get_current_lamin_settings()` function that returns the current LaminDB settings as an R list (PR #210, fixes #207)
 - Add `LAMINR_LAMINDB_VERSION` and `LAMINR_LAMINDB_OPTIONS` environment variables to control the version of Python **lamindb** that is installed (PR #194)
 
