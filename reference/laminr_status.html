@@ -9,7 +9,7 @@ Can be useful for debugging."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">laminr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.1.9005</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.1.9006</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,12 +58,13 @@ Can be useful for debugging.</p>
 
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>Prints details of the current laminr status</p>
+    <p>A <code>laminr_status</code> object</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Provides information that can be useful for debugging. To run the function
-when an error occurs set <code>options(error = laminr::laminr_status)</code>. Note that
+when an error occurs, set
+<code>options(error = function() { print(laminr::laminr_status() })</code>. Note that
 this should be used with some caution as it will print the status whenever
 any error occurs.</p>
     </div>
@@ -71,21 +72,21 @@ any error occurs.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">laminr_status</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">──</span> <span style="color: #0000BB; font-weight: bold;">laminr</span><span style="font-weight: bold;"> </span><span style="color: #0000BB; font-weight: bold;">1.1.1.9005</span> <span style="color: #00BBBB;">───────────────────────────────────────────────────────────</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ── <span style="font-weight: bold;">Environment Variables</span> ──</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> `LAMINR_LAMINDB_VERSION`: <span style="color: #0000BB;">"devel"</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> `LAMINR_LAMINDB_OPTIONS`: <span style="color: #0000BB;">"bionty"</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ── <span style="font-weight: bold;">Instance</span> ──</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">✖</span> Not connected to an instance</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ── <span style="font-weight: bold;">Python</span> ──</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">✖</span> Python not available</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">──</span> <span style="color: #0000BB; font-weight: bold;">laminr</span><span style="font-weight: bold;"> </span><span style="color: #0000BB; font-weight: bold;">1.1.1.9006</span> <span style="color: #00BBBB;">───────────────────────────────────────────────────────────</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ── <span style="font-weight: bold;">Environment Variables</span> ──</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> `LAMINR_LAMINDB_VERSION`: <span style="color: #0000BB;">"devel"</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> `LAMINR_LAMINDB_OPTIONS`: <span style="color: #0000BB;">"bionty"</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ── <span style="font-weight: bold;">Settings</span> ──</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">✖</span> Not connected to an instance</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ── <span style="font-weight: bold;">Python</span> ──</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">✖</span> Python not available</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
