@@ -1,6 +1,6 @@
 Package: laminr
 Title: Client for 'LaminDB'
-Version: 1.1.1.9003
+Version: 1.1.1.9005
 Authors@R: c(
     person("Robrecht", "Cannoodt", , "robrecht@lamin.ai", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-3641-729X")),
@@ -21,12 +21,13 @@ Imports:
     callr,
     cli,
     lifecycle,
-    pak,
+    pkgload,
     purrr,
     R.utils,
     R6,
-    reticulate (>= 1.38.0),
+    reticulate (>= 1.41.0),
     rlang,
+    sessioninfo,
     utils,
     withr
 Suggests:

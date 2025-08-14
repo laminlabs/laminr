@@ -11,10 +11,10 @@ wrap_lamindb <- function(py_lamindb, settings) {
     )
   }
 
-  instance_slug <- settings[["Current instance"]]$value
+  instance_slug <- settings$instance$slug
   if (!is.null(instance_slug)) {
     # Warn if instance modules are not available
-    instance_modules <- settings[["Current instance"]]$modules
+    instance_modules <- settings$instance$modules
     check_requires(
       cli::format_inline("Some functionality in the {.val {instance_slug}} instance"),
       instance_modules,
@@ -94,23 +94,17 @@ lamindb_finish <- function(self, ...) {
       dir.create(run_dir)
     }
 
-    pkgs <- get_loaded_packages()
-    pkg_repos <- get_package_repositories(pkgs)
+    r_environment_file <- file.path(run_dir, "r_environment.txt")
 
     tryCatch(
-      withr::with_options(
-        list(repos = unique(c(pkg_repos, getOption("repos")))),
-        {
-          pak::lockfile_create(
-            pkg = pkgs,
-            lockfile = file.path(run_dir, "r_pak_lockfile.json")
-          )
-        }
-      ),
+      {
+        r_environment <- get_r_environment()
+        writeLines(r_environment, r_environment_file)
+      },
       error = function(err) {
         cli::cli_warn(
           c(
-            "Failed to create the lockfile for the run using pak.",
+            "Failed to write the R environment file",
             "i" = "Please reach out via GitHub or Slack if you need help.",
             "x" = "Error message: {err}"
           )
@@ -138,7 +132,7 @@ lamindb_finish <- function(self, ...) {
 
 #' Initialise lamindb connection
 #'
-#' Performs setup in prepration for connecting to a lamindb instance that must
+#' Performs setup in preparation for connecting to a lamindb instance that must
 #' be done _before_ importing the Python `lamimdb` module.
 #'
 #' @param settings A list of LaminDB settings returned by [lamin_settings()]
@@ -148,7 +142,7 @@ lamindb_finish <- function(self, ...) {
 init_lamindb_connection <- function(settings) {
   require_lamindb()
 
-  instance_slug <- settings[["Current instance"]]$value
+  instance_slug <- settings$instance$slug
   if (is.null(instance_slug)) {
     cli::cli_abort(
       "No instance is loaded. Call {.code lamin_init()} or {.code lamin_connect()}"
@@ -157,7 +151,7 @@ init_lamindb_connection <- function(settings) {
   }
 
   if (is.null(get_default_instance())) {
-    instance_modules <- settings[["Current instance"]]$modules
+    instance_modules <- settings$instance$modules
     for (module in instance_modules) {
       require_module(module)
     }

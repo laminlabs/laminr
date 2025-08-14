@@ -4,21 +4,25 @@
 
 ## NEW FEATURES
 
-- Add a `lamin_settings()` function that returns information from `lamin settings` (PR #201)
+- Add a `lamin_settings()` function that displays information from running `lamin settings` (PR #201)
 - Add a `laminr_status()` function that prints information useful for debugging (PR #201)
+- Add a `get_current_lamin_settings()` function that returns the current LaminDB settings as an R list (PR #210, fixes #207)
 - Add `LAMINR_LAMINDB_VERSION` and `LAMINR_LAMINDB_OPTIONS` environment variables to control the version of Python **lamindb** that is installed (PR #194)
 
 ## MAJOR CHANGES
 
 - Isolate functions that made CLI calls so they do not interfere with the main session/environment (PR #201)
 - Require instance modules before importing `lamindb` so they should be available (PR #201)
+- Save a simplified R environment file when `ln$finish()` is called instead of a **{pak}** lockfile (PR #213, related to #195, #205)
 
 ## MINOR CHANGES
 
-- Add an alert if an instance module is not available with importing `lamindb` (PR #201)
+- Add an alert if an instance module is not available with importing **lamindb** (PR #201)
 - Add a status message to `require_module()`, can be suppressed with `silent = TRUE` (PR #201)
 - Add wrapping for the `lamindb.models.sqlrecord.Registry` class (PR #203)
 - Remove **{nanoparquet}** as a suggested dependency, loading Parquet files now requires **{arrow}** (PR #203)
+- Increase **{reticulate}** dependency to `>=1.41.0` to make sure the `py_require()` functionality is available (PR #208)
+- Add a minimal requirement for `scipy>=1.7` to avoid an issue where **{reticulate}** attempted and failed to install `scipy==1.6` (PR #209, fixes #206)
 
 ## BUG FIXES
 
