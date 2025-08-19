@@ -135,11 +135,11 @@ require_lamindb <- function(silent = FALSE) {
       )
     }
 
-    # Also require devel versions of other lamin packages
+    # Also require matching devel versions of other lamin packages
     require_module(
       "lamindb_setup",
       options = "aws",
-      source = "git+https://github.com/laminlabs/lamindb-setup.git",
+      source = "git+https://github.com/laminlabs/lamindb.git#subdirectory=sub/lamindb-setup",
       silent = silent
     )
     require_module(
@@ -149,7 +149,12 @@ require_lamindb <- function(silent = FALSE) {
     )
     require_module(
       "lamin_cli",
-      source = "git+https://github.com/laminlabs/lamin-cli.git",
+      source = "git+https://github.com/laminlabs/lamindb.git#subdirectory=sub/lamin-cli",
+      silent = silent
+    )
+    require_module(
+      "bionty",
+      source = "git+https://github.com/laminlabs/lamindb.git#subdirectory=sub/bionty",
       silent = silent
     )
     require_module(
