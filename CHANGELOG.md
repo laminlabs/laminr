@@ -8,7 +8,7 @@
 - Add a `laminr_status()` function that returns a `laminr_status` object with information useful for debugging.
   This has pretty print output. (PRs #201, #215)
 - Add a `get_current_lamin_settings()` function that returns the current LaminDB settings as an R list (PR #210, fixes #207)
-- Add `LAMINR_LAMINDB_VERSION` and `LAMINR_LAMINDB_OPTIONS` environment variables to control the version of Python **lamindb** that is installed (PR #194)
+- Add `LAMINR_LAMINDB_VERSION` and `LAMINR_LAMINDB_OPTIONS` environment variables to control the version of Python **lamindb** that is installed (PR #194, PR #218)
 
 ## MAJOR CHANGES
 
@@ -62,7 +62,7 @@
 
 ## BUG FIXES
 
-- Fix an issue that was preventing `lamin_connect()` from being run multiple 
+- Fix an issue that was preventing `lamin_connect()` from being run multiple
   times with the same instance (PR #176)
 - Properly clear and delete temporary instances created using `lamin_init_temp()` (PR #189)
 
@@ -93,7 +93,7 @@ Migration guide:
 | Connect to the default LaminDB instance | `db <- connect()` | `ln <- import_module("lamindb")` |
 | Start tracking | `db$track()` | `ln$track()` |
 | Get an artifact from another instance | `new_instance <- connect("another/instance"); new_instance$Artifact$get(...)` | `ln$Artifact$using("another/instance")$get(...)` |
-| Create an artifact from a path | `db$Artifact$from_path(path)` | `ln$Artifact(path)` | 
+| Create an artifact from a path | `db$Artifact$from_path(path)` | `ln$Artifact(path)` |
 | Finish tracking | `db$finish()` | `ln$finish()` |
 
 See the updated ["Get started"](https://laminr.lamin.ai/articles/laminr.html) vignette for more information.
@@ -184,8 +184,8 @@ This release adds support for creating new artifacts in a LaminDB instance.
 
 ## NEW FUNCTIONALITY
 
-- Add support for more loaders (PR #81).  
-  Currently supported: `.csv`, `.h5ad`, `.html`, `.jpg`, `.json`, `.parquet`, `.png`, `.rds`, `.svg`, `.tsv`, `.yaml`.  
+- Add support for more loaders (PR #81).
+  Currently supported: `.csv`, `.h5ad`, `.html`, `.jpg`, `.json`, `.parquet`, `.png`, `.rds`, `.svg`, `.tsv`, `.yaml`.
 - Add a `from_df()` method to the `Registry` class to create new artifacts from data frames (PR #78)
 - Create `TemporaryRecord` classes for new artifacts before they have been saved to the database (PR #78)
 - Add a `delete()` method to the `Record` class (PR #78)
