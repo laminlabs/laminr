@@ -11,18 +11,18 @@ py_to_r.lamindb.models.sqlrecord.Registry <- function(x) {
 }
 
 wrap_registry <- function(py_registry) {
-    wrap_python_callable(
-      py_registry,
-      public = list(
-        from_df = if ("from_df" %in% names(py_registry)) {
-          wrap_with_py_arguments(registry_from_df, py_registry$from_df)
-        },
-        from_dataframe = if ("from_dataframe" %in% names(py_registry)) {
-          wrap_with_py_arguments(registry_from_df, py_registry$from_dataframe)
-        }
-      ) |>
-        purrr::compact()
-    )
+  wrap_python_callable(
+    py_registry,
+    public = list(
+      from_df = if ("from_df" %in% names(py_registry)) {
+        wrap_with_py_arguments(registry_from_df, py_registry$from_df)
+      },
+      from_dataframe = if ("from_dataframe" %in% names(py_registry)) {
+        wrap_with_py_arguments(registry_from_df, py_registry$from_dataframe)
+      }
+    ) |>
+      purrr::compact()
+  )
 }
 
 registry_from_df <- function(self, ...) {
