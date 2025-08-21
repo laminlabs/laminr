@@ -1,25 +1,24 @@
 #' @export
 py_to_r.lamindb.models.record.Registry <- function(x) {
-  wrap_python_callable(
-    x,
-    public = list(
-      from_df = if ("from_df" %in% names(x)) {
-        wrap_with_py_arguments(registry_from_df, x$from_df)
-      }
-    ) |>
-      purrr::compact()
-  )
+  wrap_registry(x)
 }
 
 #' @export
 # nolint start: object_length_linter
 py_to_r.lamindb.models.sqlrecord.Registry <- function(x) {
   # nolint end: object_length_linter
-  wrap_python_callable(
+  wrap_registry(x)
+}
+
+wrap_registry <- function(py_registry) {
+    wrap_python_callable(
     x,
     public = list(
       from_df = if ("from_df" %in% names(x)) {
         wrap_with_py_arguments(registry_from_df, x$from_df)
+      },
+      from_dataframe = if ("from_dataframe" %in% names(x)) {
+        wrap_with_py_arguments(registry_from_df, x$from_dataframe)
       }
     ) |>
       purrr::compact()
