@@ -159,5 +159,13 @@ init_lamindb_connection <- function(settings) {
     set_default_instance(instance_slug)
   }
 
+  if (is_knitr_notebook() && getOption("LAMINR_COLORS_ENABLED", TRUE)) {
+    # Disable Python ASCII color codes in knitr
+    py_lamin_utils <- import_module("lamin_utils", silent = TRUE)
+    py_lamin_utils[["_logger"]]$LEVEL_TO_COLORS <- setNames(list(), character(0))
+    py_lamin_utils[["_logger"]]$RESET_COLOR <- ""
+    options(LAMINR_COLORS_ENABLED = FALSE)
+  }
+
   invisible()
 }
