@@ -133,7 +133,7 @@ lamindb_finish <- function(self, ...) {
 #' Initialise lamindb connection
 #'
 #' Performs setup in preparation for connecting to a lamindb instance that must
-#' be done _before_ importing the Python `lamimdb` module.
+#' be done _before_ importing the Python `lamindb` module.
 #'
 #' @param settings A list of LaminDB settings returned by [lamin_settings()]
 #' @param ... Additional arguments passed `require_lamindb()` and
