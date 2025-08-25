@@ -333,13 +333,12 @@ lamin_save <- function(filepath, key = NULL, description = NULL, registry = NULL
     require_lamindb(silent = TRUE)
     py_config <- reticulate::py_config() # nolint object_usage_linter
 
-    system2("lamin", args, stdout = TRUE, stderr = TRUE)
+    system2("lamin", system_args, stdout = TRUE, stderr = TRUE)
   }
 
   callr::r(
     system_fun,
     args = list(system_args = args),
-    show = TRUE,
     package = "laminr"
   ) |>
     print_stdout()
