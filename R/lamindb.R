@@ -136,11 +136,13 @@ lamindb_finish <- function(self, ...) {
 #' be done _before_ importing the Python `lamimdb` module.
 #'
 #' @param settings A list of LaminDB settings returned by [lamin_settings()]
+#' @param ... Additional arguments passed `require_lamindb()` and
+#'   `require_module()`
 #'
 #' @returns NULL, invisibly
 #' @noRd
-init_lamindb_connection <- function(settings) {
-  require_lamindb()
+init_lamindb_connection <- function(settings, ...) {
+  require_lamindb(...)
 
   instance_slug <- settings$instance$slug
   if (is.null(instance_slug)) {
@@ -153,7 +155,7 @@ init_lamindb_connection <- function(settings) {
   if (is.null(get_default_instance())) {
     instance_modules <- settings$instance$modules
     for (module in instance_modules) {
-      require_module(module)
+      require_module(module, ...)
     }
 
     set_default_instance(instance_slug)
