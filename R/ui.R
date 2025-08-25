@@ -48,3 +48,19 @@ get_message_fun <- function(alert = c("error", "warning", "message", "none")) {
     none = NULL
   )
 }
+
+#' Print stdoout
+#'
+#' Print output captured from stdout, removing ANSI codes when needed
+#'
+#' @param stdout Vector of stdout messages to print
+#'
+#' @returns `stdout` (after stripping), invisibly
+#' @noRd
+print_stdout <- function(stdout) {
+  if (getOption("LAMINR_COLORS_DISABLED", is_knitr_notebook())) {
+    stdout <- cli::ansi_strip(stdout)
+  }
+
+  purrr::walk(stdout, cli::cli_inform)
+}

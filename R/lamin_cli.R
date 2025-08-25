@@ -34,16 +34,15 @@ lamin_connect <- function(instance) {
     require_lamindb(silent = TRUE)
     py_config <- reticulate::py_config() # nolint object_usage_linter
 
-    system2("lamin", paste("connect", instance))
+    system2("lamin", paste("connect", instance), stdout = TRUE, stderr = TRUE)
   }
 
   callr::r(
     system_fun,
     args = list(instance = instance),
-    show = TRUE,
     package = "laminr"
   ) |>
-    invisible()
+    print_stdout()
 }
 
 #' Disconnect from a LaminDB instance
@@ -62,10 +61,10 @@ lamin_disconnect <- function() {
     require_lamindb(silent = TRUE)
     py_config <- reticulate::py_config() # nolint object_usage_linter
 
-    system2("lamin", "disconnect")
+    system2("lamin", "disconnect", stdout = TRUE, stderr = TRUE)
   }
 
-  callr::r(system_fun, show = TRUE, package = "laminr")
+  callr::r(system_fun, package = "laminr") |> print_stdout()
 
   set_default_instance(NULL)
 }
@@ -100,21 +99,21 @@ lamin_login <- function(user = NULL, api_key = NULL) {
     if (!is.null(user)) {
       # If user is provided run `lamin login <user>`
       cli::cli_alert_info("Using provided user {.val {user}}")
-      system2("lamin", paste("login", user))
+      system2("lamin", paste("login", user), stdout = TRUE, stderr = TRUE)
     } else if (!is.null(api_key)) {
       # If api_key is provided, run `lamin login` with the LAMIN_API_KEY env var
       cli::cli_alert_info("Using provided API key")
       withr::with_envvar(c("LAMIN_API_KEY" = api_key), {
-        system2("lamin", "login")
+        system2("lamin", "login", stdout = TRUE, stderr = TRUE)
       })
     } else if (!is.null(handle) && handle != "anonymous") {
       # If there is a stored user handle run `lamin login <handle>`
       cli::cli_alert_info("Using stored user handle {.val {handle}}")
-      system2("lamin", paste("login", handle))
+      system2("lamin", paste("login", handle), stdout = TRUE, stderr = TRUE)
     } else if (Sys.getenv("LAMIN_API_KEY") != "") {
       # If the LAMIN_API_KEY env var is already set run `lamin login`
       cli::cli_alert_info("Using {.field LAMIN_API_KEY} environment variable")
-      system2("lamin", "login")
+      system2("lamin", "login", stdout = TRUE, stderr = TRUE)
     } else {
       # Fail to log in
       cli::cli_abort(
@@ -126,10 +125,9 @@ lamin_login <- function(user = NULL, api_key = NULL) {
   callr::r(
     system_fun,
     args = list(user = user, api_key = api_key),
-    show = TRUE,
     package = "laminr"
   ) |>
-    invisible()
+    print_stdout()
 }
 
 #' Log out of LaminDB
@@ -144,11 +142,10 @@ lamin_logout <- function() {
     require_lamindb(silent = TRUE)
     py_config <- reticulate::py_config() # nolint object_usage_linter
 
-    system2("lamin", "logout")
+    system2("lamin", "logout", stdout = TRUE, stderr = TRUE)
   }
 
-  callr::r(system_fun, show = TRUE, package = "laminr") |>
-    invisible()
+  callr::r(system_fun, package = "laminr") |> print_stdout()
 }
 
 #' Initialise LaminDB
@@ -201,16 +198,15 @@ lamin_init <- function(storage, name = NULL, db = NULL, modules = NULL) {
       )
     }
 
-    system2("lamin", args)
+    system2("lamin", args, stdout = TRUE, stderr = TRUE)
   }
 
   callr::r(
     system_fun,
     args = list(storage = storage, name = name, db = db, modules = modules),
-    show = TRUE,
     package = "laminr"
   ) |>
-    invisible()
+    print_stdout()
 }
 
 #' @param add_timestamp Whether to append a timestamp to `name` to make it unique
@@ -282,16 +278,15 @@ lamin_delete <- function(instance, force = FALSE) {
     slug <- paste0(owner_name[[1]], "/", owner_name[[2]])
 
     # Always force here to avoid Python prompt
-    system2("lamin", paste("delete --force", slug))
+    system2("lamin", paste("delete --force", slug), stdout = TRUE, stderr = TRUE)
   }
 
   callr::r(
     system_fun,
     args = list(instance = instance),
-    show = TRUE,
     package = "laminr"
   ) |>
-    invisible()
+    print_stdout()
 }
 
 #' Save to a LaminDB instance
@@ -338,16 +333,15 @@ lamin_save <- function(filepath, key = NULL, description = NULL, registry = NULL
     require_lamindb(silent = TRUE)
     py_config <- reticulate::py_config() # nolint object_usage_linter
 
-    system2("lamin", args)
+    system2("lamin", system_args, stdout = TRUE, stderr = TRUE)
   }
 
   callr::r(
     system_fun,
     args = list(system_args = args),
-    show = TRUE,
     package = "laminr"
   ) |>
-    invisible()
+    print_stdout()
 }
 
 #' Lamin settings
@@ -366,8 +360,8 @@ lamin_settings <- function() {
     require_lamindb(silent = TRUE)
     py_config <- reticulate::py_config() # nolint object_usage_linter
 
-    system2("lamin", "settings")
+    system2("lamin", "settings", stdout = TRUE, stderr = TRUE)
   }
 
-  callr::r(system_fun, show = TRUE, package = "laminr") |> invisible()
+  callr::r(system_fun, package = "laminr") |> print_stdout()
 }
