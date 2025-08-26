@@ -1,4 +1,4 @@
-# Developement version
+# laminr v1.2.0
 
 ## BREAKING CHANGES
 
