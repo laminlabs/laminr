@@ -24,11 +24,15 @@
 - Remove **{nanoparquet}** as a suggested dependency, loading Parquet files now requires **{arrow}** (PR #203)
 - Increase **{reticulate}** dependency to `>=1.41.0` to make sure the `py_require()` functionality is available (PR #208)
 - Add a minimal requirement for `scipy>=1.7` to avoid an issue where **{reticulate}** attempted and failed to install `scipy==1.6` (PR #209, fixes #206)
+- Disable Python ANSI colour codes in RMarkdown documents (PR #217)
+- Remove **{Seurat}** as a suggested dependency (PR #219, fixes #216)
+- Add wrapping for the new `Registry$from_dataframe()` method (PR #221)
 
 ## BUG FIXES
 
 - Handle missing setting values in `lamin_settings()` (PR #202)
 - Handle list columns when creating artifacts from data frames (PR #203)
+- Handle missing document context ID when detecting the current path for tracking (PR #220)
 
 ## TESTING
 
