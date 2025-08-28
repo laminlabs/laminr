@@ -1,9 +1,9 @@
 #' Open a connection to a TileDB-SOMA object
 #'
 #' @param uri URI for the object to open
-#' @param ... Additional arguments to pass to [tiledbsoma::SOMAOpen()]
+#' @param ... Additional arguments to pass to `tiledbsoma::SOMAOpen()`
 #'
-#' @return A [tiledbsoma::SOMACollection] or [tiledbsoma::SOMAExperiment]
+#' @return A `tiledbsoma::SOMACollection` or `tiledbsoma::SOMAExperiment`
 #' @noRd
 open_tiledbsoma <- function(uri, ...) {
   check_requires(
@@ -16,10 +16,6 @@ open_tiledbsoma <- function(uri, ...) {
 
   do.call(get("SOMAOpen", asNamespace("tiledbsoma")), args)
 }
-
-file_openers <- list(
-  "tiledbsoma" = open_tiledbsoma
-)
 
 #' Open a connection to a multi-file Parquet dataset
 #'
