@@ -10,7 +10,7 @@ on:
 
 
 jobs:
-  R-CMD-check:
+  test:
     runs-on: ${{ matrix.config.os }}
 
     name: ${{ matrix.config.os }} (r-${{ matrix.config.r }})
@@ -79,19 +79,21 @@ jobs:
           name: ${{ runner.os }}-r${{ matrix.config.r }}-results
           path: check
 
-      - name: Notify Slack dispatch success
-        uses: voxmedia/github-action-slack-notify-build@v1
-        if: ${{ success() && github.event_name == 'repository_dispatch' }}
+  notify:
+    if: always()
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: voxmedia/github-action-slack-notify-build@v1
+        if: ${{ needs.test.result == 'success' && github.event_name == 'repository_dispatch' }}
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_GITHUB_ACTION }}
         with:
           channel_id: C05FDBBFJ1F
           status: SUCCESS
           color: good
-
-      - name: Notify Slack dispatch failure
-        uses: voxmedia/github-action-slack-notify-build@v1
-        if: ${{ failure() && github.event_name == 'repository_dispatch' }}
+      - uses: voxmedia/github-action-slack-notify-build@v1
+        if: ${{ needs.test.result == 'failure' && github.event_name == 'repository_dispatch' }}
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_GITHUB_ACTION }}
         with:
