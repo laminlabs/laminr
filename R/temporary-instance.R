@@ -19,6 +19,8 @@
 #'
 #' Switching to a temporary instance is not possible when another instance is
 #' already connected.
+#'
+#' @export
 use_temporary_instance <- function(name = "laminr-temp", modules = NULL,
                                    add_timestamp = TRUE, envir = parent.frame()) {
   if (isTRUE(add_timestamp)) {
