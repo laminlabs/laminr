@@ -318,7 +318,7 @@ lamin_init_temp <- function(name = "laminr-temp", db = NULL, modules = NULL,
   lifecycle::deprecate_warn(
     "1.2.0",
     "lamin_init_temp()",
-    "create_temporary_instance()"
+    "use_temporary_instance()"
   )
 
   if (isTRUE(add_timestamp)) {

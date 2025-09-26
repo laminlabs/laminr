@@ -135,6 +135,8 @@ require_lamindb <- function(silent = FALSE) {
       )
     }
 
+    reticulate::py_require(python_version = ">=3.10,<3.14")
+
     # Also require matching devel versions of other lamin packages
     require_module(
       "lamindb_setup",

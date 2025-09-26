@@ -12,13 +12,6 @@ knitr::opts_chunk$set(
 ```{r prepare, include = FALSE}
 lc <- laminr::import_module("lamin_cli")
 
-# Restore the current instance at the end of the vignette
-current_instance <- laminr::get_current_lamin_instance()
-withr::defer({
-  lc <- laminr::import_module("lamin_cli")
-  lc$connect(current_instance)
-})
-
 # Restore the current user at the end of the vignette
 current_user <- laminr::get_current_lamin_user()
 lc$logout()
@@ -28,13 +21,7 @@ withr::defer({
 })
 
 # Set up a temporary test instance
-laminr::create_temporary_instance(name = "laminr-intro", modules = c("bionty"))
-
-# Disconnect from this instance at the end of the vignette
-withr::defer({
-  lc <- laminr::import_module("lamin_cli")
-  lc$disconnect()
-})
+laminr::use_temporary_instance(name = "laminr-intro", modules = c("bionty"))
 ```
 
 This vignette introduces the **{laminr}** workflow.
