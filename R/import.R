@@ -50,9 +50,6 @@ import_module <- function(module, ...) {
   lamin_modules <- c(
     "lamindb", "lamindb_setup", "lamin_utils", "lamin_cli", "bionty"
   )
-  if (module %in% lamin_modules) {
-    disable_lamin_colors()
-  }
 
   if (module == "lamindb") {
     settings <- get_current_lamin_settings(minimal = TRUE)
@@ -81,6 +78,10 @@ import_module <- function(module, ...) {
       ))
     }
   )
+
+  if (module %in% lamin_modules) {
+    disable_lamin_colors()
+  }
 
   if (module == "lamindb") {
     wrap_lamindb(py_module, settings)
