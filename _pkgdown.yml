@@ -40,27 +40,23 @@ navbar:
 reference:
   - title: "Python modules"
     desc: >
-      Functions for managing and import Python modules
+      Functions for managing and importing Python modules
     contents:
-    - import_module
-    - require_module
+      - import_module
+      - require_module
   - title: "Current instance"
     desc: >
       Functions for getting information about the current LaminDB instance
     contents:
-    - starts_with("get_current_lamin_")
-  - title: "CLI"
-    desc: >
-      Functions for calling the `lamin` Command Line Interface
-    contents:
-    - starts_with("lamin_")
+      - starts_with("get_current_lamin_")
   - title: "Debugging"
     desc: >
       Functions to help with debugging
     contents:
-    - laminr_status
+      - laminr_status
   - title: "Deprecated functions"
     desc: >
       Functions that should no longer be used
     contents:
-    - install_lamindb
+      - install_lamindb
+      - lamin_cli

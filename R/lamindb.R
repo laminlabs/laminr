@@ -33,8 +33,9 @@ wrap_lamindb <- function(py_lamindb, settings) {
               "The directory for this instance may have been deleted."
             ),
             "i" = paste(
-              "Restart your R session and use {.code lamin_connect()} to",
-              "connect to another instance"
+              "Restart your R session and use",
+              "{.code lc <- import_module(\"lamin_cli\"); lc$connect()}",
+              "to connect to another instance"
             ),
             "x" = "Error message: {err}"
           ),
@@ -130,13 +131,14 @@ lamindb_finish <- function(self, ...) {
   )
 }
 
-#' Initialise lamindb connection
+#' Initialise LaminDB connection
 #'
-#' Performs setup in preparation for connecting to a lamindb instance that must
+#' Performs setup in preparation for connecting to a LaminDB instance that must
 #' be done _before_ importing the Python `lamindb` module.
 #'
-#' @param settings A list of LaminDB settings returned by [lamin_settings()]
-#' @param ... Additional arguments passed `require_lamindb()` and
+#' @param settings A list of LaminDB settings returned by
+#'   [get_current_lamin_settings()]
+#' @param ... Additional arguments passed to `require_lamindb()` and
 #'   `require_module()`
 #'
 #' @returns NULL, invisibly

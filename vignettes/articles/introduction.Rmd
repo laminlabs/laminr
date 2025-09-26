@@ -10,20 +10,31 @@ knitr::opts_chunk$set(
 ```
 
 ```{r prepare, include = FALSE}
+lc <- laminr::import_module("lamin_cli")
+
 # Restore the current instance at the end of the vignette
 current_instance <- laminr::get_current_lamin_instance()
-withr::defer(laminr::lamin_connect(current_instance))
+withr::defer({
+  lc <- laminr::import_module("lamin_cli")
+  lc$connect(current_instance)
+})
 
 # Restore the current user at the end of the vignette
 current_user <- laminr::get_current_lamin_user()
-laminr::lamin_logout()
-withr::defer(laminr::lamin_login(current_user))
+lc$logout()
+withr::defer({
+  lc <- laminr::import_module("lamin_cli")
+  lc$login(current_user)
+})
 
 # Set up a temporary test instance
-laminr::lamin_init_temp(name = "laminr-intro", modules = c("bionty"))
+laminr::create_temporary_instance(name = "laminr-intro", modules = c("bionty"))
 
 # Disconnect from this instance at the end of the vignette
-withr::defer(laminr::lamin_disconnect())
+withr::defer({
+  lc <- laminr::import_module("lamin_cli")
+  lc$disconnect()
+})
 ```
 
 This vignette introduces the **{laminr}** workflow.
@@ -36,15 +47,16 @@ For setup, install the **{laminr}** and **lamindb** packages and connect to a La
 
 ```r
 install.packages("laminr", dependencies = TRUE)  # install the laminr package from CRAN
-laminr::install_lamindb(extra_packages = c("bionty"))  # install lamindb & bionty for use via reticulate
-laminr::lamin_login()  # <-- you can skip this for local & self-hosted instances
-laminr::lamin_connect("<account>/<instance>")  # <-- replace with your instance
+ln <- laminr::import_module("lamindb")  # import lamindb, this will install Pythin dependencies
+lc <- laminr::import_module("lamin_cli")  # import lamin_cli for access to CLI commands
+lc$login()  # <-- you can skip this for local & self-hosted instances
+lc$connect("<account>/<instance>")  # <-- replace with your instance
 ```
 
 Here's how to create a local instance.
 
 ```r
-laminr::lamin_init(storage = "./mydata", modules = c("bionty"))
+lc$init(storage = "./mydata", modules = "bionty")
 ```
 
 In an R session, transfer an scRNA-seq dataset from the laminlabs/cellxgene instance, compute marker genes with Seurat, and save results.
@@ -55,7 +67,7 @@ In an R session, transfer an scRNA-seq dataset from the laminlabs/cellxgene inst
 If you did not use RStudio’s notebook mode, create an html export and then run the following.
 
 ```r
-laminr::lamin_save("my-analyis.Rmd")  # save source code and html report for a `.qmd` or `.Rmd` file
+lc$save("my-analyis.Rmd")  # save source code and html report for a `.qmd` or `.Rmd` file
 ```
 
 # Track notebooks & scripts
@@ -64,7 +76,8 @@ See https://docs.lamin.ai/introduction#track-notebooks-scripts
 
 ```r
 library(laminr)
-lamin_init(storage = "./laminr-intro", modules = c("bionty"))
+lc <- import_module("lamin_cli")
+lc$init(storage = "./laminr-intro", modules = c("bionty"))
 ```
 
 ```{r track}

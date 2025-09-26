@@ -54,8 +54,9 @@ jobs:
 
       - name: Login and set lamindata as default instance
         run: |
-          laminr::lamin_login()
-          laminr::lamin_connect("laminlabs/lamindata")
+          lc <- laminr::import_module("lamin_cli")
+          lc$login()
+          lc$connect("laminlabs/lamindata")
         shell: Rscript {0}
 
       - name: Check environment
