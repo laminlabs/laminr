@@ -47,14 +47,19 @@ import_module <- function(module, ...) {
   }
 
   laminr_lamindb_version <- trimws(tolower(Sys.getenv("LAMINR_LAMINDB_VERSION")))
-  lamin_modules <- c("lamindb_setup", "lamin_utils", "lamin_cli", "bionty")
+  lamin_modules <- c(
+    "lamindb", "lamindb_setup", "lamin_utils", "lamin_cli", "bionty"
+  )
+  if (module %in% lamin_modules) {
+    disable_lamin_colors()
+  }
 
   if (module == "lamindb") {
     settings <- get_current_lamin_settings(minimal = TRUE)
     init_lamindb_connection(settings, ...)
   } else if (
     module %in% lamin_modules &&
-    laminr_lamindb_version %in% c("github", "devel")
+      laminr_lamindb_version %in% c("github", "devel")
   ) {
     # Make sure we use devel versions of lamin modules if any are imported
     require_lamindb(...)

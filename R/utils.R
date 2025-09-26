@@ -220,3 +220,32 @@ standardise_list_columns <- function(df) {
 
   df
 }
+
+#' Disable Lamin colors
+#'
+#' Disable ANSI color codes in Lamin print output.
+#'
+#' @returns `TRUE` invisibly if colors are disabled, `FALSE` if they are not
+#'   disabled
+#' @noRd
+disable_lamin_colors <- function() {
+  is_disabled <- getOption("LAMINR_COLORS_DISABLED", NULL)
+
+  if (!is.null(is_disabled)) {
+    return(invisible(is_disabled))
+  }
+
+  if (is_knitr_notebook()) {
+    # Disable Python ANSI color codes in knitr
+    py_lamin_utils <- import_module("lamin_utils", silent = TRUE)
+    py_lamin_utils[["_logger"]]$LEVEL_TO_COLORS <- setNames(list(), character(0))
+    py_lamin_utils[["_logger"]]$RESET_COLOR <- ""
+    options(LAMINR_COLORS_DISABLED = TRUE)
+
+    return(invisible(TRUE))
+  } else {
+    options(LAMINR_COLORS_DISABLED = FALSE)
+
+    return(invisible(FALSE))
+  }
+}
