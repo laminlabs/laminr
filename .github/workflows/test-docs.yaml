@@ -83,7 +83,7 @@ jobs:
 
       - name: Create a test instance for main docs
         run: |
-          lc <- laminr::import_module("laminr")
+          lc <- laminr::import_module("lamin_cli")
           lc$init(storage = "./test-docs", modules = "bionty")
         shell: Rscript {0}
 
