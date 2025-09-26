@@ -242,10 +242,10 @@ disable_lamin_colors <- function() {
     py_lamin_utils[["_logger"]]$RESET_COLOR <- ""
     options(LAMINR_COLORS_DISABLED = TRUE)
 
-    return(invisible(TRUE))
+    invisible(TRUE)
   } else {
     options(LAMINR_COLORS_DISABLED = FALSE)
 
-    return(invisible(FALSE))
+    invisible(FALSE)
   }
 }
