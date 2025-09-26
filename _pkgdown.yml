@@ -54,7 +54,6 @@ reference:
       Functions to help with debugging
     contents:
       - laminr_status
-      - use_temporary_instance
   - title: "Deprecated functions"
     desc: >
       Functions that should no longer be used
