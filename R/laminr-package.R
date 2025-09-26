@@ -6,7 +6,7 @@
 #' @importFrom cli cli_abort cli_warn cli_inform
 #' @importFrom lifecycle deprecated
 #' @importFrom reticulate py_to_r r_to_py
-#' @importFrom stats na.omit
-#' @importFrom utils .DollarNames head tail
+#' @importFrom stats na.omit setNames
+#' @importFrom utils .DollarNames head tail packageVersion
 ## usethis namespace: end
 NULL
