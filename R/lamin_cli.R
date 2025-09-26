@@ -9,7 +9,7 @@
 #'
 #' @usage
 #' # Import the module instead of using deprecated functions
-#' lc <- import_module("lamin_cli")
+#' # lc <- import_module("lamin_cli")
 #'
 #' # Deprecated functions
 #'
@@ -97,13 +97,6 @@ lamin_disconnect <- function() {
     "lamin_disconnect()",
     details = "Please use `lc <- import_module(\"lamin_cli\"); lc$disconnect()` instead."
   )
-
-  if (is.null(instance)) {
-    cli::cli_alert_danger(
-      "{.arg instance} is {.val NULL}, {.code lamin connect} will not be run"
-    )
-    return(invisible(NULL))
-  }
 
   system_fun <- function() {
     require_lamindb(silent = TRUE)
