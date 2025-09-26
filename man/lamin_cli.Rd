@@ -14,7 +14,7 @@
 \title{Lamin CLI functions}
 \usage{
 # Import the module instead of using deprecated functions
-lc <- import_module("lamin_cli")
+# lc <- import_module("lamin_cli")
 
 # Deprecated functions
 
