@@ -31,6 +31,12 @@ use_temporary_instance <- function(name = "laminr-temp", modules = NULL,
 
   # Get the current instance to reset later
   current_instance <- laminr::get_current_lamin_instance()
+  callr::r(
+    function() {
+      lc <- laminr::import_module("lamin_cli", silent = TRUE)
+      lc$disconnect()
+    }
+  )
 
   # Create the temporary storage for this instance
   temp_storage <- file.path(tempdir(), name)
