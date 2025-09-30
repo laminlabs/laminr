@@ -74,17 +74,34 @@ use_temporary_instance <- function(name = "laminr-temp", modules = NULL,
   ) |>
     print_stdout()
 
+  temp_instance <- laminr::get_current_lamin_instance()
+
   # Add the clean up handler to the environment
   withr::defer(
     {
       lc <- laminr::import_module("lamin_cli", silent = TRUE)
 
-      # Delete the temporary instance
-      lc$delete(name, force = TRUE)
-      unlink(temp_storage, recursive = TRUE, force = TRUE)
+      # Disconnect from the temporary instance
+      lc$disconnect()
 
-      # Reconnect to the previous instance
-      lc$connect(current_instance)
+      # Delete the temporary instance
+      py_lamindb_setup <- laminr::import_module("lamindb_setup", silent = TRUE)
+      py_lamindb_setup$delete(temp_instance, force = TRUE, require_empty = FALSE)
+
+      # Try to reconnect to the previous instance
+      if (!is.null(current_instance)) {
+        tryCatch(
+          {
+            lc$connect(current_instance)
+          },
+          error = function(err) {
+            cli::cli_warn(c(
+              "Failed to reconnect to the previous LaminDB instance ({.val current_instance})",
+              "x" = "Error message: {err}"
+            ))
+          }
+        )
+      }
     },
     envir = envir
   )
