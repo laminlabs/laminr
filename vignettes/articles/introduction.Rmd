@@ -94,7 +94,7 @@ See https://docs.lamin.ai/tutorial#create-an-artifact
 df <- ln$core$datasets$small_dataset1(otype = "DataFrame", with_typo = TRUE)
 df
 
-artifact <- ln$Artifact$from_dataframe(df, key = "my_datasets/rnaseq1.parquet")$save()  # create & save
+artifact <- ln$Artifact$from_dataframe(df, key = "my_datasets/rnaseq1.parquet")$save()  # create and save
 artifact$describe()  # describe
 ```
 
@@ -227,7 +227,8 @@ ln$view()
 # get a single record (here the current notebook)
 transform <- ln$Transform$get(key = "introduction.Rmd")
 
-# get a set of records by filtering for a directory (LaminDB treats directories like AWS S3, as the prefix of the storage key)
+# get a set of records by filtering for a directory (LaminDB treats directories
+# like AWS S3, as the prefix of the storage key)
 ln$Artifact$filter(key__startswith = "my_datasets/")$to_dataframe()
 
 # query all artifacts ingested from a transform
