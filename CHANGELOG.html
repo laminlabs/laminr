@@ -48,17 +48,19 @@
 
 <div class="section level2">
 <h2 id="breaking-changes">BREAKING CHANGES<a class="anchor" aria-label="anchor" href="#breaking-changes"></a></h2>
-</div>
+<ul><li>The Lamin CLI functions are now deprecated. Instead, users should import the <code>lamin_cli</code> Python module using <code>import_module("lamin_cli")</code> and call the functions from there. (PR #229)</li>
+</ul></div>
 <div class="section level2">
 <h2 id="new-features">NEW FEATURES<a class="anchor" aria-label="anchor" href="#new-features"></a></h2>
-<ul><li>Add a <code><a href="reference/lamin_settings.html">lamin_settings()</a></code> function that displays information from running <code>lamin settings</code> (PR #201)</li>
+<ul><li>Add a <code><a href="reference/lamin_cli.html">lamin_settings()</a></code> function that displays information from running <code>lamin settings</code> (PR #201)</li>
 <li>Add a <code><a href="reference/laminr_status.html">laminr_status()</a></code> function that returns a <code>laminr_status</code> object with information useful for debugging. This has pretty print output. (PRs #201, #215)</li>
 <li>Add a <code><a href="reference/get_current_lamin_settings.html">get_current_lamin_settings()</a></code> function that returns the current LaminDB settings as an R list (PR #210, fixes #207)</li>
 <li>Add <code>LAMINR_LAMINDB_VERSION</code> and <code>LAMINR_LAMINDB_OPTIONS</code> environment variables to control the version of Python <strong>lamindb</strong> that is installed (PR #194, PR #218)</li>
+<li>Add a new <code><a href="reference/use_temporary_instance.html">use_temporary_instance()</a></code> function to replace <code><a href="reference/lamin_cli.html">lamin_init_temp()</a></code> (PR #229)</li>
 </ul></div>
 <div class="section level2">
 <h2 id="major-changes">MAJOR CHANGES<a class="anchor" aria-label="anchor" href="#major-changes"></a></h2>
-<ul><li>Isolate functions that made CLI calls so they do not interfere with the main session/environment (PR #201)</li>
+<ul><li>Isolate functions that make CLI calls so they do not interfere with the main session/environment (PR #201)</li>
 <li>Require instance modules before importing <code>lamindb</code> so they should be available (PR #201)</li>
 <li>Save a simplified R environment file when <code>ln$finish()</code> is called instead of a <strong>{pak}</strong> lockfile (PR #213, related to #195, #205)</li>
 </ul></div>
@@ -76,7 +78,7 @@
 </ul></div>
 <div class="section level2">
 <h2 id="bug-fixes">BUG FIXES<a class="anchor" aria-label="anchor" href="#bug-fixes"></a></h2>
-<ul><li>Handle missing setting values in <code><a href="reference/lamin_settings.html">lamin_settings()</a></code> (PR #202)</li>
+<ul><li>Handle missing setting values in <code><a href="reference/lamin_cli.html">lamin_settings()</a></code> (PR #202)</li>
 <li>Handle list columns when creating artifacts from data frames (PR #203)</li>
 <li>Handle missing document context ID when detecting the current path for tracking (PR #220)</li>
 </ul></div>
@@ -86,7 +88,7 @@
 </ul></div>
 <div class="section level2">
 <h2 id="documentation">DOCUMENTATION<a class="anchor" aria-label="anchor" href="#documentation"></a></h2>
-<ul><li>Port updates to the introduction vignette from the main documentation site (PR #203)</li>
+<ul><li>Port updates to the introduction vignette from the main documentation site (PR #203, PR #229)</li>
 <li>Use <code>laminr::import_module("lamindb")</code> in quickstart (PR #204)</li>
 </ul></div>
 </div>
@@ -113,8 +115,8 @@
 </ul></div>
 <div class="section level2">
 <h2 id="bug-fixes-2">BUG FIXES<a class="anchor" aria-label="anchor" href="#bug-fixes-2"></a></h2>
-<ul><li>Fix an issue that was preventing <code><a href="reference/lamin_connect.html">lamin_connect()</a></code> from being run multiple times with the same instance (PR #176)</li>
-<li>Properly clear and delete temporary instances created using <code><a href="reference/lamin_init.html">lamin_init_temp()</a></code> (PR #189)</li>
+<ul><li>Fix an issue that was preventing <code><a href="reference/lamin_cli.html">lamin_connect()</a></code> from being run multiple times with the same instance (PR #176)</li>
+<li>Properly clear and delete temporary instances created using <code><a href="reference/lamin_cli.html">lamin_init_temp()</a></code> (PR #189)</li>
 </ul></div>
 <div class="section level2">
 <h2 id="documentation-1">DOCUMENTATION<a class="anchor" aria-label="anchor" href="#documentation-1"></a></h2>
@@ -197,7 +199,7 @@
 <div class="section level2">
 <h2 id="new-functionality">NEW FUNCTIONALITY<a class="anchor" aria-label="anchor" href="#new-functionality"></a></h2>
 <ul><li>Add a <code><a href="reference/install_lamindb.html">install_lamindb()</a></code> function to help with setting up the default Python environment (PR #129).</li>
-<li>Add <code><a href="reference/lamin_login.html">lamin_login()</a></code> and <code><a href="reference/lamin_connect.html">lamin_connect()</a></code> functions to allow access to CLI functionality from R (PR #129).</li>
+<li>Add <code><a href="reference/lamin_cli.html">lamin_login()</a></code> and <code><a href="reference/lamin_cli.html">lamin_connect()</a></code> functions to allow access to CLI functionality from R (PR #129).</li>
 </ul></div>
 <div class="section level2">
 <h2 id="documentation-2">DOCUMENTATION<a class="anchor" aria-label="anchor" href="#documentation-2"></a></h2>
