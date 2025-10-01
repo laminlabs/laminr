@@ -28,6 +28,7 @@
 - Disable Python ANSI colour codes in R Markdown documents (PR #217, PR #223)
 - Remove **{Seurat}** as a suggested dependency (PR #219, fixes #216)
 - Add wrapping for the new `Registry$from_dataframe()` method (PR #221)
+- Add a warning if the version of **lamindb** is less than the versio expected by **{laminr}** (PR #225)
 
 ## BUG FIXES
 
