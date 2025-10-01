@@ -21,7 +21,7 @@
 #' to Python is already initialized and the requested module is already in the
 #' list of requirements then a further call to [reticulate::py_require()] will
 #' not be made to avoid errors/warnings. This means that required versions etc.
-#' need to be set before Python is initalized.
+#' need to be set before Python is initialized.
 #'
 #' ## Arguments
 #'
@@ -134,6 +134,8 @@ require_lamindb <- function(silent = FALSE) {
         "Requiring the development version of {.pkg lamindb}"
       )
     }
+
+    reticulate::py_require(python_version = ">=3.10,<3.14")
 
     # Also require matching devel versions of other lamin packages
     require_module(

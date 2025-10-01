@@ -19,11 +19,11 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - { os: ubuntu-latest, r: "release"}
-          - { os: macos-latest, r: "release"}
-          - { os: windows-latest, r: "release"}
-          - { os: ubuntu-latest, r: "devel", http-user-agent: "release"}
-          - { os: ubuntu-latest, r: "oldrel-1"}
+          - { os: ubuntu-latest, r: "release" }
+          - { os: macos-latest, r: "release" }
+          - { os: windows-latest, r: "release" }
+          - { os: ubuntu-latest, r: "devel", http-user-agent: "release" }
+          - { os: ubuntu-latest, r: "oldrel-1" }
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -54,8 +54,9 @@ jobs:
 
       - name: Login and set lamindata as default instance
         run: |
-          laminr::lamin_login()
-          laminr::lamin_connect("laminlabs/lamindata")
+          lc <- laminr::import_module("lamin_cli")
+          lc$login()
+          lc$connect("laminlabs/lamindata")
         shell: Rscript {0}
 
       - name: Check environment

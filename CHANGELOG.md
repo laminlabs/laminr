@@ -2,6 +2,8 @@
 
 ## BREAKING CHANGES
 
+- The Lamin CLI functions are now deprecated. Instead, users should import the `lamin_cli` Python module using `import_module("lamin_cli")` and call the functions from there. (PR #229)
+
 ## NEW FEATURES
 
 - Add a `lamin_settings()` function that displays information from running `lamin settings` (PR #201)
@@ -9,10 +11,11 @@
   This has pretty print output. (PRs #201, #215)
 - Add a `get_current_lamin_settings()` function that returns the current LaminDB settings as an R list (PR #210, fixes #207)
 - Add `LAMINR_LAMINDB_VERSION` and `LAMINR_LAMINDB_OPTIONS` environment variables to control the version of Python **lamindb** that is installed (PR #194, PR #218)
+- Add a new `use_temporary_instance()` function to replace `lamin_init_temp()` (PR #229)
 
 ## MAJOR CHANGES
 
-- Isolate functions that made CLI calls so they do not interfere with the main session/environment (PR #201)
+- Isolate functions that make CLI calls so they do not interfere with the main session/environment (PR #201)
 - Require instance modules before importing `lamindb` so they should be available (PR #201)
 - Save a simplified R environment file when `ln$finish()` is called instead of a **{pak}** lockfile (PR #213, related to #195, #205)
 
@@ -40,7 +43,7 @@
 
 ## DOCUMENTATION
 
-- Port updates to the introduction vignette from the main documentation site (PR #203)
+- Port updates to the introduction vignette from the main documentation site (PR #203, PR #229)
 - Use `laminr::import_module("lamindb")` in quickstart (PR #204)
 
 # laminr v1.1.1
