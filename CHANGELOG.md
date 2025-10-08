@@ -36,6 +36,7 @@
 - Handle list columns when creating artifacts from data frames (PR #203)
 - Handle missing document context ID when detecting the current path for tracking (PR #220)
 - Make sure additional arguments are correctly passed to `require_module()` (PR #224)
+- Improve suffix matching when loading artifacts (PR #231)
 
 ## TESTING
 

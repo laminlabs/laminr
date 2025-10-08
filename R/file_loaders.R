@@ -227,10 +227,10 @@ load_file <- function(file, suffix = NULL, ...) {
     suffix <- paste0(".", tools::file_ext(file))
   }
 
-  file_loader <- file_loaders[[suffix]]
+  file_loader <- file_loaders[[tolower(suffix)]]
 
   if (is.null(file_loader)) {
-    cli::cli_warn("Loading files of type {.val suffix} is not supported")
+    cli::cli_warn("Loading files of type {.val {suffix}} is not supported")
     return(file)
   } else {
     return(file_loader(file, ...))
