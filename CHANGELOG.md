@@ -36,6 +36,7 @@
 - Handle missing setting values in `lamin_settings()` (PR #202)
 - Handle list columns when creating artifacts from data frames (PR #203)
 - Handle missing document context ID when detecting the current path for tracking (PR #220)
+- Improve suffix matching when loading artifacts (PR #231)
 
 ## TESTING
 
