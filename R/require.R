@@ -124,7 +124,7 @@ require_lamindb <- function(silent = FALSE) {
     require_module(
       "lamindb",
       options = laminr_lamindb_options,
-      version = ">=1.2",
+      version = ">=1.2,<=1.13.0",
       python_version = ">=3.10,<3.14",
       silent = silent
     )
