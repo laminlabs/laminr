@@ -220,7 +220,7 @@ See https://docs.lamin.ai/tutorial#query-search-registries
 
 ```{r query-registries}
 ln$Artifact$to_dataframe()
-ln$Artifact$to_dataframe(features = TRUE)
+ln$Artifact$to_dataframe(include = "features")
 ln$Artifact
 ln$view()
 
