@@ -2,13 +2,14 @@ ln <- laminr::import_module("lamindb")  # instantiate the central object of the 
 
 # Access inputs -------------------------------------------
 
-ln$track()  # track your run of a notebook or script
-artifact <- ln$Artifact$using("laminlabs/cellxgene")$get("7dVluLROpalzEh8m")  # query the artifact https://lamin.ai/laminlabs/cellxgene/artifact/7dVluLROpalzEh8m
-adata <- artifact$load()  # load the artifact into memory or sync to cache via filepath <- artifact$cache()
+ln$track()
+cellxgene_artifacts <- ln$Artifact$connect("laminlabs/cellxgene")
+artifact <- cellxgene_artifacts$get("7dVluLROpalzEh8m")
+adata <- artifact$load()
 
 # Your transformation -------------------------------------
 
-library(Seurat)  # find marker genes with Seurat
+library(Seurat)
 seurat_obj <- CreateSeuratObject(counts = as(Matrix::t(adata$X), "CsparseMatrix"), meta.data = adata$obs)
 seurat_obj[["RNA"]] <- AddMetaData(GetAssay(seurat_obj), adata$var)
 Idents(seurat_obj) <- "cell_type"
@@ -19,6 +20,6 @@ saveRDS(seurat_obj, seurat_path)
 
 # Save outputs --------------------------------------------
 
-ln$Artifact(seurat_path, key = "my-datasets/my-seurat-object.rds")$save()  # save versioned output
-ln$Artifact$from_df(markers, key = "my-datasets/my-markers.parquet")$save()  # save versioned output
-ln$finish()  # finish the run, save source code & run report
+ln$Artifact(seurat_path, key = "my-datasets/my-seurat-object.rds")$save()
+ln$Artifact$from_df(markers, key = "my-datasets/my-markers.parquet")$save()
+ln$finish()
