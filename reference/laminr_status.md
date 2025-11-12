@@ -37,13 +37,13 @@ laminr_status()
 #> 
 #> ✖ Not connected to an instance
 #> 
-#> ── Python 3.12.12 (main, Oct 28 2025, 12:10:49) [Clang 20.1.4 ] ──
+#> ── Python 3.12.12 (main, Oct 31 2025, 23:02:31) [Clang 21.1.4 ] ──
 #> 
-#> ✔ lamindb v1.15.2
+#> ✔ lamindb v1.16.0
 #> ✔ lamin_cli v1.9.0
 #> ✔ lamin_utils v0.15.0
-#> ✔ lamindb_setup v1.15.0
-#> ✔ bionty v1.8.1
+#> ✔ lamindb_setup v1.15.1
+#> ✔ bionty v1.9.1
 #> ✔ wetlab v1.6.1
 #> ✖ clinicore
 #> ✖ cellregistry
