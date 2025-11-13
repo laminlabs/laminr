@@ -30,7 +30,7 @@ laminr_status()
 #> 
 #> ── Environment Variables ──
 #> 
-#> `LAMINR_LAMINDB_VERSION`: "devel"
+#> `LAMINR_LAMINDB_VERSION`: "release"
 #> `LAMINR_LAMINDB_OPTIONS`: "bionty"
 #> 
 #> ── Settings ──
