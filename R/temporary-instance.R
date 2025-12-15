@@ -96,7 +96,7 @@ use_temporary_instance <- function(name = "laminr-temp", modules = NULL,
           },
           error = function(err) {
             cli::cli_warn(c(
-              "Failed to reconnect to the previous LaminDB instance ({.val current_instance})",
+              "Failed to reconnect to the previous LaminDB instance ({.val {current_instance}})",
               "x" = "Error message: {err}"
             ))
           }
