@@ -59,8 +59,8 @@ open_file <- function(uri, otype = NULL, ...) {
 
   if (is.null(file_opener)) {
     cli::cli_warn("Opening remote files of type {.val {otype}} is not supported")
-    return(uri)
+    uri
   } else {
-    return(file_opener(uri, ...))
+    file_opener(uri, ...)
   }
 }

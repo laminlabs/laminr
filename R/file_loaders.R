@@ -231,8 +231,9 @@ load_file <- function(file, suffix = NULL, ...) {
 
   if (is.null(file_loader)) {
     cli::cli_warn("Loading files of type {.val {suffix}} is not supported")
-    return(file)
+
+    file
   } else {
-    return(file_loader(file, ...))
+    file_loader(file, ...)
   }
 }
