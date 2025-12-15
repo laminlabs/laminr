@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   articles/introduction: introduction.html
   welcome: welcome.html
-last_built: 2025-12-15T12:43Z
+last_built: 2025-12-15T13:32Z
 urls:
   reference: https://laminr.lamin.ai/reference
   article: https://laminr.lamin.ai/articles
