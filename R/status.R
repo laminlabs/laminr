@@ -17,7 +17,7 @@
 #' laminr_status()
 laminr_status <- function() {
   status_list <- list(
-    version = packageVersion("laminr")
+    version = utils::packageVersion("laminr")
   )
 
   env_vars <- Sys.getenv(
@@ -104,8 +104,14 @@ format.laminr_status <- function(x, ...) {
       cli::cli_text("{.field Instance}: {.val {x$settings$instance}}")
       cli::cli_text()
       cli::cli_bullets(c(
-        "i" = "To change the instance, use {.code lamin_connect()}",
-        "i" = "Run {.run lamin_settings()} to see the full CLI settings information"
+        "i" = paste(
+          "To change the instance, use",
+          "{.code lc <- import_module(\"lamin_cli\"); lc$connect()}"
+        ),
+        "i" = paste(
+          "Run {.run get_current_lamin_settings()}",
+          "to see the full settings information"
+        )
       ))
     } else {
       cli::cli_alert_danger("Not connected to an instance")

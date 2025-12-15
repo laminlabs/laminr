@@ -1,21 +1,57 @@
-#' Connect to a LaminDB instance
+#' Lamin CLI functions
 #'
-#' Connect to a LaminDB instance by calling `lamin connect` on the command line
+#' @description
+#' `r lifecycle::badge("deprecated")`
 #'
-#' @param instance Either a slug giving the instance to connect to
-#' (`<owner>/<name>`) or an instance URL (`https://lamin.ai/owner/name`)
+#' Lamin CLI calls are available from R by importing the **lamin_cli** Python
+#' module using `lc <- import_module("lamin_cli")`. The previous CLI functions
+#' are now deprecated, see examples for how to switch to the new syntax.
 #'
-#' @export
+#' @usage
+#' # Import the module instead of using deprecated functions
+#' # lc <- import_module("lamin_cli")
 #'
-#' @details
-#' Running this will set the LaminDB auto-connect option to `True` so you
-#' auto-connect to `instance` when importing Python `lamindb`.
+#' # Deprecated functions
+#'
+#' @name lamin_cli
 #'
 #' @examples
 #' \dontrun{
-#' lamin_connect("laminlabs/cellxgene")
+#' # Import Lamin modules
+#' lc <- import_module("lamin_cli")
+#' ln <- import_module("lamindb")
+#'
+#' # Examples of replacing CLI functions with the lamin_cli module
+#' }
+NULL
+
+#' @param instance Either a slug giving the instance to connect to
+#' (`<owner>/<name>`) or an instance URL (`https://lamin.ai/owner/name`). For
+#' `lamin_delete()`, the slug for the instance to delete.
+#'
+#' @details
+#'
+#' ## `lamin_connect()`
+#'
+#' Running this will set the LaminDB auto-connect option to `True` so you
+#' auto-connect to `instance` when importing Python `lamindb`.
+#' @export
+#' @rdname lamin_cli
+#'
+#' @examples
+#' \dontrun{
+#' # Connect to a LaminDB instance
+#' lamin_connect(instance)
+#' # ->
+#' lc$connect(instance)
 #' }
 lamin_connect <- function(instance) {
+  lifecycle::deprecate_warn(
+    "1.2.0",
+    "lamin_connect()",
+    details = "Please use `lc <- import_module(\"lamin_cli\"); lc$connect()` instead."
+  )
+
   if (is.null(instance)) {
     cli::cli_alert_danger(
       "{.arg instance} is {.val NULL}, {.code lamin connect} will not be run"
@@ -45,18 +81,23 @@ lamin_connect <- function(instance) {
     print_stdout()
 }
 
-#' Disconnect from a LaminDB instance
-#'
-#' Disconnect from the current LaminDB instance by calling `lamin connect` on
-#' the command line
-#'
 #' @export
+#' @rdname lamin_cli
 #'
 #' @examples
 #' \dontrun{
+#' # Disconnect from a LaminDB instance
 #' lamin_disconnect()
+#' # ->
+#' lc$disconnect()
 #' }
 lamin_disconnect <- function() {
+  lifecycle::deprecate_warn(
+    "1.2.0",
+    "lamin_disconnect()",
+    details = "Please use `lc <- import_module(\"lamin_cli\"); lc$disconnect()` instead."
+  )
+
   system_fun <- function() {
     require_lamindb(silent = TRUE)
     py_config <- reticulate::py_config() # nolint object_usage_linter
@@ -69,14 +110,13 @@ lamin_disconnect <- function() {
   set_default_instance(NULL)
 }
 
-#' Log into LaminDB
-#'
-#' Log in as a LaminDB user
-#'
 #' @param user Handle for the user to login as
 #' @param api_key API key for a user
 #'
 #' @details
+#'
+#' ## `lamin_login()`
+#'
 #' Depending on the input, one of these commands will be run (in this order):
 #'
 #' 1. If `user` is set then `lamin login <user>`
@@ -88,7 +128,22 @@ lamin_disconnect <- function() {
 #' Otherwise, exit with an error
 #'
 #' @export
+#' @rdname lamin_cli
+#'
+#' @examples
+#' \dontrun{
+#' # Log in as a LaminDB user
+#' lamin_login(...)
+#' # ->
+#' lc$login(...)
+#' }
 lamin_login <- function(user = NULL, api_key = NULL) {
+  lifecycle::deprecate_warn(
+    "1.2.0",
+    "lamin_login()",
+    details = "Plese use `lc <- import_module(\"lamin_cli\"); lc$login()` instead."
+  )
+
   check_default_instance()
 
   system_fun <- function(user, api_key) {
@@ -130,12 +185,23 @@ lamin_login <- function(user = NULL, api_key = NULL) {
     print_stdout()
 }
 
-#' Log out of LaminDB
-#'
-#' Log out of LaminDB
-#'
 #' @export
+#' @rdname lamin_cli
+#'
+#' @examples
+#' \dontrun{
+#' # Log out of LaminDB
+#' lamin_logout()
+#' # ->
+#' lc$logout()
+#' }
 lamin_logout <- function() {
+  lifecycle::deprecate_warn(
+    "1.2.0",
+    "lamin_logout()",
+    details = "Please use lc <- import_module(\"lamin_cli\"); lc$logout() instead."
+  )
+
   check_default_instance()
 
   system_fun <- function() {
@@ -148,23 +214,28 @@ lamin_logout <- function() {
   callr::r(system_fun, package = "laminr") |> print_stdout()
 }
 
-#' Initialise LaminDB
-#'
-#' Initialise a new LaminDB instance
-#'
 #' @param storage A local directory, AWS S3 bucket or Google Cloud Storage bucket
 #' @param name A name for the instance
-#' @param db A Postgres database connection URL, use `NULL` for SQLite.
+#' @param db A Postgres database connection URL, use `NULL` for SQLite
 #' @param modules A vector of modules to include (e.g. "bionty")
 #'
-#' @rdname lamin_init
 #' @export
+#' @rdname lamin_cli
 #'
 #' @examples
 #' \dontrun{
-#' lamin_init("mydata", modules = c("bionty", "wetlab"))
+#' # Create a new LaminDB instance
+#' lamin_init(...)
+#' # ->
+#' lc$init(...)
 #' }
 lamin_init <- function(storage, name = NULL, db = NULL, modules = NULL) {
+  lifecycle::deprecate_warn(
+    "1.2.0",
+    "lamin_init()",
+    details = "Please use `lc <- import_module(\"lamin_cli\"); lc$init()` instead."
+  )
+
   system_fun <- function(storage, name, db, modules) {
     require_lamindb(silent = TRUE)
 
@@ -213,6 +284,9 @@ lamin_init <- function(storage, name = NULL, db = NULL, modules = NULL) {
 #' @param envir An environment passed to [withr::defer()]
 #'
 #' @details
+#'
+#' ## `lamin_init_temp()`
+#'
 #' For [lamin_init_temp()], a time stamp is appended to `name` (if
 #' `add_timestamp = TRUE`) and then a new instance is initialised with
 #' [lamin_init()] using a temporary directory. A [lamin_delete()] call is
@@ -222,10 +296,24 @@ lamin_init <- function(storage, name = NULL, db = NULL, modules = NULL) {
 #' The [lamin_init_temp()] function is mostly for internal use and in most cases
 #' users will want [lamin_init()].
 #'
-#' @rdname lamin_init
 #' @export
+#' @rdname lamin_cli
+#'
+#' @examples
+#' \dontrun{
+#' # Create a temporary LaminDB instance
+#' lamin_init_temp(...)
+#' # ->
+#' create_temporary_instance()
+#' }
 lamin_init_temp <- function(name = "laminr-temp", db = NULL, modules = NULL,
                             add_timestamp = TRUE, envir = parent.frame()) {
+  lifecycle::deprecate_warn(
+    "1.2.0",
+    "lamin_init_temp()",
+    "use_temporary_instance()"
+  )
+
   if (isTRUE(add_timestamp)) {
     # Add a time stamp to get a unique name
     timestamp <- format(Sys.time(), "%Y%m%d%H%M%S")
@@ -243,21 +331,25 @@ lamin_init_temp <- function(name = "laminr-temp", db = NULL, modules = NULL,
   withr::defer(unlink(temp_storage, recursive = TRUE, force = TRUE), envir = envir)
 }
 
-#' LaminDB delete
-#'
-#' Delete a LaminDB entity. Currently only supports instances.
-#'
-#' @param instance Identifier for the instance to delete (e.g. "owner/name")
 #' @param force Whether to force deletion without asking for confirmation
 #'
 #' @export
+#' @rdname lamin_cli
 #'
 #' @examples
 #' \dontrun{
-#' lamin_init("to-delete")
-#' lamin_delete("to-delete")
+#' # Delete a LaminDB entity
+#' lamin_delete(...)
+#' # ->
+#' lc$delete(...)
 #' }
 lamin_delete <- function(instance, force = FALSE) {
+  lifecycle::deprecate_warn(
+    "1.2.0",
+    "lamin_delete()",
+    details = "Please use `lc <- import_module(\"lamin_cli\"); lc$delete()` instead."
+  )
+
   # Python prompts don't work so need to prompt in R
   if (!isTRUE(force)) {
     confirm <- prompt_yes_no(
@@ -289,28 +381,28 @@ lamin_delete <- function(instance, force = FALSE) {
     print_stdout()
 }
 
-#' Save to a LaminDB instance
-#'
-#' Save a file or folder to a LaminDB instance by calling `lamin save` on the
-#' command line
-#'
 #' @param filepath Path to the file or folder to save
 #' @param key The key for the saved item
 #' @param description The description for the saved item
 #' @param registry The registry for the saved item
 #'
 #' @export
-#'
-#' @details
-#' See `lamin save --help` for details of what database entries are created for
-#' different file types
+#' @rdname lamin_cli
 #'
 #' @examples
 #' \dontrun{
-#' my_file <- tempfile()
-#' lamin_save(my_file)
+#' # Save to a LaminDB instance
+#' lamin_save(...)
+#' # ->
+#' lc$save(...)
 #' }
 lamin_save <- function(filepath, key = NULL, description = NULL, registry = NULL) {
+  lifecycle::deprecate_warn(
+    "1.2.0",
+    "lamin_save()",
+    details = "Please use `lc <- import_module(\"lamin_cli\"); lc$save()` instead."
+  )
+
   args <- "save"
 
   if (!is.null(key)) {
@@ -344,18 +436,33 @@ lamin_save <- function(filepath, key = NULL, description = NULL, registry = NULL
     print_stdout()
 }
 
-#' Lamin settings
-#'
-#' Print the current LaminDB settings by calling `lamin settings` on the command
-#' line
-#`
 #' @export
+#' @rdname lamin_cli
 #'
 #' @examples
 #' \dontrun{
+#' # Access Lamin settings
 #' lamin_settings()
+#' # ->
+#' ln$setup$settings
+#' # OR
+#' ln$settings
+#' # Alternatively
+#' get_current_lamin_settings()
 #' }
 lamin_settings <- function() {
+  lifecycle::deprecate_warn(
+    "1.2.0",
+    "lamin_settings()",
+    details = c(
+      paste(
+        "Please use `ln <- import_module(\"lamindb\");",
+        "ln$setup$settings` OR `ln$settings` instead."
+      ),
+      "Alternatively, use `get_current_lamin_settings()`"
+    )
+  )
+
   system_fun <- function() {
     require_lamindb(silent = TRUE)
     py_config <- reticulate::py_config() # nolint object_usage_linter

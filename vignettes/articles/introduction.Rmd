@@ -10,44 +10,51 @@ knitr::opts_chunk$set(
 ```
 
 ```{r prepare, include = FALSE}
-# Restore the current instance at the end of the vignette
-current_instance <- laminr::get_current_lamin_instance()
-withr::defer(laminr::lamin_connect(current_instance))
+lc <- laminr::import_module("lamin_cli")
 
 # Restore the current user at the end of the vignette
 current_user <- laminr::get_current_lamin_user()
-laminr::lamin_logout()
-withr::defer(laminr::lamin_login(current_user))
+lc$logout()
+withr::defer({
+  lc <- laminr::import_module("lamin_cli")
+  lc$login(current_user)
+})
 
 # Set up a temporary test instance
-laminr::lamin_init_temp(name = "laminr-intro", modules = c("bionty"))
-
-# Disconnect from this instance at the end of the vignette
-withr::defer(laminr::lamin_disconnect())
+laminr::use_temporary_instance(name = "laminr-intro", modules = c("bionty"))
 ```
 
-This vignette introduces the **{laminr}** workflow.
+This vignette introduces the **{laminr}** workflow but reproducing examples from the LaminDB documentation.
 
 To learn more about LaminDB, see [docs.lamin.ai](https://docs.lamin.ai).
 
-# Quickstart
+# Introduction
 
-For setup, install the **{laminr}** and **lamindb** packages and connect to a LaminDB instance.
+## Setup
 
-```r
-install.packages("laminr", dependencies = TRUE)  # install the laminr package from CRAN
-laminr::install_lamindb(extra_packages = c("bionty"))  # install lamindb & bionty for use via reticulate
-laminr::lamin_login()  # <-- you can skip this for local & self-hosted instances
-laminr::lamin_connect("<account>/<instance>")  # <-- replace with your instance
-```
-
-Here's how to create a local instance.
+Install the **{laminr}** package.
 
 ```r
-laminr::lamin_init(storage = "./mydata", modules = c("bionty"))
+install.packages("laminr", dependencies = TRUE)
 ```
 
-In an R session, transfer an scRNA-seq dataset from the laminlabs/cellxgene instance, compute marker genes with Seurat, and save results.
+Create a LaminDB instance:
+
+```
+lc <- laminr::import_module("lamin_cli")
+lc$init(storage = "./mydata", modules = c("bionty"))
+```
+
+Or if you have write access to an instance, login and connect to it:
+
+```
+lc$login()
+lc$connect("<account>/<instance>")
+```
+
+## Quickstart
+
+In an R session, transfer an scRNA-seq dataset from the `laminlabs/cellxgene` instance, compute marker genes with **{Seurat}**, and save results.
 
 ```{r file = "../../test-docs/r-quickstart.R", eval = FALSE}
 ```
@@ -55,76 +62,67 @@ In an R session, transfer an scRNA-seq dataset from the laminlabs/cellxgene inst
 If you did not use RStudio’s notebook mode, create an html export and then run the following.
 
 ```r
-laminr::lamin_save("my-analyis.Rmd")  # save source code and html report for a `.qmd` or `.Rmd` file
+lc$save("my-analyis.Rmd")  # save source code and html report for a `.qmd` or `.Rmd` file
 ```
 
-# Track notebooks & scripts
+# Tutorial
 
-See https://docs.lamin.ai/introduction#track-notebooks-scripts
+See https://docs.lamin.ai/tutorial
 
-```r
-library(laminr)
-lamin_init(storage = "./laminr-intro", modules = c("bionty"))
-```
+## Track notebooks & scripts
+
+See https://docs.lamin.ai/tutorial#track-notebooks-scripts
 
 ```{r track}
-library(laminr)
-ln <- import_module("lamindb")  # instantiate the central `ln` object of the API
+library("laminr")
+ln <- import_module("lamindb")
+ln$track()
 
-ln$track()  # track a run of your notebook or script
-
-ln$Transform$df()
-
-ln$Run$df()
+ln$Transform$to_dataframe()
+ln$Run$to_dataframe()
 ```
 
-# Manage artifacts
+## Manage artifacts
 
-See https://docs.lamin.ai/introduction#manage-artifacts
+See https://docs.lamin.ai/tutorial#manage-artifacts
 
-## Create an artifact
+### Create an artifact
 
-See https://docs.lamin.ai/introduction#create-an-artifact
+See https://docs.lamin.ai/tutorial#create-an-artifact
 
 ```{r create-artifact}
 df <- ln$core$datasets$small_dataset1(otype = "DataFrame", with_typo = TRUE)
 df
 
-artifact <- ln$Artifact$from_df(df, key = "my_datasets/rnaseq1.parquet")$save()  # create and save
+artifact <- ln$Artifact$from_dataframe(df, key = "my_datasets/rnaseq1.parquet")$save()  # create and save
 artifact$describe()  # describe
 ```
 
-## Access artifacts
+### Access artifacts
 
-See https://docs.lamin.ai/introduction#access-artifacts
+See https://docs.lamin.ai/tutorial#access-artifacts
 
 ```{r access-artifacts}
 artifact <- ln$Artifact$get(key = "my_datasets/rnaseq1.parquet")
-
 artifact$load()
-
 artifact$cache()
 ```
 
-## Trace data lineage
+### Trace data lineage
 
-See https://docs.lamin.ai/introduction#trace-data-lineage
+See https://docs.lamin.ai/tutorial#trace-data-lineage
 
 ```{r trace-lineage}
 artifact$transform
-
 artifact$run
-
 artifact$view_lineage()
+
+# ln$finish() # nolint
 ```
 
-```r
-ln$finish()  # mark run as finished, save execution report & source code
-```
+### Annotate an artifact
 
-## Annotate an artifact
-
-See https://docs.lamin.ai/introduction#annotate-an-artifact
+See https://docs.lamin.ai/tutorial#annotate-an-artifact
 
 ```{r annotate-artifact}
 # create a label
@@ -136,7 +134,7 @@ artifact$ulabels$add(my_experiment)
 # describe the artifact
 artifact$describe()
 
-ln$Artifact$filter(ulabels = my_experiment)$df()
+ln$Artifact$filter(ulabels = my_experiment)$to_dataframe()
 
 bt <- import_module("bionty")
 
@@ -149,7 +147,7 @@ artifact$cell_types$add(cell_type)
 # describe the artifact
 artifact$describe()
 
-ln$Artifact$filter(cell_types = cell_type)$df()
+ln$Artifact$filter(cell_types = cell_type)$to_dataframe()
 
 # define the "temperature" & "experiment" features
 ln$Feature(name = "temperature", dtype = "float")$save()
@@ -157,18 +155,18 @@ ln$Feature(name = "experiment", dtype = ln$ULabel)$save()
 
 # annotate the artifact
 artifact$features$add_values(
-  list("temperature" = 21.6, "experiment" = "My experiment")
+  list(temperature = 21.6, experiment = "My experiment")
 )
 
 # describe the artifact
 artifact$describe()
 
-ln$Artifact$filter(temperature = 21.6)$df()
+ln$Artifact$filter(temperature = 21.6)$to_dataframe()
 ```
 
-## Validate an artifact
+### Validate an artifact
 
-See https://docs.lamin.ai/introduction#validate-an-artifact
+See https://docs.lamin.ai/tutorial#validate-an-artifact
 
 ```{r validate-artifact}
 bt <- import_module("bionty")  # <-- use bionty to access registries with imported public ontologies
@@ -190,15 +188,13 @@ ln$Feature(name = "treatment_time_h", dtype = "num", coerce_dtype = TRUE)$save()
 schema <- ln$Schema(itype = ln$Feature)$save()
 
 testthat::expect_error(
-  artifact <- ln$Artifact$from_df(
-    df, key = "my_datasets/rnaseq1.parquet", schema = schema
-  )
+  artifact <- ln$Artifact$from_dataframe(df, key = "my_datasets/rnaseq1.parquet", schema = schema)
 )
 ```
 
-## Make a new version of an artifact
+### Make a new version of an artifact
 
-See https://docs.lamin.ai/introduction#make-a-new-version-of-an-artifact
+See https://docs.lamin.ai/tutorial#make-a-new-version-of-an-artifact
 
 ```{r version-artifact}
 # fix the "IFNJ" typo
@@ -206,7 +202,7 @@ levels(df$perturbation) <- c("DMSO", "IFNG")
 df["sample2", "perturbation"] <- "IFNG"
 
 # create a new version
-artifact <- ln$Artifact$from_df(df, key = "my_datasets/rnaseq1.parquet", schema = schema)$save()
+artifact <- ln$Artifact$from_dataframe(df, key = "my_datasets/rnaseq1.parquet", schema = schema)$save()
 
 # see the annotations
 artifact$describe()
@@ -215,28 +211,17 @@ artifact$describe()
 artifact$schema
 
 # see all versions of an artifact
-artifact$versions$df()
+artifact$versions$to_dataframe()
 ```
 
-```{r version-artifact-revises}
-artifact_v1 <- ln$Artifact$from_df(df, description = "Just a description")$save()
-# below revises artifact_v1
-df_updated <- df
-df_updated[1, 1] <- 10
-artifact_v2 <- ln$Artifact$from_df(df_updated, revises = artifact_v1)$save()
-```
+## Query & search registries
 
-# Query & search registries
+See https://docs.lamin.ai/tutorial#query-search-registries
 
-See https://docs.lamin.ai/introduction#query-search-registries
-
-```{r query}
-ln$Artifact$df()
-
-ln$Artifact$df(features = TRUE)
-
+```{r query-registries}
+ln$Artifact$to_dataframe()
+ln$Artifact$to_dataframe(include = "features")
 ln$Artifact
-
 ln$view()
 
 # get a single record (here the current notebook)
@@ -244,29 +229,29 @@ transform <- ln$Transform$get(key = "introduction.Rmd")
 
 # get a set of records by filtering for a directory (LaminDB treats directories
 # like AWS S3, as the prefix of the storage key)
-ln$Artifact$filter(key__startswith = "my_datasets/")$df()
+ln$Artifact$filter(key__startswith = "my_datasets/")$to_dataframe()
 
 # query all artifacts ingested from a transform
 artifacts <- ln$Artifact$filter(transform = transform)$all()
 
-# query all artifacts ingested from a notebook with "intro" in the title
+# query all artifacts ingested from a notebook with "tutor" in the description
 artifacts <- ln$Artifact$filter(
-  transform__description__icontains = "intro"
+  transform__description__icontains = "tutor",
 )$all()
 
 # search artifacts
-ln$Artifact$search("iris")$df()
+ln$Artifact$search("iris")$to_dataframe()
 
 # search transforms
-ln$Transform$search("intro")$df()
+ln$Transform$search("tutor")$to_dataframe()
 
 # look up records with auto-complete
 ulabels <- ln$ULabel$lookup()
 ```
 
-# Manage files & folders
+## Manage files & folders
 
-See https://docs.lamin.ai/introduction#manage-files-folders
+See https://docs.lamin.ai/tutorial#manage-files-folders
 
 ```{r manage-files}
 # we use anon=True here in case no aws credentials are configured
@@ -276,43 +261,20 @@ artifact <- ln$Artifact("s3://lamindata/iris_studies/study0_raw_images")$save()
 artifact
 
 artifact$path
-
-ln$Storage$df()
+ln$Storage$to_dataframe()
 ```
 
-```{r manage-files-update}
-artifact_update <- ln$Artifact$from_df(df, key = "my_datasets/rnaseq-update.parquet")$save()
-artifact_update$description <- "My new description"  # change description
-artifact_update$save()  # save the change to the database
-artifact_update$delete()  # move to trash
-artifact_update$delete(permanent = TRUE)  # permanently delete
-```
+## Manage biological registries
 
-# Manage biological registries
-
-See https://docs.lamin.ai/introduction#manage-biological-registries
+See https://docs.lamin.ai/tutorial#manage-biological-registries
 
 ```{r manage-registries}
 bt <- import_module("bionty")
 
-cell_types <- bt$CellType$public()
-cell_types
+cell_type_ontology <- bt$CellType$public()
+cell_type_ontology
 
-cell_types$search("gamma-delta T cell") |> head(2)
-
-# define var schema
-var_schema <- ln$Schema(
-  name = "my_var_schema",
-  itype = bt$Gene$ensembl_gene_id,
-  dtype = "int"
-)$save()
-
-# define composite schema
-anndata_schema <- ln$Schema(
-  name = "my_anndata_schema",
-  otype = "AnnData",
-  slots = list("obs" = schema, "var.T" = var_schema)
-)$save()
+cell_type_ontology$search("gamma-delta T cell") |> head(n = 2)
 
 # create an ontology-coupled cell type record and save it
 neuron <- bt$CellType$from_source(name = "neuron")$save()
@@ -329,9 +291,9 @@ new_cell_state$parents$add(neuron)
 new_cell_state$view_parents(distance = 2)
 ```
 
-# Manage AnnData objects
+## Manage AnnData object
 
-See https://docs.lamin.ai/introduction#manage-anndata-objects
+See https://docs.lamin.ai/tutorial#manage-anndata-objects
 
 ```{r manage-anndata}
 # define var schema
@@ -339,13 +301,13 @@ var_schema <- ln$Schema(itype = bt$Gene$ensembl_gene_id, dtype = "int")$save()
 
 # define composite schema
 anndata_schema <- ln$Schema(
-  otype = "AnnData", components = list("obs" = schema, "var" = var_schema)
+  otype = "AnnData", slots = list("obs" = schema, "var.T" = var_schema)
 )$save()
 
 ad <- import_module("anndata")
 
 # store the dataset as an AnnData object to distinguish data from metadata
-adata <- ad$AnnData(df[, 1:3], obs = df$iloc[, 4:(ncol(df) - 1)])
+adata <- ad$AnnData(df[, 1:3], obs = df[, 4:(ncol(df) - 1)])
 
 # save curated artifact
 artifact <- ln$Artifact$from_anndata(
@@ -357,14 +319,14 @@ artifact$describe()
 feature_sets <- ln$Schema$filter(genes__symbol = "CD8A")$all()
 
 # query for all artifacts linked to these feature sets
-ln$Artifact$filter(feature_sets__in = feature_sets)$df()
+ln$Artifact$filter(feature_sets__in = feature_sets)$to_dataframe()
 ```
 
-# Scale learning
+## Scale learning
 
-See https://docs.lamin.ai/introduction#scale-learning
+See https://docs.lamin.ai/tutorial#scale-learning
 
-```{r scale}
+```{r scale-learning}
 # a new dataset
 df2 <- ln$core$datasets$small_dataset2(otype = "DataFrame")
 adata <- ad$AnnData(df2[, 1:3], obs = df2[, 4:(ncol(df2) - 1)])
@@ -372,9 +334,7 @@ artifact2 <- ln$Artifact$from_anndata(
   adata, key = "my_datasets/my_rnaseq2.h5ad", schema = anndata_schema
 )$save()
 
-collection <- ln$Collection(
-  list(artifact, artifact2), key = "my-RNA-seq-collection"
-)$save()
+collection <- ln$Collection(list(artifact, artifact2), key = "my-RNA-seq-collection")$save()
 collection$describe()
 collection$view_lineage()
 
@@ -388,7 +348,7 @@ collection$load()
 collection$artifacts$all()
 
 # or look at a DataFrame listing the artifacts
-collection$artifacts$df()
+collection$artifacts$to_dataframe()
 ```
 
 # Finish

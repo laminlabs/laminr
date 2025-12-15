@@ -15,12 +15,8 @@ if (isTRUE(as.logical(Sys.getenv("NOT_CRAN", "false")))) {
     }
   )
 
-  # Reset the current instance when we are done
-  current_instance <- laminr::get_current_lamin_instance()
-  withr::defer(lamin_connect(current_instance), testthat::teardown_env())
-
-  # Create a temporary test instance
-  lamin_init_temp(
+  # Use a temporary test instance
+  use_temporary_instance(
     test_name,
     modules = "bionty",
     add_timestamp = FALSE,

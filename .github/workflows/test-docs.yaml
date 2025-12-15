@@ -68,8 +68,9 @@ jobs:
 
       - name: Login and set lamindata as default instance
         run: |
-          laminr::lamin_login()
-          laminr::lamin_connect("laminlabs/lamindata")
+          lc <- laminr::import_module("lamin_cli")
+          lc$login()
+          lc$connect("laminlabs/lamindata")
         shell: Rscript {0}
 
       - name: Check environment
@@ -82,7 +83,8 @@ jobs:
 
       - name: Create a test instance for main docs
         run: |
-          laminr::lamin_init(storage = "./test-docs", modules = c("bionty"))
+          lc <- laminr::import_module("lamin_cli")
+          lc$init(storage = "./test-docs", modules = "bionty")
         shell: Rscript {0}
 
       - name: Run quickstart for main docs
@@ -100,7 +102,8 @@ jobs:
 
       - name: Build LaminR docs
         run: |
-          laminr::lamin_connect("laminlabs/lamindata")
+          lc <- laminr::import_module("lamin_cli")
+          lc$connect("laminlabs/lamindata")
           pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
         shell: Rscript {0}
 
