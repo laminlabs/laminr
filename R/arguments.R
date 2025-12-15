@@ -52,6 +52,9 @@ get_py_arguments <- function(py_func) {
 
   names(params)[names(params) == "function"] <- "func"
 
+  # Ignore "cls_or_self" as it should be treated like "self" or "cls"
+  params[names(params) == "cls_or_self"] <- NULL
+
   lapply(params, function(.param) {
     default <- .param$default
 
