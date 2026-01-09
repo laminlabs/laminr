@@ -38,7 +38,7 @@
 #' require_module("lamindb")
 #'
 #' # Require a specific version of lamindb
-#' require_module("lamindb", version = ">=1.2")
+#' require_module("lamindb", version = ">=2.0a2")
 #'
 #' # Require require lamindb with options
 #' require_module("lamindb", options = c("bionty", "wetlab"))
@@ -124,7 +124,7 @@ require_lamindb <- function(silent = FALSE) {
     require_module(
       "lamindb",
       options = laminr_lamindb_options,
-      version = ">=1.2",
+      version = ">=2.0a2",
       python_version = ">=3.10,<3.14",
       silent = silent
     )
