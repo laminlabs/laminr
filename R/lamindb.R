@@ -1,7 +1,7 @@
 wrap_lamindb <- function(py_lamindb, settings) {
   lamin_version <- reticulate::py_get_attr(py_lamindb, "__version__")
   lamin_version_clean <- sub("([a-zA-Z].*)", "", lamin_version) # Remove pre-release versions, e.g. 1.0a5 -> 1.0
-  min_version <- "1.2"
+  min_version <- "2.0"
   expected_version <- "1.11"
   if (utils::compareVersion(min_version, lamin_version_clean) == 1) {
     cli::cli_abort(c(
