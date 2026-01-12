@@ -56,7 +56,7 @@ install_lamindb <- function(
     reticulate::virtualenv_remove(envname)
   }
 
-  packages <- unique(c("lamindb>=2.0a2", "ipython", extra_packages))
+  packages <- unique(c("lamindb>=2.0.0", "ipython", extra_packages))
 
   reticulate::py_install(packages = packages, envname = envname, ...)
 
