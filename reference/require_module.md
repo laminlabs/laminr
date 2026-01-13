@@ -83,7 +83,7 @@ if (FALSE) { # \dontrun{
 require_module("lamindb")
 
 # Require a specific version of lamindb
-require_module("lamindb", version = ">=1.2")
+require_module("lamindb", version = ">=2.0.0")
 
 # Require require lamindb with options
 require_module("lamindb", options = c("bionty", "wetlab"))
