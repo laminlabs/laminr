@@ -42,7 +42,7 @@ Create a LaminDB instance:
 
 ```
 lc <- laminr::import_module("lamin_cli")
-lc$init(storage = "./mydata", modules = c("bionty"))
+lc$init(storage = "./lamin-tutorial", modules = c("bionty"))
 ```
 
 Or if you have write access to an instance, login and connect to it:
@@ -91,7 +91,7 @@ See https://docs.lamin.ai/tutorial#manage-artifacts
 See https://docs.lamin.ai/tutorial#create-an-artifact
 
 ```{r create-artifact}
-df <- ln$core$datasets$small_dataset1(otype = "DataFrame", with_typo = TRUE)
+df <- ln$examples$datasets$mini_immuno$get_dataset1(with_typo = TRUE)
 df
 
 artifact <- ln$Artifact$from_dataframe(df, key = "my_datasets/rnaseq1.parquet")$save()  # create and save
@@ -126,15 +126,15 @@ See https://docs.lamin.ai/tutorial#annotate-an-artifact
 
 ```{r annotate-artifact}
 # create a label
-my_experiment <- ln$ULabel(name = "My experiment")$save()
+my_experiment <- ln$Record(name = "My experiment")$save()
 
 # annotate the artifact with a label
-artifact$ulabels$add(my_experiment)
+artifact$records$add(my_experiment)
 
 # describe the artifact
 artifact$describe()
 
-ln$Artifact$filter(ulabels = my_experiment)$to_dataframe()
+ln$Artifact$filter(records = my_experiment)$to_dataframe()
 
 bt <- import_module("bionty")
 
@@ -151,7 +151,7 @@ ln$Artifact$filter(cell_types = cell_type)$to_dataframe()
 
 # define the "temperature" & "experiment" features
 ln$Feature(name = "temperature", dtype = "float")$save()
-ln$Feature(name = "experiment", dtype = ln$ULabel)$save()
+ln$Feature(name = "experiment", dtype = ln$Record)$save()
 
 # annotate the artifact
 artifact$features$add_values(
@@ -172,11 +172,11 @@ See https://docs.lamin.ai/tutorial#validate-an-artifact
 bt <- import_module("bionty")  # <-- use bionty to access registries with imported public ontologies
 
 # define a few more valid labels
-ln$ULabel(name = "DMSO")$save()
-ln$ULabel(name = "IFNG")$save()
+ln$Record(name = "DMSO")$save()
+ln$Record(name = "IFNG")$save()
 
 # define a few more valid features
-ln$Feature(name = "perturbation", dtype = ln$ULabel)$save()
+ln$Feature(name = "perturbation", dtype = ln$Record)$save()
 ln$Feature(name = "cell_type_by_model", dtype = bt$CellType)$save()
 ln$Feature(name = "cell_type_by_expert", dtype = bt$CellType)$save()
 ln$Feature(name = "assay_oid", dtype = bt$ExperimentalFactor$ontology_id)$save()
@@ -246,7 +246,7 @@ ln$Artifact$search("iris")$to_dataframe()
 ln$Transform$search("tutor")$to_dataframe()
 
 # look up records with auto-complete
-ulabels <- ln$ULabel$lookup()
+ulabels <- ln$Record$lookup()
 ```
 
 ## Manage files & folders
@@ -328,7 +328,7 @@ See https://docs.lamin.ai/tutorial#scale-learning
 
 ```{r scale-learning}
 # a new dataset
-df2 <- ln$core$datasets$small_dataset2(otype = "DataFrame")
+df2 <- ln$examples$datasets$mini_immuno$get_dataset2(otype = "DataFrame")
 adata <- ad$AnnData(df2[, 1:3], obs = df2[, 4:(ncol(df2) - 1)])
 artifact2 <- ln$Artifact$from_anndata(
   adata, key = "my_datasets/my_rnaseq2.h5ad", schema = anndata_schema
