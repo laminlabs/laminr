@@ -33,6 +33,7 @@ Imports:
 Suggests:
     anndata,
     arrow,
+    IRkernel,
     jsonlite,
     knitr,
     magick,
