@@ -30,21 +30,21 @@ laminr_status()
 #> 
 #> ── Environment Variables ──
 #> 
-#> `LAMINR_LAMINDB_VERSION`: "devel"
+#> `LAMINR_LAMINDB_VERSION`: "release"
 #> `LAMINR_LAMINDB_OPTIONS`: "bionty"
 #> 
 #> ── Settings ──
 #> 
 #> ✖ Not connected to an instance
 #> 
-#> ── Python 3.12.12 (main, Dec 17 2025, 21:10:06) [Clang 21.1.4 ] ──
+#> ── Python 3.12.12 (main, Jan 14 2026, 19:35:58) [Clang 21.1.4 ] ──
 #> 
 #> ✔ lamindb v2.0.1
 #> ✔ lamin_cli v1.11.0
 #> ✔ lamin_utils v0.16.2
 #> ✔ lamindb_setup v1.18.1
 #> ✔ bionty v2.0.0
-#> ✔ wetlab v2.0.0
+#> ✖ wetlab
 #> ✖ clinicore
 #> ✖ cellregistry
 #> ✖ omop
