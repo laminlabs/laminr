@@ -161,7 +161,7 @@ detect_path <- function() {
 
   # Get path if in a running RMarkdown notebook
   if (is_knitr_notebook()) {
-    current_path <- knitr::current_input()
+    current_path <- knitr::current_input(dir=TRUE)
   }
 
   # Get path if in a script run by `source("script.R")`
@@ -185,7 +185,7 @@ detect_path <- function() {
   }
 
   # Normalise the path relative to the working directory
-  if (!is.null(current_path)) {
+  if (!is.null(current_path) && !is_knitr_notebook()) {
     current_path <- R.utils::getRelativePath(current_path)
   }
 
