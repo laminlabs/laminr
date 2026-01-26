@@ -149,24 +149,24 @@ then run the following.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://laminr.lamin.ai">"laminr"</a></span><span class="op">)</span></span>
 <span><span class="va">ln</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/import_module.html">import_module</a></span><span class="op">(</span><span class="st">"lamindb"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; → connected lamindb: testuser1/laminr-intro-20260126141155</span></span>
+<span><span class="co">#&gt; → connected lamindb: testuser1/laminr-intro-20260126160417</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Requiring <span style="color: #0000BB;">bionty</span></span></span>
 <span><span class="va">ln</span><span class="op">$</span><span class="fu">track</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; → created Transform('h8cTWdDnXNYt0000', key='introduction.Rmd'), started new Run('xbGKD3caDXOV8Baz') at 2026-01-26 14:12:13 UTC</span></span>
-<span><span class="co">#&gt; • recommendation: to identify the notebook across renames, pass the uid: ln$track("h8cTWdDnXNYt")</span></span>
+<span><span class="co">#&gt; → created Transform('cTJxQP5tVPH30000', key='introduction.Rmd'), started new Run('hBFF8Ikc4dgJXene') at 2026-01-26 16:04:36 UTC</span></span>
+<span><span class="co">#&gt; • recommendation: to identify the notebook across renames, pass the uid: ln$track("cTJxQP5tVPH3")</span></span>
 <span></span>
 <span><span class="va">ln</span><span class="op">$</span><span class="va">Transform</span><span class="op">$</span><span class="fu">to_dataframe</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                uid              key description     kind source_code hash</span></span>
-<span><span class="co">#&gt; 1 h8cTWdDnXNYt0000 introduction.Rmd        &lt;NA&gt; notebook        &lt;NA&gt; &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 1 cTJxQP5tVPH30000 introduction.Rmd        &lt;NA&gt; notebook        &lt;NA&gt; &lt;NA&gt;</span></span>
 <span><span class="co">#&gt;   reference reference_type version_tag is_latest is_locked          created_at</span></span>
-<span><span class="co">#&gt; 1      &lt;NA&gt;           &lt;NA&gt;        &lt;NA&gt;      TRUE     FALSE 2026-01-26 14:12:13</span></span>
+<span><span class="co">#&gt; 1      &lt;NA&gt;           &lt;NA&gt;        &lt;NA&gt;      TRUE     FALSE 2026-01-26 16:04:36</span></span>
 <span><span class="co">#&gt;   branch_id space_id environment_id created_by_id</span></span>
 <span><span class="co">#&gt; 1         1        1           &lt;NA&gt;             3</span></span>
 <span><span class="va">ln</span><span class="op">$</span><span class="va">Run</span><span class="op">$</span><span class="fu">to_dataframe</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                uid name entrypoint          started_at finished_at params</span></span>
-<span><span class="co">#&gt; 1 xbGKD3caDXOV8Baz &lt;NA&gt;       &lt;NA&gt; 2026-01-26 14:12:13        &lt;NA&gt;   &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 1 hBFF8Ikc4dgJXene &lt;NA&gt;       &lt;NA&gt; 2026-01-26 16:04:36        &lt;NA&gt;   &lt;NA&gt;</span></span>
 <span><span class="co">#&gt;   reference reference_type cli_args is_locked          created_at branch_id</span></span>
-<span><span class="co">#&gt; 1      &lt;NA&gt;           &lt;NA&gt;     &lt;NA&gt;     FALSE 2026-01-26 14:12:13         1</span></span>
+<span><span class="co">#&gt; 1      &lt;NA&gt;           &lt;NA&gt;     &lt;NA&gt;     FALSE 2026-01-26 16:04:36         1</span></span>
 <span><span class="co">#&gt;   space_id transform_id report_id environment_id created_by_id</span></span>
 <span><span class="co">#&gt; 1        1            1      &lt;NA&gt;           &lt;NA&gt;             3</span></span>
 <span><span class="co">#&gt;   initiated_by_run_id</span></span>
@@ -204,14 +204,14 @@ then run the following.</p>
 <span><span class="co">#&gt; → writing the in-memory object into cache</span></span>
 <span><span class="va">artifact</span><span class="op">$</span><span class="fu">describe</span><span class="op">(</span><span class="op">)</span>  <span class="co"># describe</span></span>
 <span><span class="co">#&gt; <span style="font-weight: bold;">Artifact: </span><span style="color: #00BBBB;">my_datasets/rnaseq1.parquet</span><span style="font-weight: 100;"> (0000)</span></span></span>
-<span><span class="co">#&gt; <span style="font-weight: 100;">├── uid: </span>BpVBgH0IVSF11OMc0000            <span style="font-weight: 100;">run: </span><span style="color: #00BBBB;">xbGKD3c</span><span style="font-weight: 100;"> (</span><span style="color: #00BBBB;">introduction.Rmd</span><span style="font-weight: 100;">)</span></span></span>
+<span><span class="co">#&gt; <span style="font-weight: 100;">├── uid: </span>fp4ih9V2qmok4HML0000            <span style="font-weight: 100;">run: </span><span style="color: #00BBBB;">hBFF8Ik</span><span style="font-weight: 100;"> (</span><span style="color: #00BBBB;">introduction.Rmd</span><span style="font-weight: 100;">)</span></span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   kind: </span>dataset                        <span style="font-weight: 100;">otype: </span>DataFrame               </span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   hash: </span>0MvCJV4AOs7Pya5f_lA1kg         <span style="font-weight: 100;">size: </span>9.3 KB                   </span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   branch: </span>main                         <span style="font-weight: 100;">space: </span>all                     </span></span>
-<span><span class="co">#&gt; <span style="font-weight: 100;">│   created_at: </span>2026-01-26 14:12:14 UTC  <span style="font-weight: 100;">created_by: </span>testuser1          </span></span>
+<span><span class="co">#&gt; <span style="font-weight: 100;">│   created_at: </span>2026-01-26 16:04:37 UTC  <span style="font-weight: 100;">created_by: </span>testuser1          </span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   n_observations: </span>3                                                   </span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">└── storage/path: </span></span></span>
-<span><span class="co">#&gt; <span style="font-weight: 100;">    </span><span style="color: #00BBBB;">/tmp/RtmpZxLbV9/laminr-intro-20260126141155</span><span style="font-weight: 100;">/</span>.lamindb/BpVBgH0IVSF11OMc0000.pa</span></span>
+<span><span class="co">#&gt; <span style="font-weight: 100;">    </span><span style="color: #00BBBB;">/tmp/RtmpncNa5g/laminr-intro-20260126160417</span><span style="font-weight: 100;">/</span>.lamindb/fp4ih9V2qmok4HML0000.pa</span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">    </span>rquet</span></span></code></pre></div>
 </div>
 <div class="section level4">
@@ -238,7 +238,7 @@ then run the following.</p>
 <span><span class="co">#&gt; sample2         Chinese, Han Chinese</span></span>
 <span><span class="co">#&gt; sample3                      Chinese</span></span>
 <span><span class="va">artifact</span><span class="op">$</span><span class="fu">cache</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "/tmp/RtmpZxLbV9/laminr-intro-20260126141155/.lamindb/BpVBgH0IVSF11OMc0000.parquet"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "/tmp/RtmpncNa5g/laminr-intro-20260126160417/.lamindb/fp4ih9V2qmok4HML0000.parquet"</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="trace-data-lineage">Trace data lineage<a class="anchor" aria-label="anchor" href="#trace-data-lineage"></a>
@@ -246,9 +246,9 @@ then run the following.</p>
 <p>See <a href="https://docs.lamin.ai/tutorial#trace-data-lineage" class="external-link uri">https://docs.lamin.ai/tutorial#trace-data-lineage</a></p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">artifact</span><span class="op">$</span><span class="va">transform</span></span>
-<span><span class="co">#&gt; Transform(uid='h8cTWdDnXNYt0000', version_tag=None, is_latest=True, key='introduction.Rmd', description=None, kind='notebook', hash=None, reference=None, reference_type=None, environment=None, branch_id=1, space_id=1, created_by_id=3, created_at=2026-01-26 14:12:13 UTC, is_locked=False)</span></span>
+<span><span class="co">#&gt; Transform(uid='cTJxQP5tVPH30000', version_tag=None, is_latest=True, key='introduction.Rmd', description=None, kind='notebook', hash=None, reference=None, reference_type=None, environment=None, branch_id=1, space_id=1, created_by_id=3, created_at=2026-01-26 16:04:36 UTC, is_locked=False)</span></span>
 <span><span class="va">artifact</span><span class="op">$</span><span class="va">run</span></span>
-<span><span class="co">#&gt; Run(uid='xbGKD3caDXOV8Baz', name=None, entrypoint=None, started_at=2026-01-26 14:12:13 UTC, finished_at=None, params=None, reference=None, reference_type=None, cli_args=None, branch_id=1, space_id=1, transform_id=1, report_id=None, environment_id=None, created_by_id=3, initiated_by_run_id=None, created_at=2026-01-26 14:12:13 UTC, is_locked=False)</span></span>
+<span><span class="co">#&gt; Run(uid='hBFF8Ikc4dgJXene', name=None, entrypoint=None, started_at=2026-01-26 16:04:36 UTC, finished_at=None, params=None, reference=None, reference_type=None, cli_args=None, branch_id=1, space_id=1, transform_id=1, report_id=None, environment_id=None, created_by_id=3, initiated_by_run_id=None, created_at=2026-01-26 16:04:36 UTC, is_locked=False)</span></span>
 <span><span class="va">artifact</span><span class="op">$</span><span class="fu">view_lineage</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="introduction_files/figure-html/trace-lineage-1.png" class="r-plt" alt="" width="700"></p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
@@ -269,25 +269,25 @@ then run the following.</p>
 <span><span class="co"># describe the artifact</span></span>
 <span><span class="va">artifact</span><span class="op">$</span><span class="fu">describe</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="font-weight: bold;">Artifact: </span><span style="color: #00BBBB;">my_datasets/rnaseq1.parquet</span><span style="font-weight: 100;"> (0000)</span></span></span>
-<span><span class="co">#&gt; <span style="font-weight: 100;">├── uid: </span>BpVBgH0IVSF11OMc0000            <span style="font-weight: 100;">run: </span><span style="color: #00BBBB;">xbGKD3c</span><span style="font-weight: 100;"> (</span><span style="color: #00BBBB;">introduction.Rmd</span><span style="font-weight: 100;">)</span></span></span>
+<span><span class="co">#&gt; <span style="font-weight: 100;">├── uid: </span>fp4ih9V2qmok4HML0000            <span style="font-weight: 100;">run: </span><span style="color: #00BBBB;">hBFF8Ik</span><span style="font-weight: 100;"> (</span><span style="color: #00BBBB;">introduction.Rmd</span><span style="font-weight: 100;">)</span></span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   kind: </span>dataset                        <span style="font-weight: 100;">otype: </span>DataFrame               </span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   hash: </span>0MvCJV4AOs7Pya5f_lA1kg         <span style="font-weight: 100;">size: </span>9.3 KB                   </span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   branch: </span>main                         <span style="font-weight: 100;">space: </span>all                     </span></span>
-<span><span class="co">#&gt; <span style="font-weight: 100;">│   created_at: </span>2026-01-26 14:12:14 UTC  <span style="font-weight: 100;">created_by: </span>testuser1          </span></span>
+<span><span class="co">#&gt; <span style="font-weight: 100;">│   created_at: </span>2026-01-26 16:04:37 UTC  <span style="font-weight: 100;">created_by: </span>testuser1          </span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   n_observations: </span>3                                                   </span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">├── storage/path: </span></span></span>
-<span><span class="co">#&gt; <span style="font-weight: 100;">│   </span><span style="color: #00BBBB;">/tmp/RtmpZxLbV9/laminr-intro-20260126141155</span><span style="font-weight: 100;">/</span>.lamindb/BpVBgH0IVSF11OMc0000.pa</span></span>
+<span><span class="co">#&gt; <span style="font-weight: 100;">│   </span><span style="color: #00BBBB;">/tmp/RtmpncNa5g/laminr-intro-20260126160417</span><span style="font-weight: 100;">/</span>.lamindb/fp4ih9V2qmok4HML0000.pa</span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   </span>rquet</span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">└── </span><span style="color: #FFFF55; font-weight: bold;">Labels</span></span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">    └── </span>.ulabels           <span style="font-weight: 100;"> ULabel                  </span> My experiment</span></span>
 <span></span>
 <span><span class="va">ln</span><span class="op">$</span><span class="va">Artifact</span><span class="op">$</span><span class="fu">filter</span><span class="op">(</span>ulabels <span class="op">=</span> <span class="va">my_experiment</span><span class="op">)</span><span class="op">$</span><span class="fu">to_dataframe</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                    uid                         key description   suffix    kind</span></span>
-<span><span class="co">#&gt; 1 BpVBgH0IVSF11OMc0000 my_datasets/rnaseq1.parquet        &lt;NA&gt; .parquet dataset</span></span>
+<span><span class="co">#&gt; 1 fp4ih9V2qmok4HML0000 my_datasets/rnaseq1.parquet        &lt;NA&gt; .parquet dataset</span></span>
 <span><span class="co">#&gt;       otype size                   hash n_files n_observations version_tag</span></span>
 <span><span class="co">#&gt; 1 DataFrame 9491 0MvCJV4AOs7Pya5f_lA1kg    &lt;NA&gt;              3        &lt;NA&gt;</span></span>
 <span><span class="co">#&gt;   is_latest is_locked          created_at branch_id space_id storage_id run_id</span></span>
-<span><span class="co">#&gt; 1      TRUE     FALSE 2026-01-26 14:12:14         1        1          3      1</span></span>
+<span><span class="co">#&gt; 1      TRUE     FALSE 2026-01-26 16:04:37         1        1          3      1</span></span>
 <span><span class="co">#&gt;   schema_id created_by_id</span></span>
 <span><span class="co">#&gt; 1      &lt;NA&gt;             3</span></span>
 <span></span>
@@ -295,7 +295,7 @@ then run the following.</p>
 <span></span>
 <span><span class="co"># create a cell type label from the source ontology</span></span>
 <span><span class="va">cell_type</span> <span class="op">&lt;-</span> <span class="va">bt</span><span class="op">$</span><span class="va">CellType</span><span class="op">$</span><span class="fu">from_source</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"effector T cell"</span><span class="op">)</span><span class="op">$</span><span class="fu">save</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ... synchronizing df_all__cl__2025-04-10__CellType.parquet:  0.0%... synchronizing df_all__cl__2025-04-10__CellType.parquet:  5.4%... synchronizing df_all__cl__2025-04-10__CellType.parquet: 27.0%... synchronizing df_all__cl__2025-04-10__CellType.parquet: 34.8%... synchronizing df_all__cl__2025-04-10__CellType.parquet: 56.3%... synchronizing df_all__cl__2025-04-10__CellType.parquet: 77.9%... synchronizing df_all__cl__2025-04-10__CellType.parquet: 99.5%... synchronizing df_all__cl__2025-04-10__CellType.parquet: 100.0%</span></span>
+<span><span class="co">#&gt; ... synchronizing df_all__cl__2025-04-10__CellType.parquet:  0.0%... synchronizing df_all__cl__2025-04-10__CellType.parquet:  5.4%... synchronizing df_all__cl__2025-04-10__CellType.parquet: 27.0%... synchronizing df_all__cl__2025-04-10__CellType.parquet: 32.0%... synchronizing df_all__cl__2025-04-10__CellType.parquet: 53.6%... synchronizing df_all__cl__2025-04-10__CellType.parquet: 75.1%... synchronizing df_all__cl__2025-04-10__CellType.parquet: 96.7%... synchronizing df_all__cl__2025-04-10__CellType.parquet: 100.0%</span></span>
 <span></span>
 <span><span class="co"># annotate the artifact with a cell type</span></span>
 <span><span class="va">artifact</span><span class="op">$</span><span class="va">cell_types</span><span class="op">$</span><span class="fu">add</span><span class="op">(</span><span class="va">cell_type</span><span class="op">)</span></span>
@@ -303,14 +303,14 @@ then run the following.</p>
 <span><span class="co"># describe the artifact</span></span>
 <span><span class="va">artifact</span><span class="op">$</span><span class="fu">describe</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="font-weight: bold;">Artifact: </span><span style="color: #00BBBB;">my_datasets/rnaseq1.parquet</span><span style="font-weight: 100;"> (0000)</span></span></span>
-<span><span class="co">#&gt; <span style="font-weight: 100;">├── uid: </span>BpVBgH0IVSF11OMc0000            <span style="font-weight: 100;">run: </span><span style="color: #00BBBB;">xbGKD3c</span><span style="font-weight: 100;"> (</span><span style="color: #00BBBB;">introduction.Rmd</span><span style="font-weight: 100;">)</span></span></span>
+<span><span class="co">#&gt; <span style="font-weight: 100;">├── uid: </span>fp4ih9V2qmok4HML0000            <span style="font-weight: 100;">run: </span><span style="color: #00BBBB;">hBFF8Ik</span><span style="font-weight: 100;"> (</span><span style="color: #00BBBB;">introduction.Rmd</span><span style="font-weight: 100;">)</span></span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   kind: </span>dataset                        <span style="font-weight: 100;">otype: </span>DataFrame               </span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   hash: </span>0MvCJV4AOs7Pya5f_lA1kg         <span style="font-weight: 100;">size: </span>9.3 KB                   </span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   branch: </span>main                         <span style="font-weight: 100;">space: </span>all                     </span></span>
-<span><span class="co">#&gt; <span style="font-weight: 100;">│   created_at: </span>2026-01-26 14:12:14 UTC  <span style="font-weight: 100;">created_by: </span>testuser1          </span></span>
+<span><span class="co">#&gt; <span style="font-weight: 100;">│   created_at: </span>2026-01-26 16:04:37 UTC  <span style="font-weight: 100;">created_by: </span>testuser1          </span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   n_observations: </span>3                                                   </span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">├── storage/path: </span></span></span>
-<span><span class="co">#&gt; <span style="font-weight: 100;">│   </span><span style="color: #00BBBB;">/tmp/RtmpZxLbV9/laminr-intro-20260126141155</span><span style="font-weight: 100;">/</span>.lamindb/BpVBgH0IVSF11OMc0000.pa</span></span>
+<span><span class="co">#&gt; <span style="font-weight: 100;">│   </span><span style="color: #00BBBB;">/tmp/RtmpncNa5g/laminr-intro-20260126160417</span><span style="font-weight: 100;">/</span>.lamindb/fp4ih9V2qmok4HML0000.pa</span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   </span>rquet</span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">└── </span><span style="color: #FFFF55; font-weight: bold;">Labels</span></span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">    └── </span>.ulabels           <span style="font-weight: 100;"> ULabel                  </span> My experiment              </span></span>
@@ -318,20 +318,20 @@ then run the following.</p>
 <span></span>
 <span><span class="va">ln</span><span class="op">$</span><span class="va">Artifact</span><span class="op">$</span><span class="fu">filter</span><span class="op">(</span>cell_types <span class="op">=</span> <span class="va">cell_type</span><span class="op">)</span><span class="op">$</span><span class="fu">to_dataframe</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                    uid                         key description   suffix    kind</span></span>
-<span><span class="co">#&gt; 1 BpVBgH0IVSF11OMc0000 my_datasets/rnaseq1.parquet        &lt;NA&gt; .parquet dataset</span></span>
+<span><span class="co">#&gt; 1 fp4ih9V2qmok4HML0000 my_datasets/rnaseq1.parquet        &lt;NA&gt; .parquet dataset</span></span>
 <span><span class="co">#&gt;       otype size                   hash n_files n_observations version_tag</span></span>
 <span><span class="co">#&gt; 1 DataFrame 9491 0MvCJV4AOs7Pya5f_lA1kg    &lt;NA&gt;              3        &lt;NA&gt;</span></span>
 <span><span class="co">#&gt;   is_latest is_locked          created_at branch_id space_id storage_id run_id</span></span>
-<span><span class="co">#&gt; 1      TRUE     FALSE 2026-01-26 14:12:14         1        1          3      1</span></span>
+<span><span class="co">#&gt; 1      TRUE     FALSE 2026-01-26 16:04:37         1        1          3      1</span></span>
 <span><span class="co">#&gt;   schema_id created_by_id</span></span>
 <span><span class="co">#&gt; 1      &lt;NA&gt;             3</span></span>
 <span></span>
 <span><span class="co"># define the "temperature" &amp; "experiment" features</span></span>
 <span><span class="va">ln</span><span class="op">$</span><span class="fu">Feature</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"temperature"</span>, dtype <span class="op">=</span> <span class="st">"float"</span><span class="op">)</span><span class="op">$</span><span class="fu">save</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ! rather than passing a string 'float' to dtype, consider passing a Python object</span></span>
-<span><span class="co">#&gt; Feature(uid='cMynBrpVGBXs', is_type=False, name='temperature', _dtype_str='float', unit=None, description=None, array_rank=0, array_size=0, array_shape=None, synonyms=None, default_value=None, nullable=True, coerce=None, branch_id=1, space_id=1, created_by_id=3, run_id=1, type_id=None, created_at=2026-01-26 14:12:34 UTC, is_locked=False)</span></span>
+<span><span class="co">#&gt; Feature(uid='sXOUfHdavGUG', is_type=False, name='temperature', _dtype_str='float', unit=None, description=None, array_rank=0, array_size=0, array_shape=None, synonyms=None, default_value=None, nullable=True, coerce=None, branch_id=1, space_id=1, created_by_id=3, run_id=1, type_id=None, created_at=2026-01-26 16:04:57 UTC, is_locked=False)</span></span>
 <span><span class="va">ln</span><span class="op">$</span><span class="fu">Feature</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"experiment"</span>, dtype <span class="op">=</span> <span class="va">ln</span><span class="op">$</span><span class="va">ULabel</span><span class="op">)</span><span class="op">$</span><span class="fu">save</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Feature(uid='WEXfRCCnHr3N', is_type=False, name='experiment', _dtype_str='cat[ULabel]', unit=None, description=None, array_rank=0, array_size=0, array_shape=None, synonyms=None, default_value=None, nullable=True, coerce=None, branch_id=1, space_id=1, created_by_id=3, run_id=1, type_id=None, created_at=2026-01-26 14:12:34 UTC, is_locked=False)</span></span>
+<span><span class="co">#&gt; Feature(uid='v8dFKiQBy6Np', is_type=False, name='experiment', _dtype_str='cat[ULabel]', unit=None, description=None, array_rank=0, array_size=0, array_shape=None, synonyms=None, default_value=None, nullable=True, coerce=None, branch_id=1, space_id=1, created_by_id=3, run_id=1, type_id=None, created_at=2026-01-26 16:04:57 UTC, is_locked=False)</span></span>
 <span></span>
 <span><span class="co"># annotate the artifact</span></span>
 <span><span class="va">artifact</span><span class="op">$</span><span class="va">features</span><span class="op">$</span><span class="fu">add_values</span><span class="op">(</span></span>
@@ -341,14 +341,14 @@ then run the following.</p>
 <span><span class="co"># describe the artifact</span></span>
 <span><span class="va">artifact</span><span class="op">$</span><span class="fu">describe</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="font-weight: bold;">Artifact: </span><span style="color: #00BBBB;">my_datasets/rnaseq1.parquet</span><span style="font-weight: 100;"> (0000)</span></span></span>
-<span><span class="co">#&gt; <span style="font-weight: 100;">├── uid: </span>BpVBgH0IVSF11OMc0000            <span style="font-weight: 100;">run: </span><span style="color: #00BBBB;">xbGKD3c</span><span style="font-weight: 100;"> (</span><span style="color: #00BBBB;">introduction.Rmd</span><span style="font-weight: 100;">)</span></span></span>
+<span><span class="co">#&gt; <span style="font-weight: 100;">├── uid: </span>fp4ih9V2qmok4HML0000            <span style="font-weight: 100;">run: </span><span style="color: #00BBBB;">hBFF8Ik</span><span style="font-weight: 100;"> (</span><span style="color: #00BBBB;">introduction.Rmd</span><span style="font-weight: 100;">)</span></span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   kind: </span>dataset                        <span style="font-weight: 100;">otype: </span>DataFrame               </span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   hash: </span>0MvCJV4AOs7Pya5f_lA1kg         <span style="font-weight: 100;">size: </span>9.3 KB                   </span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   branch: </span>main                         <span style="font-weight: 100;">space: </span>all                     </span></span>
-<span><span class="co">#&gt; <span style="font-weight: 100;">│   created_at: </span>2026-01-26 14:12:14 UTC  <span style="font-weight: 100;">created_by: </span>testuser1          </span></span>
+<span><span class="co">#&gt; <span style="font-weight: 100;">│   created_at: </span>2026-01-26 16:04:37 UTC  <span style="font-weight: 100;">created_by: </span>testuser1          </span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   n_observations: </span>3                                                   </span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">├── storage/path: </span></span></span>
-<span><span class="co">#&gt; <span style="font-weight: 100;">│   </span><span style="color: #00BBBB;">/tmp/RtmpZxLbV9/laminr-intro-20260126141155</span><span style="font-weight: 100;">/</span>.lamindb/BpVBgH0IVSF11OMc0000.pa</span></span>
+<span><span class="co">#&gt; <span style="font-weight: 100;">│   </span><span style="color: #00BBBB;">/tmp/RtmpncNa5g/laminr-intro-20260126160417</span><span style="font-weight: 100;">/</span>.lamindb/fp4ih9V2qmok4HML0000.pa</span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   </span>rquet</span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">├── </span><span style="color: #FF5555; font-weight: bold;">Features</span></span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   </span>└── experiment         <span style="font-weight: 100;"> ULabel                  </span> My experiment              </span></span>
@@ -359,11 +359,11 @@ then run the following.</p>
 <span></span>
 <span><span class="va">ln</span><span class="op">$</span><span class="va">Artifact</span><span class="op">$</span><span class="fu">filter</span><span class="op">(</span>temperature <span class="op">=</span> <span class="fl">21.6</span><span class="op">)</span><span class="op">$</span><span class="fu">to_dataframe</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                    uid                         key description   suffix    kind</span></span>
-<span><span class="co">#&gt; 1 BpVBgH0IVSF11OMc0000 my_datasets/rnaseq1.parquet        &lt;NA&gt; .parquet dataset</span></span>
+<span><span class="co">#&gt; 1 fp4ih9V2qmok4HML0000 my_datasets/rnaseq1.parquet        &lt;NA&gt; .parquet dataset</span></span>
 <span><span class="co">#&gt;       otype size                   hash n_files n_observations version_tag</span></span>
 <span><span class="co">#&gt; 1 DataFrame 9491 0MvCJV4AOs7Pya5f_lA1kg    &lt;NA&gt;              3        &lt;NA&gt;</span></span>
 <span><span class="co">#&gt;   is_latest is_locked          created_at branch_id space_id storage_id run_id</span></span>
-<span><span class="co">#&gt; 1      TRUE     FALSE 2026-01-26 14:12:14         1        1          3      1</span></span>
+<span><span class="co">#&gt; 1      TRUE     FALSE 2026-01-26 16:04:37         1        1          3      1</span></span>
 <span><span class="co">#&gt;   schema_id created_by_id</span></span>
 <span><span class="co">#&gt; 1      &lt;NA&gt;             3</span></span></code></pre></div>
 </div>
@@ -376,27 +376,27 @@ then run the following.</p>
 <span></span>
 <span><span class="co"># define a few more valid labels</span></span>
 <span><span class="va">ln</span><span class="op">$</span><span class="fu">ULabel</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"DMSO"</span><span class="op">)</span><span class="op">$</span><span class="fu">save</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ULabel(uid='CySSwRaf', is_type=False, name='DMSO', description=None, reference=None, reference_type=None, branch_id=1, space_id=1, created_by_id=3, run_id=1, type_id=None, created_at=2026-01-26 14:12:34 UTC, is_locked=False)</span></span>
+<span><span class="co">#&gt; ULabel(uid='ZCWyhrnS', is_type=False, name='DMSO', description=None, reference=None, reference_type=None, branch_id=1, space_id=1, created_by_id=3, run_id=1, type_id=None, created_at=2026-01-26 16:04:58 UTC, is_locked=False)</span></span>
 <span><span class="va">ln</span><span class="op">$</span><span class="fu">ULabel</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"IFNG"</span><span class="op">)</span><span class="op">$</span><span class="fu">save</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ULabel(uid='cIyyM2C8', is_type=False, name='IFNG', description=None, reference=None, reference_type=None, branch_id=1, space_id=1, created_by_id=3, run_id=1, type_id=None, created_at=2026-01-26 14:12:34 UTC, is_locked=False)</span></span>
+<span><span class="co">#&gt; ULabel(uid='yVRdZ2Ij', is_type=False, name='IFNG', description=None, reference=None, reference_type=None, branch_id=1, space_id=1, created_by_id=3, run_id=1, type_id=None, created_at=2026-01-26 16:04:58 UTC, is_locked=False)</span></span>
 <span></span>
 <span><span class="co"># define a few more valid features</span></span>
 <span><span class="va">ln</span><span class="op">$</span><span class="fu">Feature</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"perturbation"</span>, dtype <span class="op">=</span> <span class="va">ln</span><span class="op">$</span><span class="va">ULabel</span><span class="op">)</span><span class="op">$</span><span class="fu">save</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Feature(uid='uX7o8QSQ9qV3', is_type=False, name='perturbation', _dtype_str='cat[ULabel]', unit=None, description=None, array_rank=0, array_size=0, array_shape=None, synonyms=None, default_value=None, nullable=True, coerce=None, branch_id=1, space_id=1, created_by_id=3, run_id=1, type_id=None, created_at=2026-01-26 14:12:35 UTC, is_locked=False)</span></span>
+<span><span class="co">#&gt; Feature(uid='KpRbR0y1O7rk', is_type=False, name='perturbation', _dtype_str='cat[ULabel]', unit=None, description=None, array_rank=0, array_size=0, array_shape=None, synonyms=None, default_value=None, nullable=True, coerce=None, branch_id=1, space_id=1, created_by_id=3, run_id=1, type_id=None, created_at=2026-01-26 16:04:58 UTC, is_locked=False)</span></span>
 <span><span class="va">ln</span><span class="op">$</span><span class="fu">Feature</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"cell_type_by_model"</span>, dtype <span class="op">=</span> <span class="va">bt</span><span class="op">$</span><span class="va">CellType</span><span class="op">)</span><span class="op">$</span><span class="fu">save</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Feature(uid='4enZRhtxU0qa', is_type=False, name='cell_type_by_model', _dtype_str='cat[bionty.CellType]', unit=None, description=None, array_rank=0, array_size=0, array_shape=None, synonyms=None, default_value=None, nullable=True, coerce=None, branch_id=1, space_id=1, created_by_id=3, run_id=1, type_id=None, created_at=2026-01-26 14:12:35 UTC, is_locked=False)</span></span>
+<span><span class="co">#&gt; Feature(uid='rglF0I03Efjm', is_type=False, name='cell_type_by_model', _dtype_str='cat[bionty.CellType]', unit=None, description=None, array_rank=0, array_size=0, array_shape=None, synonyms=None, default_value=None, nullable=True, coerce=None, branch_id=1, space_id=1, created_by_id=3, run_id=1, type_id=None, created_at=2026-01-26 16:04:58 UTC, is_locked=False)</span></span>
 <span><span class="va">ln</span><span class="op">$</span><span class="fu">Feature</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"cell_type_by_expert"</span>, dtype <span class="op">=</span> <span class="va">bt</span><span class="op">$</span><span class="va">CellType</span><span class="op">)</span><span class="op">$</span><span class="fu">save</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Feature(uid='bCAXBoPh3txB', is_type=False, name='cell_type_by_expert', _dtype_str='cat[bionty.CellType]', unit=None, description=None, array_rank=0, array_size=0, array_shape=None, synonyms=None, default_value=None, nullable=True, coerce=None, branch_id=1, space_id=1, created_by_id=3, run_id=1, type_id=None, created_at=2026-01-26 14:12:35 UTC, is_locked=False)</span></span>
+<span><span class="co">#&gt; Feature(uid='p3xPmCE1DJWv', is_type=False, name='cell_type_by_expert', _dtype_str='cat[bionty.CellType]', unit=None, description=None, array_rank=0, array_size=0, array_shape=None, synonyms=None, default_value=None, nullable=True, coerce=None, branch_id=1, space_id=1, created_by_id=3, run_id=1, type_id=None, created_at=2026-01-26 16:04:59 UTC, is_locked=False)</span></span>
 <span><span class="va">ln</span><span class="op">$</span><span class="fu">Feature</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"assay_oid"</span>, dtype <span class="op">=</span> <span class="va">bt</span><span class="op">$</span><span class="va">ExperimentalFactor</span><span class="op">$</span><span class="va">ontology_id</span><span class="op">)</span><span class="op">$</span><span class="fu">save</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Feature(uid='GfjoSgP11RuS', is_type=False, name='assay_oid', _dtype_str='cat[bionty.ExperimentalFactor.ontology_id]', unit=None, description=None, array_rank=0, array_size=0, array_shape=None, synonyms=None, default_value=None, nullable=True, coerce=None, branch_id=1, space_id=1, created_by_id=3, run_id=1, type_id=None, created_at=2026-01-26 14:12:35 UTC, is_locked=False)</span></span>
+<span><span class="co">#&gt; Feature(uid='YHWiRopDPJmO', is_type=False, name='assay_oid', _dtype_str='cat[bionty.ExperimentalFactor.ontology_id]', unit=None, description=None, array_rank=0, array_size=0, array_shape=None, synonyms=None, default_value=None, nullable=True, coerce=None, branch_id=1, space_id=1, created_by_id=3, run_id=1, type_id=None, created_at=2026-01-26 16:04:59 UTC, is_locked=False)</span></span>
 <span><span class="va">ln</span><span class="op">$</span><span class="fu">Feature</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"donor"</span>, dtype <span class="op">=</span> <span class="st">"str"</span>, nullable <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">$</span><span class="fu">save</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ! rather than passing a string 'str' to dtype, consider passing a Python object</span></span>
-<span><span class="co">#&gt; Feature(uid='5d9ZfOHPayUN', is_type=False, name='donor', _dtype_str='str', unit=None, description=None, array_rank=0, array_size=0, array_shape=None, synonyms=None, default_value=None, nullable=True, coerce=None, branch_id=1, space_id=1, created_by_id=3, run_id=1, type_id=None, created_at=2026-01-26 14:12:35 UTC, is_locked=False)</span></span>
+<span><span class="co">#&gt; Feature(uid='2DtBiXQQRvab', is_type=False, name='donor', _dtype_str='str', unit=None, description=None, array_rank=0, array_size=0, array_shape=None, synonyms=None, default_value=None, nullable=True, coerce=None, branch_id=1, space_id=1, created_by_id=3, run_id=1, type_id=None, created_at=2026-01-26 16:04:59 UTC, is_locked=False)</span></span>
 <span><span class="va">ln</span><span class="op">$</span><span class="fu">Feature</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"concentration"</span>, dtype <span class="op">=</span> <span class="st">"str"</span><span class="op">)</span><span class="op">$</span><span class="fu">save</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ! rather than passing a string 'str' to dtype, consider passing a Python object</span></span>
-<span><span class="co">#&gt; Feature(uid='z03dj9NUy2Fe', is_type=False, name='concentration', _dtype_str='str', unit=None, description=None, array_rank=0, array_size=0, array_shape=None, synonyms=None, default_value=None, nullable=True, coerce=None, branch_id=1, space_id=1, created_by_id=3, run_id=1, type_id=None, created_at=2026-01-26 14:12:36 UTC, is_locked=False)</span></span>
+<span><span class="co">#&gt; Feature(uid='TgsyUFw9GTrE', is_type=False, name='concentration', _dtype_str='str', unit=None, description=None, array_rank=0, array_size=0, array_shape=None, synonyms=None, default_value=None, nullable=True, coerce=None, branch_id=1, space_id=1, created_by_id=3, run_id=1, type_id=None, created_at=2026-01-26 16:04:59 UTC, is_locked=False)</span></span>
 <span><span class="va">ln</span><span class="op">$</span><span class="fu">Feature</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"treatment_time_h"</span>, dtype <span class="op">=</span> <span class="st">"num"</span>, coerce_dtype <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">$</span><span class="fu">save</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Feature(uid='k4do21DF73u2', is_type=False, name='treatment_time_h', _dtype_str='num', unit=None, description=None, array_rank=0, array_size=0, array_shape=None, synonyms=None, default_value=None, nullable=True, coerce=True, branch_id=1, space_id=1, created_by_id=3, run_id=1, type_id=None, created_at=2026-01-26 14:12:36 UTC, is_locked=False)</span></span>
+<span><span class="co">#&gt; Feature(uid='lWmiXm6tehDU', is_type=False, name='treatment_time_h', _dtype_str='num', unit=None, description=None, array_rank=0, array_size=0, array_shape=None, synonyms=None, default_value=None, nullable=True, coerce=True, branch_id=1, space_id=1, created_by_id=3, run_id=1, type_id=None, created_at=2026-01-26 16:04:59 UTC, is_locked=False)</span></span>
 <span></span>
 <span><span class="co"># define a schema that merely enforces a feature identifier type</span></span>
 <span><span class="va">schema</span> <span class="op">&lt;-</span> <span class="va">ln</span><span class="op">$</span><span class="fu">Schema</span><span class="op">(</span>itype <span class="op">=</span> <span class="va">ln</span><span class="op">$</span><span class="va">Feature</span><span class="op">)</span><span class="op">$</span><span class="fu">save</span><span class="op">(</span><span class="op">)</span></span>
@@ -405,9 +405,9 @@ then run the following.</p>
 <span>  <span class="va">artifact</span> <span class="op">&lt;-</span> <span class="va">ln</span><span class="op">$</span><span class="va">Artifact</span><span class="op">$</span><span class="fu">from_dataframe</span><span class="op">(</span><span class="va">df</span>, key <span class="op">=</span> <span class="st">"my_datasets/rnaseq1.parquet"</span>, schema <span class="op">=</span> <span class="va">schema</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; → writing the in-memory object into cache</span></span>
-<span><span class="co">#&gt; → returning artifact with same hash: Artifact(uid='BpVBgH0IVSF11OMc0000', version_tag=None, is_latest=True, key='my_datasets/rnaseq1.parquet', description=None, suffix='.parquet', kind='dataset', otype='DataFrame', size=9491, hash='0MvCJV4AOs7Pya5f_lA1kg', n_files=None, n_observations=3, branch_id=1, space_id=1, storage_id=3, run_id=1, schema_id=None, created_by_id=3, created_at=2026-01-26 14:12:14 UTC, is_locked=False); to track this artifact as an input, use: ln.Artifact.get()</span></span>
+<span><span class="co">#&gt; → returning artifact with same hash: Artifact(uid='fp4ih9V2qmok4HML0000', version_tag=None, is_latest=True, key='my_datasets/rnaseq1.parquet', description=None, suffix='.parquet', kind='dataset', otype='DataFrame', size=9491, hash='0MvCJV4AOs7Pya5f_lA1kg', n_files=None, n_observations=3, branch_id=1, space_id=1, storage_id=3, run_id=1, schema_id=None, created_by_id=3, created_at=2026-01-26 16:04:37 UTC, is_locked=False); to track this artifact as an input, use: ln.Artifact.get()</span></span>
 <span><span class="co">#&gt; → loading artifact into memory for validation</span></span>
-<span><span class="co">#&gt; ! <span style="color: #FF5555; font-weight: bold;">5 terms</span> not validated in feature 'columns': <span style="color: #FF5555; font-weight: bold;">'ENSG00000010610', 'donor_ethnicity', 'ENSG00000153563', 'ENSG00000170458', 'sample_note'</span></span></span>
+<span><span class="co">#&gt; ! <span style="color: #FF5555; font-weight: bold;">5 terms</span> not validated in feature 'columns': <span style="color: #FF5555; font-weight: bold;">'sample_note', 'donor_ethnicity', 'ENSG00000153563', 'ENSG00000010610', 'ENSG00000170458'</span></span></span>
 <span><span class="co">#&gt;     → fix typos, remove non-existent values, or save terms via: <span style="color: #55FFFF; font-weight: bold;">curator.cat.add_new_from('columns')</span></span></span>
 <span><span class="co">#&gt; ! <span style="color: #FF5555; font-weight: bold;">1 term</span> not validated in feature 'perturbation': <span style="color: #FF5555; font-weight: bold;">'IFNJ'</span></span></span>
 <span><span class="co">#&gt;     → fix typos, remove non-existent values, or save terms via: <span style="color: #55FFFF; font-weight: bold;">curator.cat.add_new_from('perturbation')</span></span></span>
@@ -425,22 +425,22 @@ then run the following.</p>
 <span><span class="co"># create a new version</span></span>
 <span><span class="va">artifact</span> <span class="op">&lt;-</span> <span class="va">ln</span><span class="op">$</span><span class="va">Artifact</span><span class="op">$</span><span class="fu">from_dataframe</span><span class="op">(</span><span class="va">df</span>, key <span class="op">=</span> <span class="st">"my_datasets/rnaseq1.parquet"</span>, schema <span class="op">=</span> <span class="va">schema</span><span class="op">)</span><span class="op">$</span><span class="fu">save</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; → writing the in-memory object into cache</span></span>
-<span><span class="co">#&gt; → creating new artifact version for key 'my_datasets/rnaseq1.parquet' in storage '/tmp/RtmpZxLbV9/laminr-intro-20260126141155'</span></span>
+<span><span class="co">#&gt; → creating new artifact version for key 'my_datasets/rnaseq1.parquet' in storage '/tmp/RtmpncNa5g/laminr-intro-20260126160417'</span></span>
 <span><span class="co">#&gt; → loading artifact into memory for validation</span></span>
-<span><span class="co">#&gt; ! <span style="color: #FF5555; font-weight: bold;">5 terms</span> not validated in feature 'columns': <span style="color: #FF5555; font-weight: bold;">'ENSG00000010610', 'donor_ethnicity', 'ENSG00000153563', 'ENSG00000170458', 'sample_note'</span></span></span>
+<span><span class="co">#&gt; ! <span style="color: #FF5555; font-weight: bold;">5 terms</span> not validated in feature 'columns': <span style="color: #FF5555; font-weight: bold;">'sample_note', 'donor_ethnicity', 'ENSG00000153563', 'ENSG00000010610', 'ENSG00000170458'</span></span></span>
 <span><span class="co">#&gt;     → fix typos, remove non-existent values, or save terms via: <span style="color: #55FFFF; font-weight: bold;">curator.cat.add_new_from('columns')</span></span></span>
 <span></span>
 <span><span class="co"># see the annotations</span></span>
 <span><span class="va">artifact</span><span class="op">$</span><span class="fu">describe</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="font-weight: bold;">Artifact: </span><span style="color: #00BBBB;">my_datasets/rnaseq1.parquet</span><span style="font-weight: 100;"> (0001)</span></span></span>
-<span><span class="co">#&gt; <span style="font-weight: 100;">├── uid: </span>BpVBgH0IVSF11OMc0001            <span style="font-weight: 100;">run: </span><span style="color: #00BBBB;">xbGKD3c</span><span style="font-weight: 100;"> (</span><span style="color: #00BBBB;">introduction.Rmd</span><span style="font-weight: 100;">)</span></span></span>
+<span><span class="co">#&gt; <span style="font-weight: 100;">├── uid: </span>fp4ih9V2qmok4HML0001            <span style="font-weight: 100;">run: </span><span style="color: #00BBBB;">hBFF8Ik</span><span style="font-weight: 100;"> (</span><span style="color: #00BBBB;">introduction.Rmd</span><span style="font-weight: 100;">)</span></span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   kind: </span>dataset                        <span style="font-weight: 100;">otype: </span>DataFrame               </span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   hash: </span>-3UQHfEeTY8xPhXedCpW1Q         <span style="font-weight: 100;">size: </span>9.3 KB                   </span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   branch: </span>main                         <span style="font-weight: 100;">space: </span>all                     </span></span>
-<span><span class="co">#&gt; <span style="font-weight: 100;">│   created_at: </span>2026-01-26 14:13:40 UTC  <span style="font-weight: 100;">created_by: </span>testuser1          </span></span>
+<span><span class="co">#&gt; <span style="font-weight: 100;">│   created_at: </span>2026-01-26 16:06:05 UTC  <span style="font-weight: 100;">created_by: </span>testuser1          </span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   n_observations: </span>3                                                   </span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">├── storage/path: </span></span></span>
-<span><span class="co">#&gt; <span style="font-weight: 100;">│   </span><span style="color: #00BBBB;">/tmp/RtmpZxLbV9/laminr-intro-20260126141155</span><span style="font-weight: 100;">/</span>.lamindb/BpVBgH0IVSF11OMc0001.pa</span></span>
+<span><span class="co">#&gt; <span style="font-weight: 100;">│   </span><span style="color: #00BBBB;">/tmp/RtmpncNa5g/laminr-intro-20260126160417</span><span style="font-weight: 100;">/</span>.lamindb/fp4ih9V2qmok4HML0001.pa</span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   </span>rquet</span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">├── </span><span style="color: #FF55FF; font-weight: bold;">Dataset features</span></span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   </span>└── <span style="color: #FF55FF; font-weight: bold;">columns</span><span style="font-weight: bold; font-weight: 100;"> (7)</span><span style="font-weight: bold;">                                                             </span></span></span>
@@ -458,19 +458,19 @@ then run the following.</p>
 <span></span>
 <span><span class="co"># simplest way to check that artifact was validated</span></span>
 <span><span class="va">artifact</span><span class="op">$</span><span class="va">schema</span></span>
-<span><span class="co">#&gt; Schema(uid='0000000000000000', is_type=False, name=None, description=None, n_members=None, coerce=None, flexible=True, itype='Feature', otype=None, hash='kMi7B_N88uu-YnbTLDU-DA', minimal_set=True, ordered_set=False, maximal_set=False, branch_id=1, space_id=1, created_by_id=3, run_id=1, type_id=None, created_at=2026-01-26 14:12:36 UTC, is_locked=False)</span></span>
+<span><span class="co">#&gt; Schema(uid='0000000000000000', is_type=False, name=None, description=None, n_members=None, coerce=None, flexible=True, itype='Feature', otype=None, hash='kMi7B_N88uu-YnbTLDU-DA', minimal_set=True, ordered_set=False, maximal_set=False, branch_id=1, space_id=1, created_by_id=3, run_id=1, type_id=None, created_at=2026-01-26 16:04:59 UTC, is_locked=False)</span></span>
 <span></span>
 <span><span class="co"># see all versions of an artifact</span></span>
 <span><span class="va">artifact</span><span class="op">$</span><span class="va">versions</span><span class="op">$</span><span class="fu">to_dataframe</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                    uid                         key description   suffix    kind</span></span>
-<span><span class="co">#&gt; 2 BpVBgH0IVSF11OMc0001 my_datasets/rnaseq1.parquet        &lt;NA&gt; .parquet dataset</span></span>
-<span><span class="co">#&gt; 1 BpVBgH0IVSF11OMc0000 my_datasets/rnaseq1.parquet        &lt;NA&gt; .parquet dataset</span></span>
+<span><span class="co">#&gt; 2 fp4ih9V2qmok4HML0001 my_datasets/rnaseq1.parquet        &lt;NA&gt; .parquet dataset</span></span>
+<span><span class="co">#&gt; 1 fp4ih9V2qmok4HML0000 my_datasets/rnaseq1.parquet        &lt;NA&gt; .parquet dataset</span></span>
 <span><span class="co">#&gt;       otype size                   hash n_files n_observations version_tag</span></span>
 <span><span class="co">#&gt; 2 DataFrame 9491 -3UQHfEeTY8xPhXedCpW1Q    &lt;NA&gt;              3        &lt;NA&gt;</span></span>
 <span><span class="co">#&gt; 1 DataFrame 9491 0MvCJV4AOs7Pya5f_lA1kg    &lt;NA&gt;              3        &lt;NA&gt;</span></span>
 <span><span class="co">#&gt;   is_latest is_locked          created_at branch_id space_id storage_id run_id</span></span>
-<span><span class="co">#&gt; 2      TRUE     FALSE 2026-01-26 14:13:40         1        1          3      1</span></span>
-<span><span class="co">#&gt; 1     FALSE     FALSE 2026-01-26 14:12:14         1        1          3      1</span></span>
+<span><span class="co">#&gt; 2      TRUE     FALSE 2026-01-26 16:06:05         1        1          3      1</span></span>
+<span><span class="co">#&gt; 1     FALSE     FALSE 2026-01-26 16:04:37         1        1          3      1</span></span>
 <span><span class="co">#&gt;   schema_id created_by_id</span></span>
 <span><span class="co">#&gt; 2         1             3</span></span>
 <span><span class="co">#&gt; 1       NaN             3</span></span></code></pre></div>
@@ -483,24 +483,24 @@ then run the following.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ln</span><span class="op">$</span><span class="va">Artifact</span><span class="op">$</span><span class="fu">to_dataframe</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                    uid                         key description   suffix    kind</span></span>
-<span><span class="co">#&gt; 2 BpVBgH0IVSF11OMc0001 my_datasets/rnaseq1.parquet        &lt;NA&gt; .parquet dataset</span></span>
-<span><span class="co">#&gt; 1 BpVBgH0IVSF11OMc0000 my_datasets/rnaseq1.parquet        &lt;NA&gt; .parquet dataset</span></span>
+<span><span class="co">#&gt; 2 fp4ih9V2qmok4HML0001 my_datasets/rnaseq1.parquet        &lt;NA&gt; .parquet dataset</span></span>
+<span><span class="co">#&gt; 1 fp4ih9V2qmok4HML0000 my_datasets/rnaseq1.parquet        &lt;NA&gt; .parquet dataset</span></span>
 <span><span class="co">#&gt;       otype size                   hash n_files n_observations version_tag</span></span>
 <span><span class="co">#&gt; 2 DataFrame 9491 -3UQHfEeTY8xPhXedCpW1Q    &lt;NA&gt;              3        &lt;NA&gt;</span></span>
 <span><span class="co">#&gt; 1 DataFrame 9491 0MvCJV4AOs7Pya5f_lA1kg    &lt;NA&gt;              3        &lt;NA&gt;</span></span>
 <span><span class="co">#&gt;   is_latest is_locked          created_at branch_id space_id storage_id run_id</span></span>
-<span><span class="co">#&gt; 2      TRUE     FALSE 2026-01-26 14:13:40         1        1          3      1</span></span>
-<span><span class="co">#&gt; 1     FALSE     FALSE 2026-01-26 14:12:14         1        1          3      1</span></span>
+<span><span class="co">#&gt; 2      TRUE     FALSE 2026-01-26 16:06:05         1        1          3      1</span></span>
+<span><span class="co">#&gt; 1     FALSE     FALSE 2026-01-26 16:04:37         1        1          3      1</span></span>
 <span><span class="co">#&gt;   schema_id created_by_id</span></span>
 <span><span class="co">#&gt; 2         1             3</span></span>
 <span><span class="co">#&gt; 1       NaN             3</span></span>
 <span><span class="va">ln</span><span class="op">$</span><span class="va">Artifact</span><span class="op">$</span><span class="fu">to_dataframe</span><span class="op">(</span>include <span class="op">=</span> <span class="st">"features"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; → queried for all categorical features of dtypes Record or ULabel and non-categorical features: (6) ['temperature', 'experiment', 'perturbation', 'donor', 'concentration', 'treatment_time_h']</span></span>
 <span><span class="co">#&gt;                    uid                         key temperature    experiment</span></span>
-<span><span class="co">#&gt; 2 BpVBgH0IVSF11OMc0001 my_datasets/rnaseq1.parquet         NaN          &lt;NA&gt;</span></span>
-<span><span class="co">#&gt; 1 BpVBgH0IVSF11OMc0000 my_datasets/rnaseq1.parquet        21.6 My experiment</span></span>
+<span><span class="co">#&gt; 2 fp4ih9V2qmok4HML0001 my_datasets/rnaseq1.parquet         NaN          &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 1 fp4ih9V2qmok4HML0000 my_datasets/rnaseq1.parquet        21.6 My experiment</span></span>
 <span><span class="co">#&gt;                    perturbation</span></span>
-<span><span class="co">#&gt; 2 &lt;environment: 0x564092900d70&gt;</span></span>
+<span><span class="co">#&gt; 2 &lt;environment: 0x5610dd2eed40&gt;</span></span>
 <span><span class="co">#&gt; 1                           NaN</span></span>
 <span><span class="va">ln</span><span class="op">$</span><span class="va">Artifact</span></span>
 <span><span class="co">#&gt; &lt;class 'lamindb.models.artifact.Artifact'&gt;</span></span>
@@ -512,8 +512,8 @@ then run the following.</p>
 <span><span class="co">#&gt; <span style="color: #5555FF; font-weight: bold;">Artifact</span></span></span>
 <span><span class="co">#&gt;                      uid                          key description    suffix  \</span></span>
 <span><span class="co">#&gt; id                                                                            </span></span>
-<span><span class="co">#&gt; 2   BpVBgH0IVSF11OMc0001  my_datasets/rnaseq1.parquet        None  .parquet   </span></span>
-<span><span class="co">#&gt; 1   BpVBgH0IVSF11OMc0000  my_datasets/rnaseq1.parquet        None  .parquet   </span></span>
+<span><span class="co">#&gt; 2   fp4ih9V2qmok4HML0001  my_datasets/rnaseq1.parquet        None  .parquet   </span></span>
+<span><span class="co">#&gt; 1   fp4ih9V2qmok4HML0000  my_datasets/rnaseq1.parquet        None  .parquet   </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;        kind      otype  size                    hash n_files  n_observations  \</span></span>
 <span><span class="co">#&gt; id                                                                             </span></span>
@@ -522,8 +522,8 @@ then run the following.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;    version_tag  is_latest  is_locked                       created_at  \</span></span>
 <span><span class="co">#&gt; id                                                                      </span></span>
-<span><span class="co">#&gt; 2         None       True      False 2026-01-26 14:13:40.964000+00:00   </span></span>
-<span><span class="co">#&gt; 1         None      False      False 2026-01-26 14:12:14.946000+00:00   </span></span>
+<span><span class="co">#&gt; 2         None       True      False 2026-01-26 16:06:05.055000+00:00   </span></span>
+<span><span class="co">#&gt; 1         None      False      False 2026-01-26 16:04:37.873000+00:00   </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;     branch_id  space_id  storage_id  run_id  schema_id  created_by_id  </span></span>
 <span><span class="co">#&gt; id                                                                     </span></span>
@@ -532,13 +532,13 @@ then run the following.</p>
 <span><span class="co">#&gt; <span style="color: #5555FF; font-weight: bold;">Feature</span></span></span>
 <span><span class="co">#&gt;              uid                 name  \</span></span>
 <span><span class="co">#&gt; id                                      </span></span>
-<span><span class="co">#&gt; 9   k4do21DF73u2     treatment_time_h   </span></span>
-<span><span class="co">#&gt; 8   z03dj9NUy2Fe        concentration   </span></span>
-<span><span class="co">#&gt; 7   5d9ZfOHPayUN                donor   </span></span>
-<span><span class="co">#&gt; 6   GfjoSgP11RuS            assay_oid   </span></span>
-<span><span class="co">#&gt; 5   bCAXBoPh3txB  cell_type_by_expert   </span></span>
-<span><span class="co">#&gt; 4   4enZRhtxU0qa   cell_type_by_model   </span></span>
-<span><span class="co">#&gt; 3   uX7o8QSQ9qV3         perturbation   </span></span>
+<span><span class="co">#&gt; 9   lWmiXm6tehDU     treatment_time_h   </span></span>
+<span><span class="co">#&gt; 8   TgsyUFw9GTrE        concentration   </span></span>
+<span><span class="co">#&gt; 7   2DtBiXQQRvab                donor   </span></span>
+<span><span class="co">#&gt; 6   YHWiRopDPJmO            assay_oid   </span></span>
+<span><span class="co">#&gt; 5   p3xPmCE1DJWv  cell_type_by_expert   </span></span>
+<span><span class="co">#&gt; 4   rglF0I03Efjm   cell_type_by_model   </span></span>
+<span><span class="co">#&gt; 3   KpRbR0y1O7rk         perturbation   </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;                                     _dtype_str  unit description  array_rank  \</span></span>
 <span><span class="co">#&gt; id                                                                             </span></span>
@@ -562,13 +562,13 @@ then run the following.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;     is_type                       created_at  branch_id  space_id  \</span></span>
 <span><span class="co">#&gt; id                                                                  </span></span>
-<span><span class="co">#&gt; 9     False 2026-01-26 14:12:36.135000+00:00          1         1   </span></span>
-<span><span class="co">#&gt; 8     False 2026-01-26 14:12:36.016000+00:00          1         1   </span></span>
-<span><span class="co">#&gt; 7     False 2026-01-26 14:12:35.898000+00:00          1         1   </span></span>
-<span><span class="co">#&gt; 6     False 2026-01-26 14:12:35.780000+00:00          1         1   </span></span>
-<span><span class="co">#&gt; 5     False 2026-01-26 14:12:35.565000+00:00          1         1   </span></span>
-<span><span class="co">#&gt; 4     False 2026-01-26 14:12:35.364000+00:00          1         1   </span></span>
-<span><span class="co">#&gt; 3     False 2026-01-26 14:12:35.166000+00:00          1         1   </span></span>
+<span><span class="co">#&gt; 9     False 2026-01-26 16:04:59.616000+00:00          1         1   </span></span>
+<span><span class="co">#&gt; 8     False 2026-01-26 16:04:59.496000+00:00          1         1   </span></span>
+<span><span class="co">#&gt; 7     False 2026-01-26 16:04:59.372000+00:00          1         1   </span></span>
+<span><span class="co">#&gt; 6     False 2026-01-26 16:04:59.250000+00:00          1         1   </span></span>
+<span><span class="co">#&gt; 5     False 2026-01-26 16:04:59.032000+00:00          1         1   </span></span>
+<span><span class="co">#&gt; 4     False 2026-01-26 16:04:58.827000+00:00          1         1   </span></span>
+<span><span class="co">#&gt; 3     False 2026-01-26 16:04:58.623000+00:00          1         1   </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;     created_by_id  run_id type_id  </span></span>
 <span><span class="co">#&gt; id                                 </span></span>
@@ -582,7 +582,7 @@ then run the following.</p>
 <span><span class="co">#&gt; <span style="color: #5555FF; font-weight: bold;">JsonValue</span></span></span>
 <span><span class="co">#&gt;     value                    hash  is_locked                       created_at  \</span></span>
 <span><span class="co">#&gt; id                                                                              </span></span>
-<span><span class="co">#&gt; 1    21.6  XftFE5byhwPHY-11WjfNAw      False 2026-01-26 14:12:34.423000+00:00   </span></span>
+<span><span class="co">#&gt; 1    21.6  XftFE5byhwPHY-11WjfNAw      False 2026-01-26 16:04:57.866000+00:00   </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;     branch_id  space_id  created_by_id  run_id  feature_id  </span></span>
 <span><span class="co">#&gt; id                                                          </span></span>
@@ -590,7 +590,7 @@ then run the following.</p>
 <span><span class="co">#&gt; <span style="color: #5555FF; font-weight: bold;">Run</span></span></span>
 <span><span class="co">#&gt;                  uid  name entrypoint                       started_at  \</span></span>
 <span><span class="co">#&gt; id                                                                       </span></span>
-<span><span class="co">#&gt; 1   xbGKD3caDXOV8Baz  None       None 2026-01-26 14:12:13.830348+00:00   </span></span>
+<span><span class="co">#&gt; 1   hBFF8Ikc4dgJXene  None       None 2026-01-26 16:04:36.758858+00:00   </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;    finished_at params reference reference_type cli_args  is_locked  \</span></span>
 <span><span class="co">#&gt; id                                                                   </span></span>
@@ -598,7 +598,7 @@ then run the following.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;                          created_at  branch_id  space_id  transform_id  \</span></span>
 <span><span class="co">#&gt; id                                                                       </span></span>
-<span><span class="co">#&gt; 1  2026-01-26 14:12:13.831000+00:00          1         1             1   </span></span>
+<span><span class="co">#&gt; 1  2026-01-26 16:04:36.759000+00:00          1         1             1   </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;    report_id environment_id  created_by_id initiated_by_run_id  </span></span>
 <span><span class="co">#&gt; id                                                              </span></span>
@@ -606,18 +606,18 @@ then run the following.</p>
 <span><span class="co">#&gt; <span style="color: #5555FF; font-weight: bold;">Schema</span></span></span>
 <span><span class="co">#&gt;                  uid  name description  n_members coerce  flexible    itype  \</span></span>
 <span><span class="co">#&gt; id                                                                            </span></span>
-<span><span class="co">#&gt; 2   0twzeh5sj3QgcS0V  None        None        7.0   None     False  Feature   </span></span>
+<span><span class="co">#&gt; 2   jMBkMl4gnWK2Hof9  None        None        7.0   None     False  Feature   </span></span>
 <span><span class="co">#&gt; 1   0000000000000000  None        None        NaN   None      True  Feature   </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;    otype                    hash  minimal_set  ordered_set  maximal_set  \</span></span>
 <span><span class="co">#&gt; id                                                                        </span></span>
-<span><span class="co">#&gt; 2   None  L62odK5-mDYI8f-41YLhcA         True        False        False   </span></span>
+<span><span class="co">#&gt; 2   None  KAh8B9k9zQiwrrg12fqwuQ         True        False        False   </span></span>
 <span><span class="co">#&gt; 1   None  kMi7B_N88uu-YnbTLDU-DA         True        False        False   </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;     is_locked  is_type                       created_at  branch_id  space_id  \</span></span>
 <span><span class="co">#&gt; id                                                                             </span></span>
-<span><span class="co">#&gt; 2       False    False 2026-01-26 14:13:40.981000+00:00          1         1   </span></span>
-<span><span class="co">#&gt; 1       False    False 2026-01-26 14:12:36.372000+00:00          1         1   </span></span>
+<span><span class="co">#&gt; 2       False    False 2026-01-26 16:06:05.071000+00:00          1         1   </span></span>
+<span><span class="co">#&gt; 1       False    False 2026-01-26 16:04:59.856000+00:00          1         1   </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;     created_by_id  run_id type_id  </span></span>
 <span><span class="co">#&gt; id                                 </span></span>
@@ -626,11 +626,11 @@ then run the following.</p>
 <span><span class="co">#&gt; <span style="color: #5555FF; font-weight: bold;">Storage</span></span></span>
 <span><span class="co">#&gt;              uid                                         root description  \</span></span>
 <span><span class="co">#&gt; id                                                                          </span></span>
-<span><span class="co">#&gt; 3   NhScYRMD5JRG  /tmp/RtmpZxLbV9/laminr-intro-20260126141155        None   </span></span>
+<span><span class="co">#&gt; 3   TTZGfIUGUGBW  /tmp/RtmpncNa5g/laminr-intro-20260126160417        None   </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;      type region  instance_uid  is_locked                       created_at  \</span></span>
 <span><span class="co">#&gt; id                                                                           </span></span>
-<span><span class="co">#&gt; 3   local   None  4S1S1Wjmz3aZ      False 2026-01-26 14:12:06.337000+00:00   </span></span>
+<span><span class="co">#&gt; 3   local   None  BPe7ypWfNCpL      False 2026-01-26 16:04:29.371000+00:00   </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;     branch_id  space_id  created_by_id run_id  </span></span>
 <span><span class="co">#&gt; id                                             </span></span>
@@ -638,7 +638,7 @@ then run the following.</p>
 <span><span class="co">#&gt; <span style="color: #5555FF; font-weight: bold;">Transform</span></span></span>
 <span><span class="co">#&gt;                  uid               key description      kind source_code  \</span></span>
 <span><span class="co">#&gt; id                                                                         </span></span>
-<span><span class="co">#&gt; 1   h8cTWdDnXNYt0000  introduction.Rmd        None  notebook        None   </span></span>
+<span><span class="co">#&gt; 1   cTJxQP5tVPH30000  introduction.Rmd        None  notebook        None   </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;     hash reference reference_type version_tag  is_latest  is_locked  \</span></span>
 <span><span class="co">#&gt; id                                                                    </span></span>
@@ -646,7 +646,7 @@ then run the following.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;                          created_at  branch_id  space_id environment_id  \</span></span>
 <span><span class="co">#&gt; id                                                                        </span></span>
-<span><span class="co">#&gt; 1  2026-01-26 14:12:13.823000+00:00          1         1           None   </span></span>
+<span><span class="co">#&gt; 1  2026-01-26 16:04:36.754000+00:00          1         1           None   </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;     created_by_id  </span></span>
 <span><span class="co">#&gt; id                 </span></span>
@@ -654,15 +654,15 @@ then run the following.</p>
 <span><span class="co">#&gt; <span style="color: #5555FF; font-weight: bold;">ULabel</span></span></span>
 <span><span class="co">#&gt;          uid           name description reference reference_type  is_locked  \</span></span>
 <span><span class="co">#&gt; id                                                                            </span></span>
-<span><span class="co">#&gt; 3   cIyyM2C8           IFNG        None      None           None      False   </span></span>
-<span><span class="co">#&gt; 2   CySSwRaf           DMSO        None      None           None      False   </span></span>
-<span><span class="co">#&gt; 1   jAHk0RGH  My experiment        None      None           None      False   </span></span>
+<span><span class="co">#&gt; 3   yVRdZ2Ij           IFNG        None      None           None      False   </span></span>
+<span><span class="co">#&gt; 2   ZCWyhrnS           DMSO        None      None           None      False   </span></span>
+<span><span class="co">#&gt; 1   lAWypaFb  My experiment        None      None           None      False   </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;     is_type                       created_at  branch_id  space_id  \</span></span>
 <span><span class="co">#&gt; id                                                                  </span></span>
-<span><span class="co">#&gt; 3     False 2026-01-26 14:12:34.945000+00:00          1         1   </span></span>
-<span><span class="co">#&gt; 2     False 2026-01-26 14:12:34.739000+00:00          1         1   </span></span>
-<span><span class="co">#&gt; 1     False 2026-01-26 14:12:16.837000+00:00          1         1   </span></span>
+<span><span class="co">#&gt; 3     False 2026-01-26 16:04:58.283000+00:00          1         1   </span></span>
+<span><span class="co">#&gt; 2     False 2026-01-26 16:04:58.188000+00:00          1         1   </span></span>
+<span><span class="co">#&gt; 1     False 2026-01-26 16:04:39.986000+00:00          1         1   </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;     created_by_id  run_id type_id  </span></span>
 <span><span class="co">#&gt; id                                 </span></span>
@@ -705,13 +705,13 @@ then run the following.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;                          created_at  branch_id  space_id  created_by_id  \</span></span>
 <span><span class="co">#&gt; id                                                                        </span></span>
-<span><span class="co">#&gt; 17 2026-01-26 14:12:37.546000+00:00          1         1              3   </span></span>
-<span><span class="co">#&gt; 16 2026-01-26 14:12:37.546000+00:00          1         1              3   </span></span>
-<span><span class="co">#&gt; 15 2026-01-26 14:12:37.357000+00:00          1         1              3   </span></span>
-<span><span class="co">#&gt; 14 2026-01-26 14:12:37.160000+00:00          1         1              3   </span></span>
-<span><span class="co">#&gt; 13 2026-01-26 14:12:36.977000+00:00          1         1              3   </span></span>
-<span><span class="co">#&gt; 12 2026-01-26 14:12:33.745000+00:00          1         1              3   </span></span>
-<span><span class="co">#&gt; 11 2026-01-26 14:12:33.745000+00:00          1         1              3   </span></span>
+<span><span class="co">#&gt; 17 2026-01-26 16:05:01.478000+00:00          1         1              3   </span></span>
+<span><span class="co">#&gt; 16 2026-01-26 16:05:01.478000+00:00          1         1              3   </span></span>
+<span><span class="co">#&gt; 15 2026-01-26 16:05:01.185000+00:00          1         1              3   </span></span>
+<span><span class="co">#&gt; 14 2026-01-26 16:05:00.886000+00:00          1         1              3   </span></span>
+<span><span class="co">#&gt; 13 2026-01-26 16:05:00.604000+00:00          1         1              3   </span></span>
+<span><span class="co">#&gt; 12 2026-01-26 16:04:57.187000+00:00          1         1              3   </span></span>
+<span><span class="co">#&gt; 11 2026-01-26 16:04:57.187000+00:00          1         1              3   </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;     run_id  source_id  </span></span>
 <span><span class="co">#&gt; id                     </span></span>
@@ -752,12 +752,12 @@ then run the following.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;                          created_at  branch_id  space_id  created_by_id  \</span></span>
 <span><span class="co">#&gt; id                                                                        </span></span>
-<span><span class="co">#&gt; 6  2026-01-26 14:13:40.059000+00:00          1         1              3   </span></span>
-<span><span class="co">#&gt; 5  2026-01-26 14:13:40.059000+00:00          1         1              3   </span></span>
-<span><span class="co">#&gt; 4  2026-01-26 14:13:40.059000+00:00          1         1              3   </span></span>
-<span><span class="co">#&gt; 3  2026-01-26 14:13:40.059000+00:00          1         1              3   </span></span>
-<span><span class="co">#&gt; 2  2026-01-26 14:13:40.059000+00:00          1         1              3   </span></span>
-<span><span class="co">#&gt; 1  2026-01-26 14:13:39.795000+00:00          1         1              3   </span></span>
+<span><span class="co">#&gt; 6  2026-01-26 16:06:04.159000+00:00          1         1              3   </span></span>
+<span><span class="co">#&gt; 5  2026-01-26 16:06:04.159000+00:00          1         1              3   </span></span>
+<span><span class="co">#&gt; 4  2026-01-26 16:06:04.159000+00:00          1         1              3   </span></span>
+<span><span class="co">#&gt; 3  2026-01-26 16:06:04.159000+00:00          1         1              3   </span></span>
+<span><span class="co">#&gt; 2  2026-01-26 16:06:04.159000+00:00          1         1              3   </span></span>
+<span><span class="co">#&gt; 1  2026-01-26 16:06:03.835000+00:00          1         1              3   </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;     run_id  source_id  </span></span>
 <span><span class="co">#&gt; id                     </span></span>
@@ -810,13 +810,13 @@ then run the following.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;                          created_at  branch_id  space_id  created_by_id  \</span></span>
 <span><span class="co">#&gt; id                                                                        </span></span>
-<span><span class="co">#&gt; 66 2026-01-26 14:12:06.377000+00:00          1         1              3   </span></span>
-<span><span class="co">#&gt; 65 2026-01-26 14:12:06.377000+00:00          1         1              3   </span></span>
-<span><span class="co">#&gt; 64 2026-01-26 14:12:06.377000+00:00          1         1              3   </span></span>
-<span><span class="co">#&gt; 63 2026-01-26 14:12:06.377000+00:00          1         1              3   </span></span>
-<span><span class="co">#&gt; 62 2026-01-26 14:12:06.377000+00:00          1         1              3   </span></span>
-<span><span class="co">#&gt; 61 2026-01-26 14:12:06.377000+00:00          1         1              3   </span></span>
-<span><span class="co">#&gt; 60 2026-01-26 14:12:06.377000+00:00          1         1              3   </span></span>
+<span><span class="co">#&gt; 66 2026-01-26 16:04:29.409000+00:00          1         1              3   </span></span>
+<span><span class="co">#&gt; 65 2026-01-26 16:04:29.409000+00:00          1         1              3   </span></span>
+<span><span class="co">#&gt; 64 2026-01-26 16:04:29.409000+00:00          1         1              3   </span></span>
+<span><span class="co">#&gt; 63 2026-01-26 16:04:29.409000+00:00          1         1              3   </span></span>
+<span><span class="co">#&gt; 62 2026-01-26 16:04:29.409000+00:00          1         1              3   </span></span>
+<span><span class="co">#&gt; 61 2026-01-26 16:04:29.409000+00:00          1         1              3   </span></span>
+<span><span class="co">#&gt; 60 2026-01-26 16:04:29.409000+00:00          1         1              3   </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;    run_id dataframe_artifact_id  </span></span>
 <span><span class="co">#&gt; id                               </span></span>
@@ -835,14 +835,14 @@ then run the following.</p>
 <span><span class="co"># like AWS S3, as the prefix of the storage key)</span></span>
 <span><span class="va">ln</span><span class="op">$</span><span class="va">Artifact</span><span class="op">$</span><span class="fu">filter</span><span class="op">(</span>key__startswith <span class="op">=</span> <span class="st">"my_datasets/"</span><span class="op">)</span><span class="op">$</span><span class="fu">to_dataframe</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                    uid                         key description   suffix    kind</span></span>
-<span><span class="co">#&gt; 2 BpVBgH0IVSF11OMc0001 my_datasets/rnaseq1.parquet        &lt;NA&gt; .parquet dataset</span></span>
-<span><span class="co">#&gt; 1 BpVBgH0IVSF11OMc0000 my_datasets/rnaseq1.parquet        &lt;NA&gt; .parquet dataset</span></span>
+<span><span class="co">#&gt; 2 fp4ih9V2qmok4HML0001 my_datasets/rnaseq1.parquet        &lt;NA&gt; .parquet dataset</span></span>
+<span><span class="co">#&gt; 1 fp4ih9V2qmok4HML0000 my_datasets/rnaseq1.parquet        &lt;NA&gt; .parquet dataset</span></span>
 <span><span class="co">#&gt;       otype size                   hash n_files n_observations version_tag</span></span>
 <span><span class="co">#&gt; 2 DataFrame 9491 -3UQHfEeTY8xPhXedCpW1Q    &lt;NA&gt;              3        &lt;NA&gt;</span></span>
 <span><span class="co">#&gt; 1 DataFrame 9491 0MvCJV4AOs7Pya5f_lA1kg    &lt;NA&gt;              3        &lt;NA&gt;</span></span>
 <span><span class="co">#&gt;   is_latest is_locked          created_at branch_id space_id storage_id run_id</span></span>
-<span><span class="co">#&gt; 2      TRUE     FALSE 2026-01-26 14:13:40         1        1          3      1</span></span>
-<span><span class="co">#&gt; 1     FALSE     FALSE 2026-01-26 14:12:14         1        1          3      1</span></span>
+<span><span class="co">#&gt; 2      TRUE     FALSE 2026-01-26 16:06:05         1        1          3      1</span></span>
+<span><span class="co">#&gt; 1     FALSE     FALSE 2026-01-26 16:04:37         1        1          3      1</span></span>
 <span><span class="co">#&gt;   schema_id created_by_id</span></span>
 <span><span class="co">#&gt; 2         1             3</span></span>
 <span><span class="co">#&gt; 1       NaN             3</span></span>
@@ -1042,17 +1042,17 @@ then run the following.</p>
 <span><span class="va">artifact</span> <span class="op">&lt;-</span> <span class="va">ln</span><span class="op">$</span><span class="fu">Artifact</span><span class="op">(</span><span class="st">"s3://lamindata/iris_studies/study0_raw_images"</span><span class="op">)</span><span class="op">$</span><span class="fu">save</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; → referenced read-only storage location at s3://lamindata, is managed by instance with uid 4XIuR0tvaiXM</span></span>
 <span><span class="va">artifact</span></span>
-<span><span class="co">#&gt; Artifact(uid='tld9Hfzrew39a79p0000', version_tag=None, is_latest=True, key='iris_studies/study0_raw_images', description=None, suffix='', kind=None, otype=None, size=658465, hash='IVKGMfNwi8zKvnpaD_gG7w', n_files=51, n_observations=None, branch_id=1, space_id=1, storage_id=4, run_id=1, schema_id=None, created_by_id=3, created_at=2026-01-26 14:13:46 UTC, is_locked=False)</span></span>
+<span><span class="co">#&gt; Artifact(uid='X4Lyorfq0xCEbLf50000', version_tag=None, is_latest=True, key='iris_studies/study0_raw_images', description=None, suffix='', kind=None, otype=None, size=658465, hash='IVKGMfNwi8zKvnpaD_gG7w', n_files=51, n_observations=None, branch_id=1, space_id=1, storage_id=4, run_id=1, schema_id=None, created_by_id=3, created_at=2026-01-26 16:06:11 UTC, is_locked=False)</span></span>
 <span></span>
 <span><span class="va">artifact</span><span class="op">$</span><span class="va">path</span></span>
 <span><span class="co">#&gt; S3QueryPath('s3://lamindata/iris_studies/study0_raw_images')</span></span>
 <span><span class="va">ln</span><span class="op">$</span><span class="va">Storage</span><span class="op">$</span><span class="fu">to_dataframe</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt;            uid                                        root description  type</span></span>
 <span><span class="co">#&gt; 4 YmV3ZoHvAAAA                              s3://lamindata        &lt;NA&gt;    s3</span></span>
-<span><span class="co">#&gt; 3 NhScYRMD5JRG /tmp/RtmpZxLbV9/laminr-intro-20260126141155        &lt;NA&gt; local</span></span>
+<span><span class="co">#&gt; 3 TTZGfIUGUGBW /tmp/RtmpncNa5g/laminr-intro-20260126160417        &lt;NA&gt; local</span></span>
 <span><span class="co">#&gt;      region instance_uid is_locked          created_at branch_id space_id</span></span>
-<span><span class="co">#&gt; 4 us-east-1 4XIuR0tvaiXM     FALSE 2026-01-26 14:13:45         1        1</span></span>
-<span><span class="co">#&gt; 3      &lt;NA&gt; 4S1S1Wjmz3aZ     FALSE 2026-01-26 14:12:06         1        1</span></span>
+<span><span class="co">#&gt; 4 us-east-1 4XIuR0tvaiXM     FALSE 2026-01-26 16:06:11         1        1</span></span>
+<span><span class="co">#&gt; 3      &lt;NA&gt; BPe7ypWfNCpL     FALSE 2026-01-26 16:04:29         1        1</span></span>
 <span><span class="co">#&gt;   created_by_id run_id</span></span>
 <span><span class="co">#&gt; 4             3      1</span></span>
 <span><span class="co">#&gt; 3             3    NaN</span></span></code></pre></div>
@@ -1125,22 +1125,22 @@ then run the following.</p>
 <span><span class="op">)</span><span class="op">$</span><span class="fu">save</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; → writing the in-memory object into cache</span></span>
 <span><span class="co">#&gt; → loading artifact into memory for validation</span></span>
-<span><span class="co">#&gt; ... synchronizing ensembl_prefix.parquet:  0.0%... synchronizing ensembl_prefix.parquet: 40.6%... synchronizing ensembl_prefix.parquet: 100.0%</span></span>
+<span><span class="co">#&gt; ... synchronizing ensembl_prefix.parquet:  0.0%... synchronizing ensembl_prefix.parquet: 41.8%... synchronizing ensembl_prefix.parquet: 100.0%</span></span>
 <span><span class="co">#&gt; ... synchronizing df_vertebrates__ensembl__release-112__Organism.parquet:  0.0%... synchronizing df_vertebrates__ensembl__release-112__Organism.parquet: 43.5%... synchronizing df_vertebrates__ensembl__release-112__Organism.parquet: 100.0%</span></span>
 <span><span class="co">#&gt; ! <span style="color: #FF5555; font-weight: bold;">1 term</span> not validated in feature 'columns' in slot 'obs': <span style="color: #FF5555; font-weight: bold;">'sample_note'</span></span></span>
 <span><span class="co">#&gt;     → fix typos, remove non-existent values, or save terms via: <span style="color: #55FFFF; font-weight: bold;">curator.slots['obs'].cat.add_new_from('columns')</span></span></span>
-<span><span class="co">#&gt; ... synchronizing df_human__ensembl__release-112__Gene.parquet:  0.0%... synchronizing df_human__ensembl__release-112__Gene.parquet:  0.7%... synchronizing df_human__ensembl__release-112__Gene.parquet:  3.2%... synchronizing df_human__ensembl__release-112__Gene.parquet:  4.5%... synchronizing df_human__ensembl__release-112__Gene.parquet:  7.1%... synchronizing df_human__ensembl__release-112__Gene.parquet:  9.6%... synchronizing df_human__ensembl__release-112__Gene.parquet: 12.2%... synchronizing df_human__ensembl__release-112__Gene.parquet: 14.7%... synchronizing df_human__ensembl__release-112__Gene.parquet: 17.3%... synchronizing df_human__ensembl__release-112__Gene.parquet: 19.9%... synchronizing df_human__ensembl__release-112__Gene.parquet: 22.4%... synchronizing df_human__ensembl__release-112__Gene.parquet: 24.9%... synchronizing df_human__ensembl__release-112__Gene.parquet: 27.5%... synchronizing df_human__ensembl__release-112__Gene.parquet: 30.1%... synchronizing df_human__ensembl__release-112__Gene.parquet: 32.6%... synchronizing df_human__ensembl__release-112__Gene.parquet: 35.2%... synchronizing df_human__ensembl__release-112__Gene.parquet: 37.7%... synchronizing df_human__ensembl__release-112__Gene.parquet: 40.3%... synchronizing df_human__ensembl__release-112__Gene.parquet: 42.9%... synchronizing df_human__ensembl__release-112__Gene.parquet: 45.4%... synchronizing df_human__ensembl__release-112__Gene.parquet: 48.0%... synchronizing df_human__ensembl__release-112__Gene.parquet: 50.5%... synchronizing df_human__ensembl__release-112__Gene.parquet: 53.1%... synchronizing df_human__ensembl__release-112__Gene.parquet: 55.6%... synchronizing df_human__ensembl__release-112__Gene.parquet: 58.2%... synchronizing df_human__ensembl__release-112__Gene.parquet: 60.8%... synchronizing df_human__ensembl__release-112__Gene.parquet: 63.3%... synchronizing df_human__ensembl__release-112__Gene.parquet: 65.8%... synchronizing df_human__ensembl__release-112__Gene.parquet: 68.4%... synchronizing df_human__ensembl__release-112__Gene.parquet: 71.0%... synchronizing df_human__ensembl__release-112__Gene.parquet: 73.5%... synchronizing df_human__ensembl__release-112__Gene.parquet: 76.1%... synchronizing df_human__ensembl__release-112__Gene.parquet: 76.2%... synchronizing df_human__ensembl__release-112__Gene.parquet: 78.8%... synchronizing df_human__ensembl__release-112__Gene.parquet: 81.4%... synchronizing df_human__ensembl__release-112__Gene.parquet: 83.9%... synchronizing df_human__ensembl__release-112__Gene.parquet: 86.5%... synchronizing df_human__ensembl__release-112__Gene.parquet: 89.1%... synchronizing df_human__ensembl__release-112__Gene.parquet: 91.6%... synchronizing df_human__ensembl__release-112__Gene.parquet: 94.2%... synchronizing df_human__ensembl__release-112__Gene.parquet: 96.8%... synchronizing df_human__ensembl__release-112__Gene.parquet: 99.3%... synchronizing df_human__ensembl__release-112__Gene.parquet: 100.0%</span></span>
-<span><span class="co">#&gt; → returning schema with same hash: Schema(uid='0twzeh5sj3QgcS0V', is_type=False, name=None, description=None, n_members=7, coerce=None, flexible=False, itype='Feature', otype=None, hash='L62odK5-mDYI8f-41YLhcA', minimal_set=True, ordered_set=False, maximal_set=False, branch_id=1, space_id=1, created_by_id=3, run_id=1, type_id=None, created_at=2026-01-26 14:13:40 UTC, is_locked=False)</span></span>
+<span><span class="co">#&gt; ... synchronizing df_human__ensembl__release-112__Gene.parquet:  0.0%... synchronizing df_human__ensembl__release-112__Gene.parquet:  0.7%... synchronizing df_human__ensembl__release-112__Gene.parquet:  3.2%... synchronizing df_human__ensembl__release-112__Gene.parquet:  4.1%... synchronizing df_human__ensembl__release-112__Gene.parquet:  6.6%... synchronizing df_human__ensembl__release-112__Gene.parquet:  9.2%... synchronizing df_human__ensembl__release-112__Gene.parquet: 11.8%... synchronizing df_human__ensembl__release-112__Gene.parquet: 14.3%... synchronizing df_human__ensembl__release-112__Gene.parquet: 14.9%... synchronizing df_human__ensembl__release-112__Gene.parquet: 17.5%... synchronizing df_human__ensembl__release-112__Gene.parquet: 20.1%... synchronizing df_human__ensembl__release-112__Gene.parquet: 22.6%... synchronizing df_human__ensembl__release-112__Gene.parquet: 25.2%... synchronizing df_human__ensembl__release-112__Gene.parquet: 27.7%... synchronizing df_human__ensembl__release-112__Gene.parquet: 30.3%... synchronizing df_human__ensembl__release-112__Gene.parquet: 32.9%... synchronizing df_human__ensembl__release-112__Gene.parquet: 35.4%... synchronizing df_human__ensembl__release-112__Gene.parquet: 38.0%... synchronizing df_human__ensembl__release-112__Gene.parquet: 40.5%... synchronizing df_human__ensembl__release-112__Gene.parquet: 43.1%... synchronizing df_human__ensembl__release-112__Gene.parquet: 45.7%... synchronizing df_human__ensembl__release-112__Gene.parquet: 48.2%... synchronizing df_human__ensembl__release-112__Gene.parquet: 50.8%... synchronizing df_human__ensembl__release-112__Gene.parquet: 53.4%... synchronizing df_human__ensembl__release-112__Gene.parquet: 55.9%... synchronizing df_human__ensembl__release-112__Gene.parquet: 58.5%... synchronizing df_human__ensembl__release-112__Gene.parquet: 61.0%... synchronizing df_human__ensembl__release-112__Gene.parquet: 63.6%... synchronizing df_human__ensembl__release-112__Gene.parquet: 66.1%... synchronizing df_human__ensembl__release-112__Gene.parquet: 68.7%... synchronizing df_human__ensembl__release-112__Gene.parquet: 71.2%... synchronizing df_human__ensembl__release-112__Gene.parquet: 73.8%... synchronizing df_human__ensembl__release-112__Gene.parquet: 76.3%... synchronizing df_human__ensembl__release-112__Gene.parquet: 78.9%... synchronizing df_human__ensembl__release-112__Gene.parquet: 81.5%... synchronizing df_human__ensembl__release-112__Gene.parquet: 84.0%... synchronizing df_human__ensembl__release-112__Gene.parquet: 86.6%... synchronizing df_human__ensembl__release-112__Gene.parquet: 89.1%... synchronizing df_human__ensembl__release-112__Gene.parquet: 91.7%... synchronizing df_human__ensembl__release-112__Gene.parquet: 94.3%... synchronizing df_human__ensembl__release-112__Gene.parquet: 96.8%... synchronizing df_human__ensembl__release-112__Gene.parquet: 99.4%... synchronizing df_human__ensembl__release-112__Gene.parquet: 100.0%</span></span>
+<span><span class="co">#&gt; → returning schema with same hash: Schema(uid='jMBkMl4gnWK2Hof9', is_type=False, name=None, description=None, n_members=7, coerce=None, flexible=False, itype='Feature', otype=None, hash='KAh8B9k9zQiwrrg12fqwuQ', minimal_set=True, ordered_set=False, maximal_set=False, branch_id=1, space_id=1, created_by_id=3, run_id=1, type_id=None, created_at=2026-01-26 16:06:05 UTC, is_locked=False)</span></span>
 <span><span class="va">artifact</span><span class="op">$</span><span class="fu">describe</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="font-weight: bold;">Artifact: </span><span style="color: #00BBBB;">my_datasets/my_rnaseq1.h5ad</span><span style="font-weight: 100;"> (0000)</span></span></span>
-<span><span class="co">#&gt; <span style="font-weight: 100;">├── uid: </span>6Y9P99llmQa9Spyt0000            <span style="font-weight: 100;">run: </span><span style="color: #00BBBB;">xbGKD3c</span><span style="font-weight: 100;"> (</span><span style="color: #00BBBB;">introduction.Rmd</span><span style="font-weight: 100;">)</span></span></span>
+<span><span class="co">#&gt; <span style="font-weight: 100;">├── uid: </span>WIIFTmarLEjtTNHV0000            <span style="font-weight: 100;">run: </span><span style="color: #00BBBB;">hBFF8Ik</span><span style="font-weight: 100;"> (</span><span style="color: #00BBBB;">introduction.Rmd</span><span style="font-weight: 100;">)</span></span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   kind: </span>dataset                        <span style="font-weight: 100;">otype: </span>AnnData                 </span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   hash: </span>m2P4vKb8_FC7kjyyjXh0Xg         <span style="font-weight: 100;">size: </span>29.5 KB                  </span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   branch: </span>main                         <span style="font-weight: 100;">space: </span>all                     </span></span>
-<span><span class="co">#&gt; <span style="font-weight: 100;">│   created_at: </span>2026-01-26 14:15:28 UTC  <span style="font-weight: 100;">created_by: </span>testuser1          </span></span>
+<span><span class="co">#&gt; <span style="font-weight: 100;">│   created_at: </span>2026-01-26 16:07:55 UTC  <span style="font-weight: 100;">created_by: </span>testuser1          </span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   n_observations: </span>3                                                   </span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">├── storage/path: </span></span></span>
-<span><span class="co">#&gt; <span style="font-weight: 100;">│   </span><span style="color: #00BBBB;">/tmp/RtmpZxLbV9/laminr-intro-20260126141155</span><span style="font-weight: 100;">/</span>.lamindb/6Y9P99llmQa9Spyt0000.h5</span></span>
+<span><span class="co">#&gt; <span style="font-weight: 100;">│   </span><span style="color: #00BBBB;">/tmp/RtmpncNa5g/laminr-intro-20260126160417</span><span style="font-weight: 100;">/</span>.lamindb/WIIFTmarLEjtTNHV0000.h5</span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   </span>ad</span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">├── </span><span style="color: #FF55FF; font-weight: bold;">Dataset features</span></span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">│   </span>├── <span style="color: #FF55FF; font-weight: bold;">obs</span><span style="font-weight: bold; font-weight: 100;"> (7)</span><span style="font-weight: bold;">                                                                 </span></span></span>
@@ -1166,11 +1166,11 @@ then run the following.</p>
 <span><span class="co"># query for all artifacts linked to these feature sets</span></span>
 <span><span class="va">ln</span><span class="op">$</span><span class="va">Artifact</span><span class="op">$</span><span class="fu">filter</span><span class="op">(</span>schemas__in <span class="op">=</span> <span class="va">schemas</span><span class="op">)</span><span class="op">$</span><span class="fu">to_dataframe</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                    uid                         key description suffix    kind</span></span>
-<span><span class="co">#&gt; 4 6Y9P99llmQa9Spyt0000 my_datasets/my_rnaseq1.h5ad        &lt;NA&gt;  .h5ad dataset</span></span>
+<span><span class="co">#&gt; 4 WIIFTmarLEjtTNHV0000 my_datasets/my_rnaseq1.h5ad        &lt;NA&gt;  .h5ad dataset</span></span>
 <span><span class="co">#&gt;     otype  size                   hash n_files n_observations version_tag</span></span>
 <span><span class="co">#&gt; 4 AnnData 30240 m2P4vKb8_FC7kjyyjXh0Xg    &lt;NA&gt;              3        &lt;NA&gt;</span></span>
 <span><span class="co">#&gt;   is_latest is_locked          created_at branch_id space_id storage_id run_id</span></span>
-<span><span class="co">#&gt; 4      TRUE     FALSE 2026-01-26 14:15:28         1        1          3      1</span></span>
+<span><span class="co">#&gt; 4      TRUE     FALSE 2026-01-26 16:07:55         1        1          3      1</span></span>
 <span><span class="co">#&gt;   schema_id created_by_id</span></span>
 <span><span class="co">#&gt; 4         4             3</span></span></code></pre></div>
 </div>
@@ -1191,9 +1191,9 @@ then run the following.</p>
 <span><span class="va">collection</span> <span class="op">&lt;-</span> <span class="va">ln</span><span class="op">$</span><span class="fu">Collection</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">artifact</span>, <span class="va">artifact2</span><span class="op">)</span>, key <span class="op">=</span> <span class="st">"my-RNA-seq-collection"</span><span class="op">)</span><span class="op">$</span><span class="fu">save</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">collection</span><span class="op">$</span><span class="fu">describe</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="font-weight: bold;">Collection: </span><span style="color: #00BBBB;">my-RNA-seq-collection</span><span style="font-weight: 100;"> (0000)</span></span></span>
-<span><span class="co">#&gt; <span style="font-weight: 100;">└── uid: </span>68gTvOznY0ZrHH3u0000            <span style="font-weight: 100;">run: </span><span style="color: #00BBBB;">xbGKD3c</span><span style="font-weight: 100;"> (</span><span style="color: #00BBBB;">introduction.Rmd</span><span style="font-weight: 100;">)</span></span></span>
+<span><span class="co">#&gt; <span style="font-weight: 100;">└── uid: </span>2AYTR2aeq1u9bQSL0000            <span style="font-weight: 100;">run: </span><span style="color: #00BBBB;">hBFF8Ik</span><span style="font-weight: 100;"> (</span><span style="color: #00BBBB;">introduction.Rmd</span><span style="font-weight: 100;">)</span></span></span>
 <span><span class="co">#&gt; <span style="font-weight: 100;">    branch: </span>main                         <span style="font-weight: 100;">space: </span>all                     </span></span>
-<span><span class="co">#&gt; <span style="font-weight: 100;">    created_at: </span>2026-01-26 14:15:32 UTC  <span style="font-weight: 100;">created_by: </span>testuser1</span></span>
+<span><span class="co">#&gt; <span style="font-weight: 100;">    created_at: </span>2026-01-26 16:07:58 UTC  <span style="font-weight: 100;">created_by: </span>testuser1</span></span>
 <span><span class="va">collection</span><span class="op">$</span><span class="fu">view_lineage</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="introduction_files/figure-html/scale-learning-1.png" class="r-plt" alt="" width="700"></p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
@@ -1208,19 +1208,19 @@ then run the following.</p>
 <span></span>
 <span><span class="co"># or iterate over its artifacts</span></span>
 <span><span class="va">collection</span><span class="op">$</span><span class="va">artifacts</span><span class="op">$</span><span class="fu">all</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; &lt;ArtifactBasicQuerySet [Artifact(uid='6Y9P99llmQa9Spyt0000', version_tag=None, is_latest=True, key='my_datasets/my_rnaseq1.h5ad', description=None, suffix='.h5ad', kind='dataset', otype='AnnData', size=30240, hash='m2P4vKb8_FC7kjyyjXh0Xg', n_files=None, n_observations=3, branch_id=1, space_id=1, storage_id=3, run_id=1, schema_id=4, created_by_id=3, created_at=2026-01-26 14:15:28 UTC, is_locked=False), Artifact(uid='9dsygeQrZRpJ0yof0000', version_tag=None, is_latest=True, key='my_datasets/my_rnaseq2.h5ad', description=None, suffix='.h5ad', kind='dataset', otype='AnnData', size=23712, hash='vw0CqippRMuSj8iwUbojpQ', n_files=None, n_observations=3, branch_id=1, space_id=1, storage_id=3, run_id=1, schema_id=4, created_by_id=3, created_at=2026-01-26 14:15:31 UTC, is_locked=False)]&gt;</span></span>
+<span><span class="co">#&gt; &lt;ArtifactBasicQuerySet [Artifact(uid='WIIFTmarLEjtTNHV0000', version_tag=None, is_latest=True, key='my_datasets/my_rnaseq1.h5ad', description=None, suffix='.h5ad', kind='dataset', otype='AnnData', size=30240, hash='m2P4vKb8_FC7kjyyjXh0Xg', n_files=None, n_observations=3, branch_id=1, space_id=1, storage_id=3, run_id=1, schema_id=4, created_by_id=3, created_at=2026-01-26 16:07:55 UTC, is_locked=False), Artifact(uid='AgTKe9Rrkw7NJXzE0000', version_tag=None, is_latest=True, key='my_datasets/my_rnaseq2.h5ad', description=None, suffix='.h5ad', kind='dataset', otype='AnnData', size=23712, hash='vw0CqippRMuSj8iwUbojpQ', n_files=None, n_observations=3, branch_id=1, space_id=1, storage_id=3, run_id=1, schema_id=4, created_by_id=3, created_at=2026-01-26 16:07:58 UTC, is_locked=False)]&gt;</span></span>
 <span></span>
 <span><span class="co"># or look at a DataFrame listing the artifacts</span></span>
 <span><span class="va">collection</span><span class="op">$</span><span class="va">artifacts</span><span class="op">$</span><span class="fu">to_dataframe</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                    uid                         key description suffix    kind</span></span>
-<span><span class="co">#&gt; 5 9dsygeQrZRpJ0yof0000 my_datasets/my_rnaseq2.h5ad        &lt;NA&gt;  .h5ad dataset</span></span>
-<span><span class="co">#&gt; 4 6Y9P99llmQa9Spyt0000 my_datasets/my_rnaseq1.h5ad        &lt;NA&gt;  .h5ad dataset</span></span>
+<span><span class="co">#&gt; 5 AgTKe9Rrkw7NJXzE0000 my_datasets/my_rnaseq2.h5ad        &lt;NA&gt;  .h5ad dataset</span></span>
+<span><span class="co">#&gt; 4 WIIFTmarLEjtTNHV0000 my_datasets/my_rnaseq1.h5ad        &lt;NA&gt;  .h5ad dataset</span></span>
 <span><span class="co">#&gt;     otype  size                   hash n_files n_observations version_tag</span></span>
 <span><span class="co">#&gt; 5 AnnData 23712 vw0CqippRMuSj8iwUbojpQ    &lt;NA&gt;              3        &lt;NA&gt;</span></span>
 <span><span class="co">#&gt; 4 AnnData 30240 m2P4vKb8_FC7kjyyjXh0Xg    &lt;NA&gt;              3        &lt;NA&gt;</span></span>
 <span><span class="co">#&gt;   is_latest is_locked          created_at branch_id space_id storage_id run_id</span></span>
-<span><span class="co">#&gt; 5      TRUE     FALSE 2026-01-26 14:15:31         1        1          3      1</span></span>
-<span><span class="co">#&gt; 4      TRUE     FALSE 2026-01-26 14:15:28         1        1          3      1</span></span>
+<span><span class="co">#&gt; 5      TRUE     FALSE 2026-01-26 16:07:58         1        1          3      1</span></span>
+<span><span class="co">#&gt; 4      TRUE     FALSE 2026-01-26 16:07:55         1        1          3      1</span></span>
 <span><span class="co">#&gt;   schema_id created_by_id</span></span>
 <span><span class="co">#&gt; 5         4             3</span></span>
 <span><span class="co">#&gt; 4         4             3</span></span></code></pre></div>
@@ -1232,7 +1232,7 @@ then run the following.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ln</span><span class="op">$</span><span class="fu">finish</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ! no html report found; to attach one, create an .html export for your .Rmd file and then run: lamin save introduction.Rmd</span></span>
-<span><span class="co">#&gt; → finished Run('xbGKD3caDXOV8Baz') after 3m at 2026-01-26 14:15:32 UTC</span></span></code></pre></div>
+<span><span class="co">#&gt; → finished Run('hBFF8Ikc4dgJXene') after 3m at 2026-01-26 16:07:59 UTC</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
