@@ -37,7 +37,7 @@ laminr_status()
 #> 
 #> ✖ Not connected to an instance
 #> 
-#> ── Python 3.12.12 (main, Jan 14 2026, 19:35:58) [Clang 21.1.4 ] ──
+#> ── Python 3.12.12 (main, Jan 27 2026, 23:58:14) [Clang 21.1.4 ] ──
 #> 
 #> ✔ lamindb v2.0.1
 #> ✔ lamin_cli v1.11.0
@@ -49,7 +49,7 @@ laminr_status()
 #> ✖ cellregistry
 #> ✖ omop
 #> ✔ scipy v1.16.3
-#> ✔ numpy v2.4.1
+#> ✔ numpy v2.4.2
 #> ✔ pandas v2.3.3
 #> 
 #> ℹ Run `reticulate::py_config()` and `reticulate::py_require()` for more
