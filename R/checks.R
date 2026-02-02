@@ -166,7 +166,7 @@ check_instance_module <- function(module, alert = c("error", "warning", "message
 #' @noRd
 check_on_jupyter <- function(alert = c("error", "warning", "message", "none")) {
   msg_fun <- get_message_fun(alert)
-  check <- check_requires("IRkernel", "Running on Jupyter", alert = "none") &&
+  check <- check_requires("Running on Jupyter", "IRkernel", alert = "none") &&
     !is.null(IRkernel::comm_manager())
 
   if (check && !is.null(msg_fun)) {
