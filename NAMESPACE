@@ -3,6 +3,7 @@
 S3method("$",laminr.CallableWrappedPythonObject)
 S3method(.DollarNames,laminr.CallableWrappedPythonObject)
 S3method(.DollarNames,laminr.WrappedPythonObject)
+S3method(as.list,lamindb.models.query_set.BasicQuerySet)
 S3method(format,laminr_status)
 S3method(print,laminr.CallableWrappedPythonObject)
 S3method(print,laminr_status)
