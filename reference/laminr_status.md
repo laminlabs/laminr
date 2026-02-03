@@ -26,12 +26,11 @@ whenever any error occurs.
 ``` r
 laminr_status()
 #> 
-#> ── laminr 1.2.2.9003 ───────────────────────────────────────────────────────────
+#> ── laminr 1.2.2.9004 ───────────────────────────────────────────────────────────
 #> 
 #> ── Environment Variables ──
 #> 
 #> `LAMINR_LAMINDB_VERSION`: "devel"
-#> `LAMINR_LAMINDB_OPTIONS`: "bionty"
 #> 
 #> ── Settings ──
 #> 
@@ -44,6 +43,7 @@ laminr_status()
 #> ✔ lamin_utils v0.16.3
 #> ✔ lamindb_setup v1.19.0
 #> ✔ bionty v2.1.0
+#> ✔ pertdb v2.0.2
 #> ✔ wetlab v2.0.1
 #> ✖ clinicore
 #> ✖ cellregistry

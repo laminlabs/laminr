@@ -65,7 +65,7 @@ ln <- import_module("lamindb")
 install_lamindb()
 
 # Add additional packages to the environment
-install_lamindb(extra_packages = c("bionty", "wetlab"))
+install_lamindb(extra_packages = c("bionty", "pertdb"))
 
 # Install into a different environment
 install_lamindb(envvname = "your-env")
