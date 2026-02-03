@@ -26,11 +26,11 @@ whenever any error occurs.
 ``` r
 laminr_status()
 #> 
-#> ── laminr 1.2.2.9000 ───────────────────────────────────────────────────────────
+#> ── laminr 1.2.2.9001 ───────────────────────────────────────────────────────────
 #> 
 #> ── Environment Variables ──
 #> 
-#> `LAMINR_LAMINDB_VERSION`: "release"
+#> `LAMINR_LAMINDB_VERSION`: "devel"
 #> `LAMINR_LAMINDB_OPTIONS`: "bionty"
 #> 
 #> ── Settings ──
