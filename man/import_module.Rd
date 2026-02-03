@@ -43,11 +43,11 @@ variables differently, see \url{https://docs.lamin.ai/setup-laminr} for details.
 ln <- import_module("lamindb")
 
 # Import lamindb with optional dependencies
-ln <- import_module("lamindb", options = c("bionty", "wetlab"))
+ln <- import_module("lamindb", options = c("dev"))
 
 # Import other LaminDB modules
 bt <- import_module("bionty")
-wl <- import_module("wetlab")
+pt <- import_module("pertdb")
 cc <- import_module("clinicore")
 
 # Import any Python module
