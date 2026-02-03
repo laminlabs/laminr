@@ -41,7 +41,7 @@
 #' require_module("lamindb", version = ">=2.0.0")
 #'
 #' # Require require lamindb with options
-#' require_module("lamindb", options = c("bionty", "wetlab"))
+#' require_module("lamindb", options = c("dev"))
 #'
 #' # Require the development version of lamindb from GitHub
 #' require_module("lamindb", source = "git+https://github.com/laminlabs/lamindb.git")

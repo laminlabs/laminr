@@ -30,18 +30,18 @@
 #' ln <- import_module("lamindb")
 #'
 #' # Import lamindb with optional dependencies
-#' ln <- import_module("lamindb", options = c("bionty", "wetlab"))
+#' ln <- import_module("lamindb", options = c("dev"))
 #'
 #' # Import other LaminDB modules
 #' bt <- import_module("bionty")
-#' wl <- import_module("wetlab")
+#' pt <- import_module("pertdb")
 #' cc <- import_module("clinicore")
 #'
 #' # Import any Python module
 #' np <- import_module("numpy")
 #' }
 import_module <- function(module, ...) {
-  registry_modules <- c("bionty", "wetlab", "clinicore", "cellregistry", "omop")
+  registry_modules <- c("bionty", "pertdb", "wetlab", "clinicore", "cellregistry", "omop")
   if (module %in% registry_modules) {
     check_instance_module(module)
   }
