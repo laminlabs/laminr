@@ -48,6 +48,7 @@ laminr_status <- function() {
       "lamin_utils",
       "lamindb_setup",
       "bionty",
+      "pertdb",
       "wetlab",
       "clinicore",
       "cellregistry",
