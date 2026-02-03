@@ -151,8 +151,7 @@ is_rstudio <- function() {
 #'
 #' Find the path of the file where code is currently been run
 #'
-#' @return If found, path to the file relative to the working directory,
-#'   otherwise `NULL`
+#' @return If found, absolute path to the current file, otherwise `NULL`
 #' @noRd
 detect_path <- function() {
   # Based on various responses from https://stackoverflow.com/questions/47044068/get-the-path-of-current-script
@@ -184,9 +183,12 @@ detect_path <- function() {
     }
   }
 
-  # Normalise the path relative to the working directory
-  if (!is.null(current_path) && !is_knitr_notebook()) {
-    current_path <- R.utils::getRelativePath(current_path)
+  # If a path is found, make it an absolute path
+  # `getAbsolutePath(NULL)` returns the working directory which we don't want
+  if (!is.null(current_path)) {
+    current_path <- current_path |>
+      R.utils::getAbsolutePath() |>
+      path.expand()
   }
 
   current_path
