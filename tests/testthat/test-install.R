@@ -17,7 +17,7 @@ test_that("install_lamindb() works with extra packages", {
   expect_no_error(
     install_lamindb(
       envname = test_install_env,
-      extra_packages = c("bionty", "wetlab"),
+      extra_packages = c("bionty", "pertdb"),
       use = FALSE
     )
   )
