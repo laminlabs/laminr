@@ -36,12 +36,12 @@ laminr_status()
 #> 
 #> ✖ Not connected to an instance
 #> 
-#> ── Python 3.12.12 (main, Jan 27 2026, 23:58:14) [Clang 21.1.4 ] ──
+#> ── Python 3.12.12 (main, Feb  3 2026, 22:51:04) [Clang 21.1.4 ] ──
 #> 
-#> ✔ lamindb v2.1.0
-#> ✔ lamin_cli v1.12.0
+#> ✔ lamindb v2.1.1
+#> ✔ lamin_cli v1.12.1
 #> ✔ lamin_utils v0.16.3
-#> ✔ lamindb_setup v1.19.0
+#> ✔ lamindb_setup v1.19.1
 #> ✔ bionty v2.1.0
 #> ✔ pertdb v2.0.2
 #> ✔ wetlab v2.0.1
