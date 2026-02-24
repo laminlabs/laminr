@@ -38,12 +38,12 @@ laminr_status()
 #> 
 #> ── Python 3.12.12 (main, Feb 12 2026, 00:42:14) [Clang 21.1.4 ] ──
 #> 
-#> ✔ lamindb v2.1.2
-#> ✔ lamin_cli v1.12.1
+#> ✔ lamindb v2.2.0
+#> ✔ lamin_cli v1.14.0
 #> ✔ lamin_utils v0.16.3
-#> ✔ lamindb_setup v1.19.2
-#> ✔ bionty v2.1.0
-#> ✔ pertdb v2.0.2
+#> ✔ lamindb_setup v1.21.0
+#> ✔ bionty v2.2.1
+#> ✔ pertdb v2.1.1
 #> ✔ wetlab v2.0.1
 #> ✖ clinicore
 #> ✖ cellregistry
