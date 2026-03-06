@@ -36,7 +36,7 @@ laminr_status()
 #> 
 #> ✖ Not connected to an instance
 #> 
-#> ── Python 3.12.12 (main, Feb 12 2026, 00:42:14) [Clang 21.1.4 ] ──
+#> ── Python 3.12.13 (main, Mar  3 2026, 14:59:34) [Clang 21.1.4 ] ──
 #> 
 #> ✔ lamindb v2.2.1
 #> ✔ lamin_cli v1.14.1
