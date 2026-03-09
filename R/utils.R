@@ -101,17 +101,19 @@ get_current_lamin_user <- function(silent = FALSE) {
 #'
 #' Get the currently connected LaminDB instance
 #'
+#' @param ignore_none Whether to ignore the `"none/none"` virtual instance as a
+#'   valid instance and return `NULL`
 #' @param silent Whether to suppress messages
 #'
 #' @returns The slug of the current LaminDB instance, or `NULL` invisibly if no
 #'   instance is found
 #' @export
-get_current_lamin_instance <- function(silent = FALSE) {
+get_current_lamin_instance <- function(ignore_none = TRUE, silent = FALSE) {
   settings <- get_current_lamin_settings(minimal = TRUE, silent = silent)
 
   instance_slug <- settings$instance$slug
 
-  if (is.null(instance_slug) || instance_slug == "none/none") {
+  if (is.null(instance_slug) || (ignore_none && identical(instance_slug, "none/none"))) {
     if (!silent) {
       cli::cli_alert_danger("No current instance")
     }
