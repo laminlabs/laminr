@@ -50,7 +50,7 @@ get_default_instance <- function() {
 #' This is done using [callr::r()] to avoid importing Python `lamindb` in the
 #' global environment
 get_current_lamin_settings <- function(minimal = FALSE) {
-  if (!reticulate::py_available() && !reticulate::py_module_available("lamindb")) {
+  if (!reticulate::py_available() || !reticulate::py_module_available("lamindb")) {
     cli::cli_alert_danger("Python {.pkg lamindb} is not available, cannot get settings")
     return(invisible(NULL))
   }
