@@ -66,6 +66,9 @@ test_that("check_requires() works with Python packages", {
 })
 
 test_that("check_default_instance() works", {
+  set_default_instance("test/test")
+  withr::defer(options(LAMINR_DEFAULT_INSTANCE = NULL))
+
   expect_error(check_default_instance())
 
   expect_warning(check_default_instance(alert = "warning"))
@@ -73,10 +76,14 @@ test_that("check_default_instance() works", {
   expect_message(check_default_instance(alert = "message"))
 
   expect_true(check_default_instance(alert = "none"))
+
 })
 
 test_that("check_default_instance() works with provided instance", {
-  expect_true(check_default_instance(get_current_lamin_instance()))
+  set_default_instance("test/test")
+  withr::defer(options(LAMINR_DEFAULT_INSTANCE = NULL))
+
+  expect_true(check_default_instance("test/test"))
 })
 
 test_that("check_instance_module()", {
