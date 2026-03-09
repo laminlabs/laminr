@@ -50,29 +50,28 @@ get_default_instance <- function() {
 #' This is done using [callr::r()] to avoid importing Python `lamindb` in the
 #' global environment
 get_current_lamin_settings <- function(minimal = FALSE) {
-  call_fun <- function(minimal) {
-    require_lamindb(silent = TRUE)
-    py_ln <- reticulate::import("lamindb")
-
-    py_settings <- py_ln$setup$settings
-
-    if (minimal) {
-      py_builtins <- reticulate::import_builtins()
-      list(
-        instance = list(
-          slug = py_settings$instance$slug,
-          modules = py_builtins$list(py_settings$instance$modules)
-        ),
-        user = list(
-          handle = py_settings$user$handle
-        )
-      )
-    } else {
-      py_settings_to_list(py_settings)
-    }
+  if (!reticulate::py_available() && !reticulate::py_module_available("lamindb")) {
+    cli::cli_alert_danger("Python {.pkg lamindb} is not available, cannot get settings")
+    return(invisible(NULL))
   }
 
-  callr::r(call_fun, args = list(minimal = minimal), package = "laminr")
+  py_lamindb <- reticulate::import("lamindb")
+  py_settings <- py_lamindb$setup$settings
+
+  if (minimal) {
+    py_builtins <- reticulate::import_builtins()
+    list(
+      instance = list(
+        slug = py_settings$instance$slug,
+        modules = py_builtins$list(py_settings$instance$modules)
+      ),
+      user = list(
+        handle = py_settings$user$handle
+      )
+    )
+  } else {
+    py_settings_to_list(py_settings)
+  }
 }
 
 #' Get current LaminDB user

@@ -33,8 +33,8 @@ laminr_status <- function() {
     status_list$env_vars <- as.list(env_vars)
   }
 
-  if (!is.null(get_default_instance())) {
-    settings <- get_current_lamin_settings(minimal = TRUE)
+  settings <- get_current_lamin_settings(minimal = TRUE)
+  if (!is.null(settings)) {
     status_list$settings <- list(
       user = settings$user$handle,
       instance = settings$instance$slug
