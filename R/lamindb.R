@@ -114,37 +114,3 @@ lamindb_finish <- function(self, ...) {
     }
   )
 }
-
-#' Initialise LaminDB connection
-#'
-#' Performs setup in preparation for connecting to a LaminDB instance that must
-#' be done _before_ importing the Python `lamindb` module.
-#'
-#' @param settings A list of LaminDB settings returned by
-#'   [get_current_lamin_settings()]
-#' @param ... Additional arguments passed to `require_lamindb()` and
-#'   `require_module()`
-#'
-#' @returns NULL, invisibly
-#' @noRd
-init_lamindb_connection <- function(settings, ...) {
-  require_lamindb(...)
-
-  instance_slug <- settings$instance$slug
-  if (is.null(instance_slug)) {
-    cli::cli_abort(
-      "No instance is loaded. Call {.code lamin_init()} or {.code lamin_connect()}"
-    )
-  }
-
-  if (is.null(get_default_instance())) {
-    instance_modules <- settings$instance$modules
-    for (module in instance_modules) {
-      require_module(module, ...)
-    }
-
-    set_default_instance(instance_slug)
-  }
-
-  invisible()
-}

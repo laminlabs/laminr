@@ -48,12 +48,11 @@ import_module <- function(module, ...) {
 
   laminr_lamindb_version <- trimws(tolower(Sys.getenv("LAMINR_LAMINDB_VERSION")))
   lamin_modules <- c(
-    "lamindb", "lamindb_setup", "lamin_utils", "lamin_cli", "bionty"
+    "lamindb", "lamindb_setup", "lamin_utils", "lamin_cli", "bionty", "pertdb"
   )
 
   if (module == "lamindb") {
-    settings <- get_current_lamin_settings(minimal = TRUE)
-    init_lamindb_connection(settings, ...)
+    require_lamindb(...)
   } else if (
     module %in% lamin_modules &&
       laminr_lamindb_version %in% c("github", "devel")
@@ -84,6 +83,7 @@ import_module <- function(module, ...) {
   }
 
   if (module == "lamindb") {
+    settings <- get_current_lamin_settings(minimal = TRUE)
     wrap_lamindb(py_module, settings)
   } else {
     py_module
