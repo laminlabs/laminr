@@ -1,4 +1,4 @@
-wrap_lamindb <- function(py_lamindb, settings) {
+wrap_lamindb <- function(py_lamindb) {
   lamin_version <- reticulate::py_get_attr(py_lamindb, "__version__")
   lamin_version_clean <- sub("([a-zA-Z].*)", "", lamin_version) # Remove pre-release versions, e.g. 1.0a5 -> 1.0
   min_version <- "2.0.0"
@@ -16,6 +16,7 @@ wrap_lamindb <- function(py_lamindb, settings) {
     ))
   }
 
+  settings <- get_current_lamin_settings()
   instance_slug <- settings$instance$slug
   if (!is.null(instance_slug)) {
     # Warn if instance modules are not available

@@ -83,8 +83,7 @@ import_module <- function(module, ...) {
   }
 
   if (module == "lamindb") {
-    settings <- get_current_lamin_settings(minimal = TRUE)
-    wrap_lamindb(py_module, settings)
+    wrap_lamindb(py_module)
   } else {
     py_module
   }
