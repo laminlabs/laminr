@@ -107,7 +107,7 @@ format.laminr_status <- function(x, ...) {
       cli::cli_bullets(c(
         "i" = paste(
           "To change the instance, use",
-          "{.code lc <- import_module(\"lamin_cli\"); lc$connect()}"
+          "{.code ln <- import_module(\"lamindb\"); ln$connect()}"
         ),
         "i" = paste(
           "Run {.run get_current_lamin_settings()}",
