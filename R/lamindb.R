@@ -27,27 +27,6 @@ wrap_lamindb <- function(py_lamindb, settings) {
       alert = "message",
       info = c("!" = "This should be done {.emph before} connecting to any instance")
     )
-
-    tryCatch(
-      storage <- reticulate::py_repr(py_lamindb$settings$storage), # nolint object_usage_linter
-      error = function(err) {
-        cli::cli_abort(
-          c(
-            paste(
-              "Failed to identify storage for instance {.val {instance_slug}}.",
-              "The directory for this instance may have been deleted."
-            ),
-            "i" = paste(
-              "Restart your R session and use",
-              "{.code lc <- import_module(\"lamin_cli\"); lc$connect()}",
-              "to connect to another instance"
-            ),
-            "x" = "Error message: {err}"
-          ),
-          call = rlang::caller_env(4)
-        )
-      }
-    )
   }
 
   reticulate::register_module_help_handler(
@@ -156,7 +135,6 @@ init_lamindb_connection <- function(settings, ...) {
     cli::cli_abort(
       "No instance is loaded. Call {.code lamin_init()} or {.code lamin_connect()}"
     )
-    return(invisible(NULL))
   }
 
   if (is.null(get_default_instance())) {
