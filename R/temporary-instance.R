@@ -30,7 +30,7 @@ use_temporary_instance <- function(name = "laminr-temp", modules = NULL,
   }
 
   # Get the current instance to reset later
-  current_instance <- laminr::get_current_lamin_instance()
+  current_instance <- get_current_lamin_instance(silent = TRUE)
   callr::r(
     function() {
       lc <- laminr::import_module("lamin_cli", silent = TRUE)
