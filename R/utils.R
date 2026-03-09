@@ -42,16 +42,15 @@ get_default_instance <- function() {
 #'
 #' @param minimal If `TRUE`, quickly extract a minimal list of important
 #'  settings instead of converting the complete settings object
+#' @param silent Whether to suppress messages
 #'
 #' @returns A list of the current LaminDB settings
 #' @export
-#'
-#' @details
-#' This is done using [callr::r()] to avoid importing Python `lamindb` in the
-#' global environment
-get_current_lamin_settings <- function(minimal = FALSE) {
+get_current_lamin_settings <- function(minimal = FALSE, silent = FALSE) {
   if (!reticulate::py_available() || !reticulate::py_module_available("lamindb")) {
-    cli::cli_alert_danger("Python {.pkg lamindb} is not available, cannot get settings")
+    if (!silent) {
+      cli::cli_alert_danger("Python {.pkg lamindb} is not available, cannot get settings")
+    }
     return(invisible(NULL))
   }
 
@@ -78,20 +77,20 @@ get_current_lamin_settings <- function(minimal = FALSE) {
 #'
 #' Get the currently logged in LaminDB user
 #'
+#' @param silent Whether to suppress messages
+#'
 #' @returns The handle of the current LaminDB user, or `NULL` invisibly if no
 #'   user is found
 #' @export
-#'
-#' @details
-#' This is done via [get_current_lamin_settings()] to avoid importing Python
-#' `lamindb`
-get_current_lamin_user <- function() {
-  settings <- get_current_lamin_settings(minimal = TRUE)
+get_current_lamin_user <- function(silent = FALSE) {
+  settings <- get_current_lamin_settings(minimal = TRUE, silent = silent)
 
   handle <- settings$user$handle
 
   if (is.null(handle)) {
-    cli::cli_alert_danger("No current user")
+    if (!silent) {
+      cli::cli_alert_danger("No current user")
+    }
     return(invisible(NULL))
   }
 
@@ -102,20 +101,20 @@ get_current_lamin_user <- function() {
 #'
 #' Get the currently connected LaminDB instance
 #'
+#' @param silent Whether to suppress messages
+#'
 #' @returns The slug of the current LaminDB instance, or `NULL` invisibly if no
 #'   instance is found
 #' @export
-#'
-#' @details
-#' This is done via a [get_current_lamin_settings()] to avoid importing Python
-#' `lamindb`
-get_current_lamin_instance <- function() {
-  settings <- get_current_lamin_settings(minimal = TRUE)
+get_current_lamin_instance <- function(silent = FALSE) {
+  settings <- get_current_lamin_settings(minimal = TRUE, silent = silent)
 
   instance_slug <- settings$instance$slug
 
-  if (is.null(instance_slug)) {
-    cli::cli_alert_danger("No current instance")
+  if (is.null(instance_slug) || instance_slug == "none/none") {
+    if (!silent) {
+      cli::cli_alert_danger("No current instance")
+    }
     return(invisible(NULL))
   }
 
