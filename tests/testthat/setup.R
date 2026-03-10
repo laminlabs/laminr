@@ -5,10 +5,7 @@ if (isTRUE(as.logical(Sys.getenv("NOT_CRAN", "false")))) {
 
   # Make sure we are using the ephemeral environment with lamindb
   withr::with_envvar(
-    c(
-      "RETICULATE_USE_MANAGED_VENV" = "yes",
-      "LAMINR_LAMINDB_OPTIONS" = "bionty" # Always include bionty for tests
-    ),
+    c("RETICULATE_USE_MANAGED_VENV" = "yes"),
     {
       require_lamindb()
       reticulate::py_config()
