@@ -4,7 +4,13 @@
 \alias{get_current_lamin_instance}
 \title{Get current LaminDB instance}
 \usage{
-get_current_lamin_instance()
+get_current_lamin_instance(ignore_none = TRUE, silent = FALSE)
+}
+\arguments{
+\item{ignore_none}{Whether to ignore the \code{"none/none"} virtual instance as a
+valid instance and return \code{NULL}}
+
+\item{silent}{Whether to suppress messages}
 }
 \value{
 The slug of the current LaminDB instance, or \code{NULL} invisibly if no
@@ -12,8 +18,4 @@ instance is found
 }
 \description{
 Get the currently connected LaminDB instance
-}
-\details{
-This is done via a \code{\link[=get_current_lamin_settings]{get_current_lamin_settings()}} to avoid importing Python
-\code{lamindb}
 }

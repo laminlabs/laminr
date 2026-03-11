@@ -33,11 +33,11 @@ laminr_status <- function() {
     status_list$env_vars <- as.list(env_vars)
   }
 
-  if (!is.null(get_default_instance())) {
-    settings <- get_current_lamin_settings(minimal = TRUE)
+  settings <- get_current_lamin_settings(minimal = TRUE, silent = TRUE)
+  if (!is.null(settings)) {
     status_list$settings <- list(
-      user = settings$user$handle,
-      instance = settings$instance$slug
+      user = get_current_lamin_user(silent = TRUE),
+      instance = get_current_lamin_instance(silent = TRUE)
     )
   }
 
@@ -101,13 +101,21 @@ format.laminr_status <- function(x, ...) {
 
     cli::cli_h2("Settings")
     if (!is.null(x$settings)) {
-      cli::cli_text("{.field User}: {.val {x$settings$user}}")
-      cli::cli_text("{.field Instance}: {.val {x$settings$instance}}")
+      if (!is.null(x$settings$user)) {
+        cli::cli_text("{.field User}: {.val {x$settings$user}}")
+      } else {
+        cli::cli_alert_danger("No user found")
+      }
+      if (!is.null(x$settings$instance)) {
+        cli::cli_text("{.field Instance}: {.val {x$settings$instance}}")
+      } else {
+        cli::cli_alert_danger("No instance connected")
+      }
       cli::cli_text()
       cli::cli_bullets(c(
         "i" = paste(
           "To change the instance, use",
-          "{.code lc <- import_module(\"lamin_cli\"); lc$connect()}"
+          "{.code ln <- import_module(\"lamindb\"); ln$connect()}"
         ),
         "i" = paste(
           "Run {.run get_current_lamin_settings()}",
@@ -115,7 +123,7 @@ format.laminr_status <- function(x, ...) {
         )
       ))
     } else {
-      cli::cli_alert_danger("Not connected to an instance")
+      cli::cli_alert_danger("Unable to get settings")
     }
 
     if (!is.null(x$python)) {

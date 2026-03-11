@@ -62,6 +62,8 @@ load_anndata_zarr <- function(file, ...) {
 load_parquet <- function(file, ...) {
   check_requires("Reading Parquet files", "arrow")
 
+  df <- arrow::read_parquet(file, ...)
+
   # If there is a "__index_level_0__" column, convert to data.frame and
   # set row names
   if ("__index_level_0__" %in% colnames(df)) {

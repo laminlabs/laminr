@@ -29,70 +29,53 @@ use_temporary_instance <- function(name = "laminr-temp", modules = NULL,
     name <- paste0(name, "-", timestamp)
   }
 
+  py_lamindb <- import_module("lamindb")
+
   # Get the current instance to reset later
-  current_instance <- laminr::get_current_lamin_instance()
-  callr::r(
-    function() {
-      lc <- laminr::import_module("lamin_cli", silent = TRUE)
-      lc$disconnect()
-    }
-  )
+  current_instance <- get_current_lamin_instance(silent = TRUE)
+  cli::cli_alert_info("Current instance: {.val {current_instance}}")
+  py_lamindb$setup$disconnect()
 
   # Create the temporary storage for this instance
   temp_storage <- file.path(tempdir(), name)
 
-  # Initialise the temporary instance
-  callr::r(
-    function(storage, name, modules) {
-      require_lamindb(silent = TRUE)
+  if (!is.null(modules)) {
+    for (module in modules) {
+      require_module(module, silent = TRUE)
+    }
 
-      if (!is.null(modules)) {
-        for (module in modules) {
-          require_module(module, silent = TRUE)
-        }
-      }
-      lc <- import_module("lamin_cli", silent = TRUE)
+    check_requires(
+      "Initialising a database with these modules", modules,
+      language = "Python"
+    )
+    modules_str <- paste(modules, collapse = ",")
+  } else {
+    modules_str <- NULL
+  }
 
-      if (!is.null(modules)) {
-        check_requires(
-          "Initialising a database with these modules", modules,
-          language = "Python"
-        )
-        modules_str <- paste(modules, collapse = ",")
-      } else {
-        modules_str <- NULL
-      }
+  py_lamindb$setup$init(
+    storage = temp_storage,
+    name = name,
+    modules = modules_str
+  )
 
-      lc$init(
-        storage = storage,
-        name = name,
-        modules = modules_str
-      )
-    },
-    args = list(storage = temp_storage, name = name, modules = modules),
-    package = "laminr"
-  ) |>
-    print_stdout()
-
-  temp_instance <- laminr::get_current_lamin_instance()
+  temp_instance <- get_current_lamin_instance(silent = TRUE)
+  cli::cli_alert_info("Temporary instance: {.val {temp_instance}}")
 
   # Add the clean up handler to the environment
   withr::defer(
     {
-      lc <- laminr::import_module("lamin_cli", silent = TRUE)
-
       # Disconnect from the temporary instance
-      lc$disconnect()
+      py_lamindb$setup$disconnect()
 
       # Delete the temporary instance
-      py_lamindb_setup <- laminr::import_module("lamindb_setup", silent = TRUE)
-      py_lamindb_setup$delete(temp_instance, force = TRUE, require_empty = FALSE)
+      py_lamindb$setup$delete(temp_instance, force = TRUE, require_empty = FALSE)
 
       # Try to reconnect to the previous instance
       if (!is.null(current_instance)) {
         tryCatch(
           {
-            lc$connect(current_instance)
+            py_lamindb$connect(current_instance)
           },
           error = function(err) {
             cli::cli_warn(c(

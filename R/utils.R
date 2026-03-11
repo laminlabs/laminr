@@ -42,57 +42,55 @@ get_default_instance <- function() {
 #'
 #' @param minimal If `TRUE`, quickly extract a minimal list of important
 #'  settings instead of converting the complete settings object
+#' @param silent Whether to suppress messages
 #'
 #' @returns A list of the current LaminDB settings
 #' @export
-#'
-#' @details
-#' This is done using [callr::r()] to avoid importing Python `lamindb` in the
-#' global environment
-get_current_lamin_settings <- function(minimal = FALSE) {
-  call_fun <- function(minimal) {
-    require_lamindb(silent = TRUE)
-    py_ln <- reticulate::import("lamindb")
-
-    py_settings <- py_ln$setup$settings
-
-    if (minimal) {
-      py_builtins <- reticulate::import_builtins()
-      list(
-        instance = list(
-          slug = py_settings$instance$slug,
-          modules = py_builtins$list(py_settings$instance$modules)
-        ),
-        user = list(
-          handle = py_settings$user$handle
-        )
-      )
-    } else {
-      py_settings_to_list(py_settings)
+get_current_lamin_settings <- function(minimal = FALSE, silent = FALSE) {
+  if (!reticulate::py_available() || !reticulate::py_module_available("lamindb")) {
+    if (!silent) {
+      cli::cli_alert_danger("Python {.pkg lamindb} is not available, cannot get settings")
     }
+    return(invisible(NULL))
   }
 
-  callr::r(call_fun, args = list(minimal = minimal), package = "laminr")
+  py_lamindb <- reticulate::import("lamindb")
+  py_settings <- py_lamindb$setup$settings
+
+  if (minimal) {
+    py_builtins <- reticulate::import_builtins()
+    list(
+      instance = list(
+        slug = py_settings$instance$slug,
+        modules = py_builtins$list(py_settings$instance$modules)
+      ),
+      user = list(
+        handle = py_settings$user$handle
+      )
+    )
+  } else {
+    py_settings_to_list(py_settings)
+  }
 }
 
 #' Get current LaminDB user
 #'
 #' Get the currently logged in LaminDB user
 #'
+#' @param silent Whether to suppress messages
+#'
 #' @returns The handle of the current LaminDB user, or `NULL` invisibly if no
 #'   user is found
 #' @export
-#'
-#' @details
-#' This is done via [get_current_lamin_settings()] to avoid importing Python
-#' `lamindb`
-get_current_lamin_user <- function() {
-  settings <- get_current_lamin_settings(minimal = TRUE)
+get_current_lamin_user <- function(silent = FALSE) {
+  settings <- get_current_lamin_settings(minimal = TRUE, silent = silent)
 
   handle <- settings$user$handle
 
   if (is.null(handle)) {
-    cli::cli_alert_danger("No current user")
+    if (!silent) {
+      cli::cli_alert_danger("No current user")
+    }
     return(invisible(NULL))
   }
 
@@ -103,20 +101,22 @@ get_current_lamin_user <- function() {
 #'
 #' Get the currently connected LaminDB instance
 #'
+#' @param ignore_none Whether to ignore the `"none/none"` virtual instance as a
+#'   valid instance and return `NULL`
+#' @param silent Whether to suppress messages
+#'
 #' @returns The slug of the current LaminDB instance, or `NULL` invisibly if no
 #'   instance is found
 #' @export
-#'
-#' @details
-#' This is done via a [get_current_lamin_settings()] to avoid importing Python
-#' `lamindb`
-get_current_lamin_instance <- function() {
-  settings <- get_current_lamin_settings(minimal = TRUE)
+get_current_lamin_instance <- function(ignore_none = TRUE, silent = FALSE) {
+  settings <- get_current_lamin_settings(minimal = TRUE, silent = silent)
 
   instance_slug <- settings$instance$slug
 
-  if (is.null(instance_slug)) {
-    cli::cli_alert_danger("No current instance")
+  if (is.null(instance_slug) || (ignore_none && identical(instance_slug, "none/none"))) {
+    if (!silent) {
+      cli::cli_alert_danger("No current instance")
+    }
     return(invisible(NULL))
   }
 

@@ -4,19 +4,17 @@
 \alias{get_current_lamin_settings}
 \title{Get current LaminDB settings}
 \usage{
-get_current_lamin_settings(minimal = FALSE)
+get_current_lamin_settings(minimal = FALSE, silent = FALSE)
 }
 \arguments{
 \item{minimal}{If \code{TRUE}, quickly extract a minimal list of important
 settings instead of converting the complete settings object}
+
+\item{silent}{Whether to suppress messages}
 }
 \value{
 A list of the current LaminDB settings
 }
 \description{
 Get the current LaminDB settings as an R list
-}
-\details{
-This is done using \code{\link[callr:r]{callr::r()}} to avoid importing Python \code{lamindb} in the
-global environment
 }
