@@ -1,7 +1,7 @@
 test_that("unwrap_python() works", {
   expect_s3_class(unwrap_python(ln), "python.builtin.module")
 
-  expect_s3_class(unwrap_python(ln$ULabel), "lamindb.models.record.Registry")
+  expect_s3_class(unwrap_python(ln$ULabel), "lamindb.models.sqlrecord.Registry")
 
   df <- data.frame(
     Letters = LETTERS[1:5],
@@ -31,9 +31,9 @@ test_that("unwrap_args_and_call() works", {
       )
     ),
     c(
-      "lamindb.models.record.Registry",
+      "lamindb.models.sqlrecord.Registry",
       "python.builtin.module",
-      "lamindb.models.record.Registry"
+      "lamindb.models.sqlrecord.Registry"
     )
   )
 })
