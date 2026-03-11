@@ -5,7 +5,7 @@ Get the current LaminDB settings as an R list
 ## Usage
 
 ``` r
-get_current_lamin_settings(minimal = FALSE)
+get_current_lamin_settings(minimal = FALSE, silent = FALSE)
 ```
 
 ## Arguments
@@ -15,12 +15,10 @@ get_current_lamin_settings(minimal = FALSE)
   If `TRUE`, quickly extract a minimal list of important settings
   instead of converting the complete settings object
 
+- silent:
+
+  Whether to suppress messages
+
 ## Value
 
 A list of the current LaminDB settings
-
-## Details
-
-This is done using
-[`callr::r()`](https://callr.r-lib.org/reference/r.html) to avoid
-importing Python `lamindb` in the global environment
