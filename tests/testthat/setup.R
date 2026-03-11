@@ -15,13 +15,14 @@ if (isTRUE(as.logical(Sys.getenv("NOT_CRAN", "false")))) {
   # Use a temporary test instance
   use_temporary_instance(
     test_name,
-    modules = "bionty",
+    modules = c("bionty", "pertdb"),
     add_timestamp = FALSE,
     envir = testthat::teardown_env()
   )
 
   # Import lamindb so we don't have to do it in every test
   ln <- import_module("lamindb")
+
   # Reset the default instance so we can connect to another
   withr::defer(options(LAMINR_DEFAULT_INSTANCE = NULL), testthat::teardown_env())
 }
