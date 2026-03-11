@@ -1,7 +1,7 @@
 skip_on_cran()
 
 test_that("Wrapping a Registry works", {
-  expect_s3_class(ln$ULabel, "laminr.lamindb.models.record.Registry")
+  expect_s3_class(ln$ULabel, "laminr.lamindb.models.sqlrecord.Registry")
 })
 
 test_that("Calling a Registry works", {
