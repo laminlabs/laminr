@@ -4,7 +4,10 @@
 \alias{get_current_lamin_user}
 \title{Get current LaminDB user}
 \usage{
-get_current_lamin_user()
+get_current_lamin_user(silent = FALSE)
+}
+\arguments{
+\item{silent}{Whether to suppress messages}
 }
 \value{
 The handle of the current LaminDB user, or \code{NULL} invisibly if no
@@ -12,8 +15,4 @@ user is found
 }
 \description{
 Get the currently logged in LaminDB user
-}
-\details{
-This is done via \code{\link[=get_current_lamin_settings]{get_current_lamin_settings()}} to avoid importing Python
-\code{lamindb}
 }
