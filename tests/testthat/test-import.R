@@ -41,7 +41,7 @@ test_that("Importing pertdb works", {
 
   pt <- import_module("pertdb")
 
-  expect_s3_class(wl, "python.builtin.module")
+  expect_s3_class(pt, "python.builtin.module")
 })
 
 test_that("Importing clinicore works", {
