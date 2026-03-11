@@ -52,6 +52,13 @@ lc$login()
 lc$connect("<account>/<instance>")
 ```
 
+Alternatively, connect after importing the **lamindb** module:
+
+```
+ln <- laminr::import_module("lamindb")
+ln$connect("<account>/<instance>")
+```
+
 ## Quickstart
 
 In an R session, transfer an scRNA-seq dataset from the `laminlabs/cellxgene` instance, compute marker genes with **{Seurat}**, and save results.
