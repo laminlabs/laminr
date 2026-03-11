@@ -9,7 +9,13 @@ withr::defer(
 
 test_that("install_lamindb() works", {
   withr::local_options(lifecycle_verbosity = "quiet")
-  expect_no_error(install_lamindb(envname = test_install_env, use = FALSE))
+  expect_no_error(
+    install_lamindb(
+      envname = test_install_env,
+      python_version = ">3.10,<3.14",
+      use = FALSE
+    )
+  )
 })
 
 test_that("install_lamindb() works with extra packages", {
@@ -17,6 +23,7 @@ test_that("install_lamindb() works with extra packages", {
   expect_no_error(
     install_lamindb(
       envname = test_install_env,
+      python_version = ">3.10,<3.14",
       extra_packages = c("bionty", "pertdb"),
       use = FALSE
     )
