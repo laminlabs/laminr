@@ -18,12 +18,12 @@ Source:
 [`DESCRIPTION`](https://github.com/laminlabs/laminr/blob/main/DESCRIPTION)
 
 Cannoodt R, Zappia L, Data Intuitive, Lamin Labs (2026). *laminr: Client
-for 'LaminDB'*. R package version 1.3.0, <https://laminr.lamin.ai>.
+for 'LaminDB'*. R package version 1.3.0.9000, <https://laminr.lamin.ai>.
 
     @Manual{,
       title = {laminr: Client for 'LaminDB'},
       author = {Robrecht Cannoodt and Luke Zappia and {Data Intuitive} and {Lamin Labs}},
       year = {2026},
-      note = {R package version 1.3.0},
+      note = {R package version 1.3.0.9000},
       url = {https://laminr.lamin.ai},
     }
