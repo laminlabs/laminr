@@ -138,15 +138,6 @@ is_knitr_notebook <- function() {
   !is.null(knitr::opts_knit$get("out.format"))
 }
 
-#' Check if we are in RStudio
-#'
-#' @return `TRUE` if we are in RStudio, `FALSE` otherwise
-#'
-#' @noRd
-is_rstudio <- function() {
-  requireNamespace("rstudioapi", quietly = TRUE) && rstudioapi::isAvailable()
-}
-
 #' Detect path
 #'
 #' Find the path of the file where code is currently been run
@@ -176,12 +167,14 @@ detect_path <- function() {
   }
 
   # Get path if in a document in RStudio
-  if (is.null(current_path) && is_rstudio()) {
+  if (is.null(current_path) && check_in_rstudio(alert = "none")) { # nolint: object_usage_linter
     doc_context <- rstudioapi::getActiveDocumentContext()
     if (is.null(doc_context$id) || doc_context$id != "#console") {
       current_path <- doc_context$path
     }
   }
+
+  # JPY_SESSION_NAME
 
   # If a path is found, make it an absolute path
   # `getAbsolutePath(NULL)` returns the working directory which we don't want
