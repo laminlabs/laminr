@@ -113,7 +113,7 @@ load_h5mu <- function(file, ...) {
 #' @return NULL if interactive mode is enabled, the path to the file otherwise
 #' @noRd
 load_html <- function(file, ...) {
-  if (check_in_knitr_notebook(alert = "no")) { # nolint: object_usage_linter
+  if (check_in_knitr_notebook(alert = "none")) { # nolint: object_usage_linter
     lines <- readLines(file)
     return(knitr::raw_html(paste(lines, collapse = "\n")))
   }
