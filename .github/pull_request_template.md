@@ -37,4 +37,4 @@ gitmoji -i
 
 **Before merge**
 
-- [ ] Update `CHANGELOG`
+- [ ] Bump devel version
