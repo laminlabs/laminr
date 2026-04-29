@@ -14,19 +14,8 @@
 #'
 #' @return Whether or not all packages are available, invisibly
 #' @noRd
-<<<<<<< HEAD
-check_requires <- function(
-  what,
-  requires,
-  alert = c("error", "warning", "message", "none"),
-  language = c("R", "Python"),
-  extra_repos = NULL,
-  info = NULL
-) {
-=======
 check_requires <- function(what, requires, language = c("R", "Python"),
                            extra_repos = NULL, ...) {
->>>>>>> origin/main
   language <- match.arg(language)
 
   is_available <- if (language == "R") {
