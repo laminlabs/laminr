@@ -6,21 +6,16 @@
 #' @param what A message stating what the packages are required for. Used at the
 #'   start of the error message e.g. "{what} requires...".
 #' @param requires Character vector of required package names
-#' @param alert Type of message to give if packages are missing
 #' @param language The language to check if the package exists, either "R" or
 #'   "Python"
 #' @param extra_repos Additional repositories that are required to install the
 #'   checked packages (only for R)
-#' @param info A vector of additional information appended to the message
-#'   formatted with [cli::cli_bullets()]
+#' @param ... Arguments passed to `issue_check_alert()`
 #'
-#' @return Invisibly, Boolean whether or not all packages are available or
-#'   raises an error if any are missing and `type = "error"`
+#' @return Whether or not all packages are available, invisibly
 #' @noRd
-check_requires <- function(what, requires,
-                           alert = c("error", "warning", "message", "none"),
-                           language = c("R", "Python"), extra_repos = NULL,
-                           info = NULL) {
+check_requires <- function(what, requires, language = c("R", "Python"),
+                           extra_repos = NULL, ...) {
   language <- match.arg(language)
 
   is_available <- if (language == "R") {
@@ -28,55 +23,56 @@ check_requires <- function(what, requires,
   } else {
     purrr::map_lgl(requires, reticulate::py_module_available)
   }
+  all_available <- all(is_available)
 
-  msg_fun <- get_message_fun(alert)
-
-  if (!all(is_available) && !is.null(msg_fun)) {
-    missing <- requires[!is_available]
-    missing_str <- paste0("'", paste(missing, collapse = "', '"), "'") # nolint object_usage_linter
-
-    msg <- "{what} requires the {language} {.pkg {missing}} package{?s}"
-
-    if (!is.null(extra_repos)) {
-      msg <- c(
-        msg,
-        "i" = paste0(
-          "Add repositories using {.run options(repos = c(",
-          paste0("'", paste(extra_repos, collapse = "', '"), "'"),
-          ", getOption('repos'))}, then:"
-        )
-      )
-    }
-
-    install_msg <- if (language == "R") {
-      "{.run install.packages(c({missing_str}))}"
-    } else {
-      paste0(
-        "{.run ",
-        paste(
-          paste0("require_module('", missing, "')"),
-          collapse = "; "
-        ),
-        "}"
-      )
-    }
-
-    msg <- c(
-      msg,
-      "i" = paste(
-        "Install {cli::qty(missing)}{?it/them} using",
-        install_msg
-      )
-    )
-
-    if (!is.null(info)) {
-      msg <- c(msg, info)
-    }
-
-    msg_fun(msg, call = rlang::caller_env())
+  if (all_available) {
+    return(invisible(TRUE))
   }
 
-  invisible(any(is_available))
+  missing <- requires[!is_available]
+  missing_str <- paste0("'", paste(missing, collapse = "', '"), "'") # nolint object_usage_linter
+
+  msg <- "{what} requires the {language} {.pkg {missing}} package{?s}"
+
+  if (!is.null(extra_repos)) {
+    msg <- c(
+      msg,
+      "i" = paste0(
+        "Add repositories using {.run options(repos = c(",
+        paste0("'", paste(extra_repos, collapse = "', '"), "'"),
+        ", getOption('repos'))}, then:"
+      )
+    )
+  }
+
+  install_msg <- if (language == "R") {
+    "{.run install.packages(c({missing_str}))}"
+  } else {
+    paste0(
+      "{.run ",
+      paste(
+        paste0("require_module('", missing, "')"),
+        collapse = "; "
+      ),
+      "}"
+    )
+  }
+
+  msg <- c(
+    msg,
+    "i" = paste(
+      "Install {cli::qty(missing)}{?it/them} using",
+      install_msg
+    )
+  )
+
+  issue_check_alert(
+    !all_available,
+    msg = msg,
+    ...
+  )
+
+  invisible(all_available)
 }
 
 #' Check default instance
@@ -86,37 +82,42 @@ check_requires <- function(what, requires,
 #' @param instance A LaminDB instance slug. If this matches the current instance
 #'   no alert will be issued.
 #' @param alert The type of alert message to give
+#' @param ... Arguments passed to `issue_check_alert()`
 #'
 #' @returns Whether to not there is a current default instance, invisibly
 #' @noRd
-check_default_instance <- function(instance = NULL, alert = c("error", "warning", "message", "none")) {
+check_default_instance <- function(instance = NULL, alert = c("error", "warning", "message", "none"), ...) {
   alert <- match.arg(alert)
   current_default <- get_default_instance()
-  check <- !is.null(current_default)
+  is_default_instance <- !is.null(current_default)
 
-  if (check && identical(instance, current_default)) {
+  if (is_default_instance && identical(instance, current_default)) {
     return(invisible(TRUE))
   }
 
-  msg_fun <- get_message_fun(alert)
-  if (check && !is.null(msg_fun)) {
-    advice <- switch(alert,
-      error = c(
-        "x" = "This command will not be run",
-        "i" = "Start a new R session before attempting to run it"
-      ),
-      warning = c(
-        "i" = "It is recommended to start a new R session"
-      )
-    )
+  advice <- switch(alert,
+     error = c(
+       "x" = "This command will not be run",
+       "i" = "Start a new R session before attempting to run it"
+     ),
+     warning = c(
+       "i" = "It is recommended to start a new R session"
+     )
+  )
 
-    msg_fun(c(
-      "There is already a default instance connected ({.val {current_default}})",
-      advice
-    ), call = rlang::caller_env())
-  }
+  msg <- c(
+    "There is already a default instance connected ({.val {current_default}})",
+    advice
+  )
 
-  invisible(check)
+  issue_check_alert(
+    is_default_instance,
+    msg = msg,
+    alert = alert,
+    ...
+  )
+
+  invisible(is_default_instance)
 }
 
 #' Check instance module
@@ -125,13 +126,11 @@ check_default_instance <- function(instance = NULL, alert = c("error", "warning"
 #' instance
 #'
 #' @param module The name of the Python module to check for
-#' @param alert The type of alert message to give
+#' @param ... Arguments passed to `issue_check_alert()`
 #'
 #' @returns Whether `module` is included in the current instance, invisibly
 #' @noRd
-check_instance_module <- function(module, alert = c("error", "warning", "message", "none")) {
-  msg_fun <- get_message_fun(alert)
-
+check_instance_module <- function(module, ...) {
   current_instance <- get_current_lamin_instance(ignore_none = FALSE, silent = TRUE)
   if (is.null(current_instance)) {
     return()
@@ -139,101 +138,89 @@ check_instance_module <- function(module, alert = c("error", "warning", "message
 
   settings <- get_current_lamin_settings(silent = TRUE)
   instance_modules <- settings$instance$modules
-  check <- module %in% instance_modules
+  is_module_available <- module %in% instance_modules
 
-  if (isFALSE(check) && !is.null(msg_fun)) {
-    msg_fun(
-      "The current instance ({.val {current_instance}}) does not include the {.pkg {module}} module",
-      call = rlang::caller_env()
-    )
-  }
+  issue_check_alert(
+    isFALSE(is_module_available),
+    msg = "The current instance ({.val {current_instance}}) does not include the {.pkg {module}} module",
+    ...
+  )
 
-  invisible(check)
-}
-
-#' Check on Jupyter
-#'
-#' Check if R is currently running on Jupyter
-#'
-#' @param alert The type of alert message to give
-#' @param info A vector of additional information appended to the message
-#'   formatted with [cli::cli_bullets()]
-#'
-#' @returns Whether or not R is running on Jupyter, invisibly
-#' @noRd
-check_on_jupyter <- function(alert = c("error", "warning", "message", "none"),
-                             info = NULL) {
-  msg_fun <- get_message_fun(alert)
-  check <- check_requires("Running on Jupyter", "IRkernel", alert = "none") &&
-    !is.null(IRkernel::comm_manager())
-
-  if (check && !is.null(msg_fun)) {
-    msg <- "{.pkg laminr} appears to be running in a Jupyter environment"
-
-    if (!is.null(info)) {
-      msg <- c(msg, info)
-    }
-
-    msg_fun(msg, call = rlang::caller_env())
-  }
-
-  invisible(check)
+  invisible(is_module_available)
 }
 
 #' Check in RStudio
 #'
 #' Check if R is currently running in RStudio
 #'
-#' @param alert The type of alert message to give
-#' @param info A vector of additional information appended to the message
-#'   formatted with [cli::cli_bullets()]
+#' @param ... Arguments passed to `issue_check_alert()`
 #'
 #' @returns Whether or not R is running in RStudio, invisibly
 #' @noRd
-check_in_rstudio <- function(alert = c("error", "warning", "message", "none"),
-                             info = NULL) {
-  msg_fun <- get_message_fun(alert)
-  check <- check_requires("Running in RStudio", "rstudioapi", alert = "none") &&
+check_in_rstudio <- function(...) {
+  is_in_rstudio <- check_requires("Running in RStudio", "rstudioapi", alert = "none") &&
     rstudioapi::isAvailable()
 
-  if (check && !is.null(msg_fun)) {
-    msg <- "{.pkg laminr} appears to be running in RStudio"
+  issue_check_alert(
+    is_in_rstudio,
+    msg = "{.pkg laminr} appears to be running in RStudio",
+    ...
+  )
 
-    if (!is.null(info)) {
-      msg <- c(msg, info)
-    }
-
-    msg_fun(msg, call = rlang::caller_env())
-  }
-
-  invisible(check)
+  invisible(is_in_rstudio)
 }
 
 #' Check on Jupyter
 #'
 #' Check if R is currently running on Jupyter
 #'
-#' @param alert The type of alert message to give
-#' @param info A vector of additional information appended to the message
-#'   formatted with [cli::cli_bullets()]
+#' @param ... Arguments passed to `issue_check_alert()`
 #'
 #' @returns Whether or not R is running on Jupyter, invisibly
 #' @noRd
-check_on_jupyter <- function(alert = c("error", "warning", "message", "none"),
-                             info = NULL) {
-  msg_fun <- get_message_fun(alert)
-  check <- check_requires("Running on Jupyter", "IRkernel", alert = "none") &&
+check_on_jupyter <- function(...) {
+  is_on_jupyter <- check_requires("Running on Jupyter", "IRkernel", alert = "none") &&
     !is.null(IRkernel::comm_manager())
 
-  if (check && !is.null(msg_fun)) {
-    msg <- "{.pkg laminr} appears to be running in a Jupyter environment"
+  issue_check_alert(
+    is_on_jupyter,
+    msg = "{.pkg laminr} appears to be running in a Jupyter environment",
+    ...
+  )
 
+  invisible(is_on_jupyter)
+}
+
+#' Issue check alert
+#'
+#' Issue an alert message for a check
+#'
+#' @param issue_alert Whether or not to issue an alert. Should depend on the
+#'   relevant check and if an alert should be issued if it is `TRUE` or `FALSE`.
+#' @param msg The message to send if an alert is issued
+#' @param alert The type of alert message to give, see `get_message_fun()`
+#' @param info A vector of additional information appended to the message
+#'   formatted with [cli::cli_bullets()]
+#' @param call The calling environment to use in the alert, see
+#'   `cli::cli_abort()`
+#'
+#'
+#' @returns Whether or not an alert message was issued, invisibly
+#' @noRd
+issue_check_alert <- function(issue_alert, msg,
+                              alert = c("error", "warning", "message", "none"),
+                              info = NULL, call = rlang::caller_env(2)) {
+  alert <- match.arg(alert)
+  msg_fun <- get_message_fun(alert)
+  issue_alert <- issue_alert && !is.null(msg_fun)
+
+  if (issue_alert) {
     if (!is.null(info)) {
       msg <- c(msg, info)
     }
 
-    msg_fun(msg, call = rlang::caller_env())
+    msg_fun(msg, call = call)
   }
 
-  invisible(check)
+  invisible(issue_alert)
 }

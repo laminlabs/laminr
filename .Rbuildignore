@@ -21,3 +21,4 @@
 ^test-docs$
 ^\.positai$
 ^\.claude$
+^\.venv$
