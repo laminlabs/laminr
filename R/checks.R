@@ -158,16 +158,37 @@ check_instance_module <- function(module, ...) {
 #' @returns Whether or not R is running in RStudio, invisibly
 #' @noRd
 check_in_rstudio <- function(...) {
-  is_in_rstudio <- check_requires("Running in RStudio", "rstudioapi", alert = "none") &&
+  in_rstudio <- check_requires("Running in RStudio", "rstudioapi", alert = "none") &&
     rstudioapi::isAvailable()
 
   issue_check_alert(
-    is_in_rstudio,
+    in_rstudio,
     msg = "{.pkg laminr} appears to be running in RStudio",
     ...
   )
 
-  invisible(is_in_rstudio)
+  invisible(in_rstudio)
+}
+
+#' Check in knitr notebook
+#'
+#' Check if R is currently running in a knitr notebook
+#'
+#' @param ... Arguments passed to `issue_check_alert()`
+#'
+#' @returns Whether or not R is running in a knitr notebook, invisibly
+#' @noRd
+check_in_knitr_notebook <- function(...) {
+  in_knitr_notebook <- check_requires("Running in a knitr notebook", "knitr", alert = "none") &&
+    !is.null(knitr::opts_knit$get("out.format"))
+
+  issue_check_alert(
+    in_knitr_notebook,
+    msg = "{.pkg laminr} appears to be running in a knitr notebook",
+    ...
+  )
+
+  invisible(in_knitr_notebook)
 }
 
 #' Check on Jupyter
