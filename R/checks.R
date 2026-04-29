@@ -156,23 +156,25 @@ check_instance_module <- function(module, alert = c("error", "warning", "message
 #' Check if R is currently running on Jupyter
 #'
 #' @param alert The type of alert message to give
+#' @param info A vector of additional information appended to the message
+#'   formatted with [cli::cli_bullets()]
 #'
 #' @returns Whether or not R is running on Jupyter, invisibly
 #' @noRd
-check_on_jupyter <- function(alert = c("error", "warning", "message", "none")) {
+check_on_jupyter <- function(alert = c("error", "warning", "message", "none"),
+                             info = NULL) {
   msg_fun <- get_message_fun(alert)
   check <- check_requires("Running on Jupyter", "IRkernel", alert = "none") &&
     !is.null(IRkernel::comm_manager())
 
   if (check && !is.null(msg_fun)) {
-    msg_fun(
-      c(
-        "{.pkg laminr} appears to be running in a Jupyter environment",
-        "!" = "Jupyter does not display Python output from {.pkg reticulate}, messages from Python will be lost",
-        "i" = "See {.url https://github.com/laminlabs/laminr/issues/243} for details"
-      ),
-      call = rlang::caller_env()
-    )
+    msg <- "{.pkg laminr} appears to be running in a Jupyter environment"
+
+    if (!is.null(info)) {
+      msg <- c(msg, info)
+    }
+
+    msg_fun(msg, call = rlang::caller_env())
   }
 
   invisible(check)
