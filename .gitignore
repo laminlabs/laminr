@@ -5,12 +5,15 @@
 .quarto
 *.Rproj
 
-experiments
+.positai
+
+inst/doc
 docs
 /doc/
 /Meta/
 *.html
 
+experiments
+
 CRAN-SUBMISSION
 cran-comments.md
-inst/doc
