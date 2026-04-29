@@ -159,7 +159,13 @@ detect_path <- function() {
     }
   }
 
-  # JPY_SESSION_NAME
+  # Check path if on Jupyter
+  if (is.null(current_path) && check_on_jupyter(alert = "none")) {
+    jupyter_session_name <- Sys.getenv("JPY_SESSION_NAME")
+    if (!identical(jupyter_session_name, "")) {
+      current_path <- jupyter_session_name
+    }
+  }
 
   # If a path is found, make it an absolute path
   # `getAbsolutePath(NULL)` returns the working directory which we don't want
