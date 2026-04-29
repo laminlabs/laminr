@@ -101,8 +101,8 @@ See https://docs.lamin.ai/tutorial#create-an-artifact
 df <- ln$examples$datasets$mini_immuno$get_dataset1(with_typo = TRUE)
 df
 
-artifact <- ln$Artifact$from_dataframe(df, key = "my_datasets/rnaseq1.parquet")$save()  # create and save
-artifact$describe()  # describe
+artifact <- ln$Artifact$from_dataframe(df, key = "my_datasets/rnaseq1.parquet")$save() # create and save
+artifact$describe() # describe
 ```
 
 ### Access artifacts
@@ -176,7 +176,7 @@ ln$Artifact$filter(temperature = 21.6)$to_dataframe()
 See https://docs.lamin.ai/tutorial#validate-an-artifact
 
 ```{r validate-artifact}
-bt <- import_module("bionty")  # <-- use bionty to access registries with imported public ontologies
+bt <- import_module("bionty") # <-- use bionty to access registries with imported public ontologies
 
 # define a few more valid labels
 ln$Record(name = "DMSO")$save()
@@ -318,7 +318,8 @@ adata <- ad$AnnData(df[, 1:3], obs = df[, 4:(ncol(df) - 1)])
 
 # save curated artifact
 artifact <- ln$Artifact$from_anndata(
-  adata, key = "my_datasets/my_rnaseq1.h5ad", schema = anndata_schema
+  adata,
+  key = "my_datasets/my_rnaseq1.h5ad", schema = anndata_schema
 )$save()
 artifact$describe()
 
@@ -338,7 +339,8 @@ See https://docs.lamin.ai/tutorial#scale-learning
 df2 <- ln$examples$datasets$mini_immuno$get_dataset2(otype = "DataFrame")
 adata <- ad$AnnData(df2[, 1:3], obs = df2[, 4:(ncol(df2) - 1)])
 artifact2 <- ln$Artifact$from_anndata(
-  adata, key = "my_datasets/my_rnaseq2.h5ad", schema = anndata_schema
+  adata,
+  key = "my_datasets/my_rnaseq2.h5ad", schema = anndata_schema
 )$save()
 
 collection <- ln$Collection(list(artifact, artifact2), key = "my-RNA-seq-collection")$save()
