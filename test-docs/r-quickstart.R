@@ -1,4 +1,4 @@
-ln <- laminr::import_module("lamindb")  # instantiate the central object of the API
+ln <- laminr::import_module("lamindb") # instantiate the central object of the API
 
 # Access inputs -------------------------------------------
 
@@ -10,7 +10,10 @@ adata <- artifact$load()
 # Your transformation -------------------------------------
 
 library(Seurat)
-seurat_obj <- CreateSeuratObject(counts = as(Matrix::t(adata$X), "CsparseMatrix"), meta.data = adata$obs)
+seurat_obj <- CreateSeuratObject(
+  counts = as(Matrix::t(adata$X), "CsparseMatrix"),
+  meta.data = adata$obs
+)
 seurat_obj[["RNA"]] <- AddMetaData(GetAssay(seurat_obj), adata$var)
 Idents(seurat_obj) <- "cell_type"
 seurat_obj <- NormalizeData(seurat_obj)

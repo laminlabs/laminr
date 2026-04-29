@@ -14,7 +14,8 @@ view_lineage_graph <- function(self, ...) {
   if (interactive()) {
     image_file <- graph$render(directory = tempdir(), format = "svg")
 
-    if (is_rstudio()) { # nolint object_usage_linter
+    if (is_rstudio()) {
+      # nolint object_usage_linter
       rstudioapi::viewer(image_file)
     } else {
       utils::browseURL(image_file)

@@ -25,60 +25,74 @@ get_r_environment <- function() {
 #' @param packages Vector of package names to get sources for
 #' @noRd
 get_package_sources <- function(packages) {
-  purrr::map_chr(packages, purrr::possibly(\(.pkg) {
-    desc <- utils::packageDescription(.pkg)
-    if (!is.null(desc$Repository)) {
-      return(desc$Repository)
-    }
-
-    if (!is.null(desc$Priority) && desc$Priority == "base") {
-      return("base")
-    }
-
-    if (!is.null(desc$biocViews)) {
-      if (!is.null(desc$RemoteRepos)) {
-        bioc_version <- sub(".*packages/(\\d+\\.\\d+).*", "\\1", desc$RemoteRepos)
-      } else {
-        bioc_version <- ""
-      }
-
-      if (grepl("AnnotationData", desc$biocViews)) {
-        bioc_type <- "AnnotationData"
-      } else {
-        bioc_type <- ""
-      }
-
-      return(trimws(paste("Bioconductor", bioc_version, bioc_type)))
-    }
-
-    if (!is.null(desc$RemoteType)) {
-      remote_source <- desc$RemoteType
-
-      if (!is.null(desc$RemoteUsername) || !is.null(desc$RemoteRepo) || !is.null(desc$RemoteSha)) {
-        remote_source <- paste0(remote_source, " (")
-        if (!is.null(desc$RemoteUsername)) {
-          remote_source <- paste0(remote_source, desc$RemoteUsername)
+  purrr::map_chr(
+    packages,
+    purrr::possibly(
+      \(.pkg) {
+        desc <- utils::packageDescription(.pkg)
+        if (!is.null(desc$Repository)) {
+          return(desc$Repository)
         }
-        if (!is.null(desc$RemoteRepo)) {
-          if (!is.null(desc$RemoteUsername)) {
-            remote_source <- paste0(remote_source, "/")
+
+        if (!is.null(desc$Priority) && desc$Priority == "base") {
+          return("base")
+        }
+
+        if (!is.null(desc$biocViews)) {
+          if (!is.null(desc$RemoteRepos)) {
+            bioc_version <- sub(
+              ".*packages/(\\d+\\.\\d+).*",
+              "\\1",
+              desc$RemoteRepos
+            )
+          } else {
+            bioc_version <- ""
           }
-          remote_source <- paste0(remote_source, desc$RemoteRepo)
+
+          if (grepl("AnnotationData", desc$biocViews)) {
+            bioc_type <- "AnnotationData"
+          } else {
+            bioc_type <- ""
+          }
+
+          return(trimws(paste("Bioconductor", bioc_version, bioc_type)))
         }
-        if (!is.null(desc$RemoteSha)) {
-          remote_source <- paste0(remote_source, "@", desc$RemoteSha)
+
+        if (!is.null(desc$RemoteType)) {
+          remote_source <- desc$RemoteType
+
+          if (
+            !is.null(desc$RemoteUsername) ||
+              !is.null(desc$RemoteRepo) ||
+              !is.null(desc$RemoteSha)
+          ) {
+            remote_source <- paste0(remote_source, " (")
+            if (!is.null(desc$RemoteUsername)) {
+              remote_source <- paste0(remote_source, desc$RemoteUsername)
+            }
+            if (!is.null(desc$RemoteRepo)) {
+              if (!is.null(desc$RemoteUsername)) {
+                remote_source <- paste0(remote_source, "/")
+              }
+              remote_source <- paste0(remote_source, desc$RemoteRepo)
+            }
+            if (!is.null(desc$RemoteSha)) {
+              remote_source <- paste0(remote_source, "@", desc$RemoteSha)
+            }
+            remote_source <- paste0(remote_source, ")")
+          }
+
+          return(remote_source)
         }
-        remote_source <- paste0(remote_source, ")")
-      }
 
-      return(remote_source)
-    }
+        if (pkgload::is_dev_package(.pkg)) {
+          return("pkgload")
+        }
 
-    if (pkgload::is_dev_package(.pkg)) {
-      return("pkgload")
-    }
-
-    return(NA_character_) # nolint: return_linter
-  }, otherwise = "Unknown")) |>
+        return(NA_character_) # nolint: return_linter
+      },
+      otherwise = "Unknown"
+    )
+  ) |>
     purrr::set_names(packages)
 }

@@ -7,7 +7,8 @@
 #' @noRd
 open_tiledbsoma <- function(uri, ...) {
   check_requires(
-    "Opening TileDB-SOMA artifacts", "tiledbsoma",
+    "Opening TileDB-SOMA artifacts",
+    "tiledbsoma",
     extra_repos = "https://chanzuckerberg.r-universe.dev"
   )
 
@@ -58,7 +59,9 @@ open_file <- function(uri, otype = NULL, ...) {
   file_opener <- file_openers[[otype]]
 
   if (is.null(file_opener)) {
-    cli::cli_warn("Opening remote files of type {.val {otype}} is not supported")
+    cli::cli_warn(
+      "Opening remote files of type {.val {otype}} is not supported"
+    )
     uri
   } else {
     file_opener(uri, ...)

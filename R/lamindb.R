@@ -8,7 +8,9 @@ wrap_lamindb <- function(py_lamindb) {
       "This version of {.pkg laminr} requires Python {.pkg lamindb} >= v{min_version}",
       "i" = "You have {.pkg lamindb} v{lamin_version}"
     ))
-  } else if (utils::compareVersion(expected_version, lamin_version_clean) == 1) {
+  } else if (
+    utils::compareVersion(expected_version, lamin_version_clean) == 1
+  ) {
     cli::cli_warn(c(
       "This version of {.pkg laminr} expects Python {.pkg lamindb} >= v{expected_version}",
       "i" = "You have {.pkg lamindb} v{lamin_version}",
@@ -22,11 +24,15 @@ wrap_lamindb <- function(py_lamindb) {
     # Warn if instance modules are not available
     instance_modules <- settings$instance$modules
     check_requires(
-      cli::format_inline("Some functionality in the {.val {instance_slug}} instance"),
+      cli::format_inline(
+        "Some functionality in the {.val {instance_slug}} instance"
+      ),
       instance_modules,
       language = "Python",
       alert = "message",
-      info = c("!" = "This should be done {.emph before} connecting to any instance")
+      info = c(
+        "!" = "This should be done {.emph before} connecting to any instance"
+      )
     )
   }
 

@@ -10,7 +10,8 @@ set_default_instance <- function(instance_slug) {
   current_default <- get_default_instance()
 
   if (
-    !is.null(current_default) && !is.null(instance_slug) &&
+    !is.null(current_default) &&
+      !is.null(instance_slug) &&
       !identical(instance_slug, current_default)
   ) {
     cli::cli_warn(c(
@@ -47,9 +48,13 @@ get_default_instance <- function() {
 #' @returns A list of the current LaminDB settings
 #' @export
 get_current_lamin_settings <- function(minimal = FALSE, silent = FALSE) {
-  if (!reticulate::py_available() || !reticulate::py_module_available("lamindb")) {
+  if (
+    !reticulate::py_available() || !reticulate::py_module_available("lamindb")
+  ) {
     if (!silent) {
-      cli::cli_alert_danger("Python {.pkg lamindb} is not available, cannot get settings")
+      cli::cli_alert_danger(
+        "Python {.pkg lamindb} is not available, cannot get settings"
+      )
     }
     return(invisible(NULL))
   }
@@ -113,7 +118,10 @@ get_current_lamin_instance <- function(ignore_none = TRUE, silent = FALSE) {
 
   instance_slug <- settings$instance$slug
 
-  if (is.null(instance_slug) || (ignore_none && identical(instance_slug, "none/none"))) {
+  if (
+    is.null(instance_slug) ||
+      (ignore_none && identical(instance_slug, "none/none"))
+  ) {
     if (!silent) {
       cli::cli_alert_danger("No current instance")
     }
@@ -241,7 +249,10 @@ disable_lamin_colors <- function() {
     # Disable Python ANSI color codes in knitr
     # Don't use import_module() here to avoid an infinite loop
     py_lamin_utils <- reticulate::import("lamin_utils")
-    py_lamin_utils[["_logger"]]$LEVEL_TO_COLORS <- setNames(list(), character(0))
+    py_lamin_utils[["_logger"]]$LEVEL_TO_COLORS <- setNames(
+      list(),
+      character(0)
+    )
     py_lamin_utils[["_logger"]]$RESET_COLOR <- ""
     options(LAMINR_COLORS_DISABLED = TRUE)
 

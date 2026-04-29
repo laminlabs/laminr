@@ -25,7 +25,12 @@
 #'
 #' @returns An object from a custom R6 class wrapping the Python object
 #' @noRd
-wrap_python <- function(obj, public = list(), active = list(), private = list()) {
+wrap_python <- function(
+  obj,
+  public = list(),
+  active = list(),
+  private = list()
+) {
   class_name <- paste0("laminr.", class(obj)[1])
 
   # Make sure there is always a print method
@@ -51,7 +56,9 @@ wrap_python <- function(obj, public = list(), active = list(), private = list())
     }
 
     # Class methods are stored as public members
-    if (inherits(value, c("python.builtin.function", "python.builtin.method"))) {
+    if (
+      inherits(value, c("python.builtin.function", "python.builtin.method"))
+    ) {
       # Skip if this is already defined in public
       if (.name %in% names(public)) {
         next
@@ -73,7 +80,9 @@ wrap_python <- function(obj, public = list(), active = list(), private = list())
       # Build a function that accesses the correct variable in the Python object
       fun_src <- paste0(
         "function(value) {\n",
-        "  get_or_set_python_slot(private$.py_object, '", .name, "', value)",
+        "  get_or_set_python_slot(private$.py_object, '",
+        .name,
+        "', value)",
         "\n}"
       )
 
@@ -117,7 +126,13 @@ wrap_python <- function(obj, public = list(), active = list(), private = list())
 #'
 #' @returns A callable structure wrapping the Python object
 #' @noRd
-wrap_python_callable <- function(obj, call = NULL, public = list(), active = list(), private = list()) {
+wrap_python_callable <- function(
+  obj,
+  call = NULL,
+  public = list(),
+  active = list(),
+  private = list()
+) {
   if (is.null(call)) {
     # Avoid "no visible binding" NOTE
     self <- NULL
@@ -129,7 +144,12 @@ wrap_python_callable <- function(obj, call = NULL, public = list(), active = lis
   }
   public$call <- call
 
-  wrapped <- wrap_python(obj, public = public, active = active, private = private)
+  wrapped <- wrap_python(
+    obj,
+    public = public,
+    active = active,
+    private = private
+  )
 
   structure(
     wrapped$call,
@@ -189,16 +209,30 @@ get_or_set_python_slot <- function(py_object, slot, value) {
 #'
 #' @returns A wrapper function around `func_string` that inherits `args`
 #' @noRd
-make_wrapper_function <- function(func_string, args, ignore_defaults = NULL,
-                                  after_string = NULL) {
-  defaults_string <- make_argument_defaults_string(args[!(names(args) %in% ignore_defaults)])
+make_wrapper_function <- function(
+  func_string,
+  args,
+  ignore_defaults = NULL,
+  after_string = NULL
+) {
+  defaults_string <- make_argument_defaults_string(args[
+    !(names(args) %in% ignore_defaults)
+  ])
   usage_string <- make_argument_usage_string(args)
 
   after_string <- ifelse(is.null(after_string), "", paste(" |>", after_string))
 
   fun_src <- paste0(
-    "function(", defaults_string, ") {\n",
-    "  ", func_string, "(", usage_string, ")", after_string, "\n",
+    "function(",
+    defaults_string,
+    ") {\n",
+    "  ",
+    func_string,
+    "(",
+    usage_string,
+    ")",
+    after_string,
+    "\n",
     "}\n"
   )
 
@@ -233,7 +267,11 @@ make_wrapper_function <- function(func_string, args, ignore_defaults = NULL,
 #' @returns A wrapper function around `func` that inserts arguments from
 #'   `py_func`
 #' @noRd
-wrap_with_py_arguments <- function(func, py_func, ignore_defaults = c("self", "private")) {
+wrap_with_py_arguments <- function(
+  func,
+  py_func,
+  ignore_defaults = c("self", "private")
+) {
   func_name <- deparse(substitute(func))
   func_args <- get_r_arguments(func)
 

@@ -1,5 +1,6 @@
 #' @export
-py_to_r.lamindb.models.artifact.Artifact <- function(x) { # nolint object_length_linter
+py_to_r.lamindb.models.artifact.Artifact <- function(x) {
+  # nolint object_length_linter
   # Avoid "no visible binding for global variable"
   self <- NULL
 
@@ -41,7 +42,9 @@ artifact_open <- function(self, mode, is_run_input, ...) {
   py_lamin <- reticulate::import("lamindb")
   py_object <- unwrap_python(self)
 
-  filepath_cache_key <- py_lamin$core$storage$paths$filepath_cache_key_from_artifact(py_object)
+  filepath_cache_key <- py_lamin$core$storage$paths$filepath_cache_key_from_artifact(
+    py_object
+  )
   local_path <- py_lamin$setup$settings$paths$cloud_to_local_no_update(
     filepath_cache_key[[1]],
     cache_key = filepath_cache_key[[2]]

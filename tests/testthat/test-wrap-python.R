@@ -1,6 +1,9 @@
 test_that("wrap_python() works", {
   np <- reticulate::import("numpy", convert = FALSE)
-  expect_warning(wrapped_np <- wrap_python(np), "Failed to parse default string")
+  expect_warning(
+    wrapped_np <- wrap_python(np),
+    "Failed to parse default string"
+  )
   expect_s3_class(wrapped_np, "laminr.python.builtin.module")
 
   ndarray <- np$random$rand(4L, 4L)

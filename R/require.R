@@ -49,9 +49,14 @@
 #' # Require lamindb with a specific Python version
 #' require_module("lamindb", python_version = "3.12")
 #' }
-require_module <- function(module, options = NULL, version = NULL,
-                           source = NULL, python_version = NULL,
-                           silent = FALSE) {
+require_module <- function(
+  module,
+  options = NULL,
+  version = NULL,
+  source = NULL,
+  python_version = NULL,
+  silent = FALSE
+) {
   if (length(module) > 1) {
     cli::cli_abort("Only one module can be required at a time")
   }
@@ -67,7 +72,12 @@ require_module <- function(module, options = NULL, version = NULL,
 
   requirement <- module
   if (!is.null(options)) {
-    requirement <- paste0(requirement, "[", paste0(options, collapse = ","), "]")
+    requirement <- paste0(
+      requirement,
+      "[",
+      paste0(options, collapse = ","),
+      "]"
+    )
   }
   if (!is.null(version)) {
     requirement <- paste0(requirement, version)
@@ -100,17 +110,24 @@ require_module <- function(module, options = NULL, version = NULL,
 #' called before attempting to use it (either directly, or via
 #' `import_module()`).
 require_lamindb <- function(silent = FALSE) {
-  if (reticulate::py_available() && reticulate::py_module_available("lamindb")) {
+  if (
+    reticulate::py_available() && reticulate::py_module_available("lamindb")
+  ) {
     return(invisible(NULL))
   }
 
   # Minimal scipy requirement to avoid trying to compile scipy 1.6
   require_module("scipy", version = ">=1.7", silent = TRUE)
 
-  laminr_lamindb_version <- trimws(tolower(Sys.getenv("LAMINR_LAMINDB_VERSION")))
+  laminr_lamindb_version <- trimws(tolower(Sys.getenv(
+    "LAMINR_LAMINDB_VERSION"
+  )))
   laminr_lamindb_options <- Sys.getenv("LAMINR_LAMINDB_OPTIONS")
   if (laminr_lamindb_options != "") {
-    laminr_lamindb_options <- trimws(unlist(strsplit(laminr_lamindb_options, ",")))
+    laminr_lamindb_options <- trimws(unlist(strsplit(
+      laminr_lamindb_options,
+      ","
+    )))
     if (!isTRUE(silent)) {
       cli::cli_alert_info(
         "Requiring {.pkg lamindb} options {.val {laminr_lamindb_options}}"

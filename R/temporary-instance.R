@@ -21,8 +21,12 @@
 #' already connected.
 #'
 #' @export
-use_temporary_instance <- function(name = "laminr-temp", modules = NULL,
-                                   add_timestamp = TRUE, envir = parent.frame()) {
+use_temporary_instance <- function(
+  name = "laminr-temp",
+  modules = NULL,
+  add_timestamp = TRUE,
+  envir = parent.frame()
+) {
   if (isTRUE(add_timestamp)) {
     # Add a time stamp to get a unique name
     timestamp <- format(Sys.time(), "%Y%m%d%H%M%S")
@@ -45,7 +49,8 @@ use_temporary_instance <- function(name = "laminr-temp", modules = NULL,
     }
 
     check_requires(
-      "Initialising a database with these modules", modules,
+      "Initialising a database with these modules",
+      modules,
       language = "Python"
     )
     modules_str <- paste(modules, collapse = ",")
@@ -69,7 +74,11 @@ use_temporary_instance <- function(name = "laminr-temp", modules = NULL,
       py_lamindb$setup$disconnect()
 
       # Delete the temporary instance
-      py_lamindb$setup$delete(temp_instance, force = TRUE, require_empty = FALSE)
+      py_lamindb$setup$delete(
+        temp_instance,
+        force = TRUE,
+        require_empty = FALSE
+      )
 
       # Try to reconnect to the previous instance
       if (!is.null(current_instance)) {

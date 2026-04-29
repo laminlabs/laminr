@@ -76,7 +76,6 @@ test_that("check_default_instance() works", {
   expect_message(check_default_instance(alert = "message"))
 
   expect_true(check_default_instance(alert = "none"))
-
 })
 
 test_that("check_default_instance() works with provided instance", {

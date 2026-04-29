@@ -65,7 +65,10 @@ laminr_status <- function() {
       py_available,
       function(.module, .available) {
         if (.available) {
-          py_to_r(reticulate::py_get_attr(reticulate::import(.module), "__version__"))
+          py_to_r(reticulate::py_get_attr(
+            reticulate::import(.module),
+            "__version__"
+          ))
         } else {
           NA_character_
         }

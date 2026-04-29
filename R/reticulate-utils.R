@@ -31,7 +31,10 @@ suppress_future_warning <- function(expr) {
   warnings <- reticulate::import("warnings")
 
   with(warnings$catch_warnings(), {
-    warnings$simplefilter(action = "ignore", category = py_builtins$FutureWarning)
+    warnings$simplefilter(
+      action = "ignore",
+      category = py_builtins$FutureWarning
+    )
     eval(expr)
   })
 }

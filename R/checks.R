@@ -17,10 +17,14 @@
 #' @return Invisibly, Boolean whether or not all packages are available or
 #'   raises an error if any are missing and `type = "error"`
 #' @noRd
-check_requires <- function(what, requires,
-                           alert = c("error", "warning", "message", "none"),
-                           language = c("R", "Python"), extra_repos = NULL,
-                           info = NULL) {
+check_requires <- function(
+  what,
+  requires,
+  alert = c("error", "warning", "message", "none"),
+  language = c("R", "Python"),
+  extra_repos = NULL,
+  info = NULL
+) {
   language <- match.arg(language)
 
   is_available <- if (language == "R") {
@@ -89,7 +93,10 @@ check_requires <- function(what, requires,
 #'
 #' @returns Whether to not there is a current default instance, invisibly
 #' @noRd
-check_default_instance <- function(instance = NULL, alert = c("error", "warning", "message", "none")) {
+check_default_instance <- function(
+  instance = NULL,
+  alert = c("error", "warning", "message", "none")
+) {
   alert <- match.arg(alert)
   current_default <- get_default_instance()
   check <- !is.null(current_default)
@@ -100,7 +107,8 @@ check_default_instance <- function(instance = NULL, alert = c("error", "warning"
 
   msg_fun <- get_message_fun(alert)
   if (check && !is.null(msg_fun)) {
-    advice <- switch(alert,
+    advice <- switch(
+      alert,
       error = c(
         "x" = "This command will not be run",
         "i" = "Start a new R session before attempting to run it"
@@ -110,10 +118,13 @@ check_default_instance <- function(instance = NULL, alert = c("error", "warning"
       )
     )
 
-    msg_fun(c(
-      "There is already a default instance connected ({.val {current_default}})",
-      advice
-    ), call = rlang::caller_env())
+    msg_fun(
+      c(
+        "There is already a default instance connected ({.val {current_default}})",
+        advice
+      ),
+      call = rlang::caller_env()
+    )
   }
 
   invisible(check)
@@ -129,10 +140,16 @@ check_default_instance <- function(instance = NULL, alert = c("error", "warning"
 #'
 #' @returns Whether `module` is included in the current instance, invisibly
 #' @noRd
-check_instance_module <- function(module, alert = c("error", "warning", "message", "none")) {
+check_instance_module <- function(
+  module,
+  alert = c("error", "warning", "message", "none")
+) {
   msg_fun <- get_message_fun(alert)
 
-  current_instance <- get_current_lamin_instance(ignore_none = FALSE, silent = TRUE)
+  current_instance <- get_current_lamin_instance(
+    ignore_none = FALSE,
+    silent = TRUE
+  )
   if (is.null(current_instance)) {
     return()
   }
