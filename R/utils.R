@@ -143,7 +143,8 @@ detect_path <- function() {
   current_path <- NULL
 
   # Get path if in a running RMarkdown notebook
-  if (check_in_knitr_notebook(alert = "none")) { # nolint: object_usage_linter
+  if (check_in_knitr_notebook(alert = "none")) {
+    # nolint: object_usage_linter
     current_path <- knitr::current_input(dir = TRUE)
   }
 
@@ -160,7 +161,8 @@ detect_path <- function() {
   }
 
   # Get path if in a document in RStudio
-  if (is.null(current_path) && check_in_rstudio(alert = "none")) { # nolint: object_usage_linter
+  if (is.null(current_path) && check_in_rstudio(alert = "none")) {
+    # nolint: object_usage_linter
     doc_context <- rstudioapi::getActiveDocumentContext()
     if (is.null(doc_context$id) || doc_context$id != "#console") {
       current_path <- doc_context$path
@@ -229,7 +231,8 @@ disable_lamin_colors <- function() {
     return(invisible(is_disabled))
   }
 
-  if (check_in_knitr_notebook(alert = "none")) { # nolint: object_usage_linter
+  if (check_in_knitr_notebook(alert = "none")) {
+    # nolint: object_usage_linter
     # Disable Python ANSI color codes in knitr
     # Don't use import_module() here to avoid an infinite loop
     py_lamin_utils <- reticulate::import("lamin_utils")

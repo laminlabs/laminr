@@ -59,7 +59,10 @@ get_message_fun <- function(alert = c("error", "warning", "message", "none")) {
 #' @returns `stdout` (after stripping), invisibly
 #' @noRd
 print_stdout <- function(stdout) {
-  if (getOption("LAMINR_COLORS_DISABLED", check_in_knitr_notebook(alert = "none"))) { # nolint: object_usage_linter
+  if (
+    getOption("LAMINR_COLORS_DISABLED", check_in_knitr_notebook(alert = "none"))
+  ) {
+    # nolint: object_usage_linter
     stdout <- cli::ansi_strip(stdout)
   }
 
