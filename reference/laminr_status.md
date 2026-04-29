@@ -30,7 +30,7 @@ laminr_status()
 #> 
 #> ── Environment Variables ──
 #> 
-#> `LAMINR_LAMINDB_VERSION`: "release"
+#> `LAMINR_LAMINDB_VERSION`: "devel"
 #> 
 #> ── Settings ──
 #> 
@@ -42,11 +42,11 @@ laminr_status()
 #> 
 #> ── Python 3.12.13 (main, Apr 14 2026, 14:29:00) [Clang 22.1.3 ] ──
 #> 
-#> ✔ lamindb v2.4.1
+#> ✔ lamindb v2.4.2
 #> ✔ lamin_cli v1.16.0
 #> ✔ lamin_utils v0.16.4
 #> ✔ lamindb_setup v1.24.1
-#> ✔ bionty v2.4.0
+#> ✔ bionty v2.3.1
 #> ✔ pertdb v2.2.0
 #> ✖ wetlab
 #> ✖ clinicore
