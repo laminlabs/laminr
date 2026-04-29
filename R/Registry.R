@@ -4,9 +4,8 @@ py_to_r.lamindb.models.record.Registry <- function(x) {
 }
 
 #' @export
-# nolint start: object_length_linter
+# nolint next: object_length_linter.
 py_to_r.lamindb.models.sqlrecord.Registry <- function(x) {
-  # nolint end: object_length_linter
   wrap_registry(x)
 }
 
@@ -29,7 +28,7 @@ registry_from_df <- function(self, ...) {
   args <- list(...)
 
   if (!is.data.frame(args$df)) {
-    df_class <- class(args$df)[1] # nolint object_usage_linter
+    df_class <- class(args$df)[1] # nolint: object_usage_linter.
     cli::cli_abort(
       "{.arg df} must be a {.cls data.frame} but is a {.cls {df_class}}"
     )
@@ -39,7 +38,7 @@ registry_from_df <- function(self, ...) {
     !is.null(args$revises) &&
       !inherits(args$revises, "laminr.lamindb.models.artifact.Artifact")
   ) {
-    revises_class <- class(args$revises)[1] # nolint object_usage_linter
+    revises_class <- class(args$revises)[1] # nolint: object_usage_linter.
     cli::cli_abort(
       "{.arg revises} must be an {.cls Artifact} but is a {.cls {revises_class}}"
     )

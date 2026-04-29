@@ -60,9 +60,9 @@ get_message_fun <- function(alert = c("error", "warning", "message", "none")) {
 #' @noRd
 print_stdout <- function(stdout) {
   if (
+    # nolint next: object_usage_linter.
     getOption("LAMINR_COLORS_DISABLED", check_in_knitr_notebook(alert = "none"))
   ) {
-    # nolint: object_usage_linter
     stdout <- cli::ansi_strip(stdout)
   }
 

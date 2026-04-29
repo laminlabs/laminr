@@ -68,7 +68,7 @@ lamin_connect <- function(instance) {
 
   system_fun <- function(instance) {
     require_lamindb(silent = TRUE)
-    py_config <- reticulate::py_config() # nolint object_usage_linter
+    py_config <- reticulate::py_config() # nolint: object_usage_linter.
 
     system2("lamin", paste("connect", instance), stdout = TRUE, stderr = TRUE)
   }
@@ -100,7 +100,7 @@ lamin_disconnect <- function() {
 
   system_fun <- function() {
     require_lamindb(silent = TRUE)
-    py_config <- reticulate::py_config() # nolint object_usage_linter
+    py_config <- reticulate::py_config() # nolint: object_usage_linter.
 
     system2("lamin", "disconnect", stdout = TRUE, stderr = TRUE)
   }
@@ -206,7 +206,7 @@ lamin_logout <- function() {
 
   system_fun <- function() {
     require_lamindb(silent = TRUE)
-    py_config <- reticulate::py_config() # nolint object_usage_linter
+    py_config <- reticulate::py_config() # nolint: object_usage_linter.
 
     system2("lamin", "logout", stdout = TRUE, stderr = TRUE)
   }
@@ -244,7 +244,7 @@ lamin_init <- function(storage, name = NULL, db = NULL, modules = NULL) {
         require_module(module, silent = TRUE)
       }
     }
-    py_config <- reticulate::py_config() # nolint object_usage_linter
+    py_config <- reticulate::py_config() # nolint: object_usage_linter.
 
     if (!is.null(modules)) {
       check_requires(
@@ -446,7 +446,7 @@ lamin_save <- function(
 
   system_fun <- function(system_args) {
     require_lamindb(silent = TRUE)
-    py_config <- reticulate::py_config() # nolint object_usage_linter
+    py_config <- reticulate::py_config() # nolint: object_usage_linter.
 
     system2("lamin", system_args, stdout = TRUE, stderr = TRUE)
   }
@@ -488,7 +488,7 @@ lamin_settings <- function() {
 
   system_fun <- function() {
     require_lamindb(silent = TRUE)
-    py_config <- reticulate::py_config() # nolint object_usage_linter
+    py_config <- reticulate::py_config() # nolint: object_usage_linter.
 
     system2("lamin", "settings", stdout = TRUE, stderr = TRUE)
   }

@@ -116,7 +116,7 @@ lamindb_finish <- function(self, ...) {
         ))
       }
       # Please don't change the below without changing it in lamindb
-      message <- gsub(".*NotebookNotSaved: (.*)$", "\\1", py_err$value) # nolint object_usage_linter
+      message <- gsub(".*NotebookNotSaved: (.*)$", "\\1", py_err$value) # nolint: object_usage_linter.
       cli::cli_inform(paste("NotebookNotSaved: {message}"))
     }
   )

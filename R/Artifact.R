@@ -1,6 +1,6 @@
 #' @export
+# nolint next: object_length_linter.
 py_to_r.lamindb.models.artifact.Artifact <- function(x) {
-  # nolint object_length_linter
   # Avoid "no visible binding for global variable"
   self <- NULL
 

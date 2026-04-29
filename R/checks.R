@@ -14,8 +14,13 @@
 #'
 #' @return Whether or not all packages are available, invisibly
 #' @noRd
-check_requires <- function(what, requires, language = c("R", "Python"),
-                           extra_repos = NULL, ...) {
+check_requires <- function(
+  what,
+  requires,
+  language = c("R", "Python"),
+  extra_repos = NULL,
+  ...
+) {
   language <- match.arg(language)
 
   is_available <- if (language == "R") {
@@ -30,7 +35,7 @@ check_requires <- function(what, requires, language = c("R", "Python"),
   }
 
   missing <- requires[!is_available]
-  missing_str <- paste0("'", paste(missing, collapse = "', '"), "'") # nolint object_usage_linter
+  missing_str <- paste0("'", paste(missing, collapse = "', '"), "'") # nolint: object_usage_linter.
 
   msg <- "{what} requires the {language} {.pkg {missing}} package{?s}"
 
@@ -86,7 +91,11 @@ check_requires <- function(what, requires, language = c("R", "Python"),
 #'
 #' @returns Whether to not there is a current default instance, invisibly
 #' @noRd
-check_default_instance <- function(instance = NULL, alert = c("error", "warning", "message", "none"), ...) {
+check_default_instance <- function(
+  instance = NULL,
+  alert = c("error", "warning", "message", "none"),
+  ...
+) {
   alert <- match.arg(alert)
   current_default <- get_default_instance()
   is_default_instance <- !is.null(current_default)
@@ -95,7 +104,8 @@ check_default_instance <- function(instance = NULL, alert = c("error", "warning"
     return(invisible(TRUE))
   }
 
-  advice <- switch(alert,
+  advice <- switch(
+    alert,
     error = c(
       "x" = "This command will not be run",
       "i" = "Start a new R session before attempting to run it"
@@ -131,7 +141,10 @@ check_default_instance <- function(instance = NULL, alert = c("error", "warning"
 #' @returns Whether `module` is included in the current instance, invisibly
 #' @noRd
 check_instance_module <- function(module, ...) {
-  current_instance <- get_current_lamin_instance(ignore_none = FALSE, silent = TRUE)
+  current_instance <- get_current_lamin_instance(
+    ignore_none = FALSE,
+    silent = TRUE
+  )
   if (is.null(current_instance)) {
     return()
   }
@@ -158,7 +171,11 @@ check_instance_module <- function(module, ...) {
 #' @returns Whether or not R is running in RStudio, invisibly
 #' @noRd
 check_in_rstudio <- function(...) {
-  in_rstudio <- check_requires("Running in RStudio", "rstudioapi", alert = "none") &&
+  in_rstudio <- check_requires(
+    "Running in RStudio",
+    "rstudioapi",
+    alert = "none"
+  ) &&
     rstudioapi::isAvailable()
 
   issue_check_alert(
@@ -179,7 +196,11 @@ check_in_rstudio <- function(...) {
 #' @returns Whether or not R is running in a knitr notebook, invisibly
 #' @noRd
 check_in_knitr_notebook <- function(...) {
-  in_knitr_notebook <- check_requires("Running in a knitr notebook", "knitr", alert = "none") &&
+  in_knitr_notebook <- check_requires(
+    "Running in a knitr notebook",
+    "knitr",
+    alert = "none"
+  ) &&
     !is.null(knitr::opts_knit$get("out.format"))
 
   issue_check_alert(
@@ -200,7 +221,11 @@ check_in_knitr_notebook <- function(...) {
 #' @returns Whether or not R is running on Jupyter, invisibly
 #' @noRd
 check_on_jupyter <- function(...) {
-  is_on_jupyter <- check_requires("Running on Jupyter", "IRkernel", alert = "none") &&
+  is_on_jupyter <- check_requires(
+    "Running on Jupyter",
+    "IRkernel",
+    alert = "none"
+  ) &&
     !is.null(IRkernel::comm_manager())
 
   issue_check_alert(
@@ -228,9 +253,13 @@ check_on_jupyter <- function(...) {
 #'
 #' @returns Whether or not an alert message was issued, invisibly
 #' @noRd
-issue_check_alert <- function(issue_alert, msg,
-                              alert = c("error", "warning", "message", "none"),
-                              info = NULL, call = rlang::caller_env(2)) {
+issue_check_alert <- function(
+  issue_alert,
+  msg,
+  alert = c("error", "warning", "message", "none"),
+  info = NULL,
+  call = rlang::caller_env(2)
+) {
   alert <- match.arg(alert)
   msg_fun <- get_message_fun(alert)
   issue_alert <- issue_alert && !is.null(msg_fun)

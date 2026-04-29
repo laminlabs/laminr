@@ -1,6 +1,6 @@
 #' @export
+# nolint next: object_length_linter.
 py_to_r.lamindb.models.collection.Collection <- function(x) {
-  # nolint object_length_linter
   wrap_python(
     x,
     public = list(
