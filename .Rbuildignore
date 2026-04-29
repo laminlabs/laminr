@@ -19,3 +19,5 @@
 ^vignettes/articles$
 ^\.ipynb_checkpoints$
 ^test-docs$
+^\.positai$
+^\.claude$
