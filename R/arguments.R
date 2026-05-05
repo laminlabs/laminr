@@ -2,7 +2,7 @@
 #'
 #' Get a list of arguments for an R function
 #'
-#' @param func
+#' @param func The R function to get arguments for
 #'
 #' @details
 #' Arguments are found using the R `formals` function. If an arguments does

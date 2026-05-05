@@ -10,7 +10,7 @@ import_module(module, ...)
 \item{module}{The name of the Python module to import}
 
 \item{...}{
-  Arguments passed on to \code{\link[=require_module]{require_module}}
+  Arguments passed on to \code{\link{require_module}}
   \describe{
     \item{\code{options}}{A vector of defined optional dependencies for the module that
 is being required}
@@ -18,7 +18,7 @@ is being required}
     \item{\code{source}}{A source for the module requirement, for example
 \verb{git+https://github.com/owner/module.git}}
     \item{\code{python_version}}{A string defining the Python version to require. Passed
-to \code{\link[reticulate:py_require]{reticulate::py_require()}}}
+to \code{\link[reticulate:py_require]{reticulate::py_require()}}.}
     \item{\code{silent}}{Whether to suppress the message showing what has been required}
   }}
 }
@@ -34,8 +34,8 @@ Python dependencies are set using \code{\link[=require_module]{require_module()}
 the module and used to create an ephemeral environment unless another
 environment is found (see \code{vignette("versions", package = "reticulate")}).
 
-Requirements for the \code{lamindb} module can be controlled using environment
-variables differently, see \url{https://docs.lamin.ai/setup-laminr} for details.
+Requirements for the \code{lamindb} module can be controlled differently using
+environment variables, see \url{https://docs.lamin.ai/setup-laminr} for details.
 }
 \examples{
 \dontrun{
