@@ -10,7 +10,7 @@
 #' @param source A source for the module requirement, for example
 #'   `git+https://github.com/owner/module.git`
 #' @param python_version A string defining the Python version to require. Passed
-#'   to [reticulate::py_require()]
+#'   to [reticulate::py_require()].
 #' @param silent Whether to suppress the message showing what has been required
 #'
 #' @returns The result of [reticulate::py_require]
@@ -21,7 +21,7 @@
 #' to Python is already initialized and the requested module is already in the
 #' list of requirements then a further call to [reticulate::py_require()] will
 #' not be made to avoid errors/warnings. This means that required versions etc.
-#' need to be set before Python is initialized.
+#' need to be set _before_ Python is initialized.
 #'
 #' ## Arguments
 #'
