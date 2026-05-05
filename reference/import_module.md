@@ -37,7 +37,7 @@ import_module(module, ...)
   `python_version`
 
   :   A string defining the Python version to require. Passed to
-      [`reticulate::py_require()`](https://rstudio.github.io/reticulate/reference/py_require.html)
+      [`reticulate::py_require()`](https://rstudio.github.io/reticulate/reference/py_require.html).
 
   `silent`
 
@@ -55,9 +55,9 @@ before importing the module and used to create an ephemeral environment
 unless another environment is found (see
 [`vignette("versions", package = "reticulate")`](https://rstudio.github.io/reticulate/articles/versions.html)).
 
-Requirements for the `lamindb` module can be controlled using
-environment variables differently, see
-<https://docs.lamin.ai/setup-laminr> for details.
+Requirements for the `lamindb` module can be controlled differently
+using environment variables, see <https://docs.lamin.ai/setup-laminr>
+for details.
 
 ## See also
 

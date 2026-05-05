@@ -26,7 +26,7 @@ whenever any error occurs.
 ``` r
 laminr_status()
 #> 
-#> ── laminr 1.3.0.9001 ───────────────────────────────────────────────────────────
+#> ── laminr 1.3.0.9002 ───────────────────────────────────────────────────────────
 #> 
 #> ── Environment Variables ──
 #> 
@@ -40,7 +40,7 @@ laminr_status()
 #> ℹ To change the instance, use `ln <- import_module("lamindb"); ln$connect()`
 #> ℹ Run `get_current_lamin_settings()` to see the full settings information
 #> 
-#> ── Python 3.12.13 (main, Apr 14 2026, 14:29:00) [Clang 22.1.3 ] ──
+#> ── Python 3.12.13 (main, May  4 2026, 21:09:48) [Clang 22.1.3 ] ──
 #> 
 #> ✔ lamindb v2.4.2
 #> ✔ lamin_cli v1.16.0

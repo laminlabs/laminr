@@ -39,7 +39,7 @@ require_module(
 - python_version:
 
   A string defining the Python version to require. Passed to
-  [`reticulate::py_require()`](https://rstudio.github.io/reticulate/reference/py_require.html)
+  [`reticulate::py_require()`](https://rstudio.github.io/reticulate/reference/py_require.html).
 
 - silent:
 
@@ -58,7 +58,7 @@ If a connection to Python is already initialized and the requested
 module is already in the list of requirements then a further call to
 [`reticulate::py_require()`](https://rstudio.github.io/reticulate/reference/py_require.html)
 will not be made to avoid errors/warnings. This means that required
-versions etc. need to be set before Python is initialized.
+versions etc. need to be set *before* Python is initialized.
 
 ### Arguments
 

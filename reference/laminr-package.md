@@ -21,6 +21,9 @@ Useful links:
 
 Authors:
 
+- Robrecht Cannoodt <robrecht@lamin.ai>
+  ([ORCID](https://orcid.org/0000-0003-3641-729X))
+
 - Luke Zappia <luke@data-intuitive.com>
   ([ORCID](https://orcid.org/0000-0001-7744-8565))
 

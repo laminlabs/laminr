@@ -9,7 +9,7 @@ laminr  with additional checks and nicer error messages."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">laminr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.3.0.9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.3.0.9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -87,7 +87,7 @@ is being required</p></dd>
 
 <dt id="arg-python-version">python_version<a class="anchor" aria-label="anchor" href="#arg-python-version"></a></dt>
 <dd><p>A string defining the Python version to require. Passed
-to <code><a href="https://rstudio.github.io/reticulate/reference/py_require.html" class="external-link">reticulate::py_require()</a></code></p></dd>
+to <code><a href="https://rstudio.github.io/reticulate/reference/py_require.html" class="external-link">reticulate::py_require()</a></code>.</p></dd>
 
 
 <dt id="arg-silent">silent<a class="anchor" aria-label="anchor" href="#arg-silent"></a></dt>
@@ -104,7 +104,7 @@ to <code><a href="https://rstudio.github.io/reticulate/reference/py_require.html
 to Python is already initialized and the requested module is already in the
 list of requirements then a further call to <code><a href="https://rstudio.github.io/reticulate/reference/py_require.html" class="external-link">reticulate::py_require()</a></code> will
 not be made to avoid errors/warnings. This means that required versions etc.
-need to be set before Python is initialized.</p><div class="section">
+need to be set <em>before</em> Python is initialized.</p><div class="section">
 <h3 id="arguments-1">Arguments<a class="anchor" aria-label="anchor" href="#arguments-1"></a></h3>
 
 <ul><li><p>Setting <code>options = c("opt1", "opt2")</code> results in <code>"module[opt1,opt2]"</code></p></li>
