@@ -22,6 +22,7 @@ Useful links:
 
 Authors:
 \itemize{
+  \item Robrecht Cannoodt \email{robrecht@lamin.ai} (\href{https://orcid.org/0000-0003-3641-729X}{ORCID})
   \item Luke Zappia \email{luke@data-intuitive.com} (\href{https://orcid.org/0000-0001-7744-8565}{ORCID})
   \item Data Intuitive \email{info@data-intuitive.com}
   \item Lamin Labs \email{open-source@lamin.ai} [copyright holder]

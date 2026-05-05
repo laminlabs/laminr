@@ -25,7 +25,7 @@ is being required}
 \verb{git+https://github.com/owner/module.git}}
 
 \item{python_version}{A string defining the Python version to require. Passed
-to \code{\link[reticulate:py_require]{reticulate::py_require()}}}
+to \code{\link[reticulate:py_require]{reticulate::py_require()}}.}
 
 \item{silent}{Whether to suppress the message showing what has been required}
 }
@@ -41,7 +41,7 @@ Python dependencies are set using \code{\link[reticulate:py_require]{reticulate:
 to Python is already initialized and the requested module is already in the
 list of requirements then a further call to \code{\link[reticulate:py_require]{reticulate::py_require()}} will
 not be made to avoid errors/warnings. This means that required versions etc.
-need to be set before Python is initialized.
+need to be set \emph{before} Python is initialized.
 \subsection{Arguments}{
 \itemize{
 \item Setting \code{options = c("opt1", "opt2")} results in \code{"module[opt1,opt2]"}
