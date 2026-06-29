@@ -40,9 +40,9 @@ laminr_status()
 #> ℹ To change the instance, use `ln <- import_module("lamindb"); ln$connect()`
 #> ℹ Run `get_current_lamin_settings()` to see the full settings information
 #> 
-#> ── Python 3.12.13 (main, Jun  2 2026, 22:27:15) [Clang 22.1.3 ] ──
+#> ── Python 3.12.13 (main, Jun 23 2026, 15:18:55) [Clang 22.1.3 ] ──
 #> 
-#> ✔ lamindb v2.6.0
+#> ✔ lamindb v2.6.1
 #> ✔ lamin_cli v1.17.0
 #> ✔ lamin_utils v0.16.4
 #> ✔ lamindb_setup v1.25.1
@@ -53,7 +53,7 @@ laminr_status()
 #> ✖ cellregistry
 #> ✖ omop
 #> ✔ scipy v1.16.3
-#> ✔ numpy v2.4.6
+#> ✔ numpy v2.5.0
 #> ✔ pandas v2.3.3
 #> 
 #> ℹ Run `reticulate::py_config()` and `reticulate::py_require()` for more
