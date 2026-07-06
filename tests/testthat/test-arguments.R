@@ -32,7 +32,10 @@ test_that("make_argument_usage_string() escapes underscore-prefixed names", {
   )
 
   result <- make_argument_usage_string(args)
-  expect_equal(result, "instance = instance, `_instance_info` = `_instance_info`, ...")
+  expect_equal(
+    result,
+    "instance = instance, `_instance_info` = `_instance_info`, ..."
+  )
 })
 
 test_that("make_wrapper_function() handles underscore-prefixed arguments", {
