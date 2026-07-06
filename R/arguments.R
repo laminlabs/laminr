@@ -79,6 +79,29 @@ get_py_arguments <- function(py_func) {
   })
 }
 
+#' Escape an R argument name
+#'
+#' Wrap an argument name in backticks if it is not a syntactically valid R name.
+#'
+#' @param name The argument name to escape
+#'
+#' @details
+#' Python allows argument names that are not valid R names, for example names
+#' starting with an underscore (e.g. `_instance_info`) or names matching R
+#' reserved words. These must be backtick-quoted so that the generated wrapper
+#' function can be parsed. Backtick-quoting preserves the exact name so the
+#' correct Python keyword argument is still used when the wrapper is called.
+#' The literal `...` is never escaped.
+#'
+#' @returns The (possibly backtick-quoted) argument name
+#' @noRd
+escape_r_argument_name <- function(name) {
+  if (name == "..." || name == make.names(name)) {
+    return(name)
+  }
+  paste0("`", name, "`")
+}
+
 #' Make argument defaults string
 #'
 #' Make a string mapping arguments of a Python function to their default values,
@@ -98,7 +121,7 @@ make_argument_defaults_string <- function(arguments) {
 
     # The "__NODEFAULT__" string indicates a named arguments with no default
     if (default == "__NODEFAULT__") {
-      return(.argument)
+      return(escape_r_argument_name(.argument))
     }
 
     # If the default is "..." replace it with literal `...` and no name
@@ -123,7 +146,7 @@ make_argument_defaults_string <- function(arguments) {
       default <- paste0(as.integer(default), "L")
     }
 
-    paste(.argument, "=", default)
+    paste(escape_r_argument_name(.argument), "=", default)
   }) |>
     unique() |>
     paste(collapse = ", ")
@@ -151,7 +174,8 @@ make_argument_usage_string <- function(arguments) {
       return("...")
     }
 
-    paste(.argument, "=", .argument)
+    escaped <- escape_r_argument_name(.argument)
+    paste(escaped, "=", escaped)
   }) |>
     unique() |>
     paste(collapse = ", ")
