@@ -3,6 +3,34 @@ ln <- laminr::import_module("lamindb") # instantiate the central object of the A
 # Access inputs -------------------------------------------
 
 ln$track()
+
+# --- DEBUG: inspect Artifact.connect on the dev build ---
+cat("=== DEBUG START ===\n")
+cat("lamindb version:", ln$`__version__`, "\n")
+cat("class(ln$Artifact):", paste(class(ln$Artifact), collapse = ", "), "\n")
+connect_attr <- tryCatch(
+  ln$Artifact$connect,
+  error = function(e) {
+    cat("Error accessing ln$Artifact$connect:", conditionMessage(e), "\n")
+    NULL
+  }
+)
+cat("is.null(connect_attr):", is.null(connect_attr), "\n")
+cat("is.function(connect_attr):", is.function(connect_attr), "\n")
+cat("class(connect_attr):", paste(class(connect_attr), collapse = ", "), "\n")
+cat("py type of connect:", tryCatch(
+  reticulate::py_to_r(reticulate::py_get_attr(
+    reticulate::py_get_attr(ln$Artifact, "connect"), "__class__"
+  ))$`__name__`,
+  error = function(e) paste("ERR:", conditionMessage(e))
+), "\n")
+cat("has ln$DB:", !is.null(tryCatch(ln$DB, error = function(e) NULL)), "\n")
+cat("dir(ln$Artifact) has connect:", "connect" %in% tryCatch(
+  reticulate::py_to_r(reticulate::py_get_attr(ln$Artifact, "__dir__")()),
+  error = function(e) character(0)
+), "\n")
+cat("=== DEBUG END ===\n")
+
 cellxgene_artifacts <- ln$Artifact$connect("laminlabs/cellxgene")
 artifact <- cellxgene_artifacts$get("7dVluLROpalzEh8m")
 adata <- artifact$load()
