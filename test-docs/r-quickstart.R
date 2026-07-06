@@ -4,31 +4,54 @@ ln <- laminr::import_module("lamindb") # instantiate the central object of the A
 
 ln$track()
 
-# --- DEBUG: inspect Artifact.connect on the dev build ---
+# --- DEBUG: why is ln$Artifact NULL on the dev build? ---
 cat("=== DEBUG START ===\n")
-cat("lamindb version:", ln$`__version__`, "\n")
-cat("class(ln$Artifact):", paste(class(ln$Artifact), collapse = ", "), "\n")
-connect_attr <- tryCatch(
-  ln$Artifact$connect,
+
+# Raw (converting) module, exactly what wrap_lamindb() iterates over
+py_lamindb <- reticulate::import("lamindb")
+cat(
+  "raw __version__:",
+  tryCatch(
+    reticulate::py_to_r(reticulate::py_get_attr(py_lamindb, "__version__")),
+    error = function(e) paste("ERR:", conditionMessage(e))
+  ),
+  "\n"
+)
+cat("'Artifact' %in% names(py_lamindb):", "Artifact" %in% names(py_lamindb), "\n")
+cat("'DB' %in% names(py_lamindb):", "DB" %in% names(py_lamindb), "\n")
+
+# Reproduce the access that wrap_python() does in its loop (this is where the
+# error is being silently swallowed via try())
+cat("--- reproducing py_lamindb[['Artifact']] ---\n")
+tryCatch(
+  {
+    a <- py_lamindb[["Artifact"]]
+    cat("Artifact access OK; class:", paste(class(a), collapse = ", "), "\n")
+  },
   error = function(e) {
-    cat("Error accessing ln$Artifact$connect:", conditionMessage(e), "\n")
+    cat("Artifact access ERROR:", conditionMessage(e), "\n")
+    py_err <- tryCatch(reticulate::py_last_error(), error = function(e2) NULL)
+    if (!is.null(py_err)) {
+      cat("Python error type:", py_err$type, "\n")
+      cat("Python error message:", py_err$message, "\n")
+    }
+  }
+)
+
+# Python metaclass chain of Artifact (S3 dispatch for py_to_r keys off this).
+# If the "...Registry" path changed in dev, wrap_registry() won't be reached.
+py_lamindb_nc <- reticulate::import("lamindb", convert = FALSE)
+art_nc <- tryCatch(
+  reticulate::py_get_attr(py_lamindb_nc, "Artifact"),
+  error = function(e) {
+    cat("py_get_attr(Artifact) ERROR:", conditionMessage(e), "\n")
     NULL
   }
 )
-cat("is.null(connect_attr):", is.null(connect_attr), "\n")
-cat("is.function(connect_attr):", is.function(connect_attr), "\n")
-cat("class(connect_attr):", paste(class(connect_attr), collapse = ", "), "\n")
-cat("py type of connect:", tryCatch(
-  reticulate::py_to_r(reticulate::py_get_attr(
-    reticulate::py_get_attr(ln$Artifact, "connect"), "__class__"
-  ))$`__name__`,
-  error = function(e) paste("ERR:", conditionMessage(e))
-), "\n")
-cat("has ln$DB:", !is.null(tryCatch(ln$DB, error = function(e) NULL)), "\n")
-cat("dir(ln$Artifact) has connect:", "connect" %in% tryCatch(
-  reticulate::py_to_r(reticulate::py_get_attr(ln$Artifact, "__dir__")()),
-  error = function(e) character(0)
-), "\n")
+if (!is.null(art_nc)) {
+  cat("Artifact R class chain:", paste(class(art_nc), collapse = " | "), "\n")
+  cat("'connect' %in% names(Artifact):", "connect" %in% names(art_nc), "\n")
+}
 cat("=== DEBUG END ===\n")
 
 cellxgene_artifacts <- ln$Artifact$connect("laminlabs/cellxgene")
