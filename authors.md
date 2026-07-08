@@ -15,7 +15,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/laminlabs/laminr/blob/main/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/laminlabs/laminr/blob/v1.3.1/DESCRIPTION)
 
 Cannoodt R, Zappia L, Data Intuitive, Lamin Labs (2026). *laminr: Client
 for 'LaminDB'*. R package version 1.3.1, <https://laminr.lamin.ai>.
