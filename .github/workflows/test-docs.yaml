@@ -75,6 +75,12 @@ jobs:
       - name: Check environment
         run: |
           laminr::import_module("lamindb")
+          for (mod in c("lamindb", "lamindb_setup")) {
+            version <- reticulate::py_to_r(
+              reticulate::py_get_attr(reticulate::import(mod), "__version__")
+            )
+            cat(mod, "version:", version, "\n")
+          }
           laminr::laminr_status()
           reticulate::py_config()
           reticulate::py_list_packages()
