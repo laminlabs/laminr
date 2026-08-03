@@ -40,19 +40,19 @@ laminr_status()
 #> ℹ To change the instance, use `ln <- import_module("lamindb"); ln$connect()`
 #> ℹ Run `get_current_lamin_settings()` to see the full settings information
 #> 
-#> ── Python 3.12.13 (main, Jun 23 2026, 15:18:55) [Clang 22.1.3 ] ──
+#> ── Python 3.12.13 (main, Jul 23 2026, 14:43:28) [Clang 22.1.3 ] ──
 #> 
-#> ✔ lamindb v2.7.0
-#> ✔ lamin_cli v1.18.1
+#> ✔ lamindb v2.9.0
+#> ✔ lamin_cli v1.19.2
 #> ✔ lamin_utils v0.16.4
-#> ✔ lamindb_setup v1.25.2
-#> ✔ bionty v2.4.2
+#> ✔ lamindb_setup v1.25.6
+#> ✔ bionty v2.4.3
 #> ✔ pertdb v2.2.0
 #> ✖ wetlab
 #> ✖ clinicore
 #> ✖ cellregistry
 #> ✖ omop
-#> ✔ scipy v1.16.3
+#> ✔ scipy v1.18.0
 #> ✔ numpy v2.5.1
 #> ✔ pandas v2.3.3
 #> 
