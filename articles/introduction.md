@@ -90,23 +90,25 @@ See <https://docs.lamin.ai/tutorial#track-notebooks-scripts>
 library("laminr")
 ln <- import_module("lamindb")
 ln$track()
-#> → created Transform('fTyP2X15T36Y0000', key='introduction.Rmd'), started new Run('VBGzUbG8bAfPzpjT') at 2026-08-25 14:24:10 UTC
-#> • tip: to identify the notebook across renames, pass the uid: ln$track("fTyP2X15T36Y")
+#> ! could not run pip freeze: /home/runner/.cache/uv/archive-v0/HVgAhJXAZhsJMck8/bin/python: No module named pip
+#> ! could not track Python environment (no pixi.lock found, pip freeze unavailable)
+#> → created Transform('JujpHULggz0W0000', key='introduction.Rmd'), started new Run('ypGiSafWBahEot9c') at 2026-09-15 10:05:54 UTC
+#> • tip: to identify the notebook across renames, pass the uid: ln$track("JujpHULggz0W")
 
 ln$Transform$to_dataframe()
 #>                uid              key description     kind source_code hash
-#> 1 fTyP2X15T36Y0000 introduction.Rmd        <NA> notebook        <NA> <NA>
+#> 1 JujpHULggz0W0000 introduction.Rmd        <NA> notebook        <NA> <NA>
 #>   reference reference_type version_tag is_latest is_locked          created_at
-#> 1      <NA>           <NA>        <NA>      TRUE     FALSE 2026-08-25 14:24:10
+#> 1      <NA>           <NA>        <NA>      TRUE     FALSE 2026-09-15 10:05:54
 #>   branch_id created_on_id space_id environment_id plan_id run_id created_by_id
 #> 1         1             1        1           <NA>    <NA>   <NA>             1
 ln$Run$to_dataframe()
 #>                uid name description entrypoint          started_at finished_at
-#> 1 VBGzUbG8bAfPzpjT <NA>        <NA>       <NA> 2026-08-25 14:24:10        <NA>
+#> 1 ypGiSafWBahEot9c <NA>        <NA>       <NA> 2026-09-15 10:05:54        <NA>
 #>   params extra_data reference reference_type cli_args is_locked
 #> 1   <NA>       <NA>      <NA>           <NA>     <NA>     FALSE
 #>            created_at branch_id created_on_id space_id transform_id report_id
-#> 1 2026-08-25 14:24:10         1             1        1            1      <NA>
+#> 1 2026-09-15 10:05:54         1             1        1            1      <NA>
 #>   environment_id plan_id created_by_id initiated_by_run_id
 #> 1           <NA>    <NA>             1                <NA>
 ```
@@ -143,14 +145,14 @@ df
 artifact <- ln$Artifact$from_dataframe(df, key = "my_datasets/rnaseq1.parquet")$save() # create and save
 artifact$describe() # describe
 #> Artifact: my_datasets/rnaseq1.parquet (0000)
-#> ├── uid: UiynzdEembL61vfN0000            run: VBGzUbG (introduction.Rmd)
+#> ├── uid: R45doSMBjKlFLiiH0000            run: ypGiSaf (introduction.Rmd)
 #> │   kind: dataset                        otype: DataFrame               
-#> │   hash: il4_vyW-1h8P2oAjs0lCgQ         size: 9.3 KB                   
+#> │   hash: LjVO1hFa6ZLMT8VpocO_MA         size: 9.2 KB                   
 #> │   branch: main                         space: all                     
-#> │   created_at: 2026-08-25 14:24:12 UTC  created_by: testuser1          
+#> │   created_at: 2026-09-15 10:05:57 UTC  created_by: testuser1          
 #> │   n_observations: 3                                                   
 #> └── storage/path: 
-#>     /tmp/Rtmpr14Xu8/laminr-intro-20260825142354/.lamindb/UiynzdEembL61vfN0000.pa
+#>     /tmp/RtmpcgPv1P/laminr-intro-20260915100546/.lamindb/R45doSMBjKlFLiiH0000.pa
 #>     rquet
 ```
 
@@ -179,7 +181,7 @@ artifact$load()
 #> sample2                 Chinese    , Han Chinese
 #> sample3                                  Chinese
 artifact$cache()
-#> [1] "/tmp/Rtmpr14Xu8/laminr-intro-20260825142354/.lamindb/UiynzdEembL61vfN0000.parquet"
+#> [1] "/tmp/RtmpcgPv1P/laminr-intro-20260915100546/.lamindb/R45doSMBjKlFLiiH0000.parquet"
 ```
 
 #### Trace data lineage
@@ -189,9 +191,9 @@ See <https://docs.lamin.ai/tutorial#trace-data-lineage>
 ``` r
 
 artifact$transform
-#> Transform(uid='fTyP2X15T36Y0000', key='introduction.Rmd', description=None, kind='notebook', hash=None, reference=None, reference_type=None, environment=None, plan=None, branch_id=1, created_on_id=1, space_id=1, run_id=None, created_by_id=1, created_at=2026-08-25 14:24:10 UTC, is_locked=False, version_tag=None, is_latest=True)
+#> Transform(uid='JujpHULggz0W0000', key='introduction.Rmd', description=None, kind='notebook', hash=None, reference=None, reference_type=None, environment=None, plan=None, branch_id=1, created_on_id=1, space_id=1, run_id=None, created_by_id=1, created_at=2026-09-15 10:05:54 UTC, is_locked=False, version_tag=None, is_latest=True)
 artifact$run
-#> Run(uid='VBGzUbG8bAfPzpjT', name=None, description=None, entrypoint=None, started_at=2026-08-25 14:24:10 UTC, finished_at=None, params=None, extra_data=None, reference=None, reference_type=None, cli_args=None, branch_id=1, created_on_id=1, space_id=1, transform_id=1, report_id=None, environment_id=None, plan_id=None, created_by_id=1, initiated_by_run_id=None, created_at=2026-08-25 14:24:10 UTC, is_locked=False)
+#> Run(uid='ypGiSafWBahEot9c', name=None, description=None, entrypoint=None, started_at=2026-09-15 10:05:54 UTC, finished_at=None, params=None, extra_data=None, reference=None, reference_type=None, cli_args=None, branch_id=1, created_on_id=1, space_id=1, transform_id=1, report_id=None, environment_id=None, plan_id=None, created_by_id=1, initiated_by_run_id=None, created_at=2026-09-15 10:05:54 UTC, is_locked=False)
 artifact$view_lineage()
 ```
 
@@ -211,6 +213,7 @@ See <https://docs.lamin.ai/tutorial#annotate-an-artifact>
 
 # create a label
 my_experiment <- ln$Record(name = "My experiment")$save()
+#> ! tip: pass `type` to map record into a type hierarchy
 
 # annotate the artifact with a label
 artifact$records$add(my_experiment)
@@ -218,25 +221,25 @@ artifact$records$add(my_experiment)
 # describe the artifact
 artifact$describe()
 #> Artifact: my_datasets/rnaseq1.parquet (0000)
-#> ├── uid: UiynzdEembL61vfN0000            run: VBGzUbG (introduction.Rmd)
+#> ├── uid: R45doSMBjKlFLiiH0000            run: ypGiSaf (introduction.Rmd)
 #> │   kind: dataset                        otype: DataFrame               
-#> │   hash: il4_vyW-1h8P2oAjs0lCgQ         size: 9.3 KB                   
+#> │   hash: LjVO1hFa6ZLMT8VpocO_MA         size: 9.2 KB                   
 #> │   branch: main                         space: all                     
-#> │   created_at: 2026-08-25 14:24:12 UTC  created_by: testuser1          
+#> │   created_at: 2026-09-15 10:05:57 UTC  created_by: testuser1          
 #> │   n_observations: 3                                                   
 #> ├── storage/path: 
-#> │   /tmp/Rtmpr14Xu8/laminr-intro-20260825142354/.lamindb/UiynzdEembL61vfN0000.pa
+#> │   /tmp/RtmpcgPv1P/laminr-intro-20260915100546/.lamindb/R45doSMBjKlFLiiH0000.pa
 #> │   rquet
 #> └── Labels
 #>     └── .records            Record                   My experiment
 
 ln$Artifact$filter(records = my_experiment)$to_dataframe()
 #>                    uid                         key description   suffix    kind
-#> 1 UiynzdEembL61vfN0000 my_datasets/rnaseq1.parquet        <NA> .parquet dataset
+#> 1 R45doSMBjKlFLiiH0000 my_datasets/rnaseq1.parquet        <NA> .parquet dataset
 #>       otype size                   hash n_files n_observations extra_data
-#> 1 DataFrame 9491 il4_vyW-1h8P2oAjs0lCgQ    <NA>              3       <NA>
+#> 1 DataFrame 9452 LjVO1hFa6ZLMT8VpocO_MA    <NA>              3       <NA>
 #>   version_tag is_latest is_locked          created_at branch_id created_on_id
-#> 1        <NA>      TRUE     FALSE 2026-08-25 14:24:12         1             1
+#> 1        <NA>      TRUE     FALSE 2026-09-15 10:05:57         1             1
 #>   space_id storage_id run_id schema_id created_by_id
 #> 1        1          1      1      <NA>             1
 
@@ -244,7 +247,7 @@ bt <- import_module("bionty")
 
 # create a cell type label from the source ontology
 cell_type <- bt$CellType$from_source(name = "effector T cell")$save()
-#> ... synchronizing df_all__cl__2025-12-17__CellType.parquet:  0.0%... synchronizing df_all__cl__2025-12-17__CellType.parquet:  4.8%... synchronizing df_all__cl__2025-12-17__CellType.parquet: 23.4%... synchronizing df_all__cl__2025-12-17__CellType.parquet: 32.5%... synchronizing df_all__cl__2025-12-17__CellType.parquet: 51.1%... synchronizing df_all__cl__2025-12-17__CellType.parquet: 57.1%... synchronizing df_all__cl__2025-12-17__CellType.parquet: 75.7%... synchronizing df_all__cl__2025-12-17__CellType.parquet: 86.7%... synchronizing df_all__cl__2025-12-17__CellType.parquet: 100.0%
+#> ... synchronizing df_all__cl__2026-06-08__CellType.parquet:  0.0%... synchronizing df_all__cl__2026-06-08__CellType.parquet:  4.5%... synchronizing df_all__cl__2026-06-08__CellType.parquet: 21.8%... synchronizing df_all__cl__2026-06-08__CellType.parquet: 30.8%... synchronizing df_all__cl__2026-06-08__CellType.parquet: 48.2%... synchronizing df_all__cl__2026-06-08__CellType.parquet: 56.7%... synchronizing df_all__cl__2026-06-08__CellType.parquet: 74.1%... synchronizing df_all__cl__2026-06-08__CellType.parquet: 80.4%... synchronizing df_all__cl__2026-06-08__CellType.parquet: 97.8%... synchronizing df_all__cl__2026-06-08__CellType.parquet: 100.0%
 
 # annotate the artifact with a cell type
 artifact$cell_types$add(cell_type)
@@ -252,14 +255,14 @@ artifact$cell_types$add(cell_type)
 # describe the artifact
 artifact$describe()
 #> Artifact: my_datasets/rnaseq1.parquet (0000)
-#> ├── uid: UiynzdEembL61vfN0000            run: VBGzUbG (introduction.Rmd)
+#> ├── uid: R45doSMBjKlFLiiH0000            run: ypGiSaf (introduction.Rmd)
 #> │   kind: dataset                        otype: DataFrame               
-#> │   hash: il4_vyW-1h8P2oAjs0lCgQ         size: 9.3 KB                   
+#> │   hash: LjVO1hFa6ZLMT8VpocO_MA         size: 9.2 KB                   
 #> │   branch: main                         space: all                     
-#> │   created_at: 2026-08-25 14:24:12 UTC  created_by: testuser1          
+#> │   created_at: 2026-09-15 10:05:57 UTC  created_by: testuser1          
 #> │   n_observations: 3                                                   
 #> ├── storage/path: 
-#> │   /tmp/Rtmpr14Xu8/laminr-intro-20260825142354/.lamindb/UiynzdEembL61vfN0000.pa
+#> │   /tmp/RtmpcgPv1P/laminr-intro-20260915100546/.lamindb/R45doSMBjKlFLiiH0000.pa
 #> │   rquet
 #> └── Labels
 #>     └── .records            Record                   My experiment              
@@ -267,20 +270,22 @@ artifact$describe()
 
 ln$Artifact$filter(cell_types = cell_type)$to_dataframe()
 #>                    uid                         key description   suffix    kind
-#> 1 UiynzdEembL61vfN0000 my_datasets/rnaseq1.parquet        <NA> .parquet dataset
+#> 1 R45doSMBjKlFLiiH0000 my_datasets/rnaseq1.parquet        <NA> .parquet dataset
 #>       otype size                   hash n_files n_observations extra_data
-#> 1 DataFrame 9491 il4_vyW-1h8P2oAjs0lCgQ    <NA>              3       <NA>
+#> 1 DataFrame 9452 LjVO1hFa6ZLMT8VpocO_MA    <NA>              3       <NA>
 #>   version_tag is_latest is_locked          created_at branch_id created_on_id
-#> 1        <NA>      TRUE     FALSE 2026-08-25 14:24:12         1             1
+#> 1        <NA>      TRUE     FALSE 2026-09-15 10:05:57         1             1
 #>   space_id storage_id run_id schema_id created_by_id
 #> 1        1          1      1      <NA>             1
 
 # define the "temperature" & "experiment" features
 ln$Feature(name = "temperature", dtype = "float")$save()
 #> ! rather than passing a string 'float' to dtype, consider passing a Python object
-#> Feature(uid='9Pfvf3O2XnvY', is_type=False, name='temperature', _dtype_str='float', unit=None, description=None, array_rank=0, array_size=0, array_shape=None, synonyms=None, default_value=None, nullable=True, coerce=None, branch_id=1, created_on_id=1, space_id=1, created_by_id=1, run_id=1, type_id=None, created_at=2026-08-25 14:24:35 UTC, is_locked=False)
+#> ! tip: pass `type` to map feature into a type hierarchy
+#> Feature(uid='KC56N9CcSvED', is_type=False, name='temperature', _dtype_str='float', unit=None, description=None, array_rank=0, array_size=0, array_shape=None, synonyms=None, default_value=None, nullable=True, coerce=None, branch_id=1, created_on_id=1, space_id=1, created_by_id=1, run_id=1, type_id=None, created_at=2026-09-15 10:06:21 UTC, is_locked=False)
 ln$Feature(name = "experiment", dtype = ln$Record)$save()
-#> Feature(uid='X3Sow0uCdmyT', is_type=False, name='experiment', _dtype_str='cat[Record]', unit=None, description=None, array_rank=0, array_size=0, array_shape=None, synonyms=None, default_value=None, nullable=True, coerce=None, branch_id=1, created_on_id=1, space_id=1, created_by_id=1, run_id=1, type_id=None, created_at=2026-08-25 14:24:35 UTC, is_locked=False)
+#> ! tip: pass `type` to map feature into a type hierarchy
+#> Feature(uid='49V6g0X2IVlw', is_type=False, name='experiment', _dtype_str='cat[Record]', unit=None, description=None, array_rank=0, array_size=0, array_shape=None, synonyms=None, default_value=None, nullable=True, coerce=None, branch_id=1, created_on_id=1, space_id=1, created_by_id=1, run_id=1, type_id=None, created_at=2026-09-15 10:06:21 UTC, is_locked=False)
 
 # annotate the artifact
 artifact$features$add_values(
@@ -290,14 +295,14 @@ artifact$features$add_values(
 # describe the artifact
 artifact$describe()
 #> Artifact: my_datasets/rnaseq1.parquet (0000)
-#> ├── uid: UiynzdEembL61vfN0000            run: VBGzUbG (introduction.Rmd)
+#> ├── uid: R45doSMBjKlFLiiH0000            run: ypGiSaf (introduction.Rmd)
 #> │   kind: dataset                        otype: DataFrame               
-#> │   hash: il4_vyW-1h8P2oAjs0lCgQ         size: 9.3 KB                   
+#> │   hash: LjVO1hFa6ZLMT8VpocO_MA         size: 9.2 KB                   
 #> │   branch: main                         space: all                     
-#> │   created_at: 2026-08-25 14:24:12 UTC  created_by: testuser1          
+#> │   created_at: 2026-09-15 10:05:57 UTC  created_by: testuser1          
 #> │   n_observations: 3                                                   
 #> ├── storage/path: 
-#> │   /tmp/Rtmpr14Xu8/laminr-intro-20260825142354/.lamindb/UiynzdEembL61vfN0000.pa
+#> │   /tmp/RtmpcgPv1P/laminr-intro-20260915100546/.lamindb/R45doSMBjKlFLiiH0000.pa
 #> │   rquet
 #> ├── Features
 #> │   └── experiment          Record                   My experiment              
@@ -308,11 +313,11 @@ artifact$describe()
 
 ln$Artifact$filter(temperature = 21.6)$to_dataframe()
 #>                    uid                         key description   suffix    kind
-#> 1 UiynzdEembL61vfN0000 my_datasets/rnaseq1.parquet        <NA> .parquet dataset
+#> 1 R45doSMBjKlFLiiH0000 my_datasets/rnaseq1.parquet        <NA> .parquet dataset
 #>       otype size                   hash n_files n_observations extra_data
-#> 1 DataFrame 9491 il4_vyW-1h8P2oAjs0lCgQ    <NA>              3       <NA>
+#> 1 DataFrame 9452 LjVO1hFa6ZLMT8VpocO_MA    <NA>              3       <NA>
 #>   version_tag is_latest is_locked          created_at branch_id created_on_id
-#> 1        <NA>      TRUE     FALSE 2026-08-25 14:24:12         1             1
+#> 1        <NA>      TRUE     FALSE 2026-09-15 10:05:57         1             1
 #>   space_id storage_id run_id schema_id created_by_id
 #> 1        1          1      1      <NA>             1
 ```
@@ -327,27 +332,36 @@ bt <- import_module("bionty") # <-- use bionty to access registries with importe
 
 # define a few more valid labels
 ln$Record(name = "DMSO")$save()
-#> Record(uid='nzR6hHLatQe1XYVS', is_type=False, name='DMSO', description=None, reference=None, reference_type=None, extra_data=None, branch_id=1, created_on_id=1, space_id=1, created_by_id=1, type_id=None, schema_id=None, run_id=1, created_at=2026-08-25 14:24:37 UTC, is_locked=False)
+#> ! tip: pass `type` to map record into a type hierarchy
+#> Record(uid='PTIW5kOQ6qBztbzt', is_type=False, name='DMSO', description=None, reference=None, reference_type=None, extra_data=None, branch_id=1, created_on_id=1, space_id=1, created_by_id=1, type_id=None, schema_id=None, run_id=1, created_at=2026-09-15 10:06:22 UTC, is_locked=False)
 ln$Record(name = "IFNG")$save()
-#> Record(uid='dhxwvLb7qi8fAK3O', is_type=False, name='IFNG', description=None, reference=None, reference_type=None, extra_data=None, branch_id=1, created_on_id=1, space_id=1, created_by_id=1, type_id=None, schema_id=None, run_id=1, created_at=2026-08-25 14:24:37 UTC, is_locked=False)
+#> ! tip: pass `type` to map record into a type hierarchy
+#> Record(uid='Z4Ci439TolQoPnSq', is_type=False, name='IFNG', description=None, reference=None, reference_type=None, extra_data=None, branch_id=1, created_on_id=1, space_id=1, created_by_id=1, type_id=None, schema_id=None, run_id=1, created_at=2026-09-15 10:06:22 UTC, is_locked=False)
 
 # define a few more valid features
 ln$Feature(name = "perturbation", dtype = ln$Record)$save()
-#> Feature(uid='WCgquBau0M6l', is_type=False, name='perturbation', _dtype_str='cat[Record]', unit=None, description=None, array_rank=0, array_size=0, array_shape=None, synonyms=None, default_value=None, nullable=True, coerce=None, branch_id=1, created_on_id=1, space_id=1, created_by_id=1, run_id=1, type_id=None, created_at=2026-08-25 14:24:37 UTC, is_locked=False)
+#> ! tip: pass `type` to map feature into a type hierarchy
+#> Feature(uid='uEbN7GQtzf2d', is_type=False, name='perturbation', _dtype_str='cat[Record]', unit=None, description=None, array_rank=0, array_size=0, array_shape=None, synonyms=None, default_value=None, nullable=True, coerce=None, branch_id=1, created_on_id=1, space_id=1, created_by_id=1, run_id=1, type_id=None, created_at=2026-09-15 10:06:22 UTC, is_locked=False)
 ln$Feature(name = "cell_type_by_model", dtype = bt$CellType)$save()
-#> Feature(uid='UIAJKyL9Jh31', is_type=False, name='cell_type_by_model', _dtype_str='cat[bionty.CellType]', unit=None, description=None, array_rank=0, array_size=0, array_shape=None, synonyms=None, default_value=None, nullable=True, coerce=None, branch_id=1, created_on_id=1, space_id=1, created_by_id=1, run_id=1, type_id=None, created_at=2026-08-25 14:24:37 UTC, is_locked=False)
+#> ! tip: pass `type` to map feature into a type hierarchy
+#> Feature(uid='WCvzpWJoqJh7', is_type=False, name='cell_type_by_model', _dtype_str='cat[bionty.CellType]', unit=None, description=None, array_rank=0, array_size=0, array_shape=None, synonyms=None, default_value=None, nullable=True, coerce=None, branch_id=1, created_on_id=1, space_id=1, created_by_id=1, run_id=1, type_id=None, created_at=2026-09-15 10:06:23 UTC, is_locked=False)
 ln$Feature(name = "cell_type_by_expert", dtype = bt$CellType)$save()
-#> Feature(uid='WXqw2dfIxDLx', is_type=False, name='cell_type_by_expert', _dtype_str='cat[bionty.CellType]', unit=None, description=None, array_rank=0, array_size=0, array_shape=None, synonyms=None, default_value=None, nullable=True, coerce=None, branch_id=1, created_on_id=1, space_id=1, created_by_id=1, run_id=1, type_id=None, created_at=2026-08-25 14:24:37 UTC, is_locked=False)
+#> ! tip: pass `type` to map feature into a type hierarchy
+#> Feature(uid='isAcs0qguMxf', is_type=False, name='cell_type_by_expert', _dtype_str='cat[bionty.CellType]', unit=None, description=None, array_rank=0, array_size=0, array_shape=None, synonyms=None, default_value=None, nullable=True, coerce=None, branch_id=1, created_on_id=1, space_id=1, created_by_id=1, run_id=1, type_id=None, created_at=2026-09-15 10:06:23 UTC, is_locked=False)
 ln$Feature(name = "assay_oid", dtype = bt$ExperimentalFactor$ontology_id)$save()
-#> Feature(uid='hJfqEFGQss5A', is_type=False, name='assay_oid', _dtype_str='cat[bionty.ExperimentalFactor.ontology_id]', unit=None, description=None, array_rank=0, array_size=0, array_shape=None, synonyms=None, default_value=None, nullable=True, coerce=None, branch_id=1, created_on_id=1, space_id=1, created_by_id=1, run_id=1, type_id=None, created_at=2026-08-25 14:24:37 UTC, is_locked=False)
+#> ! tip: pass `type` to map feature into a type hierarchy
+#> Feature(uid='Smynoo1p4h6G', is_type=False, name='assay_oid', _dtype_str='cat[bionty.ExperimentalFactor.ontology_id]', unit=None, description=None, array_rank=0, array_size=0, array_shape=None, synonyms=None, default_value=None, nullable=True, coerce=None, branch_id=1, created_on_id=1, space_id=1, created_by_id=1, run_id=1, type_id=None, created_at=2026-09-15 10:06:23 UTC, is_locked=False)
 ln$Feature(name = "donor", dtype = "str", nullable = TRUE)$save()
 #> ! rather than passing a string 'str' to dtype, consider passing a Python object
-#> Feature(uid='xWSnAMymGXYy', is_type=False, name='donor', _dtype_str='str', unit=None, description=None, array_rank=0, array_size=0, array_shape=None, synonyms=None, default_value=None, nullable=True, coerce=None, branch_id=1, created_on_id=1, space_id=1, created_by_id=1, run_id=1, type_id=None, created_at=2026-08-25 14:24:38 UTC, is_locked=False)
+#> ! tip: pass `type` to map feature into a type hierarchy
+#> Feature(uid='OFrVrM6Me6Dn', is_type=False, name='donor', _dtype_str='str', unit=None, description=None, array_rank=0, array_size=0, array_shape=None, synonyms=None, default_value=None, nullable=True, coerce=None, branch_id=1, created_on_id=1, space_id=1, created_by_id=1, run_id=1, type_id=None, created_at=2026-09-15 10:06:23 UTC, is_locked=False)
 ln$Feature(name = "concentration", dtype = "str")$save()
 #> ! rather than passing a string 'str' to dtype, consider passing a Python object
-#> Feature(uid='rVbRdIorEHD7', is_type=False, name='concentration', _dtype_str='str', unit=None, description=None, array_rank=0, array_size=0, array_shape=None, synonyms=None, default_value=None, nullable=True, coerce=None, branch_id=1, created_on_id=1, space_id=1, created_by_id=1, run_id=1, type_id=None, created_at=2026-08-25 14:24:38 UTC, is_locked=False)
+#> ! tip: pass `type` to map feature into a type hierarchy
+#> Feature(uid='c1SnIecFdqkI', is_type=False, name='concentration', _dtype_str='str', unit=None, description=None, array_rank=0, array_size=0, array_shape=None, synonyms=None, default_value=None, nullable=True, coerce=None, branch_id=1, created_on_id=1, space_id=1, created_by_id=1, run_id=1, type_id=None, created_at=2026-09-15 10:06:23 UTC, is_locked=False)
 ln$Feature(name = "treatment_time_h", dtype = "num", coerce_dtype = TRUE)$save()
-#> Feature(uid='1xfZSrC81dTA', is_type=False, name='treatment_time_h', _dtype_str='num', unit=None, description=None, array_rank=0, array_size=0, array_shape=None, synonyms=None, default_value=None, nullable=True, coerce=True, branch_id=1, created_on_id=1, space_id=1, created_by_id=1, run_id=1, type_id=None, created_at=2026-08-25 14:24:38 UTC, is_locked=False)
+#> ! tip: pass `type` to map feature into a type hierarchy
+#> Feature(uid='howg5piJDt2k', is_type=False, name='treatment_time_h', _dtype_str='num', unit=None, description=None, array_rank=0, array_size=0, array_shape=None, synonyms=None, default_value=None, nullable=True, coerce=True, branch_id=1, created_on_id=1, space_id=1, created_by_id=1, run_id=1, type_id=None, created_at=2026-09-15 10:06:24 UTC, is_locked=False)
 
 # define a schema that merely enforces a feature identifier type
 schema <- ln$Schema(itype = ln$Feature)$save()
@@ -355,9 +369,9 @@ schema <- ln$Schema(itype = ln$Feature)$save()
 testthat::expect_error(
   artifact <- ln$Artifact$from_dataframe(df, key = "my_datasets/rnaseq1.parquet", schema = schema)
 )
-#> → returning artifact with same hash: Artifact(uid='UiynzdEembL61vfN0000', key='my_datasets/rnaseq1.parquet', description=None, suffix='.parquet', kind='dataset', otype='DataFrame', size=9491, hash='il4_vyW-1h8P2oAjs0lCgQ', n_files=None, n_observations=3, extra_data=None, branch_id=1, created_on_id=1, space_id=1, storage_id=1, run_id=1, schema_id=None, created_by_id=1, created_at=2026-08-25 14:24:12 UTC, is_locked=False, version_tag=None, is_latest=True); to track this artifact as an input, use: ln.Artifact.get()
+#> → returning artifact with same hash: Artifact(uid='R45doSMBjKlFLiiH0000', key='my_datasets/rnaseq1.parquet', description=None, suffix='.parquet', kind='dataset', otype='DataFrame', size=9452, hash='LjVO1hFa6ZLMT8VpocO_MA', n_files=None, n_observations=3, extra_data=None, branch_id=1, created_on_id=1, space_id=1, storage_id=1, run_id=1, schema_id=None, created_by_id=1, created_at=2026-09-15 10:05:57 UTC, is_locked=False, version_tag=None, is_latest=True); to track this artifact as an input, use: ln.Artifact.get()
 #> → loading artifact into memory for validation
-#> ... synchronizing df_all__efo__3.85.0__ExperimentalFactor.parquet:  0.0%... synchronizing df_all__efo__3.85.0__ExperimentalFactor.parquet:  0.9%... synchronizing df_all__efo__3.85.0__ExperimentalFactor.parquet:  4.5%... synchronizing df_all__efo__3.85.0__ExperimentalFactor.parquet:  5.7%... synchronizing df_all__efo__3.85.0__ExperimentalFactor.parquet:  9.3%... synchronizing df_all__efo__3.85.0__ExperimentalFactor.parquet: 11.5%... synchronizing df_all__efo__3.85.0__ExperimentalFactor.parquet: 15.1%... synchronizing df_all__efo__3.85.0__ExperimentalFactor.parquet: 16.2%... synchronizing df_all__efo__3.85.0__ExperimentalFactor.parquet: 19.9%... synchronizing df_all__efo__3.85.0__ExperimentalFactor.parquet: 21.0%... synchronizing df_all__efo__3.85.0__ExperimentalFactor.parquet: 24.6%... synchronizing df_all__efo__3.85.0__ExperimentalFactor.parquet: 26.8%... synchronizing df_all__efo__3.85.0__ExperimentalFactor.parquet: 30.4%... synchronizing df_all__efo__3.85.0__ExperimentalFactor.parquet: 31.6%... synchronizing df_all__efo__3.85.0__ExperimentalFactor.parquet: 35.2%... synchronizing df_all__efo__3.85.0__ExperimentalFactor.parquet: 37.3%... synchronizing df_all__efo__3.85.0__ExperimentalFactor.parquet: 40.9%... synchronizing df_all__efo__3.85.0__ExperimentalFactor.parquet: 42.1%... synchronizing df_all__efo__3.85.0__ExperimentalFactor.parquet: 45.7%... synchronizing df_all__efo__3.85.0__ExperimentalFactor.parquet: 46.9%... synchronizing df_all__efo__3.85.0__ExperimentalFactor.parquet: 50.5%... synchronizing df_all__efo__3.85.0__ExperimentalFactor.parquet: 52.6%... synchronizing df_all__efo__3.85.0__ExperimentalFactor.parquet: 56.2%... synchronizing df_all__efo__3.85.0__ExperimentalFactor.parquet: 57.4%... synchronizing df_all__efo__3.85.0__ExperimentalFactor.parquet: 61.0%... synchronizing df_all__efo__3.85.0__ExperimentalFactor.parquet: 63.1%... synchronizing df_all__efo__3.85.0__ExperimentalFactor.parquet: 66.7%... synchronizing df_all__efo__3.85.0__ExperimentalFactor.parquet: 68.9%... synchronizing df_all__efo__3.85.0__ExperimentalFactor.parquet: 72.5%... synchronizing df_all__efo__3.85.0__ExperimentalFactor.parquet: 74.7%... synchronizing df_all__efo__3.85.0__ExperimentalFactor.parquet: 78.3%... synchronizing df_all__efo__3.85.0__ExperimentalFactor.parquet: 81.9%... synchronizing df_all__efo__3.85.0__ExperimentalFactor.parquet: 82.3%... synchronizing df_all__efo__3.85.0__ExperimentalFactor.parquet: 85.9%... synchronizing df_all__efo__3.85.0__ExperimentalFactor.parquet: 88.1%... synchronizing df_all__efo__3.85.0__ExperimentalFactor.parquet: 89.0%... synchronizing df_all__efo__3.85.0__ExperimentalFactor.parquet: 92.6%... synchronizing df_all__efo__3.85.0__ExperimentalFactor.parquet: 96.2%... synchronizing df_all__efo__3.85.0__ExperimentalFactor.parquet: 99.8%... synchronizing df_all__efo__3.85.0__ExperimentalFactor.parquet: 100.0%
+#> ... synchronizing df_all__efo__3.93.0__ExperimentalFactor.parquet:  0.0%... synchronizing df_all__efo__3.93.0__ExperimentalFactor.parquet:  1.0%... synchronizing df_all__efo__3.93.0__ExperimentalFactor.parquet:  4.8%... synchronizing df_all__efo__3.93.0__ExperimentalFactor.parquet:  6.0%... synchronizing df_all__efo__3.93.0__ExperimentalFactor.parquet:  9.8%... synchronizing df_all__efo__3.93.0__ExperimentalFactor.parquet: 12.1%... synchronizing df_all__efo__3.93.0__ExperimentalFactor.parquet: 15.9%... synchronizing df_all__efo__3.93.0__ExperimentalFactor.parquet: 17.1%... synchronizing df_all__efo__3.93.0__ExperimentalFactor.parquet: 21.0%... synchronizing df_all__efo__3.93.0__ExperimentalFactor.parquet: 23.2%... synchronizing df_all__efo__3.93.0__ExperimentalFactor.parquet: 27.0%... synchronizing df_all__efo__3.93.0__ExperimentalFactor.parquet: 28.3%... synchronizing df_all__efo__3.93.0__ExperimentalFactor.parquet: 32.1%... synchronizing df_all__efo__3.93.0__ExperimentalFactor.parquet: 34.3%... synchronizing df_all__efo__3.93.0__ExperimentalFactor.parquet: 38.1%... synchronizing df_all__efo__3.93.0__ExperimentalFactor.parquet: 39.4%... synchronizing df_all__efo__3.93.0__ExperimentalFactor.parquet: 43.2%... synchronizing df_all__efo__3.93.0__ExperimentalFactor.parquet: 44.4%... synchronizing df_all__efo__3.93.0__ExperimentalFactor.parquet: 48.2%... synchronizing df_all__efo__3.93.0__ExperimentalFactor.parquet: 49.5%... synchronizing df_all__efo__3.93.0__ExperimentalFactor.parquet: 53.3%... synchronizing df_all__efo__3.93.0__ExperimentalFactor.parquet: 55.5%... synchronizing df_all__efo__3.93.0__ExperimentalFactor.parquet: 59.3%... synchronizing df_all__efo__3.93.0__ExperimentalFactor.parquet: 60.6%... synchronizing df_all__efo__3.93.0__ExperimentalFactor.parquet: 64.4%... synchronizing df_all__efo__3.93.0__ExperimentalFactor.parquet: 65.6%... synchronizing df_all__efo__3.93.0__ExperimentalFactor.parquet: 69.4%... synchronizing df_all__efo__3.93.0__ExperimentalFactor.parquet: 70.7%... synchronizing df_all__efo__3.93.0__ExperimentalFactor.parquet: 74.5%... synchronizing df_all__efo__3.93.0__ExperimentalFactor.parquet: 76.8%... synchronizing df_all__efo__3.93.0__ExperimentalFactor.parquet: 80.6%... synchronizing df_all__efo__3.93.0__ExperimentalFactor.parquet: 81.8%... synchronizing df_all__efo__3.93.0__ExperimentalFactor.parquet: 85.6%... synchronizing df_all__efo__3.93.0__ExperimentalFactor.parquet: 86.9%... synchronizing df_all__efo__3.93.0__ExperimentalFactor.parquet: 90.7%... synchronizing df_all__efo__3.93.0__ExperimentalFactor.parquet: 91.9%... synchronizing df_all__efo__3.93.0__ExperimentalFactor.parquet: 95.7%... synchronizing df_all__efo__3.93.0__ExperimentalFactor.parquet: 98.0%... synchronizing df_all__efo__3.93.0__ExperimentalFactor.parquet: 100.0%
 ```
 
 #### Make a new version of an artifact
@@ -372,20 +386,20 @@ df["sample2", "perturbation"] <- "IFNG"
 
 # create a new version
 artifact <- ln$Artifact$from_dataframe(df, key = "my_datasets/rnaseq1.parquet", schema = schema)$save()
-#> → creating new artifact version for key 'my_datasets/rnaseq1.parquet' in storage '/tmp/Rtmpr14Xu8/laminr-intro-20260825142354'
+#> → creating new artifact version for key 'my_datasets/rnaseq1.parquet' in storage '/tmp/RtmpcgPv1P/laminr-intro-20260915100546'
 #> → loading artifact into memory for validation
 
 # see the annotations
 artifact$describe()
 #> Artifact: my_datasets/rnaseq1.parquet (0001)
-#> ├── uid: UiynzdEembL61vfN0001            run: VBGzUbG (introduction.Rmd)
+#> ├── uid: R45doSMBjKlFLiiH0001            run: ypGiSaf (introduction.Rmd)
 #> │   kind: dataset                        otype: DataFrame               
-#> │   hash: yZwe029fdZ6e1CXGO__ABQ         size: 9.3 KB                   
+#> │   hash: ddPDeAJOAKhBAFxfpyavIg         size: 9.2 KB                   
 #> │   branch: main                         space: all                     
-#> │   created_at: 2026-08-25 14:26:01 UTC  created_by: testuser1          
+#> │   created_at: 2026-09-15 10:07:45 UTC  created_by: testuser1          
 #> │   n_observations: 3                    schema: 0000000                
 #> ├── storage/path: 
-#> │   /tmp/Rtmpr14Xu8/laminr-intro-20260825142354/.lamindb/UiynzdEembL61vfN0001.pa
+#> │   /tmp/RtmpcgPv1P/laminr-intro-20260915100546/.lamindb/R45doSMBjKlFLiiH0001.pa
 #> │   rquet
 #> ├── Dataset features
 #> │   └── columns (7)                                                             
@@ -403,22 +417,22 @@ artifact$describe()
 
 # simplest way to check that artifact was validated
 artifact$schema
-#> Schema(uid='0000000000000000', is_type=False, name=None, description=None, n_members=None, coerce=None, flexible=True, itype='Feature', otype=None, suffix=None, hash='kMi7B_N88uu-YnbTLDU-DA', minimal_set=True, ordered_set=False, maximal_set=False, branch_id=1, created_on_id=1, space_id=1, created_by_id=1, run_id=1, type_id=None, created_at=2026-08-25 14:24:38 UTC, is_locked=False)
+#> Schema(uid='0000000000000000', is_type=False, name=None, description=None, n_members=None, coerce=None, flexible=True, itype='Feature', otype=None, suffix=None, hash='kMi7B_N88uu-YnbTLDU-DA', minimal_set=True, ordered_set=False, maximal_set=False, branch_id=1, created_on_id=1, space_id=1, created_by_id=1, run_id=1, type_id=None, created_at=2026-09-15 10:06:24 UTC, is_locked=False)
 
 # see all versions of an artifact
 artifact$versions$to_dataframe()
 #>                    uid                         key description   suffix    kind
-#> 2 UiynzdEembL61vfN0001 my_datasets/rnaseq1.parquet        <NA> .parquet dataset
-#> 1 UiynzdEembL61vfN0000 my_datasets/rnaseq1.parquet        <NA> .parquet dataset
+#> 3 R45doSMBjKlFLiiH0001 my_datasets/rnaseq1.parquet        <NA> .parquet dataset
+#> 2 R45doSMBjKlFLiiH0000 my_datasets/rnaseq1.parquet        <NA> .parquet dataset
 #>       otype size                   hash n_files n_observations extra_data
-#> 2 DataFrame 9491 yZwe029fdZ6e1CXGO__ABQ    <NA>              3       <NA>
-#> 1 DataFrame 9491 il4_vyW-1h8P2oAjs0lCgQ    <NA>              3       <NA>
+#> 3 DataFrame 9452 ddPDeAJOAKhBAFxfpyavIg    <NA>              3       <NA>
+#> 2 DataFrame 9452 LjVO1hFa6ZLMT8VpocO_MA    <NA>              3       <NA>
 #>   version_tag is_latest is_locked          created_at branch_id created_on_id
-#> 2        <NA>      TRUE     FALSE 2026-08-25 14:26:01         1             1
-#> 1        <NA>     FALSE     FALSE 2026-08-25 14:24:12         1             1
+#> 3        <NA>      TRUE     FALSE 2026-09-15 10:07:45         1             1
+#> 2        <NA>     FALSE     FALSE 2026-09-15 10:05:57         1             1
 #>   space_id storage_id run_id schema_id created_by_id
-#> 2        1          1      1         1             1
-#> 1        1          1      1       NaN             1
+#> 3        1          1      1         1             1
+#> 2        1          1      1       NaN             1
 ```
 
 ### Query & search registries
@@ -429,27 +443,27 @@ See <https://docs.lamin.ai/tutorial#query-search-registries>
 
 ln$Artifact$to_dataframe()
 #>                    uid                         key description   suffix    kind
-#> 2 UiynzdEembL61vfN0001 my_datasets/rnaseq1.parquet        <NA> .parquet dataset
-#> 1 UiynzdEembL61vfN0000 my_datasets/rnaseq1.parquet        <NA> .parquet dataset
+#> 3 R45doSMBjKlFLiiH0001 my_datasets/rnaseq1.parquet        <NA> .parquet dataset
+#> 2 R45doSMBjKlFLiiH0000 my_datasets/rnaseq1.parquet        <NA> .parquet dataset
 #>       otype size                   hash n_files n_observations extra_data
-#> 2 DataFrame 9491 yZwe029fdZ6e1CXGO__ABQ    <NA>              3       <NA>
-#> 1 DataFrame 9491 il4_vyW-1h8P2oAjs0lCgQ    <NA>              3       <NA>
+#> 3 DataFrame 9452 ddPDeAJOAKhBAFxfpyavIg    <NA>              3       <NA>
+#> 2 DataFrame 9452 LjVO1hFa6ZLMT8VpocO_MA    <NA>              3       <NA>
 #>   version_tag is_latest is_locked          created_at branch_id created_on_id
-#> 2        <NA>      TRUE     FALSE 2026-08-25 14:26:01         1             1
-#> 1        <NA>     FALSE     FALSE 2026-08-25 14:24:12         1             1
+#> 3        <NA>      TRUE     FALSE 2026-09-15 10:07:45         1             1
+#> 2        <NA>     FALSE     FALSE 2026-09-15 10:05:57         1             1
 #>   space_id storage_id run_id schema_id created_by_id
-#> 2        1          1      1         1             1
-#> 1        1          1      1       NaN             1
+#> 3        1          1      1         1             1
+#> 2        1          1      1       NaN             1
 ln$Artifact$to_dataframe(include = "features")
 #>                    uid                         key temperature    experiment
-#> 2 UiynzdEembL61vfN0001 my_datasets/rnaseq1.parquet         NaN          <NA>
-#> 1 UiynzdEembL61vfN0000 my_datasets/rnaseq1.parquet        21.6 My experiment
+#> 3 R45doSMBjKlFLiiH0001 my_datasets/rnaseq1.parquet         NaN          <NA>
+#> 2 R45doSMBjKlFLiiH0000 my_datasets/rnaseq1.parquet        21.6 My experiment
 #>       perturbation   cell_type_by_model
-#> 2 {'DMSO', 'IFNG'} {'B cell', 'T cell'}
-#> 1              NaN                  NaN
+#> 3 {'IFNG', 'DMSO'} {'T cell', 'B cell'}
+#> 2              NaN                  NaN
 #>                             cell_type_by_expert   assay_oid
-#> 2 {'B cell', 'CD8-positive, alpha-beta T cell'} EFO:0008913
-#> 1                                           NaN        <NA>
+#> 3 {'CD8-positive, alpha-beta T cell', 'B cell'} EFO:0008913
+#> 2                                           NaN        <NA>
 ln$Artifact
 #> <class 'lamindb.models.artifact.Artifact'>
 #>  signature: (*args, **kwargs)
@@ -460,53 +474,53 @@ ln$view()
 #> Artifact
 #>                      uid                          key  ... schema_id created_by_id
 #> id                                                     ...                        
-#> 2   UiynzdEembL61vfN0001  my_datasets/rnaseq1.parquet  ...       1.0             1
-#> 1   UiynzdEembL61vfN0000  my_datasets/rnaseq1.parquet  ...       NaN             1
+#> 2   R45doSMBjKlFLiiH0001  my_datasets/rnaseq1.parquet  ...       1.0             1
+#> 1   R45doSMBjKlFLiiH0000  my_datasets/rnaseq1.parquet  ...       NaN             1
 #> 
 #> [2 rows x 22 columns]
 #> Feature
 #>              uid                 name  ... run_id type_id
 #> id                                     ...               
-#> 9   1xfZSrC81dTA     treatment_time_h  ...      1    None
-#> 8   rVbRdIorEHD7        concentration  ...      1    None
-#> 7   xWSnAMymGXYy                donor  ...      1    None
-#> 6   hJfqEFGQss5A            assay_oid  ...      1    None
-#> 5   WXqw2dfIxDLx  cell_type_by_expert  ...      1    None
-#> 4   UIAJKyL9Jh31   cell_type_by_model  ...      1    None
-#> 3   WCgquBau0M6l         perturbation  ...      1    None
+#> 9   howg5piJDt2k     treatment_time_h  ...      1    None
+#> 8   c1SnIecFdqkI        concentration  ...      1    None
+#> 7   OFrVrM6Me6Dn                donor  ...      1    None
+#> 6   Smynoo1p4h6G            assay_oid  ...      1    None
+#> 5   isAcs0qguMxf  cell_type_by_expert  ...      1    None
+#> 4   WCvzpWJoqJh7   cell_type_by_model  ...      1    None
+#> 3   uEbN7GQtzf2d         perturbation  ...      1    None
 #> 
 #> [7 rows x 21 columns]
 #> Record
 #>                  uid           name description  ... type_id schema_id run_id
 #> id                                               ...                         
-#> 3   dhxwvLb7qi8fAK3O           IFNG        None  ...    None      None      1
-#> 2   nzR6hHLatQe1XYVS           DMSO        None  ...    None      None      1
-#> 1   kqT0rmxA1ZD8uiaz  My experiment        None  ...    None      None      1
+#> 3   Z4Ci439TolQoPnSq           IFNG        None  ...    None      None      1
+#> 2   PTIW5kOQ6qBztbzt           DMSO        None  ...    None      None      1
+#> 1   W3BpBiDAkjqzlxbi  My experiment        None  ...    None      None      1
 #> 
 #> [3 rows x 16 columns]
 #> Run
 #>                  uid  name  ... created_by_id initiated_by_run_id
 #> id                          ...                                  
-#> 1   VBGzUbG8bAfPzpjT  None  ...             1                None
+#> 1   ypGiSafWBahEot9c  None  ...             1                None
 #> 
 #> [1 rows x 22 columns]
 #> Schema
 #>                  uid  name description  ...  created_by_id run_id  type_id
 #> id                                      ...                               
-#> 2   KOwEB52xeEcONUFK  None        None  ...              1      1     None
+#> 2   HCGc5BcpKIMoAHIW  None        None  ...              1      1     None
 #> 1   0000000000000000  None        None  ...              1      1     None
 #> 
 #> [2 rows x 22 columns]
 #> Storage
 #>              uid  ... run_id
 #> id                ...       
-#> 1   sSIvts0B5pH6  ...   None
+#> 1   iIBgn4OndnWq  ...   None
 #> 
 #> [1 rows x 13 columns]
 #> Transform
 #>                  uid               key  ... run_id created_by_id
 #> id                                      ...                     
-#> 1   fTyP2X15T36Y0000  introduction.Rmd  ...   None             1
+#> 1   JujpHULggz0W0000  introduction.Rmd  ...   None             1
 #> 
 #> [1 rows x 19 columns]
 #> ******************
@@ -525,16 +539,17 @@ ln$view()
 #> 
 #> [7 rows x 14 columns]
 #> ExperimentalFactor
-#>                uid                        name  ... run_id source_id
-#> id                                              ...                 
-#> 6   2zGOHoUsHHJFcp      single cell sequencing  ...      1        31
-#> 5   6dI7vyK20eylfD          assay by sequencer  ...      1        31
-#> 4   6oIjaW4XFc0Cv3         assay by instrument  ...      1        31
-#> 3   1wLRxESwCItpOF           assay by molecule  ...      1        31
-#> 2   789nVHwo8zWbXT                   RNA assay  ...      1        31
-#> 1   4WYv9kl0W2SroY  single-cell RNA sequencing  ...      1        31
+#>                uid                                name  ... run_id source_id
+#> id                                                      ...                 
+#> 9   7RW2qSqGC6PONH                        sc/snRNA-seq  ...      1        31
+#> 8   3C8KLOGpZkHsC5                             RNA-Seq  ...      1        31
+#> 7   2zGOHoUsHHJFcp              single cell sequencing  ...      1        31
+#> 6   6dI7vyK20eylfD                  assay by sequencer  ...      1        31
+#> 5   6oIjaW4XFc0Cv3                 assay by instrument  ...      1        31
+#> 4   1wLRxESwCItpOF                   assay by molecule  ...      1        31
+#> 3   5SxWpxFdjEFZHz  assay by high throughput sequencer  ...      1        31
 #> 
-#> [6 rows x 14 columns]
+#> [7 rows x 14 columns]
 #> Source
 #>          uid                     entity  ... run_id dataframe_artifact_id
 #> id                                       ...                             
@@ -542,8 +557,8 @@ ln$view()
 #> 42  7au3ZQrD           bionty.Ethnicity  ...   None                  None
 #> 41  6na9vRls  bionty.DevelopmentalStage  ...   None                  None
 #> 40  7JO1x6p1  bionty.DevelopmentalStage  ...   None                  None
-#> 39  1atB0WnU                       Drug  ...   None                  None
-#> 38  ugaIoIlj                       Drug  ...   None                  None
+#> 39  ugaIoIlj                       Drug  ...   None                  None
+#> 38  6bSx9Bpd                       Drug  ...   None                  None
 #> 37  3rm9aOzL                BFXPipeline  ...   None                  None
 #> 
 #> [7 rows x 19 columns]
@@ -555,17 +570,17 @@ transform <- ln$Transform$get(key = "introduction.Rmd")
 # like AWS S3, as the prefix of the storage key)
 ln$Artifact$filter(key__startswith = "my_datasets/")$to_dataframe()
 #>                    uid                         key description   suffix    kind
-#> 2 UiynzdEembL61vfN0001 my_datasets/rnaseq1.parquet        <NA> .parquet dataset
-#> 1 UiynzdEembL61vfN0000 my_datasets/rnaseq1.parquet        <NA> .parquet dataset
+#> 3 R45doSMBjKlFLiiH0001 my_datasets/rnaseq1.parquet        <NA> .parquet dataset
+#> 2 R45doSMBjKlFLiiH0000 my_datasets/rnaseq1.parquet        <NA> .parquet dataset
 #>       otype size                   hash n_files n_observations extra_data
-#> 2 DataFrame 9491 yZwe029fdZ6e1CXGO__ABQ    <NA>              3       <NA>
-#> 1 DataFrame 9491 il4_vyW-1h8P2oAjs0lCgQ    <NA>              3       <NA>
+#> 3 DataFrame 9452 ddPDeAJOAKhBAFxfpyavIg    <NA>              3       <NA>
+#> 2 DataFrame 9452 LjVO1hFa6ZLMT8VpocO_MA    <NA>              3       <NA>
 #>   version_tag is_latest is_locked          created_at branch_id created_on_id
-#> 2        <NA>      TRUE     FALSE 2026-08-25 14:26:01         1             1
-#> 1        <NA>     FALSE     FALSE 2026-08-25 14:24:12         1             1
+#> 3        <NA>      TRUE     FALSE 2026-09-15 10:07:45         1             1
+#> 2        <NA>     FALSE     FALSE 2026-09-15 10:05:57         1             1
 #>   space_id storage_id run_id schema_id created_by_id
-#> 2        1          1      1         1             1
-#> 1        1          1      1       NaN             1
+#> 3        1          1      1         1             1
+#> 2        1          1      1       NaN             1
 
 # query all artifacts ingested from a transform
 artifacts <- ln$Artifact$filter(transform = transform)$all()
@@ -604,7 +619,7 @@ See <https://docs.lamin.ai/tutorial#manage-files-folders>
 
 # we use anon=True here in case no aws credentials are configured
 ln$UPath("s3://lamindata/iris_studies", anon = TRUE)$view_tree()
-#> 3 sub-directories & 151 files with suffixes '.csv', '.jpg'
+#> 3 sub-directories & 151 files with suffixes '.jpg', '.csv'
 #> s3://lamindata/iris_studies
 #> ├── study0_raw_images/
 #> │   ├── iris-0337d20a3b7273aa0ddaa7d6afb57a37a759b060e4401871db3cefaa6adc068d.jpg
@@ -762,22 +777,23 @@ ln$UPath("s3://lamindata/iris_studies", anon = TRUE)$view_tree()
 #>     └── meta.csv
 
 artifact <- ln$Artifact("s3://lamindata/iris_studies/study0_raw_images")$save()
+#> ! storage location s3://lamindata is already marked with uid D9BilDV2, meaning that it is managed by another LaminDB instance -- if you manage your instance with LaminHub you get an overview of all your storage locations
 #> → referenced read-only storage location at s3://lamindata, is managed by instance with uid 4XIuR0tvaiXM
 artifact
-#> Artifact(uid='JoatOv0m4wIfq9g40000', key='iris_studies/study0_raw_images', description=None, suffix='', kind=None, otype=None, size=658465, hash='b4mOx8qRVGKmI2-4tw2WCw', n_files=51, n_observations=None, extra_data=None, branch_id=1, created_on_id=1, space_id=1, storage_id=2, run_id=1, schema_id=None, created_by_id=1, created_at=2026-08-25 14:26:05 UTC, is_locked=False, version_tag=None, is_latest=True)
+#> Artifact(uid='Wo4b0JKjdREk6pAp0000', key='iris_studies/study0_raw_images', description=None, suffix='', kind=None, otype=None, size=658465, hash='b4mOx8qRVGKmI2-4tw2WCw', n_files=51, n_observations=None, extra_data=None, branch_id=1, created_on_id=1, space_id=1, storage_id=2, run_id=1, schema_id=None, created_by_id=1, created_at=2026-09-15 10:07:49 UTC, is_locked=False, version_tag=None, is_latest=True)
 
 artifact$path
 #> S3QueryPath('lamindata/iris_studies/study0_raw_images', protocol='s3')
 ln$Storage$to_dataframe()
 #>            uid                                        root description  type
-#> 2 YmV3ZoHvAAAA                              s3://lamindata        <NA>    s3
-#> 1 sSIvts0B5pH6 /tmp/Rtmpr14Xu8/laminr-intro-20260825142354        <NA> local
+#> 3     D9BilDV2                              s3://lamindata        <NA>    s3
+#> 2 iIBgn4OndnWq /tmp/RtmpcgPv1P/laminr-intro-20260915100546        <NA> local
 #>      region instance_uid is_locked          created_at branch_id created_on_id
-#> 2 us-east-1 4XIuR0tvaiXM     FALSE 2026-08-25 14:26:04         1             1
-#> 1      <NA> 1rJkqJtbzGFZ     FALSE 2026-08-25 14:24:08         1             1
+#> 3 us-east-1 4XIuR0tvaiXM     FALSE 2026-09-15 10:07:49         1             1
+#> 2      <NA> 4Jt8ySclsmXN     FALSE 2026-09-15 10:05:52         1             1
 #>   space_id created_by_id run_id
-#> 2        1             1      1
-#> 1        1             1    NaN
+#> 3        1             1      1
+#> 2        1             1    NaN
 ```
 
 ### Manage biological registries
@@ -793,8 +809,8 @@ cell_type_ontology
 #> PublicOntology
 #> Entity: CellType
 #> Organism: all
-#> Source: cl, 2025-12-17
-#> #terms: 3437
+#> Source: cl, 2026-06-08
+#> #terms: 3533
 
 cell_type_ontology$search("gamma-delta T cell") |> head(n = 2)
 #>                                  name
@@ -804,11 +820,11 @@ cell_type_ontology$search("gamma-delta T cell") |> head(n = 2)
 #> CL:0000798 A T Cell That Expresses A Gamma-Delta T Cell Receptor Complex.
 #> CL:4033072                       A(N) Gamma-Delta T Cell That Is Cycling.
 #>                                                                                          synonyms
-#> CL:0000798 gammadelta T cell|gamma-delta T-lymphocyte|gamma-delta T lymphocyte|gamma-delta T-cell
+#> CL:0000798 gamma-delta T lymphocyte|gamma-delta T-lymphocyte|gamma-delta T-cell|gammadelta T cell
 #> CL:4033072                                                       proliferating gamma-delta T cell
 #>                           parents
 #> CL:0000798             CL:0000084
-#> CL:4033072 CL:0000798, CL:4033069
+#> CL:4033072 CL:4033069, CL:0000798
 
 # create an ontology-coupled cell type record and save it
 neuron <- bt$CellType$from_source(name = "neuron")$save()
@@ -851,20 +867,20 @@ artifact <- ln$Artifact$from_anndata(
   key = "my_datasets/my_rnaseq1.h5ad", schema = anndata_schema
 )$save()
 #> → loading artifact into memory for validation
-#> ... synchronizing ensembl_prefix.parquet:  0.0%... synchronizing ensembl_prefix.parquet: 41.8%... synchronizing ensembl_prefix.parquet: 100.0%
-#> ... synchronizing df_vertebrates__ensembl__release-114__Organism.parquet:  0.0%... synchronizing df_vertebrates__ensembl__release-114__Organism.parquet: 42.7%... synchronizing df_vertebrates__ensembl__release-114__Organism.parquet: 100.0%
-#> ... synchronizing df_human__ensembl__release-114__Gene.parquet:  0.0%... synchronizing df_human__ensembl__release-114__Gene.parquet:  0.6%... synchronizing df_human__ensembl__release-114__Gene.parquet:  3.1%... synchronizing df_human__ensembl__release-114__Gene.parquet:  3.9%... synchronizing df_human__ensembl__release-114__Gene.parquet:  6.4%... synchronizing df_human__ensembl__release-114__Gene.parquet:  7.8%... synchronizing df_human__ensembl__release-114__Gene.parquet: 10.2%... synchronizing df_human__ensembl__release-114__Gene.parquet: 11.0%... synchronizing df_human__ensembl__release-114__Gene.parquet: 13.5%... synchronizing df_human__ensembl__release-114__Gene.parquet: 14.3%... synchronizing df_human__ensembl__release-114__Gene.parquet: 16.7%... synchronizing df_human__ensembl__release-114__Gene.parquet: 18.2%... synchronizing df_human__ensembl__release-114__Gene.parquet: 20.6%... synchronizing df_human__ensembl__release-114__Gene.parquet: 21.4%... synchronizing df_human__ensembl__release-114__Gene.parquet: 23.8%... synchronizing df_human__ensembl__release-114__Gene.parquet: 24.6%... synchronizing df_human__ensembl__release-114__Gene.parquet: 27.1%... synchronizing df_human__ensembl__release-114__Gene.parquet: 28.5%... synchronizing df_human__ensembl__release-114__Gene.parquet: 30.9%... synchronizing df_human__ensembl__release-114__Gene.parquet: 31.7%... synchronizing df_human__ensembl__release-114__Gene.parquet: 34.2%... synchronizing df_human__ensembl__release-114__Gene.parquet: 35.0%... synchronizing df_human__ensembl__release-114__Gene.parquet: 37.4%... synchronizing df_human__ensembl__release-114__Gene.parquet: 38.9%... synchronizing df_human__ensembl__release-114__Gene.parquet: 41.3%... synchronizing df_human__ensembl__release-114__Gene.parquet: 42.1%... synchronizing df_human__ensembl__release-114__Gene.parquet: 44.5%... synchronizing df_human__ensembl__release-114__Gene.parquet: 45.3%... synchronizing df_human__ensembl__release-114__Gene.parquet: 47.8%... synchronizing df_human__ensembl__release-114__Gene.parquet: 49.2%... synchronizing df_human__ensembl__release-114__Gene.parquet: 51.6%... synchronizing df_human__ensembl__release-114__Gene.parquet: 52.4%... synchronizing df_human__ensembl__release-114__Gene.parquet: 54.9%... synchronizing df_human__ensembl__release-114__Gene.parquet: 55.7%... synchronizing df_human__ensembl__release-114__Gene.parquet: 58.1%... synchronizing df_human__ensembl__release-114__Gene.parquet: 59.6%... synchronizing df_human__ensembl__release-114__Gene.parquet: 62.0%... synchronizing df_human__ensembl__release-114__Gene.parquet: 62.8%... synchronizing df_human__ensembl__release-114__Gene.parquet: 65.2%... synchronizing df_human__ensembl__release-114__Gene.parquet: 66.0%... synchronizing df_human__ensembl__release-114__Gene.parquet: 68.5%... synchronizing df_human__ensembl__release-114__Gene.parquet: 69.9%... synchronizing df_human__ensembl__release-114__Gene.parquet: 72.3%... synchronizing df_human__ensembl__release-114__Gene.parquet: 73.1%... synchronizing df_human__ensembl__release-114__Gene.parquet: 75.6%... synchronizing df_human__ensembl__release-114__Gene.parquet: 77.0%... synchronizing df_human__ensembl__release-114__Gene.parquet: 79.4%... synchronizing df_human__ensembl__release-114__Gene.parquet: 80.3%... synchronizing df_human__ensembl__release-114__Gene.parquet: 82.7%... synchronizing df_human__ensembl__release-114__Gene.parquet: 83.5%... synchronizing df_human__ensembl__release-114__Gene.parquet: 85.9%... synchronizing df_human__ensembl__release-114__Gene.parquet: 86.7%... synchronizing df_human__ensembl__release-114__Gene.parquet: 89.2%... synchronizing df_human__ensembl__release-114__Gene.parquet: 90.6%... synchronizing df_human__ensembl__release-114__Gene.parquet: 93.0%... synchronizing df_human__ensembl__release-114__Gene.parquet: 94.5%... synchronizing df_human__ensembl__release-114__Gene.parquet: 96.9%... synchronizing df_human__ensembl__release-114__Gene.parquet: 97.7%... synchronizing df_human__ensembl__release-114__Gene.parquet: 100.0%
-#> → returning schema with same hash: Schema(uid='KOwEB52xeEcONUFK', is_type=False, name=None, description=None, n_members=7, coerce=None, flexible=False, itype='Feature', otype=None, suffix=None, hash='uWp6KaN-9rzjA6ShyBViyg', minimal_set=True, ordered_set=False, maximal_set=False, branch_id=1, created_on_id=1, space_id=1, created_by_id=1, run_id=1, type_id=None, created_at=2026-08-25 14:26:01 UTC, is_locked=False)
+#> ... synchronizing ensembl_prefix.parquet:  0.0%... synchronizing ensembl_prefix.parquet: 41.9%... synchronizing ensembl_prefix.parquet: 100.0%
+#> ... synchronizing df_vertebrates__ensembl__release-116__Organism.parquet:  0.0%... synchronizing df_vertebrates__ensembl__release-116__Organism.parquet: 40.5%... synchronizing df_vertebrates__ensembl__release-116__Organism.parquet: 100.0%
+#> ... synchronizing df_human__ensembl__release-116__Gene.parquet:  0.0%... synchronizing df_human__ensembl__release-116__Gene.parquet:  0.6%... synchronizing df_human__ensembl__release-116__Gene.parquet:  3.0%... synchronizing df_human__ensembl__release-116__Gene.parquet:  3.8%... synchronizing df_human__ensembl__release-116__Gene.parquet:  6.3%... synchronizing df_human__ensembl__release-116__Gene.parquet:  7.7%... synchronizing df_human__ensembl__release-116__Gene.parquet: 10.1%... synchronizing df_human__ensembl__release-116__Gene.parquet: 10.9%... synchronizing df_human__ensembl__release-116__Gene.parquet: 13.3%... synchronizing df_human__ensembl__release-116__Gene.parquet: 14.1%... synchronizing df_human__ensembl__release-116__Gene.parquet: 16.5%... synchronizing df_human__ensembl__release-116__Gene.parquet: 17.3%... synchronizing df_human__ensembl__release-116__Gene.parquet: 19.7%... synchronizing df_human__ensembl__release-116__Gene.parquet: 21.2%... synchronizing df_human__ensembl__release-116__Gene.parquet: 23.6%... synchronizing df_human__ensembl__release-116__Gene.parquet: 24.4%... synchronizing df_human__ensembl__release-116__Gene.parquet: 26.8%... synchronizing df_human__ensembl__release-116__Gene.parquet: 27.6%... synchronizing df_human__ensembl__release-116__Gene.parquet: 30.0%... synchronizing df_human__ensembl__release-116__Gene.parquet: 30.8%... synchronizing df_human__ensembl__release-116__Gene.parquet: 33.2%... synchronizing df_human__ensembl__release-116__Gene.parquet: 34.0%... synchronizing df_human__ensembl__release-116__Gene.parquet: 36.5%... synchronizing df_human__ensembl__release-116__Gene.parquet: 37.9%... synchronizing df_human__ensembl__release-116__Gene.parquet: 40.3%... synchronizing df_human__ensembl__release-116__Gene.parquet: 41.1%... synchronizing df_human__ensembl__release-116__Gene.parquet: 43.5%... synchronizing df_human__ensembl__release-116__Gene.parquet: 44.3%... synchronizing df_human__ensembl__release-116__Gene.parquet: 46.7%... synchronizing df_human__ensembl__release-116__Gene.parquet: 47.5%... synchronizing df_human__ensembl__release-116__Gene.parquet: 49.9%... synchronizing df_human__ensembl__release-116__Gene.parquet: 50.7%... synchronizing df_human__ensembl__release-116__Gene.parquet: 53.2%... synchronizing df_human__ensembl__release-116__Gene.parquet: 54.6%... synchronizing df_human__ensembl__release-116__Gene.parquet: 57.0%... synchronizing df_human__ensembl__release-116__Gene.parquet: 57.8%... synchronizing df_human__ensembl__release-116__Gene.parquet: 60.2%... synchronizing df_human__ensembl__release-116__Gene.parquet: 61.0%... synchronizing df_human__ensembl__release-116__Gene.parquet: 63.4%... synchronizing df_human__ensembl__release-116__Gene.parquet: 64.2%... synchronizing df_human__ensembl__release-116__Gene.parquet: 66.7%... synchronizing df_human__ensembl__release-116__Gene.parquet: 68.0%... synchronizing df_human__ensembl__release-116__Gene.parquet: 70.5%... synchronizing df_human__ensembl__release-116__Gene.parquet: 71.3%... synchronizing df_human__ensembl__release-116__Gene.parquet: 73.7%... synchronizing df_human__ensembl__release-116__Gene.parquet: 74.5%... synchronizing df_human__ensembl__release-116__Gene.parquet: 76.9%... synchronizing df_human__ensembl__release-116__Gene.parquet: 77.7%... synchronizing df_human__ensembl__release-116__Gene.parquet: 80.1%... synchronizing df_human__ensembl__release-116__Gene.parquet: 80.9%... synchronizing df_human__ensembl__release-116__Gene.parquet: 83.4%... synchronizing df_human__ensembl__release-116__Gene.parquet: 84.8%... synchronizing df_human__ensembl__release-116__Gene.parquet: 87.2%... synchronizing df_human__ensembl__release-116__Gene.parquet: 88.0%... synchronizing df_human__ensembl__release-116__Gene.parquet: 90.4%... synchronizing df_human__ensembl__release-116__Gene.parquet: 91.2%... synchronizing df_human__ensembl__release-116__Gene.parquet: 93.6%... synchronizing df_human__ensembl__release-116__Gene.parquet: 94.4%... synchronizing df_human__ensembl__release-116__Gene.parquet: 96.8%... synchronizing df_human__ensembl__release-116__Gene.parquet: 97.6%... synchronizing df_human__ensembl__release-116__Gene.parquet: 100.0%
+#> → returning schema with same hash: Schema(uid='HCGc5BcpKIMoAHIW', is_type=False, name=None, description=None, n_members=7, coerce=None, flexible=False, itype='Feature', otype=None, suffix=None, hash='wcd5JZGLKs49XRwTdLIzqA', minimal_set=True, ordered_set=False, maximal_set=False, branch_id=1, created_on_id=1, space_id=1, created_by_id=1, run_id=1, type_id=None, created_at=2026-09-15 10:07:45 UTC, is_locked=False)
 artifact$describe()
 #> Artifact: my_datasets/my_rnaseq1.h5ad (0000)
-#> ├── uid: TjszU89pO7dqkg2d0000            run: VBGzUbG (introduction.Rmd)
+#> ├── uid: jOAER3qE8zlTX4cd0000            run: ypGiSaf (introduction.Rmd)
 #> │   kind: dataset                        otype: AnnData                 
-#> │   hash: 7I70-FPesYS8iFMNHwuIHQ         size: 29.6 KB                  
+#> │   hash: UrAjKVqGOq1vGvKWfaWKVw         size: 34.4 KB                  
 #> │   branch: main                         space: all                     
-#> │   created_at: 2026-08-25 14:28:21 UTC  created_by: testuser1          
-#> │   n_observations: 3                    schema: PDqiikL                
+#> │   created_at: 2026-09-15 10:10:11 UTC  created_by: testuser1          
+#> │   n_observations: 3                    schema: YqHqnMk                
 #> ├── storage/path: 
-#> │   /tmp/Rtmpr14Xu8/laminr-intro-20260825142354/.lamindb/TjszU89pO7dqkg2d0000.h5
+#> │   /tmp/RtmpcgPv1P/laminr-intro-20260915100546/.lamindb/jOAER3qE8zlTX4cd0000.h5
 #> │   ad
 #> ├── Dataset features
 #> │   ├── obs (7)                                                                 
@@ -890,11 +906,11 @@ schemas <- ln$Schema$filter(genes__symbol = "CD8A")$all()
 # query for all artifacts linked to these feature sets
 ln$Artifact$filter(schemas__in = schemas)$to_dataframe()
 #>                    uid                         key description suffix    kind
-#> 4 TjszU89pO7dqkg2d0000 my_datasets/my_rnaseq1.h5ad        <NA>  .h5ad dataset
+#> 4 jOAER3qE8zlTX4cd0000 my_datasets/my_rnaseq1.h5ad        <NA>  .h5ad dataset
 #>     otype  size                   hash n_files n_observations extra_data
-#> 4 AnnData 30280 7I70-FPesYS8iFMNHwuIHQ    <NA>              3       <NA>
+#> 4 AnnData 35232 UrAjKVqGOq1vGvKWfaWKVw    <NA>              3       <NA>
 #>   version_tag is_latest is_locked          created_at branch_id created_on_id
-#> 4        <NA>      TRUE     FALSE 2026-08-25 14:28:21         1             1
+#> 4        <NA>      TRUE     FALSE 2026-09-15 10:10:11         1             1
 #>   space_id storage_id run_id schema_id created_by_id
 #> 4        1          1      1         4             1
 ```
@@ -917,9 +933,9 @@ artifact2 <- ln$Artifact$from_anndata(
 collection <- ln$Collection(list(artifact, artifact2), key = "my-RNA-seq-collection")$save()
 collection$describe()
 #> Collection: my-RNA-seq-collection (0000)
-#> └── uid: gMi1254DAjKy2AsN0000            run: VBGzUbG (introduction.Rmd)
+#> └── uid: JcFQWmuWnAmApsmA0000            run: ypGiSaf (introduction.Rmd)
 #>     branch: main                         space: all                     
-#>     created_at: 2026-08-25 14:28:25 UTC  created_by: testuser1
+#>     created_at: 2026-09-15 10:10:18 UTC  created_by: testuser1
 collection$view_lineage()
 ```
 
@@ -939,22 +955,22 @@ collection$load()
 
 # or iterate over its artifacts
 collection$artifacts$all()
-#> <ArtifactBasicQuerySet [Artifact(uid='TjszU89pO7dqkg2d0000', key='my_datasets/my_rnaseq1.h5ad', description=None, suffix='.h5ad', kind='dataset', otype='AnnData', size=30280, hash='7I70-FPesYS8iFMNHwuIHQ', n_files=None, n_observations=3, extra_data=None, branch_id=1, created_on_id=1, space_id=1, storage_id=1, run_id=1, schema_id=4, created_by_id=1, created_at=2026-08-25 14:28:21 UTC, is_locked=False, version_tag=None, is_latest=True), Artifact(uid='pyKz0PxHv6G91HND0000', key='my_datasets/my_rnaseq2.h5ad', description=None, suffix='.h5ad', kind='dataset', otype='AnnData', size=23616, hash='m2IP7F8nEMYbUs58TCQz6w', n_files=None, n_observations=3, extra_data=None, branch_id=1, created_on_id=1, space_id=1, storage_id=1, run_id=1, schema_id=4, created_by_id=1, created_at=2026-08-25 14:28:24 UTC, is_locked=False, version_tag=None, is_latest=True)]>
+#> <ArtifactBasicQuerySet [Artifact(uid='jOAER3qE8zlTX4cd0000', key='my_datasets/my_rnaseq1.h5ad', description=None, suffix='.h5ad', kind='dataset', otype='AnnData', size=35232, hash='UrAjKVqGOq1vGvKWfaWKVw', n_files=None, n_observations=3, extra_data=None, branch_id=1, created_on_id=1, space_id=1, storage_id=1, run_id=1, schema_id=4, created_by_id=1, created_at=2026-09-15 10:10:11 UTC, is_locked=False, version_tag=None, is_latest=True), Artifact(uid='cu925aVBQlemUbcH0000', key='my_datasets/my_rnaseq2.h5ad', description=None, suffix='.h5ad', kind='dataset', otype='AnnData', size=26976, hash='5NhU7CCHM8yqi_DaQSkGyA', n_files=None, n_observations=3, extra_data=None, branch_id=1, created_on_id=1, space_id=1, storage_id=1, run_id=1, schema_id=4, created_by_id=1, created_at=2026-09-15 10:10:17 UTC, is_locked=False, version_tag=None, is_latest=True)]>
 
 # or look at a DataFrame listing the artifacts
 collection$artifacts$to_dataframe()
 #>                    uid                         key description suffix    kind
-#> 5 pyKz0PxHv6G91HND0000 my_datasets/my_rnaseq2.h5ad        <NA>  .h5ad dataset
-#> 4 TjszU89pO7dqkg2d0000 my_datasets/my_rnaseq1.h5ad        <NA>  .h5ad dataset
+#> 6 cu925aVBQlemUbcH0000 my_datasets/my_rnaseq2.h5ad        <NA>  .h5ad dataset
+#> 5 jOAER3qE8zlTX4cd0000 my_datasets/my_rnaseq1.h5ad        <NA>  .h5ad dataset
 #>     otype  size                   hash n_files n_observations extra_data
-#> 5 AnnData 23616 m2IP7F8nEMYbUs58TCQz6w    <NA>              3       <NA>
-#> 4 AnnData 30280 7I70-FPesYS8iFMNHwuIHQ    <NA>              3       <NA>
+#> 6 AnnData 26976 5NhU7CCHM8yqi_DaQSkGyA    <NA>              3       <NA>
+#> 5 AnnData 35232 UrAjKVqGOq1vGvKWfaWKVw    <NA>              3       <NA>
 #>   version_tag is_latest is_locked          created_at branch_id created_on_id
-#> 5        <NA>      TRUE     FALSE 2026-08-25 14:28:24         1             1
-#> 4        <NA>      TRUE     FALSE 2026-08-25 14:28:21         1             1
+#> 6        <NA>      TRUE     FALSE 2026-09-15 10:10:17         1             1
+#> 5        <NA>      TRUE     FALSE 2026-09-15 10:10:11         1             1
 #>   space_id storage_id run_id schema_id created_by_id
+#> 6        1          1      1         4             1
 #> 5        1          1      1         4             1
-#> 4        1          1      1         4             1
 ```
 
 ## Finish
@@ -963,5 +979,5 @@ collection$artifacts$to_dataframe()
 
 ln$finish()
 #> ! no html report found; to attach one, create an .html export for your .Rmd file and then run: lamin save /home/runner/work/laminr/laminr/vignettes/articles/introduction.Rmd
-#> → finished Run('VBGzUbG8bAfPzpjT') after 4m at 2026-08-25 14:28:26 UTC
+#> → finished Run('ypGiSafWBahEot9c') after 4m at 2026-09-15 10:10:19 UTC
 ```
