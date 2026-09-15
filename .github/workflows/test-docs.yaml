@@ -84,9 +84,11 @@ jobs:
         run: |
           lc <- laminr::import_module("lamin_cli")
           lc$init(storage = "./test-docs", modules = "bionty")
-          # Unset so later steps can connect to other instances from this directory
+          # Init already connected this session but only wrote a directory-scoped
+          # marker. Unset that lock and persist the global default.
           ln_setup <- reticulate::import("lamindb_setup")
           ln_setup$settings$dev_dir <- NULL
+          ln_setup$settings$instance$`_persist`(write_to_disk = TRUE)
         shell: Rscript {0}
 
       - name: Run quickstart for main docs
