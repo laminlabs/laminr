@@ -46,7 +46,7 @@ laminr_status()
 #> ✔ lamin_cli v1.19.3
 #> ✔ lamin_utils v0.16.4
 #> ✔ lamindb_setup v1.25.7
-#> ✔ bionty v2.5.0
+#> ✔ bionty v2.5.1
 #> ✔ pertdb v2.2.0
 #> ✖ wetlab
 #> ✖ clinicore
