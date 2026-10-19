@@ -45,7 +45,6 @@ laminr_status <- function() {
     py_modules <- c(
       "lamindb",
       "lamin_cli",
-      "lamin_utils",
       "lamindb_setup",
       "bionty",
       "pertdb",

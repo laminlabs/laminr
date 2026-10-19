@@ -27,3 +27,12 @@ test_that("wrap_python_callable() works", {
 
   expect_equal(py_to_r(abs_wrapped(-1.1)), 1.1)
 })
+
+test_that("wrap_lamindb() rejects lamindb older than 2.11", {
+  testthat::local_mocked_bindings(
+    py_get_attr = function(...) "2.10.9",
+    .package = "reticulate"
+  )
+
+  expect_error(wrap_lamindb(NULL), "requires Python.*2[.]11[.]0")
+})

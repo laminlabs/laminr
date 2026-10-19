@@ -59,7 +59,6 @@ import_module <- function(module, ...) {
   lamin_modules <- c(
     "lamindb",
     "lamindb_setup",
-    "lamin_utils",
     "lamin_cli",
     "bionty",
     "pertdb"

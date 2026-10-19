@@ -234,12 +234,12 @@ disable_lamin_colors <- function() {
   if (check_in_knitr_notebook(alert = "none")) {
     # Disable Python ANSI color codes in knitr
     # Don't use import_module() here to avoid an infinite loop
-    py_lamin_utils <- reticulate::import("lamin_utils")
-    py_lamin_utils[["_logger"]]$LEVEL_TO_COLORS <- setNames(
+    py_lamin_logger <- import_lamin_logger_module()
+    py_lamin_logger$LEVEL_TO_COLORS <- setNames(
       list(),
       character(0)
     )
-    py_lamin_utils[["_logger"]]$RESET_COLOR <- ""
+    py_lamin_logger$RESET_COLOR <- ""
     options(LAMINR_COLORS_DISABLED = TRUE)
 
     invisible(TRUE)
@@ -248,4 +248,12 @@ disable_lamin_colors <- function() {
 
     invisible(FALSE)
   }
+}
+
+#' Import the Lamin logger module
+#'
+#' @returns The Python logger module from `lamindb_setup`
+#' @noRd
+import_lamin_logger_module <- function() {
+  reticulate::import("lamindb_setup.core._logger")
 }

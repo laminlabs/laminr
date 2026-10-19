@@ -57,7 +57,7 @@ need to be set \emph{before} Python is initialized.
 require_module("lamindb")
 
 # Require a specific version of lamindb
-require_module("lamindb", version = ">=2.0.0")
+require_module("lamindb", version = ">=2.11.0")
 
 # Require require lamindb with options
 require_module("lamindb", options = c("dev"))

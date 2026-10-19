@@ -10,6 +10,25 @@ test_that("Importing a non-required module works", {
   expect_s3_class(scipy, "python.builtin.module")
 })
 
+test_that("lamindb 2.11 or newer is required", {
+  requirements <- list()
+  withr::local_envvar(LAMINR_LAMINDB_VERSION = NA)
+
+  testthat::local_mocked_bindings(
+    py_available = function(...) FALSE,
+    .package = "reticulate"
+  )
+  testthat::local_mocked_bindings(
+    require_module = function(module, version = NULL, ...) {
+      requirements[[module]] <<- version
+    }
+  )
+
+  require_lamindb(silent = TRUE)
+
+  expect_identical(requirements$lamindb, ">=2.11.0")
+})
+
 test_that("Importing lamindb works", {
   expect_s3_class(ln, "laminr.python.builtin.module")
 })
