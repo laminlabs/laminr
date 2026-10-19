@@ -30,7 +30,7 @@ laminr_status()
 #> 
 #> ── Environment Variables ──
 #> 
-#> `LAMINR_LAMINDB_VERSION`: "release"
+#> `LAMINR_LAMINDB_VERSION`: "devel"
 #> 
 #> ── Settings ──
 #> 
@@ -40,20 +40,19 @@ laminr_status()
 #> ℹ To change the instance, use `ln <- import_module("lamindb"); ln$connect()`
 #> ℹ Run `get_current_lamin_settings()` to see the full settings information
 #> 
-#> ── Python 3.12.15 (main, Oct  1 2026, 20:59:04) [Clang 22.1.3 ] ──
+#> ── Python 3.13.16 (main, Oct 14 2026, 01:04:01) [Clang 23.1.3 ] ──
 #> 
-#> ✔ lamindb v2.10.0
-#> ✔ lamin_cli v1.19.3
-#> ✔ lamin_utils v0.16.4
-#> ✔ lamindb_setup v1.25.7
-#> ✔ bionty v2.5.1
-#> ✔ pertdb v2.2.0
+#> ✔ lamindb v2.11.0
+#> ✔ lamin_cli v1.21.0
+#> ✔ lamindb_setup v1.27.0
+#> ✔ bionty v2.5.2
+#> ✔ pertdb v2.2.1
 #> ✖ wetlab
 #> ✖ clinicore
 #> ✖ cellregistry
 #> ✖ omop
 #> ✔ scipy v1.18.1
-#> ✔ numpy v2.5.3
+#> ✔ numpy v2.5.4
 #> ✔ pandas v3.0.6
 #> 
 #> ℹ Run `reticulate::py_config()` and `reticulate::py_require()` for more
