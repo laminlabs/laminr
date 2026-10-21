@@ -26,7 +26,7 @@ whenever any error occurs.
 ``` r
 laminr_status()
 #> 
-#> ── laminr 1.3.1.9000 ───────────────────────────────────────────────────────────
+#> ── laminr 1.3.2.9000 ───────────────────────────────────────────────────────────
 #> 
 #> ── Environment Variables ──
 #> 
@@ -42,9 +42,9 @@ laminr_status()
 #> 
 #> ── Python 3.13.16 (main, Oct 14 2026, 01:04:01) [Clang 23.1.3 ] ──
 #> 
-#> ✔ lamindb v2.11.0
-#> ✔ lamin_cli v1.20.0
-#> ✔ lamindb_setup v1.26.1
+#> ✔ lamindb v2.12.0
+#> ✔ lamin_cli v1.21.0
+#> ✔ lamindb_setup v1.27.0
 #> ✔ bionty v2.5.2
 #> ✔ pertdb v2.2.1
 #> ✖ wetlab
