@@ -1,4 +1,4 @@
-artifact <- ln$Artifact$from_df(
+artifact <- ln$Artifact$from_dataframe(
   ln$core$datasets$small_dataset1(otype = "DataFrame", with_typo = TRUE),
   key = "my_datasets/rnaseq1.parquet"
 )

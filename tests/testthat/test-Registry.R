@@ -10,13 +10,13 @@ test_that("Calling a Registry works", {
   expect_s3_class(label, "lamindb.models.ulabel.ULabel")
 })
 
-test_that("Registry$from_df() works", {
+test_that("Registry$from_dataframe() works", {
   df <- data.frame(
     Letters = LETTERS[1:5],
     Numbers = 1:5
   )
   artifact <- expect_no_error(
-    ln$Artifact$from_df(df, description = "My data frame")
+    ln$Artifact$from_dataframe(df, description = "My data frame")
   )
   expect_s3_class(artifact, "laminr.lamindb.models.artifact.Artifact")
 
@@ -25,7 +25,7 @@ test_that("Registry$from_df() works", {
     Numbers = 1:5
   )
   artifact <- expect_no_error(
-    ln$Artifact$from_df(df, revises = artifact)
+    ln$Artifact$from_dataframe(df, revises = artifact)
   )
   expect_s3_class(artifact, "laminr.lamindb.models.artifact.Artifact")
 })
