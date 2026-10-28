@@ -24,5 +24,8 @@ saveRDS(seurat_obj, seurat_path)
 # Save outputs --------------------------------------------
 
 ln$Artifact(seurat_path, key = "my-datasets/my-seurat-object.rds")$save()
-ln$Artifact$from_dataframe(markers, key = "my-datasets/my-markers.parquet")$save()
+ln$Artifact$from_dataframe(
+  markers,
+  key = "my-datasets/my-markers.parquet"
+)$save()
 ln$finish()
