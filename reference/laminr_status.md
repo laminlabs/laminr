@@ -30,7 +30,7 @@ laminr_status()
 #> 
 #> ── Environment Variables ──
 #> 
-#> `LAMINR_LAMINDB_VERSION`: "devel"
+#> `LAMINR_LAMINDB_VERSION`: "release"
 #> 
 #> ── Settings ──
 #> 
@@ -42,7 +42,7 @@ laminr_status()
 #> 
 #> ── Python 3.13.18 (main, Oct 26 2026, 14:08:20) [Clang 23.1.3 ] ──
 #> 
-#> ✔ lamindb v2.12.1
+#> ✔ lamindb v2.12.2
 #> ✔ lamin_cli v1.22.0
 #> ✔ lamindb_setup v1.28.0
 #> ✔ bionty v2.5.2
@@ -53,7 +53,7 @@ laminr_status()
 #> ✖ omop
 #> ✔ scipy v1.18.1
 #> ✔ numpy v2.5.4
-#> ✔ pandas v3.1.0
+#> ✔ pandas v3.1.1
 #> 
 #> ℹ Run `reticulate::py_config()` and `reticulate::py_require()` for more
 #>   information
