@@ -40,7 +40,7 @@ laminr_status()
 #> ℹ To change the instance, use `ln <- import_module("lamindb"); ln$connect()`
 #> ℹ Run `get_current_lamin_settings()` to see the full settings information
 #> 
-#> ── Python 3.13.18 (main, Oct 26 2026, 14:08:20) [Clang 23.1.3 ] ──
+#> ── Python 3.13.18 (main, Nov 11 2026, 00:17:48) [Clang 23.1.3 ] ──
 #> 
 #> ✔ lamindb v2.12.2
 #> ✔ lamin_cli v1.22.0
